@@ -1,0 +1,4 @@
+#do not manage [.class] file
+*.class
+#do not manage following folder
+/bin/
