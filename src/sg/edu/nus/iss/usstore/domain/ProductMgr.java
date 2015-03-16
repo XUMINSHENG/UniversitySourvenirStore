@@ -2,10 +2,18 @@ package sg.edu.nus.iss.usstore.domain;
 
 import java.util.ArrayList;
 
+import sg.edu.nus.iss.usstore.dao.ProductDao;
+import sg.edu.nus.iss.usstore.exception.DataInputException;
+
 public class ProductMgr {
 	
 	private ArrayList<Product> productList;
+	private ProductDao productDao;
 	
+	public ProductMgr() throws DataInputException{
+		productDao = new ProductDao();
+		productList = productDao.loadDataFromFile();
+	}
 	
 	public ProductMgr(ArrayList<Product> list){
 		this.productList = list;
