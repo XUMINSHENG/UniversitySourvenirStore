@@ -22,7 +22,7 @@ public class ProductMgr {
 				orderList.add(productList.get(i));
 			}
 		}
-		return null;
+		return orderList;
 	}
 	
 	public Product getProductById(String id){
