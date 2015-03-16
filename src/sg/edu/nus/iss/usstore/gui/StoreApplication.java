@@ -1,8 +1,13 @@
 package sg.edu.nus.iss.usstore.gui;
 
 
+import java.io.FileNotFoundException;
+import java.util.List;
+
 import sg.edu.nus.iss.usstore.dao.ProductDao;
+import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Store;
+import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
 public class StoreApplication {
@@ -72,7 +77,15 @@ public class StoreApplication {
 		
 		
 		ProductDao pd = new ProductDao();
-		pd.loadDataFromFile();
+		try {
+			List<Product> dataList = pd.loadDataFromFile();
+			
+			pd.saveDataToFile(dataList);
+			
+		} catch (DataInputException | FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}

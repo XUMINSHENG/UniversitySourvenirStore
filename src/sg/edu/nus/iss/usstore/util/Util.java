@@ -1,7 +1,5 @@
 package sg.edu.nus.iss.usstore.util;
 
-import java.awt.Color;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,10 +10,7 @@ public class Util {
 
 	
 	public static final String C_Separator = ",";
-	
-	public static final Color C_Color_Err = Color.RED;
-	public static final Color C_Color_Ok = Color.WHITE;
-	
+		
 	public static final String C_Date_Format = "dd/mm/yyyy";
 	
 	/**
@@ -25,14 +20,13 @@ public class Util {
 	 * @return Component's text
 	 * @throws DataInputException 
 	 */
-	public static String castString(javax.swing.text.JTextComponent sender) throws DataInputException{
+	public static String castString(String s) throws DataInputException{
 		
-		if (sender.getText().contains(C_Separator)){
-			sender.setBackground(C_Color_Err);
+		if (s.contains(C_Separator)){
+			
 			throw new DataInputException("text contains unexpected char(',')");
 		}else{
-			sender.setBackground(C_Color_Ok);
-			return sender.getText();
+			return s;
 		}
 		
 	}
@@ -43,16 +37,13 @@ public class Util {
 	 * @return cast text to integer
 	 * @throws DataInputException 
 	 */
-	public static int castInt(javax.swing.text.JTextComponent sender) throws DataInputException{
+	public static int castInt(String s) throws DataInputException{
 		
 		int result;
 		
 		try{
-			result = Integer.parseInt(sender.getText());
-			sender.setBackground(C_Color_Ok);
-			
+			result = Integer.parseInt(s);			
 		}catch(NumberFormatException e){
-			sender.setBackground(C_Color_Err);
 			throw new DataInputException("is not integer");
 		}
 
@@ -66,16 +57,14 @@ public class Util {
 	 * @return cast text to double
 	 * @throws DataInputException 
 	 */
-	public static double castDouble(javax.swing.text.JTextComponent sender) throws DataInputException{
+	public static double castDouble(String s) throws DataInputException{
 		
 		double result;
 		
 		try{
-			result = Double.parseDouble(sender.getText());
-			sender.setBackground(C_Color_Ok);
-			
+			result = Double.parseDouble(s);
+		
 		}catch(NumberFormatException e){
-			sender.setBackground(C_Color_Err);
 			throw new DataInputException("is not double");
 		}
 
@@ -88,17 +77,15 @@ public class Util {
 	 * @return cast text to date
 	 * @throws DataInputException 
 	 */
-	public static Date castDate(javax.swing.text.JTextComponent sender) throws DataInputException{
+	public static Date castDate(String s) throws DataInputException{
 		
 		Date result;
 		SimpleDateFormat sdf = new SimpleDateFormat(C_Date_Format);
 		
 		try{
-			result = sdf.parse(sender.getText());
-			sender.setBackground(C_Color_Ok);
+			result = sdf.parse(s);
 			
 		}catch(ParseException e){
-			sender.setBackground(C_Color_Err);
 			throw new DataInputException("is not a valid date");
 		}
 

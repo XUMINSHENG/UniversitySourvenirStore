@@ -1,6 +1,5 @@
 package sg.edu.nus.iss.usstore.domain;
 
-import java.util.HashMap;
 import java.util.List;
 
 import sg.edu.nus.iss.usstore.exception.LoginException;
