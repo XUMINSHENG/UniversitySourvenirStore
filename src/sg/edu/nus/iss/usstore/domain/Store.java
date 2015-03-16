@@ -1,18 +1,19 @@
 package sg.edu.nus.iss.usstore.domain;
 
+import java.util.HashMap;
 import java.util.List;
 
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
 public class Store {
 
-//	private StorekeeperMgr storekeeperMgr;	
-//	private MemberMgr memberMgr;
-//	private TransactionMgr transactionMgr;
-//	private ProductMgr productMgr;
-//	private CategoryMgr categoryMgr;
-//	private VendorMgr vendorMgr;
-//	private DiscountMgr discountMgr;
+	//	private StorekeeperMgr storekeeperMgr;	
+	//	private MemberMgr memberMgr;
+	//  private TransactionMgr transactionMgr;
+	//	private ProductMgr productMgr;
+	//	private CategoryMgr categoryMgr;
+	//	private VendorMgr vendorMgr;
+	//	private DiscountMgr discountMgr;
 	
 	public Store() {
 //		storekeeperMgr = new StorekeeperMgr();
@@ -29,7 +30,7 @@ public class Store {
 	 */
 	public void login(String username, String password) throws LoginException{
 		// invoke StorekeeperMgr.checkAuthorith()
-		if (false) throw new LoginException("invaild user/password");		
+		//if (false) throw new LoginException("invaild user/password");		
 	}
 	
 	/**
@@ -101,15 +102,41 @@ public class Store {
 		// verification product
 		
 		// invoke TransactionMgr.addTransaction()
+		// transactionMgr.addTransaction(transaction);
 		
+		// update product's quantity 
 		
-		// invoke 
+		// update Member's loyalty point
 		
+		// update 
+		
+		// check inventory
 		
 		return transaction;
 	}
 	
+	public PurchaseOrder getPurchaseOrder(){
+		
+		PurchaseOrder purchaseOrder = new PurchaseOrder();;
+		
+		// invoke ProductMgr.checkInventory
+		// List<Product> productList = ProductMgr.checkInventory();
+		
+		// HashMap<Product,Vendor> purchaseList = new HashMap<Product,Vendor>();
+		
+		// foreach product in productList, 
+		// purchaseList.add(product, product.getCategory().getPreferenceVendor())
+		
+		// purchaseOrder.
+		
+		return purchaseOrder;
+	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @param memberId
+	 */	
 	public void registerMember(String name, String memberId){
 		// invoke TransactionMgr.addTransaction()
 	}

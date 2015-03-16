@@ -1,15 +1,22 @@
 package sg.edu.nus.iss.usstore.util;
 
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 public class Util {
+
 	
 	public static final String C_Separator = ",";
 	
 	public static final Color C_Color_Err = Color.RED;
 	public static final Color C_Color_Ok = Color.WHITE;
+	
+	public static final String C_Date_Format = "dd/mm/yyyy";
 	
 	/**
 	 * front-end validation 
@@ -75,6 +82,28 @@ public class Util {
 		return result;
 	}
 	
+	/**
+	 * front-end validation
+	 * 
+	 * @return cast text to date
+	 * @throws DataInputException 
+	 */
+	public static Date castDate(javax.swing.text.JTextComponent sender) throws DataInputException{
+		
+		Date result;
+		SimpleDateFormat sdf = new SimpleDateFormat(C_Date_Format);
+		
+		try{
+			result = sdf.parse(sender.getText());
+			sender.setBackground(C_Color_Ok);
+			
+		}catch(ParseException e){
+			sender.setBackground(C_Color_Err);
+			throw new DataInputException("is not a valid date");
+		}
+
+		return result;
+	}
 	
 	
 	
