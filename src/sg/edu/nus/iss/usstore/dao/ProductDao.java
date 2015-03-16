@@ -15,15 +15,12 @@ public class ProductDao extends BaseDao{
 	 * 
 	 * @return
 	 * @throws DataInputException 
+	 * @throws IOException 
 	 */
-	public ArrayList<Product> loadDataFromFile() throws DataInputException {
+	public ArrayList<Product> loadDataFromFile() throws DataInputException, IOException {
 		ArrayList<String> stringList = null;
 		
-		try {
-			stringList = super.loadDataFromFile(this.filename);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		stringList = super.loadDataFromFile(this.filename);
 		
 		ArrayList<Product> dataList = new ArrayList<Product>();
 		

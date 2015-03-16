@@ -1,7 +1,10 @@
 package sg.edu.nus.iss.usstore.domain;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
 public class Store {
@@ -14,14 +17,14 @@ public class Store {
 	//	private VendorMgr vendorMgr;
 	//	private DiscountMgr discountMgr;
 	
-	public Store() {
+	public Store() throws DataInputException, IOException {
 //		storekeeperMgr = new StorekeeperMgr();
-//		storekeeperMgr = new MemberMgr();
+//		memberMgr = new MemberMgr();
 //		storekeeperMgr = new TransactionMgr();
-		//productMgr = new ProductMgr();
-//		storekeeperMgr = new CategoryMgr();
-//		storekeeperMgr = new VendorMgr();
-//		storekeeperMgr = new DiscountMgr();
+		productMgr = new ProductMgr();
+//		categoryMgr = new CategoryMgr();
+//		vendorMgr = new VendorMgr();
+//		discountMgr = new DiscountMgr();
 	}
 	
 	/**
@@ -118,8 +121,9 @@ public class Store {
 		
 		PurchaseOrder purchaseOrder = new PurchaseOrder();;
 		
-		// invoke ProductMgr.checkInventory
-		// List<Product> productList = ProductMgr.checkInventory();
+		ArrayList<Product> productList = null;
+		productList = productMgr.checkInventory();
+
 		
 		// HashMap<Product,Vendor> purchaseList = new HashMap<Product,Vendor>();
 		
