@@ -1,7 +1,6 @@
-package store.product;
+package sg.edu.nus.iss.usstore.domain;
 
 import java.util.ArrayList;
-import store.gui.ProductsWindow;
 
 public class ProductMgr {
 	
@@ -62,7 +61,7 @@ public class ProductMgr {
 				return productList.get(x);
 			}
 		}
-		return new Product();
+		return null;
 	}
 
 }

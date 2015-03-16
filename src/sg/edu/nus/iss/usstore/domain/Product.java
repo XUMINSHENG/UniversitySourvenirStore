@@ -1,4 +1,4 @@
-package store.product;
+package sg.edu.nus.iss.usstore.domain;
 
 public class Product {
 
