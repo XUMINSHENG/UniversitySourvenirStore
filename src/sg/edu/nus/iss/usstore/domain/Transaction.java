@@ -9,7 +9,7 @@ import java.util.List;
 public class Transaction {
 	private int id;
 	private Date date;
-	private String contomer;
+	private String contomerID;
 	private int discount;
 	private List itemList;
 	private double cashAmount;
