@@ -9,7 +9,7 @@ public class Product {
 	private int quantityAvaible;
 	private double price;
 	private String barCodeNumber;
-	private int recorderQuantity;
+	private int reorderQuantity;
 	private int orderQuantity;	
 	
 	public Product(String productId, String category, String name,
@@ -23,12 +23,12 @@ public class Product {
 		this.quantityAvaible = quantityAvaible;
 		this.price = price;
 		this.barCodeNumber = barCodeNumber;
-		this.recorderQuantity = recorderQuantity;
+		this.reorderQuantity = recorderQuantity;
 		this.orderQuantity = orderQuantity;
 	}
 
 	public boolean checkInventoryLevel(){
-		if(this.quantityAvaible < this.recorderQuantity){
+		if(this.quantityAvaible < this.reorderQuantity){
 			return false;
 		}
 		return true;
@@ -90,12 +90,12 @@ public class Product {
 		this.barCodeNumber = barCodeNumber;
 	}
 
-	public int getRecorderQuantity() {
-		return recorderQuantity;
+	public int getReorderQuantity() {
+		return reorderQuantity;
 	}
 
 	public void setRecorderQuantity(int recorderQuantity) {
-		this.recorderQuantity = recorderQuantity;
+		this.reorderQuantity = recorderQuantity;
 	}
 
 	public int getOrderQuantity() {
