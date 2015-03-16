@@ -2,8 +2,7 @@ package sg.edu.nus.iss.usstore.gui;
 
 
 import java.io.FileNotFoundException;
-import java.util.List;
-
+import java.util.ArrayList;
 import sg.edu.nus.iss.usstore.dao.ProductDao;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Store;
@@ -78,7 +77,7 @@ public class StoreApplication {
 		
 		ProductDao pd = new ProductDao();
 		try {
-			List<Product> dataList = pd.loadDataFromFile();
+			ArrayList<Product> dataList = pd.loadDataFromFile();
 			
 			pd.saveDataToFile(dataList);
 			

@@ -9,7 +9,7 @@ public class Store {
 	//	private StorekeeperMgr storekeeperMgr;	
 	//	private MemberMgr memberMgr;
 	//  private TransactionMgr transactionMgr;
-	//	private ProductMgr productMgr;
+	private ProductMgr productMgr;
 	//	private CategoryMgr categoryMgr;
 	//	private VendorMgr vendorMgr;
 	//	private DiscountMgr discountMgr;
@@ -18,7 +18,7 @@ public class Store {
 //		storekeeperMgr = new StorekeeperMgr();
 //		storekeeperMgr = new MemberMgr();
 //		storekeeperMgr = new TransactionMgr();
-//		storekeeperMgr = new ProductMgr();
+		//productMgr = new ProductMgr();
 //		storekeeperMgr = new CategoryMgr();
 //		storekeeperMgr = new VendorMgr();
 //		storekeeperMgr = new DiscountMgr();

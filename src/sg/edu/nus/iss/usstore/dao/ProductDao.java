@@ -3,8 +3,6 @@ package sg.edu.nus.iss.usstore.dao;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
@@ -18,8 +16,8 @@ public class ProductDao extends BaseDao{
 	 * @return
 	 * @throws DataInputException 
 	 */
-	public List<Product> loadDataFromFile() throws DataInputException {
-		List<String> stringList = null;
+	public ArrayList<Product> loadDataFromFile() throws DataInputException {
+		ArrayList<String> stringList = null;
 		
 		try {
 			stringList = super.loadDataFromFile(this.filename);
@@ -27,7 +25,7 @@ public class ProductDao extends BaseDao{
 			e.printStackTrace();
 		}
 		
-		List<Product> dataList = new ArrayList<Product>();
+		ArrayList<Product> dataList = new ArrayList<Product>();
 		
 		for(String line : stringList){
 			
@@ -56,9 +54,9 @@ public class ProductDao extends BaseDao{
 	 * @param dataList
 	 * @throws FileNotFoundException 
 	 */
-	public void saveDataToFile(List<Product> dataList) throws FileNotFoundException {
+	public void saveDataToFile(ArrayList<Product> dataList) throws FileNotFoundException {
 		
-		List<String> stringList = new ArrayList<String>();
+		ArrayList<String> stringList = new ArrayList<String>();
 		
 		for(Product product : dataList){
 			String line;

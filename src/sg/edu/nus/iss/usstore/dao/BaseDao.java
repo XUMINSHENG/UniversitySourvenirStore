@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class BaseDao {
 	
@@ -19,9 +18,9 @@ public abstract class BaseDao {
 	 * @return
 	 * @throws IOException
 	 */
-	public List<String> loadDataFromFile(String filename) throws IOException{
+	public ArrayList<String> loadDataFromFile(String filename) throws IOException{
 		
-		List<String> stringList = new ArrayList<String>();
+		ArrayList<String> stringList = new ArrayList<String>();
 		
 		File inFile = new File(C_DataFolderPath + filename);
 		FileReader fr = new FileReader(inFile);
@@ -45,7 +44,7 @@ public abstract class BaseDao {
 	 * @param dataList
 	 * @throws FileNotFoundException 
 	 */
-	public void saveDataToFile(String filename ,List<String> stringList) throws FileNotFoundException{
+	public void saveDataToFile(String filename ,ArrayList<String> stringList) throws FileNotFoundException{
 		File outFile = new File(C_DataFolderPath + filename);
 		PrintWriter pw = new PrintWriter(outFile);
 		
