@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class BaseDao {
 	
-	private static final String C_DataFolderPath = "";
+	private static final String C_DataFolderPath = "./data/";
 	
 	
 	public abstract List<Object> loadDataFromFile();

@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.usstore.gui;
 
 
+import sg.edu.nus.iss.usstore.dao.ProductDao;
 import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
@@ -67,7 +68,11 @@ public class StoreApplication {
 	public static void main(String[] args) {
 		StoreApplication manager = new StoreApplication();
 		manager.startup();	
-		manager.login("", "");
+		
+		
+		
+		ProductDao pd = new ProductDao();
+		pd.loadDataFromFile();
 		
 		
 	}
