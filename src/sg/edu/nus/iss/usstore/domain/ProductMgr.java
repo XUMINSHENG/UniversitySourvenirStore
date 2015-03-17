@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import sg.edu.nus.iss.usstore.dao.ProductDao;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
-import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 public class ProductMgr {
 	
