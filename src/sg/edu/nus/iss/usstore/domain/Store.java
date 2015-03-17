@@ -2,8 +2,10 @@ package sg.edu.nus.iss.usstore.domain;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
@@ -16,16 +18,16 @@ public class Store {
 
 	//	private StorekeeperMgr storekeeperMgr;	
 	//	private MemberMgr memberMgr;
-	//  private TransactionMgr transactionMgr;
+	private TransactionMgr transactionMgr;
 	private ProductMgr productMgr;
 	//	private CategoryMgr categoryMgr;
 	//	private VendorMgr vendorMgr;
 	//	private DiscountMgr discountMgr;
 	
-	public Store() throws DataInputException, IOException {
+	public Store() throws IOException, DataFileException {
 //		storekeeperMgr = new StorekeeperMgr();
 //		memberMgr = new MemberMgr();
-//		storekeeperMgr = new TransactionMgr();
+		transactionMgr = new TransactionMgr();
 		productMgr = new ProductMgr();
 //		categoryMgr = new CategoryMgr();
 //		vendorMgr = new VendorMgr();
@@ -75,7 +77,16 @@ public class Store {
 	 */
 	public Transaction addBillItem(Transaction transaction, String productId, int quantity){
 		
-		// invoke transaction.addItem(transaction, productId, quantity)
+		Product product = productMgr.getProductById(productId);
+		
+		if (product==null){
+			// no such product
+			
+			
+			return transaction;
+		}
+		
+		//transaction.addItem(product, quantity);
 	
 		return transaction;
 	}
@@ -85,7 +96,9 @@ public class Store {
 	 */
 	public Transaction removeBillItem(Transaction transaction, String productId){
 		
-		// invoke transaction.removeItem(transaction, productId)
+		Product product = productMgr.getProductById(productId);
+		
+		// transaction.removeItem(product);
 	
 		return transaction;
 	}
@@ -95,8 +108,8 @@ public class Store {
 	 */
 	public Transaction setPayment(Transaction transaction, double cash, int redeemLoyaltyPoint){
 		
-		//invoke transaction.setCashAmount(cash);
-		//invoke transaction.setRedeemedLoyaltyPoint(redeemLoyaltyPoint);
+		transaction.setCashAmount(cash);
+		transaction.setRedeemedLoyaltyPoint(redeemLoyaltyPoint);
 		
 		return transaction;
 	}
@@ -109,9 +122,10 @@ public class Store {
 		// verification product
 		
 		// invoke TransactionMgr.addTransaction()
-		// transactionMgr.addTransaction(transaction);
+		transactionMgr.newTransaction(transaction);
 		
-		// update product's quantity 
+		// update product's quantity
+		
 		
 		// update Member's loyalty point
 		
@@ -149,6 +163,17 @@ public class Store {
 		// invoke TransactionMgr.addTransaction()
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @param categoryCode
+	 * @param briefDescription
+	 * @param quantityAvailable
+	 * @param price
+	 * @param barCode
+	 * @param threshold
+	 * @param orderQuantity
+	 */
 	public void addProduct(String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		
@@ -161,10 +186,20 @@ public class Store {
 		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<Product> getProductList(){
 		return productMgr.getProductList();
 	}
 	
+	/**
+	 * 
+	 * @param code
+	 * @param name
+	 * @param vendorNameList
+	 */
 	public void newCategory(String code, String name, List<String> vendorNameList){
 		
 		// invoke vendorMgr.getVendorByName()
@@ -173,6 +208,17 @@ public class Store {
 		
 		
 		
+	}
+	
+	/**
+	 * 
+	 * @param date
+	 * @return TransactionList
+	 */
+	public ArrayList<Transaction> getTransactionByDate(Date date){
+		
+		//
+		return transactionMgr.getTransactionListByDate(new String());
 	}
 	
 	

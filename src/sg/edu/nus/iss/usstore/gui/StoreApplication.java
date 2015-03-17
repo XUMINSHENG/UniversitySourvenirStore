@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Store;
+import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
@@ -29,9 +30,10 @@ public class StoreApplication {
 		try {
 			// instantiate store & load date
 			store = new Store();
-		} catch (DataInputException | IOException e) {
+		} catch ( IOException | DataFileException e) {
 			
 			e.printStackTrace();
+			System.exit(0);
 		}
 		
 	}
@@ -94,7 +96,7 @@ public class StoreApplication {
 		manager.addProduct("NUS Logo Cup", "CUP", "NUS Logo Cup 300ml", 400, 5.8, "", 50, 200);
 		
 		System.out.println("helloworld");
-		
+	
 	}
 	
 	

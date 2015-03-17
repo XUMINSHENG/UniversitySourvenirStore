@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.usstore.dao.ProductDao;
+import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 public class ProductMgr {
@@ -11,7 +12,7 @@ public class ProductMgr {
 	private ArrayList<Product> productList;
 	private ProductDao productDao;
 	
-	public ProductMgr() throws DataInputException, IOException{
+	public ProductMgr() throws IOException, DataFileException{
 		productDao = new ProductDao();
 		productList = productDao.loadDataFromFile();
 	}
