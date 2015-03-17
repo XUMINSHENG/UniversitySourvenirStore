@@ -4,8 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.Panel;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,49 +17,27 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
-public class CheckOut extends JFrame {
+public class CheckOut extends JPanel {
 	private boolean DEBUG = true;
 	// 表格中各行的内容保存在二维数组data中
-	private final static Object[][] data= {
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },
+	private Object[][] data= {
 		{ "***", "***",0,0.00,new Boolean(false) }};
 	
+	public Object[][] getData()
+	{
+		return data;
+	}
+
+	public void setData(Object[][] data)
+	{
+		this.data = data;
+	}
+
 	public CheckOut() { // 实现构造方法
-		super("CheckOut!"); // 首先调用父类JFrame的构造方法生成一个窗口
 		
 		//OPeration
 		JPanel jpOperation = new JPanel();
-		getContentPane().add(jpOperation,BorderLayout.NORTH);
+		this.add(jpOperation,BorderLayout.NORTH);
 		//Title
 		JLabel jlTitle = new JLabel("Check Out!");
 		jlTitle.setFont(new Font("Bauhaus 93", Font.PLAIN, 30));
@@ -211,12 +188,7 @@ public class CheckOut extends JFrame {
 		// 产生一个带滚动条的面板
 		JScrollPane scrollPane = new JScrollPane(table);
 		// 将带滚动条的面板添加入窗口中
-		getContentPane().add(scrollPane, BorderLayout.CENTER);
-		addWindowListener(new WindowAdapter() {// 注册窗口监听器
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
+		this.add(scrollPane, BorderLayout.CENTER);
 	}
 
 	// 把要显示在表格中的数据存入字符串数组和Object数组中
@@ -305,12 +277,29 @@ public class CheckOut extends JFrame {
 		}
 	}
 
-	public static void main(String[] args) {
-		CheckOut frame = new CheckOut();
-		frame.pack();
-		frame.setVisible(true);
-		frame.setSize(800, 600);
+	public static void main(String[] args) throws InterruptedException {
+		Object[][] data = {
+				{ "***", "***",0,0.00,new Boolean(false) },
+				{ "***", "***",0,0.00,new Boolean(false) },
+				{ "***", "***",0,0.00,new Boolean(false) }
+		};
+		Object[][] data2 = {
+				{ "***", "***",0,0.00,new Boolean(false) },
+				{ "***", "***",0,0.00,new Boolean(false) },
+				{ "***", "***",0,0.00,new Boolean(false) },
+				{ "***", "***",0,0.00,new Boolean(false) }
+		};
+		JFrame jf = new JFrame();
+		jf.setVisible(true);
+		jf.setSize(800, 600);
 		//frame.setResizable(false);
-		frame.setTitle("CheckOut!");
+		CheckOut ck = new CheckOut();
+		jf.add(ck);
+		ck.updateUI();
+		Thread.sleep(2000);
+		jf.remove(ck);
+		jf.add(ck);
+		ck.setData(data2);
+		ck.updateUI();
 		}
 }
