@@ -257,12 +257,11 @@ public class CheckOut extends JFrame {
 		// 将表格声明为可编辑的
 		public boolean isCellEditable(int row, int col) {
 
-//			if (col < 2) {
-//				return false;
-//			} else {
-//				return true;
-//			}
-			return true;
+			if (col ==2||col ==4) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		// 改变某个数据的值
