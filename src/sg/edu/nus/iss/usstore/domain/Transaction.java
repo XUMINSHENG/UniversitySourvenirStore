@@ -8,7 +8,7 @@ public class Transaction
 {
 	private int id;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	private String date = dateFormat.format(new Date());
+	private Date date = new Date();
 	private String costomerID = "public";
 	private int discount = 0;
 	private ArrayList<TransactionItem> itemList = new ArrayList<TransactionItem>();
@@ -21,7 +21,7 @@ public class Transaction
 	}
 
 	public Transaction(int id, ArrayList<TransactionItem> itemList,
-			String costomerID, String date)
+			String costomerID, Date date)
 	{
 		this.id = id;
 		this.itemList = itemList;
@@ -39,12 +39,12 @@ public class Transaction
 		this.id = id;
 	}
 
-	public String getDate()
+	public Date getDate()
 	{
 		return date;
 	}
 
-	public void setDate(String date)
+	public void setDate(Date date)
 	{
 		this.date = date;
 	}

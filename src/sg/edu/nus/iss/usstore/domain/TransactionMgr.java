@@ -1,6 +1,9 @@
 package sg.edu.nus.iss.usstore.domain;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TransactionMgr
 {
@@ -27,20 +30,24 @@ public class TransactionMgr
 		}
 		return result;
 	}
-//	public static void main(String[] args)
+//	public static void main(String[] args) throws ParseException
 //	{
+//		SimpleDateFormat df =new SimpleDateFormat("yyyy-MM-dd");
 //		Transaction t = new Transaction();
 //		Transaction t2 = new Transaction();
 //		Transaction t3 = new Transaction();
-//		t.setDate("1990-1-1");
+//		Date date = df.parse("1990-1-1");
+//		t.setDate(date);
 //		t.setId(3);
 //		System.out.println(t.getId());
 //		System.out.println(t.getDate());
-//		t2.setDate("1990-1-2");
+//		Date date2 = df.parse("1990-1-2");
+//		t.setDate(date2);
 //		t2.setId(5);
 //		System.out.println(t2.getId());
 //		System.out.println(t2.getDate());
-//		t3.setDate("1990-1-1");
+//		Date date3 = df.parse("1990-1-1");
+//		t.setDate(date3);
 //		t3.setId(7);
 //		System.out.println(t3.getId());
 //		System.out.println(t3.getDate());		
