@@ -7,6 +7,11 @@ import java.util.List;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
+/**
+ * 
+ * @author Xu Minsheng
+ *
+ */
 public class Store {
 
 	//	private StorekeeperMgr storekeeperMgr;	
@@ -144,13 +149,20 @@ public class Store {
 		// invoke TransactionMgr.addTransaction()
 	}
 	
-	public void newProduct(String name, String categoryCode, String briefDescription, 
+	public void addProduct(String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		
 		// invoke categoryMgr.getCategoryByCode() to get category
 		
-		// invoke productyMgr.newProduct()
+		Product product = new Product(categoryCode + "\3", categoryCode, name, 
+				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 		
+		productMgr.addProduct(product);
+		
+	}
+	
+	public ArrayList<Product> getProductList(){
+		return productMgr.getProductList();
 	}
 	
 	public void newCategory(String code, String name, List<String> vendorNameList){

@@ -8,6 +8,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+/**
+ * Super Class for Data Access Object, provide access to flat file
+ * 
+ * @author Xu Minsheng
+ *
+ */
 public abstract class BaseDao {
 	
 	private static final String C_DataFolderPath = "./data/";
@@ -15,10 +21,10 @@ public abstract class BaseDao {
 	/**
 	 * 
 	 * @param filename
-	 * @return
+	 * @return 
 	 * @throws IOException
 	 */
-	public ArrayList<String> loadDataFromFile(String filename) throws IOException{
+	public ArrayList<String> loadStringFromFile(String filename) throws IOException{
 		
 		ArrayList<String> stringList = new ArrayList<String>();
 		
@@ -44,7 +50,7 @@ public abstract class BaseDao {
 	 * @param dataList
 	 * @throws FileNotFoundException 
 	 */
-	public void saveDataToFile(String filename ,ArrayList<String> stringList) throws FileNotFoundException{
+	public void saveStringToFile(String filename ,ArrayList<String> stringList) throws FileNotFoundException{
 		File outFile = new File(C_DataFolderPath + filename);
 		PrintWriter pw = new PrintWriter(outFile);
 		

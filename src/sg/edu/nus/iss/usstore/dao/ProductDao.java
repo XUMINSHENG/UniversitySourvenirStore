@@ -7,9 +7,16 @@ import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
 
+/**
+ * 
+ * @author Xu Minsheng
+ *
+ */
 public class ProductDao extends BaseDao{
 
 	private final String filename = "Products.dat";
+	// determine if the No. of fields of a record is correct
+	private final int fieldNo = 8; 
 	
 	/**
 	 * 
@@ -20,13 +27,16 @@ public class ProductDao extends BaseDao{
 	public ArrayList<Product> loadDataFromFile() throws DataInputException, IOException {
 		ArrayList<String> stringList = null;
 		
-		stringList = super.loadDataFromFile(this.filename);
+		stringList = super.loadStringFromFile(this.filename);
 		
 		ArrayList<Product> dataList = new ArrayList<Product>();
 		
 		for(String line : stringList){
 			
 			String[] fields = line.split(Util.C_Separator);
+			
+			// when the No. of fields of a record is less then 8, skip
+			if (fields.length != this.fieldNo) continue;
 			
 			String productId = fields[0];
 			String category = null;
@@ -70,7 +80,7 @@ public class ProductDao extends BaseDao{
 			stringList.add(line);
 		}
 		
-		super.saveDataToFile(this.filename, stringList);
+		super.saveStringToFile(this.filename, stringList);
 		
 	}
 	

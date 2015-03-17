@@ -6,12 +6,17 @@ import java.util.Date;
 
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 
+/**
+ * 
+ * @author Xu Minsheng
+ *
+ */
 public class Util {
 
 	
 	public static final String C_Separator = ",";
 		
-	public static final String C_Date_Format = "dd/mm/yyyy";
+	public static final String C_Date_Format = "yyyy-mm-dd";
 	
 	/**
 	 * front-end validation 
