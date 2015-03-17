@@ -1,14 +1,22 @@
 package sg.edu.nus.iss.usstore.domain;
 
+import java.io.IOException;
+
+import sg.edu.nus.iss.usstore.exception.DataFileException;
+
 public class TransactionItem
 {
 	private Product product;
 	private double price;
 	private int qty;
 	
-	public TransactionItem()
+	public TransactionItem(String pID,int qty) throws IOException, DataFileException
 	{
-		
+		ProductMgr pm = new ProductMgr();
+		this.product = pm.getProductById(pID);
+		//System.out.println(pID);
+		this.qty = qty;
+		this.price = pm.getProductById(pID).getPrice();
 	}
 	
 	public TransactionItem(Product product,double price,int qty)

@@ -7,8 +7,7 @@ import java.util.Date;
 public class Transaction
 {
 	private int id;
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	private Date date = new Date();
+	private Date date;
 	private String costomerID = "public";
 	private int discount = 0;
 	private ArrayList<TransactionItem> itemList = new ArrayList<TransactionItem>();
@@ -17,15 +16,12 @@ public class Transaction
 
 	public Transaction()
 	{
-
 	}
 
-	public Transaction(int id, ArrayList<TransactionItem> itemList,
-			String costomerID, Date date)
+	public Transaction(int id,String costomerID, Date date)
 	{
 		this.id = id;
-		this.itemList = itemList;
-		this.costomerID = costomerID;
+		this.setCostomerID(costomerID);
 		this.date = date;
 	}
 
@@ -147,4 +143,14 @@ public class Transaction
 	// System.out.println(t.calcTotalPrice());
 	//
 	// }
+
+	public String getCostomerID()
+	{
+		return costomerID;
+	}
+
+	public void setCostomerID(String costomerID)
+	{
+		this.costomerID = costomerID;
+	}
 }
