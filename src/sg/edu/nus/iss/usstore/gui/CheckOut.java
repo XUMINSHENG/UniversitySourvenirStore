@@ -53,7 +53,7 @@ public class CheckOut extends JFrame {
 		{ "***", "***",0,0.00,new Boolean(false) },
 		{ "***", "***",0,0.00,new Boolean(false) },
 		{ "***", "***",0,0.00,new Boolean(false) },
-		{ "***", "***",0,0.00,new Boolean(false) },};
+		{ "***", "***",0,0.00,new Boolean(false) }};
 	
 	public CheckOut() { // 实现构造方法
 		super("CheckOut!"); // 首先调用父类JFrame的构造方法生成一个窗口
@@ -217,8 +217,6 @@ public class CheckOut extends JFrame {
 				System.exit(0);
 			}
 		});
-
-		
 	}
 
 	// 把要显示在表格中的数据存入字符串数组和Object数组中
@@ -314,6 +312,5 @@ public class CheckOut extends JFrame {
 		frame.setSize(800, 600);
 		//frame.setResizable(false);
 		frame.setTitle("CheckOut!");
-		
 		}
 }

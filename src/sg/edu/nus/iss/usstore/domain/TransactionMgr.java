@@ -48,8 +48,8 @@ public class TransactionMgr
 		}
 		return result;
 	}
-	public static void main(String[] args) throws IOException, DataFileException, ParseException, InterruptedException
-	{
+//	public static void main(String[] args) throws IOException, DataFileException, ParseException, InterruptedException
+//	{
 //		
 //		
 //		TransactionMgr tm = new TransactionMgr();
@@ -81,8 +81,8 @@ public class TransactionMgr
 //		Transaction tt1  = (Transaction) al3.get(0);
 //		System.out.println(tt1.getItemList().size());
 		
-		TransactionMgr tm = new TransactionMgr();
-		
-		tm.finalize();
-	}
+//		TransactionMgr tm = new TransactionMgr();
+//		
+//		tm.finalize();
+//	}
 }
