@@ -13,6 +13,12 @@ public class TransactionMgr
 {
 	private ArrayList<Transaction> transactionList = new ArrayList<Transaction>();
 	private TransactionsDao td; 
+	
+	public void finalize() throws IOException
+	{
+		td.saveDataToFile(transactionList);
+	}
+	
 	public TransactionMgr() throws IOException, DataFileException
 	{
 		td = new TransactionsDao();
@@ -42,8 +48,8 @@ public class TransactionMgr
 		}
 		return result;
 	}
-//	public static void main(String[] args) throws IOException, DataFileException, ParseException
-//	{
+	public static void main(String[] args) throws IOException, DataFileException, ParseException, InterruptedException
+	{
 //		
 //		
 //		TransactionMgr tm = new TransactionMgr();
@@ -74,5 +80,9 @@ public class TransactionMgr
 //		System.out.println(al3.size());
 //		Transaction tt1  = (Transaction) al3.get(0);
 //		System.out.println(tt1.getItemList().size());
-//	}
+		
+		TransactionMgr tm = new TransactionMgr();
+		
+		tm.finalize();
+	}
 }
