@@ -65,12 +65,13 @@ public class TransactionDao extends BaseDao
 				String productID = fields[1];
 				String costomerID = fields[2];
 				int qty = Util.castInt(fields[3]);
-
 				Date date = Util.castDate(fields[4]);
+				//double price = Util.castDouble(fields[5]);
 				System.out.println("Dao" + date);
 				if (flag == id)
 				{
 					TransactionItem ti = new TransactionItem(productID, qty);
+					//TransactionItem ti = new TransactionItem(product,price, qty);
 					tflag.addItem(ti);
 					// System.out.println("1");
 				} else
@@ -119,7 +120,8 @@ public class TransactionDao extends BaseDao
 				line.append(dataList.get(i).getItemList().get(j).getProduct().getProductId() + Util.C_Separator);
 				line.append(dataList.get(i).getCostomerID() + Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getQty() + Util.C_Separator);
-				line.append(df.format(dataList.get(i).getDate()));
+				line.append(df.format(dataList.get(i).getDate())+Util.C_Separator);
+				//line.append(dataList.get(i).getItemList().get(j).getPrice());
 				stringList.add(line.toString());
 			}
 		}

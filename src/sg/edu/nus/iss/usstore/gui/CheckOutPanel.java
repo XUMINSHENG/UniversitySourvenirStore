@@ -1,28 +1,135 @@
 package sg.edu.nus.iss.usstore.gui;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
-public class CheckOutPanel extends JPanel {
+public class CheckOutPanel extends JPanel
+{
+	private JLabel JlMemberName;
+	private JLabel JlTotalPriceNum;
+	private JLabel JlDiscountNum;
+	private JLabel JlDiscountedPriceNum;
+	private JLabel JlLoyalPointNum;
+	private JLabel JlRestNum;
+	private JLabel JlChangeNum;
+	private JTable table;
+	private DefaultTableModel defaultModel = null;
 	private boolean DEBUG = true;
-	// 表格中各行的内容保存在二维数组data中
-	private Object[][] data= {
-		{ "***", "***",0,0.00,new Boolean(false) }};
+	private Vector v;
+	private static int i = 1;
 	
+	public static int getI()
+	{
+		return i;
+	}
+
+	public static void setI(int i)
+	{
+		CheckOutPanel.i = i;
+	}
+
+	public JLabel getJlMemberName()
+	{
+		return JlMemberName;
+	}
+
+	public void setJlMemberName(JLabel jlMemberName)
+	{
+		JlMemberName = jlMemberName;
+	}
+
+	public JLabel getJlTotalPriceNum()
+	{
+		return JlTotalPriceNum;
+	}
+
+	public void setJlTotalPriceNum(JLabel jlTotalPriceNum)
+	{
+		JlTotalPriceNum = jlTotalPriceNum;
+	}
+
+	public JLabel getJlDiscountNum()
+	{
+		return JlDiscountNum;
+	}
+
+	public void setJlDiscountNum(JLabel jlDiscountNum)
+	{
+		JlDiscountNum = jlDiscountNum;
+	}
+
+	public JLabel getJlDiscountedPriceNum()
+	{
+		return JlDiscountedPriceNum;
+	}
+
+	public void setJlDiscountedPriceNum(JLabel jlDiscountedPriceNum)
+	{
+		JlDiscountedPriceNum = jlDiscountedPriceNum;
+	}
+
+	public JLabel getJlLoyalPointNum()
+	{
+		return JlLoyalPointNum;
+	}
+
+	public void setJlLoyalPointNum(JLabel jlLoyalPointNum)
+	{
+		JlLoyalPointNum = jlLoyalPointNum;
+	}
+
+	public JLabel getJlRestNum()
+	{
+		return JlRestNum;
+	}
+
+	public void setJlRestNum(JLabel jlRestNum)
+	{
+		JlRestNum = jlRestNum;
+	}
+
+	public JLabel getJlChangeNum()
+	{
+		return JlChangeNum;
+	}
+
+	public void setJlChangeNum(JLabel jlChangeNum)
+	{
+		JlChangeNum = jlChangeNum;
+	}
+
+	public JTable getTable()
+	{
+		return table;
+	}
+
+	public void setTable(JTable table)
+	{
+		this.table = table;
+	}
+
+	
+	// 表格中各行的内容保存在二维数组data中
+	private Object[][] data = {};
+
 	public Object[][] getData()
 	{
 		return data;
@@ -33,66 +140,66 @@ public class CheckOutPanel extends JPanel {
 		this.data = data;
 	}
 
-	public CheckOutPanel() { // 实现构造方法
-		
-		//OPeration
+	public CheckOutPanel()
+	{ // 实现构造方法
+
+		// OPeration
 		JPanel jpOperation = new JPanel();
-		this.add(jpOperation,BorderLayout.NORTH);
-		//Title
+		this.add(jpOperation, BorderLayout.NORTH);
+		// Title
 		JLabel jlTitle = new JLabel("Check Out!");
 		jlTitle.setFont(new Font("Bauhaus 93", Font.PLAIN, 30));
 		jlTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		jpOperation.setLayout(new GridLayout(3,1));
+		jpOperation.setLayout(new GridLayout(3, 1));
 		jpOperation.add(jlTitle);
 		JPanel jpInput = new JPanel();
 		JPanel jpOutput = new JPanel();
 		jpOperation.add(jpInput);
 		jpOperation.add(jpOutput);
-		
-		//Input
+
+		// Input
 		jpOperation.add(jpInput);
-		jpInput.setLayout(new GridLayout(2,2));
+		jpInput.setLayout(new GridLayout(2, 2));
 		JPanel jp1 = new JPanel();
 		JPanel jp2 = new JPanel();
 		JPanel jp3 = new JPanel();
 		JPanel jp4 = new JPanel();
 
-		//jp1
+		// jp1
 		JLabel JlMemberID = new JLabel("MEMBER ID");
 		JTextField JtMemberID = new JTextField(24);
 		jp1.setLayout(new FlowLayout(FlowLayout.LEFT));
 		jp1.add(JlMemberID);
 		jp1.add(JtMemberID);
 		jpInput.add(jp1);
-		
-		//jp2
-		JLabel JlMemberName = new JLabel("MEMBER  NAME");
+
+		// jp2
+		JlMemberName = new JLabel("MEMBER  NAME");
 		JLabel JlgetMemberName = new JLabel("PUBLIC");
-		JLabel JlLoyalPoint = new JLabel("LOYAL POINT");
-		JLabel JlLoyalPointNum = new JLabel("0");
-		jp2.setLayout(new GridLayout(1,2));
+		JButton jbMemberSubmit = new JButton("  Enter ");
+
+		jp2.setLayout(new GridLayout(1, 2));
 		JPanel jp2_1 = new JPanel();
 		JPanel jp2_2 = new JPanel();
 		jp2_1.setLayout(new FlowLayout(FlowLayout.LEFT));
 		jp2_2.setLayout(new FlowLayout(FlowLayout.LEFT));
 		jp2_1.add(JlMemberName);
 		jp2_1.add(JlgetMemberName);
-		jp2_2.add(JlLoyalPoint);
-		jp2_2.add(JlLoyalPointNum);
+		jp2_2.add(jbMemberSubmit);
 		jp2.add(jp2_1);
 		jp2.add(jp2_2);
 		jpInput.add(jp2);
-		
-		//jp3
+
+		// jp3
 		JLabel JlBarCodeID = new JLabel("Bar   Code  ");
 		JTextField JtBarCodeID = new JTextField(24);
 		jp3.setLayout(new FlowLayout(FlowLayout.LEFT));
 		jp3.add(JlBarCodeID);
 		jp3.add(JtBarCodeID);
 		jpInput.add(jp3);
-		
-		//jp4
-		jp4.setLayout(new GridLayout(1,2));
+
+		// jp4
+		jp4.setLayout(new GridLayout(1, 2));
 		JPanel jp4_1 = new JPanel();
 		JPanel jp4_2 = new JPanel();
 		jp4_1.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -100,6 +207,23 @@ public class CheckOutPanel extends JPanel {
 		JLabel jlQuantity = new JLabel("QUANTITY");
 		JTextField jtQuantity = new JTextField(6);
 		JButton jbQuantity = new JButton("Submit");
+		
+		jbQuantity.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				v = new Vector(5);
+				// TODO Auto-generated method stub
+				v.add(i++);
+				v.add("2");
+				v.add("3");
+				v.add("4");
+				v.add("5");
+				v.add("20");
+				defaultModel.addRow(v);
+				table.revalidate();
+			}
+		});
 		jp4_1.add(jlQuantity);
 		jp4_1.add(jtQuantity);
 		jp4_2.add(jbQuantity);
@@ -107,9 +231,9 @@ public class CheckOutPanel extends JPanel {
 		jp4.add(jp4_2);
 		jpInput.add(jp4);
 		
-		//output
+		// output
 		jpOperation.add(jpOutput);
-		jpOutput.setLayout(new GridLayout(2,4));
+		jpOutput.setLayout(new GridLayout(2, 4));
 		JPanel jp5 = new JPanel();
 		JPanel jp6 = new JPanel();
 		JPanel jp7 = new JPanel();
@@ -118,190 +242,170 @@ public class CheckOutPanel extends JPanel {
 		JPanel jp10 = new JPanel();
 		JPanel jp11 = new JPanel();
 		JPanel jp12 = new JPanel();
-		
-		//jp5
+
+		// jp5
 		jp5.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlTotalPrice = new JLabel("Total Price:");
-		JLabel JlTotalPriceNum = new JLabel("00.00");
+		JlTotalPriceNum = new JLabel("00.00");
 		jp5.add(JlTotalPrice);
 		jp5.add(JlTotalPriceNum);
 		jpOutput.add(jp5);
-		
-		//jp6
+
+		// jp6
 		jp6.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlDiscount = new JLabel("Discount:");
-		JLabel JlDiscountNum = new JLabel("00.00");
+		JlDiscountNum = new JLabel("00.00");
 		jp6.add(JlDiscount);
 		jp6.add(JlDiscountNum);
 		jpOutput.add(jp6);
-		
-		//jp7
+
+		// jp7
 		jp7.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel JlDiscountedPrice = new JLabel("Discountd:");
-		JLabel JlDiscountedPriceNum = new JLabel("00.00");
+		JLabel JlDiscountedPrice = new JLabel("DiscountedPrice:");
+		JlDiscountedPriceNum = new JLabel("00.00");
 		jp7.add(JlDiscountedPrice);
 		jp7.add(JlDiscountedPriceNum);
 		jpOutput.add(jp7);
-		
-		//jp8
+
+		// jp8
 		jp8.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel JlLoyalPoint = new JLabel("LOYAL POINT");
+		JlLoyalPointNum = new JLabel("0");
+		jp8.add(JlLoyalPoint);
+		jp8.add(JlLoyalPointNum);
+		jpOutput.add(jp8);
+
+		// jp9
+		jp9.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlPaid = new JLabel("Use Point");
 		JTextField JtPaidNum = new JTextField(6);
-		jp8.add(JlPaid);
-		jp8.add(JtPaidNum);
-		jpOutput.add(jp8);
-		
-		//jp9
-		jp9.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel JlRest = new JLabel("REST:");
-		JLabel JlRestNum = new JLabel("00.00");
-		jp9.add(JlRest);
-		jp9.add(JlRestNum);
+		jp9.add(JlPaid);
+		jp9.add(JtPaidNum);
 		jpOutput.add(jp9);
-		
-		//jp10
+
+		// jp10
 		jp10.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel JlRest = new JLabel("REST:");
+		JlRestNum = new JLabel("00.00");
+		jp10.add(JlRest);
+		jp10.add(JlRestNum);
+		jpOutput.add(jp10);
+
+		// jp11
+		jp11.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlCash = new JLabel("Cash:");
 		JTextField JtCashNum = new JTextField(6);
-		jp10.add(JlCash);
-		jp10.add(JtCashNum);
-		jpOutput.add(jp10);
-		
-		//jp11
-		jp11.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel JlChange = new JLabel("CHANGE:");
-		JLabel JlChangeNum = new JLabel("00.00");
-		jp11.add(JlChange);
-		jp11.add(JlChangeNum);
+		jp11.add(JlCash);
+		jp11.add(JtCashNum);
 		jpOutput.add(jp11);
-		
-		//jp12
+
+		// jp12
 		jp12.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JButton jbFinish = new JButton("Finish");
-		JButton jbCancal = new JButton("Cancel");
-		jp12.add(jbFinish);
-		jp12.add(jbCancal);
+		JLabel JlChange = new JLabel("CHANGE:");
+		JlChangeNum = new JLabel("00.00");
+		jp12.add(JlChange);
+		jp12.add(JlChangeNum);
 		jpOutput.add(jp12);
+
+		// Table
 		
-		//Table
-		MyTableModel myModel = new MyTableModel();// myModel存放表格的数据
-		JTable table = new JTable(myModel);// 表格对象table的数据来源是myModel对象
+		String[] tableTitle = {"Num","Bar Code","Product","Quantity","Price","Total Price"};
+		defaultModel = new DefaultTableModel(data,tableTitle){
+			public boolean isCellEditable(int row, int column) 
+			{
+				if (column==3)
+					return true;
+				else
+					return false;
+			}
+		};
+		table = new JTable(defaultModel);// 表格对象table的数据来源是myModel对象
+		@SuppressWarnings("serial")
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() 
+		{ 
+		public Component getTableCellRendererComponent(JTable table, Object value, 
+		boolean isSelected, boolean hasFocus, int row, int column) 
+		{ 
+		///设置偶数行颜色
+		if(row%2 == 0) 
+		setBackground(Color.white); 
+		///设置奇数行颜色
+		else if(row%2 == 1) 
+		setBackground(new Color(206,231,255)); 
+		return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); 
+		} 
+		}; 
+		for(int i=0;i<=5;i++)
+		{
+		table.getColumn(tableTitle[i]).setCellRenderer(tcr); 
+		}
+
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));// 表格的显示尺寸
 		// 产生一个带滚动条的面板
-		JScrollPane scrollPane = new JScrollPane(table);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.getViewport().setBackground(Color.white); 
+		scrollPane.getViewport().add(table); 
 		// 将带滚动条的面板添加入窗口中
 		this.add(scrollPane, BorderLayout.CENTER);
+
+		JPanel jpButton = new JPanel();
+		jpButton.setLayout(new GridLayout(7, 1));
+		JButton jbDelete = new JButton("    Delete    ");
+		JLabel jlBlank1 = new JLabel(" ");
+		jbDelete.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				// TODO Auto-generated method stub
+				int rowcount = defaultModel.getRowCount();//getRowCount返回行数，rowcount<0代表已经没有任何行了。
+				System.out.print(rowcount);
+	            if(rowcount > 0)
+	            {
+	            	defaultModel.removeRow(table.getSelectedRow());
+	                defaultModel.setRowCount(rowcount-1);//删除行比较简单，只要用DefaultTableModel的removeRow()方法即可。删除行完毕后必须重新设置列数，也就是使用DefaultTableModel的setRowCount()方法来设置当前行。
+	            }
+	            table.revalidate();
+			}
+		});
+		JButton jbCancal = new JButton("    Cancal    ");
+		JLabel jlBlank2 = new JLabel(" ");
+		JLabel jlerror = new JLabel();
+		JLabel jlBlank3 = new JLabel(" ");
+		JButton jbFinish = new JButton("    Finish     ");
+		jlerror.setText("");
+		jpButton.add(jlerror);
+		jpButton.add(jlBlank1);
+		jpButton.add(jbDelete);
+		jpButton.add(jlBlank2);
+		jpButton.add(jbCancal);
+		jpButton.add(jlBlank3);
+		jpButton.add(jbFinish);
+		this.add(jpButton, BorderLayout.EAST);
 	}
+	
+	
 
-	// 把要显示在表格中的数据存入字符串数组和Object数组中
-	class MyTableModel extends AbstractTableModel {
-		// 表格中第一行所要显示的内容存放在字符串数组columnNames中
-		final String[] columnNames = { "Num", "Product", "Quan",
-				"Price", "Del" };
-		
-		// 下述方法是重写AbstractTableModel中的方法，其主要用途是被JTable对象调用，以便在表格中正确的显示出来。程序员必须根据采用的数据类型加以恰当实现。
+	
 
-		// 获得列的数目
-		public int getColumnCount() {
-			return columnNames.length;
-		}
-
-		// 获得行的数目
-		public int getRowCount() {
-			return data.length;
-		}
-
-		// 获得某列的名字，而目前各列的名字保存在字符串数组columnNames中
-		public String getColumnName(int col) {
-			return columnNames[col];
-		}
-
-		// 获得某行某列的数据，而数据保存在对象数组data中
-		public Object getValueAt(int row, int col) {
-			return data[row][col];
-		}
-
-		// 判断每个单元格的类型
-		public Class getColumnClass(int c) {
-			return getValueAt(0, c).getClass();
-		}
-
-		// 将表格声明为可编辑的
-		public boolean isCellEditable(int row, int col) {
-
-			if (col ==2||col ==4) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		// 改变某个数据的值
-		public void setValueAt(Object value, int row, int col) {
-			if (DEBUG) {
-				System.out.println("Setting value at " + row + "," + col
-						+ " to " + value + " (an instance of "
-						+ value.getClass() + ")");
-			}
-
-			if (data[0][col] instanceof Integer && !(value instanceof Integer)) {
-				try {
-					data[row][col] = new Integer(value.toString());
-					fireTableCellUpdated(row, col);
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(CheckOutPanel.this, "The \""
-							+ getColumnName(col)
-							+ "\" column accepts only integer values.");
-				}
-			} else {
-				data[row][col] = value;
-				fireTableCellUpdated(row, col);
-			}
-
-			if (DEBUG) {
-				System.out.println("New value of data:");
-				printDebugData();
-			}
-		}
-
-		private void printDebugData() {
-			int numRows = getRowCount();
-			int numCols = getColumnCount();
-
-			for (int i = 0; i < numRows; i++) {
-				System.out.print(" row " + i + ":");
-				for (int j = 0; j < numCols; j++) {
-					System.out.print(" " + data[i][j]);
-				}
-				System.out.println();
-			}
-			System.out.println("--------------------------");
-		}
-	}
-
-	public static void main(String[] args) throws InterruptedException {
-		Object[][] data = {
-				{ "***", "***",0,0.00,new Boolean(false) },
-				{ "***", "***",0,0.00,new Boolean(false) },
-				{ "***", "***",0,0.00,new Boolean(false) }
-		};
-		Object[][] data2 = {
-				{ "***", "***",0,0.00,new Boolean(false) },
-				{ "***", "***",0,0.00,new Boolean(false) },
-				{ "***", "***",0,0.00,new Boolean(false) },
-				{ "***", "***",0,0.00,new Boolean(false) }
-		};
+	public static void main(String[] args) throws InterruptedException
+	{
+//		Object[][] data = { { "***", "***", 0, 0.00, new Boolean(false) },
+//				{ "***", "***", 0, 0.00, new Boolean(false) },
+//				{ "***", "***", 0, 0.00, new Boolean(false) } };
+//		Object[][] data2 = { { "***", "***", 0, 0.00, new Boolean(false) },
+//				{ "***", "***", 0, 0.00, new Boolean(false) },
+//				{ "***", "***", 0, 0.00, new Boolean(false) },
+//				{ "***", "***", 0, 0.00, new Boolean(false) } };
 		JFrame jf = new JFrame();
 		jf.setVisible(true);
 		jf.setSize(800, 600);
-		//frame.setResizable(false);
+		// frame.setResizable(false);
 		CheckOutPanel ck = new CheckOutPanel();
 		jf.add(ck);
 		ck.updateUI();
-		Thread.sleep(2000);
-		jf.remove(ck);
-		jf.add(ck);
-		ck.setData(data2);
-		ck.updateUI();
-		}
+//		Thread.sleep(2000);
+//		ck.setData(data2);
+//		ck.table.repaint();
+	}
 }
