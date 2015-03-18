@@ -1,9 +1,16 @@
 package sg.edu.nus.iss.usstore.domain;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.usstore.dao.ProductDao;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
+
+/*
+ * ProductManager
+ * ProductListScreen's Manager
+ * @ XIE JIABAO
+ */
 
 public class ProductMgr {
 	
@@ -12,13 +19,24 @@ public class ProductMgr {
 	
 	public ProductMgr() throws DataInputException{
 		productDao = new ProductDao();
-		productList = productDao.loadDataFromFile();
+		loadData();
 	}
 	
 	public ProductMgr(ArrayList<Product> list){
 		this.productList = list;
 	}
 	
+	//load data from file
+	public void loadData() throws DataInputException{
+		productList = productDao.loadDataFromFile();
+	}
+	
+	//save data to file
+	public void saveData() throws FileNotFoundException{
+		productDao.saveDataToFile(productList);
+	}
+	
+	//check the products below thresholds and return list
 	public ArrayList<Product> checkInventory(){
 		if(productList.size()==0){
 			return null;
@@ -32,19 +50,7 @@ public class ProductMgr {
 		return orderList;
 	}
 	
-	public Product getProductById(String id){
-		for(int x=0;x<productList.size();x++){
-			if(id.equals(productList.get(x).getProductId())){
-				return productList.get(x);
-			}
-		}
-		return null;
-	}
-	
-	public ArrayList<Product> getProductList(){
-		return this.productList;
-	}
-	
+	//add new product or implement product quantity if product exists
 	public void addProduct(Product p){
 		if(productList.contains(p)){
 			int i = productList.indexOf(p);
@@ -55,6 +61,7 @@ public class ProductMgr {
 		}
 	}
 	
+	//change quantity of product when checkout 
 	public void changeProductQty(Product p, int qty){
 		if(productList.contains(p)){
 			int i = productList.indexOf(p);
@@ -63,6 +70,16 @@ public class ProductMgr {
 		
 	}
 	
+	public Product getProductById(String id){
+		for(int x=0;x<productList.size();x++){
+			if(id.equals(productList.get(x).getProductId())){
+				return productList.get(x);
+			}
+		}
+		return null;
+	}
+	
+	//return the bar code of product
 	public Product getProductByBarCode(String barCode){
 		for(int x=0;x<productList.size();x++){
 			if(barCode.equals(productList.get(x).getBarCodeNumber())){
@@ -72,4 +89,7 @@ public class ProductMgr {
 		return null;
 	}
 
+	public ArrayList<Product> getProductList(){
+		return this.productList;
+	}
 }
