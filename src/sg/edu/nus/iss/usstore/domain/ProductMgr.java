@@ -19,7 +19,7 @@ public class ProductMgr {
 	private ArrayList<Product> productList;
 	private ProductDao productDao;
 	
-	public ProductMgr() throws IOException, DataFileException, DataInputException{
+	public ProductMgr() throws IOException, DataFileException{
 		productDao = new ProductDao();
 		loadData();
 	}
@@ -29,7 +29,7 @@ public class ProductMgr {
 	}
 	
 	//load data from file
-	public void loadData() throws DataInputException, IOException, DataFileException{
+	public void loadData() throws IOException, DataFileException{
 		productList = productDao.loadDataFromFile();
 	}
 	

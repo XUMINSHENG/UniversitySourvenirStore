@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.usstore.domain;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -214,8 +215,9 @@ public class Store {
 	 * 
 	 * @param date
 	 * @return TransactionList
+	 * @throws ParseException 
 	 */
-	public ArrayList<Transaction> getTransactionByDate(Date date){
+	public ArrayList<Transaction> getTransactionByDate(Date date) throws ParseException{
 		
 		//
 		return transactionMgr.getTransactionListByDate(new String());
