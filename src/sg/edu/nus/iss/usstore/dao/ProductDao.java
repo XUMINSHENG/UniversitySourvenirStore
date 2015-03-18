@@ -2,7 +2,9 @@ package sg.edu.nus.iss.usstore.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
@@ -18,9 +20,24 @@ public class ProductDao extends BaseDao{
 	// datafile name
 	private static final String C_File_Name = "Products.dat";
 	// determine if the No. of fields of a record is correct
-	private static final int C_Field_No = 8; 
+	private static final int C_Field_No = 8;
+	// use store to get relevant category objects
+	private Store store;
 	
+	/**
+	 * 
+	 */
+	public ProductDao() {
+
+	}
 	
+	/**
+	 * 
+	 */
+	public ProductDao(Store store) {
+		this.store = store;
+	}
+
 	/**
 	 * 
 	 * @return
@@ -52,6 +69,8 @@ public class ProductDao extends BaseDao{
 			try {
 				String productId = fields[0];
 				String category = null;
+				//category = store.getProductById(categoryCode);
+				
 				String name = fields[1];
 				String briefDescription = fields[2];
 				int quantityAvaible = Util.castInt(fields[3]);

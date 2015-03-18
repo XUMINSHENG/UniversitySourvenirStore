@@ -13,19 +13,17 @@ import sg.edu.nus.iss.usstore.exception.DataInputException;
  */
 public class Util {
 
-	
 	public static final String C_Separator = ",";
 		
 	public static final String C_Date_Format = "yyyy-MM-dd";
 	
 	/**
-	 * front-end validation 
 	 * throw Exception when Component's text contains "," 
 	 * 
 	 * @return Component's text
 	 * @throws DataInputException 
 	 */
-	public static String castString(String s) throws DataInputException{
+	public static String examineString(String s) throws DataInputException{
 		
 		if (s.contains(C_Separator)){
 			
@@ -37,7 +35,7 @@ public class Util {
 	}
 	
 	/**
-	 * front-end validation
+	 * String cast to int
 	 * 
 	 * @return cast text to integer
 	 * @throws DataInputException 
@@ -57,7 +55,7 @@ public class Util {
 	}
 	
 	/**
-	 * front-end validation
+	 * String cast to double
 	 * 
 	 * @return cast text to double
 	 * @throws DataInputException 
@@ -77,7 +75,7 @@ public class Util {
 	}
 	
 	/**
-	 * front-end validation
+	 * String cast to date
 	 * 
 	 * @return cast text to date
 	 * @throws DataInputException 
@@ -95,6 +93,17 @@ public class Util {
 		}
 
 		return result;
+	}
+	
+	/**
+	 * date to Formated string
+	 * 
+	 * @return cast text to date
+	 * @throws DataInputException 
+	 */
+	public static String dateToString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat(C_Date_Format);
+		return sdf.format(date);
 	}
 	
 	
