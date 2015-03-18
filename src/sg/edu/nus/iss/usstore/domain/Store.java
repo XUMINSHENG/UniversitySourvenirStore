@@ -27,7 +27,7 @@ public class Store {
 	public Store() throws IOException, DataFileException {
 //		storekeeperMgr = new StorekeeperMgr();
 //		memberMgr = new MemberMgr();
-		transactionMgr = new TransactionMgr();
+		transactionMgr = new TransactionMgr(this);
 		productMgr = new ProductMgr();
 //		categoryMgr = new CategoryMgr();
 //		vendorMgr = new VendorMgr();
