@@ -6,13 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import sg.edu.nus.iss.usstore.dao.TransactionsDao;
+import sg.edu.nus.iss.usstore.dao.TransactionDao;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 
 public class TransactionMgr
 {
 	private ArrayList<Transaction> transactionList = new ArrayList<Transaction>();
-	private TransactionsDao td;
+	private TransactionDao td;
 	
 	public void finalize() throws IOException
 	{
@@ -21,7 +21,7 @@ public class TransactionMgr
 	
 	public TransactionMgr(Store store) throws IOException, DataFileException
 	{
-		td = new TransactionsDao(store);
+		td = new TransactionDao(store);
 		transactionList = td.loadDataFromFile();
 	}
 	public void setTransaction(ArrayList<Transaction> transactionList)
