@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
-public class CheckOut extends JPanel {
+public class CheckOutPanel extends JPanel {
 	private boolean DEBUG = true;
 	// 表格中各行的内容保存在二维数组data中
 	private Object[][] data= {
@@ -33,7 +33,7 @@ public class CheckOut extends JPanel {
 		this.data = data;
 	}
 
-	public CheckOut() { // 实现构造方法
+	public CheckOutPanel() { // 实现构造方法
 		
 		//OPeration
 		JPanel jpOperation = new JPanel();
@@ -249,7 +249,7 @@ public class CheckOut extends JPanel {
 					data[row][col] = new Integer(value.toString());
 					fireTableCellUpdated(row, col);
 				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(CheckOut.this, "The \""
+					JOptionPane.showMessageDialog(CheckOutPanel.this, "The \""
 							+ getColumnName(col)
 							+ "\" column accepts only integer values.");
 				}
@@ -295,7 +295,7 @@ public class CheckOut extends JPanel {
 		jf.setVisible(true);
 		jf.setSize(800, 600);
 		//frame.setResizable(false);
-		CheckOut ck = new CheckOut();
+		CheckOutPanel ck = new CheckOutPanel();
 		jf.add(ck);
 		ck.updateUI();
 		Thread.sleep(2000);
