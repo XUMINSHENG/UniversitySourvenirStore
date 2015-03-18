@@ -16,7 +16,7 @@ public class Util {
 	
 	public static final String C_Separator = ",";
 		
-	public static final String C_Date_Format = "yyyy-mm-dd";
+	public static final String C_Date_Format = "yyyy-MM-dd";
 	
 	/**
 	 * front-end validation 
