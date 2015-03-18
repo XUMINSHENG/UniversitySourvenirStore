@@ -96,6 +96,10 @@ public class StoreApplication {
 		manager.addProduct("NUS Logo Cup", "CUP", "NUS Logo Cup 300ml", 400, 5.8, "", 50, 200);
 		
 		System.out.println("helloworld");
+		
+		
+		
+		
 	
 	}
 	

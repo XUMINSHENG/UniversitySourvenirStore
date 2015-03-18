@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import sg.edu.nus.iss.usstore.exception.DataFileException;
-import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
 /**
@@ -82,12 +81,11 @@ public class Store {
 		
 		if (product==null){
 			// no such product
-			
-			
+
 			return transaction;
 		}
 		
-		//transaction.addItem(product, quantity);
+		transaction.addItem(product, quantity);
 	
 		return transaction;
 	}
@@ -99,7 +97,7 @@ public class Store {
 		
 		Product product = productMgr.getProductById(productId);
 		
-		// transaction.removeItem(product);
+		//transaction.removeItem(product);
 	
 		return transaction;
 	}
