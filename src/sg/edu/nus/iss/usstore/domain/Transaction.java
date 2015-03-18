@@ -77,6 +77,7 @@ public class Transaction
 
 	public void addItem(TransactionItem transactionItem)
 	{
+		
 		if (itemList.contains(transactionItem))
 		{
 			int i = itemList.indexOf(transactionItem);
@@ -85,6 +86,20 @@ public class Transaction
 		} else
 		{
 			itemList.add(transactionItem);
+		}
+	}
+	
+	public void addItem(Product product,int qty)
+	{
+		TransactionItem transactionitem = new TransactionItem(product,product.getPrice(),qty);
+		if (itemList.contains(transactionitem))
+		{
+			int i = itemList.indexOf(transactionitem);
+			int add = itemList.get(i).getQty();
+			itemList.get(i).setQty(transactionitem.getQty() + add);
+		} else
+		{
+			itemList.add(transactionitem);
 		}
 	}
 

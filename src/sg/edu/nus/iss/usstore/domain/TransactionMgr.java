@@ -12,16 +12,16 @@ import sg.edu.nus.iss.usstore.exception.DataFileException;
 public class TransactionMgr
 {
 	private ArrayList<Transaction> transactionList = new ArrayList<Transaction>();
-	private TransactionsDao td; 
+	private TransactionsDao td;
 	
 	public void finalize() throws IOException
 	{
 		td.saveDataToFile(transactionList);
 	}
 	
-	public TransactionMgr() throws IOException, DataFileException
+	public TransactionMgr(Store store) throws IOException, DataFileException
 	{
-		td = new TransactionsDao();
+		td = new TransactionsDao(store);
 		transactionList = td.loadDataFromFile();
 	}
 	public void setTransaction(ArrayList<Transaction> transactionList)

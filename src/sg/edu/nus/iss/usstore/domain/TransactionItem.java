@@ -3,6 +3,7 @@ package sg.edu.nus.iss.usstore.domain;
 import java.io.IOException;
 
 import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 public class TransactionItem
 {
@@ -10,7 +11,7 @@ public class TransactionItem
 	private double price;
 	private int qty;
 	
-	public TransactionItem(String pID,int qty) throws IOException, DataFileException
+	public TransactionItem(String pID,int qty) throws IOException, DataFileException, DataInputException
 	{
 		ProductMgr pm = new ProductMgr();
 		this.product = pm.getProductById(pID);
