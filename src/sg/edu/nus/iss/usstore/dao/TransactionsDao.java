@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
@@ -19,6 +20,10 @@ import sg.edu.nus.iss.usstore.util.Util;
  */
 public class TransactionsDao extends BaseDao
 {
+	public TransactionsDao(Store store)
+	{
+		
+	}
 
 	// datafile name
 	private static final String C_File_Name = "Transactions.dat";
