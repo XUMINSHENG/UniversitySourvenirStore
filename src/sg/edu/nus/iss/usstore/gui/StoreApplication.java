@@ -1,14 +1,19 @@
 package sg.edu.nus.iss.usstore.gui;
 
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import sg.edu.nus.iss.usstore.dao.ProductDao;
+import java.io.IOException;
+
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Store;
+import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
+/**
+ * 
+ * @author Xu Minsheng
+ *
+ */
 public class StoreApplication {
 
 	private Store store;
@@ -21,14 +26,20 @@ public class StoreApplication {
 	
 	public StoreApplication(){
 		// instantiate attributes
-		store = new Store();
 		
-		
+		try {
+			// instantiate store & load date
+			store = new Store();
+		} catch ( IOException | DataFileException e) {
+			
+			e.printStackTrace();
+			System.exit(0);
+		}
 		
 	}
 	
 	public void startup(){
-		// load date
+		
 		// show login screen
 	}
 	
@@ -64,29 +75,28 @@ public class StoreApplication {
 	}
 	
 	
+	public void showProductScreen(){
+		
+	}
 	
-	
-	
-	
+	public void addProduct(String name, String categoryCode, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
+		// 
+		store.addProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+		
+		//
+		
+	}
 	
 	public static void main(String[] args) {
 		StoreApplication manager = new StoreApplication();
 		manager.startup();	
 		
+		manager.store.getProductList();
+		manager.addProduct("NUS Logo Cup", "CUP", "NUS Logo Cup 300ml", 400, 5.8, "", 50, 200);
 		
-		
-		ProductDao pd = new ProductDao();
-		try {
-			ArrayList<Product> dataList = pd.loadDataFromFile();
-			
-			pd.saveDataToFile(dataList);
-			
-		} catch (DataInputException | FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+		System.out.println("helloworld");
+	
 	}
 	
 	

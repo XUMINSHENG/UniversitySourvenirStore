@@ -1,13 +1,19 @@
 package sg.edu.nus.iss.usstore.dao;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+/**
+ * Super Class for Data Access Object, provide access to flat file
+ * 
+ * @author Xu Minsheng
+ *
+ */
 public abstract class BaseDao {
 	
 	private static final String C_DataFolderPath = "./data/";
@@ -15,20 +21,19 @@ public abstract class BaseDao {
 	/**
 	 * 
 	 * @param filename
-	 * @return
+	 * @return 
 	 * @throws IOException
 	 */
-	public ArrayList<String> loadDataFromFile(String filename) throws IOException{
+	public ArrayList<String> loadStringFromFile(String fullpath) throws IOException{
 		
 		ArrayList<String> stringList = new ArrayList<String>();
 		
-		File inFile = new File(C_DataFolderPath + filename);
+		File inFile = new File(fullpath);
 		FileReader fr = new FileReader(inFile);
 		BufferedReader br = new BufferedReader(fr);
 		
 		String line;
 		while ((line = br.readLine()) !=null ){
-			//System.out.println(line);
 			stringList.add(line);
 		}
 		
@@ -42,11 +47,12 @@ public abstract class BaseDao {
 	 * 
 	 * @param filename
 	 * @param dataList
-	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	public void saveDataToFile(String filename ,ArrayList<String> stringList) throws FileNotFoundException{
-		File outFile = new File(C_DataFolderPath + filename);
-		PrintWriter pw = new PrintWriter(outFile);
+	public void saveStringToFile(String fullpath ,ArrayList<String> stringList) throws IOException{
+		File outFile = new File(fullpath);
+		BufferedWriter bw = new BufferedWriter(new java.io.FileWriter(outFile));
+		PrintWriter pw = new PrintWriter(bw);
 		
 		for (String line : stringList){
 			pw.println(line);
@@ -54,8 +60,16 @@ public abstract class BaseDao {
 		pw.flush();
 		
 		pw.close();
-		
+		bw.close();
 	}
 
+	/**
+	 * 
+	 * @return default data folder path
+	 */
+	public static String getcDatafolderpath() {
+		return C_DataFolderPath;
+	}
+	
 	
 }

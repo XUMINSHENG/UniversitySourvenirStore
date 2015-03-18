@@ -6,12 +6,17 @@ import java.util.Date;
 
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 
+/**
+ * 
+ * @author Xu Minsheng
+ *
+ */
 public class Util {
 
 	
 	public static final String C_Separator = ",";
 		
-	public static final String C_Date_Format = "dd/mm/yyyy";
+	public static final String C_Date_Format = "yyyy-mm-dd";
 	
 	/**
 	 * front-end validation 
@@ -24,7 +29,7 @@ public class Util {
 		
 		if (s.contains(C_Separator)){
 			
-			throw new DataInputException("text contains unexpected char(',')");
+			throw new DataInputException(s + " contains unexpected char(',')");
 		}else{
 			return s;
 		}
@@ -44,7 +49,7 @@ public class Util {
 		try{
 			result = Integer.parseInt(s);			
 		}catch(NumberFormatException e){
-			throw new DataInputException("is not integer");
+			throw new DataInputException(s + " is not integer");
 		}
 
 		return result;
@@ -65,7 +70,7 @@ public class Util {
 			result = Double.parseDouble(s);
 		
 		}catch(NumberFormatException e){
-			throw new DataInputException("is not double");
+			throw new DataInputException(s + " is not double");
 		}
 
 		return result;
@@ -86,7 +91,7 @@ public class Util {
 			result = sdf.parse(s);
 			
 		}catch(ParseException e){
-			throw new DataInputException("is not a valid date");
+			throw new DataInputException(s + " is not a valid date");
 		}
 
 		return result;

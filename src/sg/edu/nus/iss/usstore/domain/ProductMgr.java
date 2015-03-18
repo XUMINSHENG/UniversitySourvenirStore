@@ -1,9 +1,11 @@
 package sg.edu.nus.iss.usstore.domain;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.usstore.dao.ProductDao;
+import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 /*
@@ -17,7 +19,7 @@ public class ProductMgr {
 	private ArrayList<Product> productList;
 	private ProductDao productDao;
 	
-	public ProductMgr() throws DataInputException{
+	public ProductMgr() throws IOException, DataFileException, DataInputException{
 		productDao = new ProductDao();
 		loadData();
 	}
@@ -27,12 +29,12 @@ public class ProductMgr {
 	}
 	
 	//load data from file
-	public void loadData() throws DataInputException{
+	public void loadData() throws DataInputException, IOException, DataFileException{
 		productList = productDao.loadDataFromFile();
 	}
 	
 	//save data to file
-	public void saveData() throws FileNotFoundException{
+	public void saveData() throws IOException{
 		productDao.saveDataToFile(productList);
 	}
 	
