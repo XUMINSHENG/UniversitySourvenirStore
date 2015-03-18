@@ -5,8 +5,10 @@ import java.io.IOException;
 
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Store;
+import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
+import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
 /**
@@ -71,7 +73,48 @@ public class StoreApplication {
 	}
 	
 	public void checkOut(){
+		this.store.checkout();
+	}
+	
+	public void addBillItem(){
 		
+		Transaction transaction = null;
+		String productId = null;
+		int quantity = 0;
+		
+		try {
+			this.store.addBillItem(transaction, productId, quantity);
+		} catch (DataNotFoundException e) {
+			// UI action
+			
+			e.printStackTrace();
+		}
+		
+		// UI action
+	}
+	
+	public void removeBillItem(){
+		Transaction transaction = null;
+		String productId = null;
+		this.store.removeBillItem(transaction, productId);
+		
+		// UI action
+	}
+	
+	public void setPayment(){
+		Transaction transaction = null;
+		double cash=0;
+		int redeemLoyaltyPoint=0;
+		this.store.setPayment(transaction, cash, redeemLoyaltyPoint);
+		
+		// UI action
+	}
+	
+	public void confirmPayment(){
+		Transaction transaction = null;
+		this.store.confirmPayment(transaction);
+		
+		// UI action
 	}
 	
 	

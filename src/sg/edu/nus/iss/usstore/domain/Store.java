@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
 /**
@@ -57,13 +58,16 @@ public class Store {
 		//Customer customer;
 		//Discount discount;
 				
-		if (memberId!=null){
+		if (memberId==null){
+			//customer = new Public();
+		}else{
 			//customer = memberMgr.getMemberById();
+			//if (customer == null) 
+			//{
+			//	throw new DataNotFoundException("Customer",memberId);
+			//}
+			// invoke transaction.setCustomer();
 		}
-		
-		
-		//if (customer == null) customer = new Public();
-		// invoke transaction.setCustomer();
 		
 		
 		// discount = customer.getDiscount(discountMgr.getDiscountList());
@@ -74,15 +78,18 @@ public class Store {
 	
 	/**
 	 * 
+	 * @param transaction
+	 * @param productId
+	 * @param quantity
+	 * @return
+	 * @throws DataNotFoundException
 	 */
-	public Transaction addBillItem(Transaction transaction, String productId, int quantity){
+	public Transaction addBillItem(Transaction transaction, String productId, int quantity) throws DataNotFoundException{
 		
 		Product product = productMgr.getProductById(productId);
 		
 		if (product==null){
-			// no such product
-
-			return transaction;
+			throw new DataNotFoundException("Product",productId);
 		}
 		
 		transaction.addItem(product, quantity);
@@ -104,12 +111,14 @@ public class Store {
 	
 	/**
 	 * 
+	 * @param transaction
+	 * @param cash
+	 * @param redeemLoyaltyPoint
+	 * @return
 	 */
 	public Transaction setPayment(Transaction transaction, double cash, int redeemLoyaltyPoint){
-		
-		transaction.setCashAmount(cash);
 		transaction.setRedeemedLoyaltyPoint(redeemLoyaltyPoint);
-		
+		transaction.setCashAmount(cash);
 		return transaction;
 	}
 	
@@ -124,11 +133,15 @@ public class Store {
 		transactionMgr.newTransaction(transaction);
 		
 		// update product's quantity
-		
+		ArrayList<TransactionItem> itemList = transaction.getItemList();
+		for(TransactionItem item : itemList){
+			productMgr.changeProductQty(item.getProduct(), item.getProduct().getQuantityAvaible() - item.getQty());
+		}
 		
 		// update Member's loyalty point
-		
-		// update 
+		if (transaction.getCostomerID() != "public"){
+			
+		}
 		
 		// check inventory
 		
@@ -177,6 +190,7 @@ public class Store {
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		
 		// invoke categoryMgr.getCategoryByCode() to get category
+		// if () throw new DataNotFoundException("Category",categoryCode);
 		
 		Product product = new Product(categoryCode + "\3", categoryCode, name, 
 				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
@@ -204,7 +218,6 @@ public class Store {
 		// invoke vendorMgr.getVendorByName()
 		
 		// invoke categoryMgr.newCategory
-		
 		
 		
 	}
