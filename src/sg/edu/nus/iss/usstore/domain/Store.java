@@ -130,7 +130,7 @@ public class Store {
 		// verification product
 		
 		// invoke TransactionMgr.addTransaction()
-		transactionMgr.newTransaction(transaction);
+		transactionMgr.addTransaction(transaction);
 		
 		// update product's quantity
 		ArrayList<TransactionItem> itemList = transaction.getItemList();

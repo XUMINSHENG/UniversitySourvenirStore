@@ -28,7 +28,7 @@ public class TransactionMgr
 	{
 		this.transactionList = transactionList;
 	}
-	public void newTransaction(Transaction transaction)
+	public void addTransaction(Transaction transaction)
 	{
 		transactionList.add(transaction);
 	}
