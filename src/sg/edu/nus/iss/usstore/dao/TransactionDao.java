@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.ProductMgr;
 import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
@@ -24,11 +26,10 @@ public class TransactionDao extends BaseDao
 	{
 		
 	}
-
 	// datafile name
 	private static final String C_File_Name = "Transactions.dat";
 	// determine if the No. of fields of a record is correct
-	private static final int C_Field_No = 5;
+	private static final int C_Field_No = 6;
 
 	/**
 	 * 
@@ -66,19 +67,22 @@ public class TransactionDao extends BaseDao
 				String costomerID = fields[2];
 				int qty = Util.castInt(fields[3]);
 				Date date = Util.castDate(fields[4]);
-				//double price = Util.castDouble(fields[5]);
-				System.out.println("Dao" + date);
+				double price = Util.castDouble(fields[5]);
+				//System.out.println("Dao" + date);
+				ProductMgr pm = new ProductMgr();
+				Product product = pm.getProductById(productID);
 				if (flag == id)
 				{
-					TransactionItem ti = new TransactionItem(productID, qty);
-					//TransactionItem ti = new TransactionItem(product,price, qty);
-					tflag.addItem(ti);
+					//TransactionItem ti = new TransactionItem(productID, qty);
+					
+					TransactionItem ti = new TransactionItem(product,price,qty);
+					tflag.addItem(product,price,qty);
 					// System.out.println("1");
 				} else
 				{
-					TransactionItem ti = new TransactionItem(productID, qty);
+					TransactionItem ti = new TransactionItem(product,price,qty);
 					Transaction t = new Transaction(id, costomerID, date);
-					t.addItem(ti);
+					t.addItem(product,price,qty);
 					dataList.add(t);
 					tflag = t;
 					// System.out.println("2");
@@ -121,7 +125,7 @@ public class TransactionDao extends BaseDao
 				line.append(dataList.get(i).getCostomerID() + Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getQty() + Util.C_Separator);
 				line.append(df.format(dataList.get(i).getDate())+Util.C_Separator);
-				//line.append(dataList.get(i).getItemList().get(j).getPrice());
+				line.append(dataList.get(i).getItemList().get(j).getPrice());
 				stringList.add(line.toString());
 			}
 		}

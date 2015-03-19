@@ -231,7 +231,7 @@ public class Store {
 	public ArrayList<Transaction> getTransactionByDate(Date date) throws ParseException{
 		
 		//
-		return transactionMgr.getTransactionListByDate(new String());
+		return transactionMgr.getTransactionListByDate(date);
 	}
 	
 	

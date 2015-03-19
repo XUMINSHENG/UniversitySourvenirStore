@@ -74,20 +74,20 @@ public class Transaction
 		this.redeemedLoyaltyPoint = redeemedLoyaltyPoint;
 	}
 
-	public void addItem(TransactionItem transactionItem)
-	{
-		
-		if (itemList.contains(transactionItem))
-		{
-			int i = itemList.indexOf(transactionItem);
-			int add = itemList.get(i).getQty();
-			itemList.get(i).setQty(transactionItem.getQty() + add);
-		} else
-		{
-			itemList.add(transactionItem);
-		}
-	}
-	
+//	public void addItem(TransactionItem transactionItem)
+//	{
+//		
+//		if (itemList.contains(transactionItem))
+//		{
+//			int i = itemList.indexOf(transactionItem);
+//			int add = itemList.get(i).getQty();
+//			itemList.get(i).setQty(transactionItem.getQty() + add);
+//		} else
+//		{
+//			itemList.add(transactionItem);
+//		}
+//	}
+//	
 	public void addItem(Product product,int qty)
 	{
 		TransactionItem transactionitem = new TransactionItem(product,product.getPrice(),qty);
@@ -101,12 +101,27 @@ public class Transaction
 			itemList.add(transactionitem);
 		}
 	}
-
-	public void removeItem(TransactionItem transactionItem)
+	
+	public void addItem(Product product,double price,int qty)
 	{
-		if (itemList.contains(transactionItem))
+		TransactionItem transactionitem = new TransactionItem(product,price,qty);
+		if (itemList.contains(transactionitem))
 		{
-			itemList.remove(transactionItem);
+			int i = itemList.indexOf(transactionitem);
+			int add = itemList.get(i).getQty();
+			itemList.get(i).setQty(transactionitem.getQty() + add);
+		} else
+		{
+			itemList.add(transactionitem);
+		}
+	}
+
+	public void removeItem(Product product)
+	{
+		for(int i = 0; i<itemList.size();i++)
+		{
+			if (itemList.get(i).getProduct()==product)
+				itemList.remove(i);
 		}
 	}
 

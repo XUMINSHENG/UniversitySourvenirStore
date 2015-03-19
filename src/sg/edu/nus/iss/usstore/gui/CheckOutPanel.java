@@ -28,6 +28,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.ProductMgr;
@@ -48,6 +49,7 @@ public class CheckOutPanel extends JPanel
 	private JTextField JtMemberID;
 	private JTextField JtPaidNum;
 	private JTextField JtCashNum;
+	private TableColumn column;
 
 	private DecimalFormat df=new DecimalFormat("#.00");
 	private int discount = 10;
@@ -360,7 +362,19 @@ public class CheckOutPanel extends JPanel
 			}
 		};
 		table = new JTable(defaultModel);// 表格对象table的数据来源是myModel对象
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		//table.setFont(new Font("Times new Romer", Font.PLAIN, 10));
+		for(int i = 0;i<table.getColumnCount();i++)
+		{
+			column = table.getColumnModel().getColumn(i);
+			if (i==1||i==2)
+			{
+				column.setPreferredWidth(150);
+			}
+			else
+			{
+				column.setPreferredWidth(75);
+			}
+		}
 		defaultModel.addTableModelListener(new TableModelListener()
 		{
 

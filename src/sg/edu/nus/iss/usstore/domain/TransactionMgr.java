@@ -32,17 +32,12 @@ public class TransactionMgr
 	{
 		transactionList.add(transaction);
 	}
-	public ArrayList<Transaction> getTransactionListByDate(String dateString) throws ParseException
+	public ArrayList<Transaction> getTransactionListByDate(Date date)
 	{
-		SimpleDateFormat df2 =new SimpleDateFormat("yyyy-MM-dd");
-		Date date = df2.parse(dateString);
-		//System.out.println(date);
 		ArrayList<Transaction> result = new ArrayList<Transaction>();
 		for(int i = 0;i<transactionList.size();i++)
 		{
 			Transaction t = (Transaction) transactionList.get(i);
-			System.out.println(t.getDate());
-			System.out.println(date);
 			if (date.equals(t.getDate()))
 				result.add(t);
 		}
