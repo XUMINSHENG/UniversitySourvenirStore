@@ -49,9 +49,10 @@ public class DigitDocument extends PlainDocument{
 			if(this.getLength()+str.length()<=limitedLength){
 				char[] upper = str.toCharArray();  
 				int length = 0;  
+				Character dot = new Character('.');
 				for (int i = 0; i < upper.length; i++)
 				{  
-					if (Character.isDigit(upper[i]))
+					if (Character.isDigit(upper[i])||dot.equals(upper[i]))
 					{  
 						upper[length++] = upper[i];  
 					}  
