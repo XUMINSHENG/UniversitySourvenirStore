@@ -24,7 +24,6 @@ import javax.swing.text.PlainDocument;
 public class DigitDocument extends PlainDocument{
 	
 	private int limitedLength;
-	private int data;
 	
 	public DigitDocument(){
 		super();
