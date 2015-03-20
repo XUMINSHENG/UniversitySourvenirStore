@@ -1,112 +1,194 @@
 package sg.edu.nus.iss.usstore.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.Test;
 
-public class TransactionTest
+import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.ProductMgr;
+import sg.edu.nus.iss.usstore.domain.Transaction;
+import sg.edu.nus.iss.usstore.domain.TransactionItem;
+import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.exception.DataInputException;
+
+public class TransactionTest extends Transaction
 {
 
+	Date date = new Date();
+	Transaction t = new Transaction(1,"costumer",date);
 	@Test
 	public void testTransaction()
 	{
-		fail("Not yet implemented");
+		Transaction t1 = new Transaction();
+		assertFalse(t1.toString()==null);
+		t=null;
 	}
 
 	@Test
 	public void testTransactionIntStringDate()
 	{
-		fail("Not yet implemented");
+		Date date = new Date();
+		Transaction t2 = new Transaction(1,"customer",date);
+		assertEquals(1,t2.getId());
+		assertEquals("custumer",t2.getCostomerID());
+		assertEquals(date,t2.getDate());	
 	}
 
 	@Test
 	public void testGetId()
 	{
-		fail("Not yet implemented");
+		assertEquals(1,t.getId());
 	}
 
 	@Test
 	public void testSetId()
 	{
-		fail("Not yet implemented");
+		t.setId(2);
+		assertEquals(2,t.getId());
 	}
 
 	@Test
 	public void testGetDate()
 	{
-		fail("Not yet implemented");
+		assertEquals(date,t.getDate());
 	}
 
 	@Test
 	public void testSetDate()
 	{
-		fail("Not yet implemented");
+		Date date2 = new Date();
+		t.setDate(date2);
+		assertEquals(date2,t.getDate());
 	}
-
+	
+	@Test
+	public void testSetItemList() throws IOException, DataFileException, DataInputException
+	{
+		Product product1 = new Product("1","2","3","4",5,6.7,"8",9,10);
+		Product product2 = new Product("11","12","13","14",15,16.17,"18",19,20);
+		TransactionItem ti1 = new TransactionItem(product1,2.3,4);
+		TransactionItem ti2 = new TransactionItem(product2,5.6,7);
+		ArrayList<TransactionItem> al1 = new ArrayList<TransactionItem>();
+		al1.add(ti1);
+		al1.add(ti2);
+		t.setItemList(al1);
+		ArrayList<TransactionItem> al2 =t.getItemList();
+		assertEquals(al1,al2);
+	}
 	@Test
 	public void testGetItemList()
 	{
-		fail("Not yet implemented");
+		Product product1 = new Product("1","2","3","4",5,6.7,"8",9,10);
+		Product product2 = new Product("11","12","13","14",15,16.17,"18",19,20);
+		TransactionItem ti1 = new TransactionItem(product1,2.3,4);
+		TransactionItem ti2 = new TransactionItem(product2,5.6,7);
+		ArrayList<TransactionItem> al1 = new ArrayList<TransactionItem>();
+		al1.add(ti1);
+		al1.add(ti2);
+		t.setItemList(al1);
+		ArrayList<TransactionItem> al2 =t.getItemList();
+		assertEquals(al1,al2);
 	}
+	
 
-	@Test
-	public void testSetItemList()
-	{
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetCashAmount()
-	{
-		fail("Not yet implemented");
-	}
-
+	
 	@Test
 	public void testSetCashAmount()
 	{
-		fail("Not yet implemented");
+		t.setCashAmount(100.11);
+		double CashAmount = t.getCashAmount();
+		assertFalse(100.11!=CashAmount);
 	}
-
+	
 	@Test
-	public void testGetRedeemedLoyaltyPoint()
+	public void testGetCashAmount()
 	{
-		fail("Not yet implemented");
+		t.setCashAmount(100.11);
+		double CashAmount = t.getCashAmount();
+		assertFalse(100.11!=CashAmount);
 	}
 
 	@Test
 	public void testSetRedeemedLoyaltyPoint()
 	{
-		fail("Not yet implemented");
+		t.setRedeemedLoyaltyPoint(100);
+		int redeemedLoyaltyPoint = t.getRedeemedLoyaltyPoint();
+		assertEquals(100,redeemedLoyaltyPoint);
+	}
+	
+	@Test
+	public void testGetRedeemedLoyaltyPoint()
+	{
+		int redeemedLoyaltyPoint = t.getRedeemedLoyaltyPoint();
+		assertEquals(100,redeemedLoyaltyPoint);
 	}
 
 	@Test
 	public void testAddItemProductInt()
 	{
-		fail("Not yet implemented");
+		ProductMgr pm = null;
+		try
+		{
+			pm = new ProductMgr();
+		} catch (IOException | DataFileException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Product p = pm.getProductById("CLO/1");
+		t.addItem(p, 2);
+		assertEquals(t.getItemList().get(0).getProduct(),p);
 	}
 
 	@Test
 	public void testAddItemProductDoubleInt()
 	{
-		fail("Not yet implemented");
+		Product product3 = new Product("31","32","33","34",35,36.37,"38",39,40);
+		t.addItem(product3,40.41,42);
+		Product product4 = t.getItemList().get(0).getProduct();
+		assertEquals(product3,product4);
 	}
 
 	@Test
 	public void testRemoveItem()
 	{
-		fail("Not yet implemented");
+		Product product3 = new Product("31","32","33","34",35,36.37,"38",39,40);
+		t.addItem(product3,40.41,42);
+		t.removeItem(product3);
+		assertEquals(0,t.getItemList().size());
 	}
 
 	@Test
 	public void testCalcTotalPrice()
 	{
-		fail("Not yet implemented");
+		ProductMgr pm = null;
+		try
+		{
+			pm = new ProductMgr();
+		} catch (IOException | DataFileException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Product p = pm.getProductById("CLO/1");
+		Product p2 = pm.getProductById("MUG/1");
+		Product p3 = pm.getProductById("STA/1");
+		t.addItem(p, 2);
+		t.addItem(p2, 3);
+		t.addItem(p3, 4);
+		assertFalse(p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4!=t.calcTotalPrice());
 	}
 
 	@Test
 	public void testCalcDiscountPrice()
 	{
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
