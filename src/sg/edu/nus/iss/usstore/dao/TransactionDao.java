@@ -122,7 +122,7 @@ public class TransactionDao extends BaseDao
 				StringBuffer line;
 				line = new StringBuffer(dataList.get(i).getId() + Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getProduct().getProductId() + Util.C_Separator);
-				line.append(dataList.get(i).getCostomerID() + Util.C_Separator);
+				line.append(dataList.get(i).getCustomerID() + Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getQty() + Util.C_Separator);
 				line.append(df.format(dataList.get(i).getDate())+Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getPrice());

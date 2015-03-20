@@ -142,7 +142,7 @@ public class Store {
 		}
 		
 		// update Member's loyalty point
-		if (transaction.getCostomerID() != "public"){
+		if (transaction.getCustomerID() != "public"){
 			
 		}
 		
