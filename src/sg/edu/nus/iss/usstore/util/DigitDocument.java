@@ -9,9 +9,14 @@ import javax.swing.text.PlainDocument;
  * or with limited length of input
  * 
  * For example:
- * JTextField jtf = new JTextField(new DigitDocument());
+ * JTextField jtf = new JTextField();
+ * jtf.setDocument(new DigitDocument())
  * or limits assigned length using int parameter,
- * jtf = new JTextField(new DigitDocument(4));
+ * jtf.setDocument(new DigitDocument(4));
+ * 
+ * Hint:
+ * When setDocument for JTextfield, the data of JTextfield would be erased automatically.
+ * So when u initial a JTextfield with a string, Using setText after setDocument to add your string.
  * 
  * @ XIE JIABAO
  */
@@ -19,6 +24,7 @@ import javax.swing.text.PlainDocument;
 public class DigitDocument extends PlainDocument{
 	
 	private int limitedLength;
+	private int data;
 	
 	public DigitDocument(){
 		super();
@@ -37,11 +43,12 @@ public class DigitDocument extends PlainDocument{
 		if(limitedLength<=0){
 			char[] upper = str.toCharArray();  
             int length = 0;  
+            Character dot = new Character('.');
             for (int i = 0; i < upper.length; i++)
             {  
-                if (Character.isDigit(upper[i]))
+            	if (Character.isDigit(upper[i])||dot.equals(upper[i]))
                 {  
-                    upper[length++] = upper[i];  
+                    upper[length++] = upper[i];
                 }  
             }  
             super.insertString(offset, new String(upper,0,length),a);
@@ -49,10 +56,9 @@ public class DigitDocument extends PlainDocument{
 			if(this.getLength()+str.length()<=limitedLength){
 				char[] upper = str.toCharArray();  
 				int length = 0;  
-				Character dot = new Character('.');
 				for (int i = 0; i < upper.length; i++)
 				{  
-					if (Character.isDigit(upper[i])||dot.equals(upper[i]))
+					if (Character.isDigit(upper[i]))
 					{  
 						upper[length++] = upper[i];  
 					}  
