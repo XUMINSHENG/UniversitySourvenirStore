@@ -1,3 +1,5 @@
+package sg.edu.nus.iss.usstore.test;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;

@@ -99,12 +99,15 @@ public class Store {
 	
 	/**
 	 * 
+	 * @param transaction
+	 * @param productId
+	 * @return
 	 */
 	public Transaction removeBillItem(Transaction transaction, String productId){
 		
 		Product product = productMgr.getProductById(productId);
 		
-		//transaction.removeItem(product);
+		transaction.removeItem(product);
 	
 		return transaction;
 	}

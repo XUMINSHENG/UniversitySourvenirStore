@@ -96,10 +96,10 @@ public class Util {
 	}
 	
 	/**
-	 * date to Formated string
+	 * Cast date to String in yyyy-MM-dd format
 	 * 
-	 * @return cast text to date
-	 * @throws DataInputException 
+	 * @param date
+	 * @return String
 	 */
 	public static String dateToString(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat(C_Date_Format);
