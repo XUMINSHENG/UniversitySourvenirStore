@@ -88,7 +88,7 @@ public class CheckOutPanel extends JPanel
 		double totalPrice = 0;
 		for (int i = 0; i < table.getModel().getRowCount(); i++)
 			totalPrice = totalPrice + (double) table.getValueAt(i, 5);
-		JlTotalPriceNum.setText(Double.toString(totalPrice));
+		JlTotalPriceNum.setText(df.format(totalPrice));
 		JlDiscountNum.setText(Integer.toString(discount));
 		JlDiscountedPriceNum.setText(df.format(totalPrice - totalPrice * 0.1));
 	}
@@ -208,9 +208,9 @@ public class CheckOutPanel extends JPanel
 					table.revalidate();
 					JtBarCodeID.setText(null);
 					jtQuantity.setText(null);
-					setOutputValue();
 				}
 				flag=0;
+				setOutputValue();
 			}
 		});
 		jp4_1.add(jlQuantity);
@@ -397,6 +397,7 @@ public class CheckOutPanel extends JPanel
 				//System.out.print(v2);
 				table.validate();
 				table.repaint();}
+				setOutputValue();
 				}
 		});
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer()
@@ -444,8 +445,8 @@ public class CheckOutPanel extends JPanel
 				System.out.print(rowcount);
 				if (rowcount > 0)
 				{
-					defaultModel.removeRow(table.getSelectedRow());
-					defaultModel.setRowCount(rowcount - 1);// 删除行比较简单，只要用DefaultTableModel的removeRow()方法即可。删除行完毕后必须重新设置列数，也就是使用DefaultTableModel的setRowCount()方法来设置当前行。
+					Vector v = defaultModel.getDataVector();
+					v.remove(table.getSelectedRow());
 				}
 				table.revalidate();
 			}
