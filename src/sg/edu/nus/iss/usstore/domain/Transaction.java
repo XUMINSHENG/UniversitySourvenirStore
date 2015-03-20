@@ -5,44 +5,22 @@ import java.util.Date;
 
 public class Transaction
 {
-
-
 	private int id;
 	private Date date;
-	private String customerID=null;
-	private int discount;
+	private String costomerID = "public";
+	private int discount = 0;
 	private ArrayList<TransactionItem> itemList = new ArrayList<TransactionItem>();
-	private double cashAmount;
-	public String getCustomerID()
-	{
-		return customerID;
-	}
-
-	public void setCustomerID(String customerID)
-	{
-		this.customerID = customerID;
-	}
-
-	public int getDiscount()
-	{
-		return discount;
-	}
-
-	public void setDiscount(int discount)
-	{
-		this.discount = discount;
-	}
-
+	private double cashAmount = 0;
 	private int redeemedLoyaltyPoint;
 
 	public Transaction()
 	{
 	}
-	
-	public Transaction(int id,String customerID, Date date)
+
+	public Transaction(int id,String costomerID, Date date)
 	{
 		this.id = id;
-		this.customerID=customerID;
+		this.setCostomerID(costomerID);
 		this.date = date;
 	}
 
@@ -95,7 +73,7 @@ public class Transaction
 	{
 		this.redeemedLoyaltyPoint = redeemedLoyaltyPoint;
 	}
-	
+
 //	public void addItem(TransactionItem transactionItem)
 //	{
 //		
@@ -127,7 +105,15 @@ public class Transaction
 	public void addItem(Product product,double price,int qty)
 	{
 		TransactionItem transactionitem = new TransactionItem(product,price,qty);
-		itemList.add(transactionitem);
+		if (itemList.contains(transactionitem))
+		{
+			int i = itemList.indexOf(transactionitem);
+			int add = itemList.get(i).getQty();
+			itemList.get(i).setQty(transactionitem.getQty() + add);
+		} else
+		{
+			itemList.add(transactionitem);
+		}
 	}
 
 	public void removeItem(Product product)
@@ -187,4 +173,13 @@ public class Transaction
 	//
 	// }
 
+	public String getCostomerID()
+	{
+		return costomerID;
+	}
+
+	public void setCostomerID(String costomerID)
+	{
+		this.costomerID = costomerID;
+	}
 }
