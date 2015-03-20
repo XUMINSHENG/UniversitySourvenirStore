@@ -63,6 +63,10 @@ public class ProductMgr {
 		}
 	}
 	
+	public void deleteProduct(int index){
+		this.productList.remove(index);
+	}
+	
 	//change quantity of product when checkout 
 	public void changeProductQty(Product p, int qty){
 		if(productList.contains(p)){
