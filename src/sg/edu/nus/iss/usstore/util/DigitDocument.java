@@ -24,6 +24,7 @@ import javax.swing.text.PlainDocument;
 public class DigitDocument extends PlainDocument{
 	
 	private int limitedLength;
+	private int data;
 	
 	public DigitDocument(){
 		super();
@@ -39,10 +40,10 @@ public class DigitDocument extends PlainDocument{
 		if(str == null){
 			return;
 		}
-		Character dot = new Character('.');
 		if(limitedLength<=0){
 			char[] upper = str.toCharArray();  
             int length = 0;  
+            Character dot = new Character('.');
             for (int i = 0; i < upper.length; i++)
             {  
             	if (Character.isDigit(upper[i])||dot.equals(upper[i]))
@@ -57,7 +58,7 @@ public class DigitDocument extends PlainDocument{
 				int length = 0;  
 				for (int i = 0; i < upper.length; i++)
 				{  
-					if (Character.isDigit(upper[i])||dot.equals(upper[i]))
+					if (Character.isDigit(upper[i]))
 					{  
 						upper[length++] = upper[i];  
 					}  
