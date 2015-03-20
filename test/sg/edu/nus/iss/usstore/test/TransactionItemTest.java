@@ -1,16 +1,23 @@
 package sg.edu.nus.iss.usstore.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
 
 import org.junit.Test;
 
-public class TransactionItemTest
+import sg.edu.nus.iss.usstore.domain.Transaction;
+import sg.edu.nus.iss.usstore.domain.TransactionItem;
+import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.exception.DataInputException;
+
+public class TransactionItemTest extends Transaction
 {
 
 	@Test
-	public void testTransactionItemStringInt()
+	public void testTransactionItemStringInt() throws IOException, DataFileException, DataInputException
 	{
-		fail("Not yet implemented");
+		TransactionItem ti = new TransactionItem("1234",5);
 	}
 
 	@Test

@@ -36,7 +36,7 @@ public class TransactionTest extends Transaction
 		Date date = new Date();
 		Transaction t2 = new Transaction(1,"customer",date);
 		assertEquals(1,t2.getId());
-		assertEquals("custumer",t2.getCostomerID());
+		assertEquals("customer",t2.getCostomerID());
 		assertEquals(date,t2.getDate());	
 	}
 
@@ -125,6 +125,7 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testGetRedeemedLoyaltyPoint()
 	{
+		t.setRedeemedLoyaltyPoint(100);
 		int redeemedLoyaltyPoint = t.getRedeemedLoyaltyPoint();
 		assertEquals(100,redeemedLoyaltyPoint);
 	}
@@ -188,31 +189,82 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testCalcDiscountPrice()
 	{
-		
+		ProductMgr pm = null;
+		try
+		{
+			pm = new ProductMgr();
+		} catch (IOException | DataFileException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Product p = pm.getProductById("CLO/1");
+		Product p2 = pm.getProductById("MUG/1");
+		Product p3 = pm.getProductById("STA/1");
+		t.addItem(p, 2);
+		t.addItem(p2, 3);
+		t.addItem(p3, 4);
+		t.setDiscount(10);
+		assertFalse((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/100!=t.calcDiscountPrice());
 	}
 
 	@Test
 	public void testCalcChange()
 	{
-		fail("Not yet implemented");
+		ProductMgr pm = null;
+		t.setCashAmount(500.20);
+		try
+		{
+			pm = new ProductMgr();
+		} catch (IOException | DataFileException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Product p = pm.getProductById("CLO/1");
+		Product p2 = pm.getProductById("MUG/1");
+		Product p3 = pm.getProductById("STA/1");
+		t.addItem(p, 2);
+		t.addItem(p2, 3);
+		t.addItem(p3, 4);
+		t.setDiscount(10);
+		assertFalse((500.20-(p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/100)!=t.calcChange());
 	}
 
 	@Test
 	public void testCalcGainedPoint()
 	{
-		fail("Not yet implemented");
+		ProductMgr pm = null;
+		try
+		{
+			pm = new ProductMgr();
+		} catch (IOException | DataFileException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Product p = pm.getProductById("CLO/1");
+		Product p2 = pm.getProductById("MUG/1");
+		Product p3 = pm.getProductById("STA/1");
+		t.addItem(p, 2);
+		t.addItem(p2, 3);
+		t.addItem(p3, 4);
+		t.setDiscount(10);
+		assertFalse((int)((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/10000)!=t.calcGainedPoint());
 	}
 
 	@Test
 	public void testGetCostomerID()
 	{
-		fail("Not yet implemented");
+		t.setCostomerID("customer1");
+		assertEquals("customer1",t.getCostomerID());
 	}
 
 	@Test
 	public void testSetCostomerID()
 	{
-		fail("Not yet implemented");
+		t.setCostomerID("customer1");
+		assertEquals("customer1",t.getCostomerID());
 	}
 
 }
