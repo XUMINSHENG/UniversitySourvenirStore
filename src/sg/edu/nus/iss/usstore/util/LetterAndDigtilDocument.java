@@ -4,9 +4,13 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-public class LetterAndDigtilDocument extends PlainDocument{
+/*
+ * @ XIE JIABAO
+ */
 
-private int limitedLength;
+public class LetterAndDigtilDocument extends PlainDocument{
+	
+	private int limitedLength;
 	
 	public LetterAndDigtilDocument(){
 		super();
