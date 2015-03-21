@@ -6,17 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.Popup;
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
-
-import sg.edu.nus.iss.usstore.domain.Store;
-import sg.edu.nus.iss.usstore.exception.LoginException;
 
 
 /**
