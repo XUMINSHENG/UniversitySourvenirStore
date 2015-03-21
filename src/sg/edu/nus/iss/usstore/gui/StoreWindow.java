@@ -34,6 +34,11 @@ public class StoreWindow extends JFrame{
 	private JPanel cards;
 	private ProductsListPanel productListPanel;
 	private CheckInventoryPanel checkInventoryPanel;
+	//private LoginPanel loginPanel;
+	//private CheckOutScreen checkOutScreen;
+	//private MemberListScreen memberListScreen;
+	//private ProductListScreen productListScreen;
+	//private CategoryListScreen categoryListScreen;
 	
 	public StoreWindow(StoreApplication manager){
 		super("University Store System");

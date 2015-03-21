@@ -19,12 +19,7 @@ import sg.edu.nus.iss.usstore.exception.LoginException;
 public class StoreApplication {
 
 	private Store store;
-	//private LoginScreen loginScreen;
-	//private MainMenu mainMenu;
-	//private CheckOutScreen checkOutScreen;
-	//private MemberListScreen memberListScreen;
-	//private ProductListScreen productListScreen;
-	//private CategoryListScreen categoryListScreen;
+	private StoreWindow storeWindow;
 	
 	public StoreApplication(){
 		// instantiate attributes
@@ -32,6 +27,7 @@ public class StoreApplication {
 		try {
 			// instantiate store & load date
 			store = new Store();
+			storeWindow = new StoreWindow(this);
 		} catch ( IOException | DataFileException e) {
 			
 			e.printStackTrace();
@@ -142,11 +138,15 @@ public class StoreApplication {
 		
 		
 		
-		
-	
 	}
-	
-	
+
+	public Store getStore() {
+		return store;
+	}
+
+	public StoreWindow getStoreWindow() {
+		return storeWindow;
+	}
 	
 
 }

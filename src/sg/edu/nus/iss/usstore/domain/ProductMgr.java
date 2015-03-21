@@ -63,6 +63,10 @@ public class ProductMgr {
 		}
 	}
 	
+	public void modifyProduct(Product p, int index){
+		this.productList.set(index, p);
+	}
+	
 	public void deleteProduct(int index){
 		this.productList.remove(index);
 	}
@@ -97,5 +101,11 @@ public class ProductMgr {
 
 	public ArrayList<Product> getProductList(){
 		return this.productList;
+	}
+	
+	public void showData(){
+		for(int i=0;i<productList.size();i++){
+			productList.get(i).show();
+		}
 	}
 }

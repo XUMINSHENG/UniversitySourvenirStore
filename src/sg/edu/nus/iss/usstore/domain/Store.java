@@ -236,6 +236,10 @@ public class Store {
 		//
 		return transactionMgr.getTransactionListByDate(date);
 	}
+
+	public ProductMgr getPm() {
+		return productMgr;
+	}
 	
 	
 	
