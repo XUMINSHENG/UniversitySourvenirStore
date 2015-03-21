@@ -17,7 +17,7 @@ import sg.edu.nus.iss.usstore.exception.LoginException;
  */
 public class Store {
 
-	//	private StorekeeperMgr storekeeperMgr;	
+	private StoreKeeperMgr storekeeperMgr;	
 	//	private MemberMgr memberMgr;
 	private TransactionMgr transactionMgr;
 	private ProductMgr productMgr;
@@ -26,7 +26,7 @@ public class Store {
 	//	private DiscountMgr discountMgr;
 	
 	public Store() throws IOException, DataFileException {
-//		storekeeperMgr = new StorekeeperMgr();
+		storekeeperMgr = new StoreKeeperMgr();
 //		memberMgr = new MemberMgr();
 		transactionMgr = new TransactionMgr(this);
 		productMgr = new ProductMgr();
@@ -38,9 +38,9 @@ public class Store {
 	/**
 	 * 
 	 */
-	public void login(String username, String password) throws LoginException{
-		// invoke StorekeeperMgr.checkAuthorith()
-		//if (false) throw new LoginException("invaild user/password");		
+	public boolean login(String username, String password){
+		// invoke StorekeeperMgr.checkAuthority()
+		return storekeeperMgr.checkAuthority(username, password);
 	}
 	
 	/**

@@ -20,6 +20,7 @@ public class StoreApplication {
 
 	private Store store;
 	private StoreWindow storeWindow;
+	private LoginScreen loginScreen;
 	
 	public StoreApplication(){
 		// instantiate attributes
@@ -27,7 +28,6 @@ public class StoreApplication {
 		try {
 			// instantiate store & load date
 			store = new Store();
-			storeWindow = new StoreWindow(this);
 		} catch ( IOException | DataFileException e) {
 			
 			e.printStackTrace();
@@ -39,6 +39,8 @@ public class StoreApplication {
 	public void startup(){
 		
 		// show login screen
+		loginScreen = new LoginScreen(this);
+		loginScreen.show();
 	}
 	
 	public void shutdown(){
@@ -46,22 +48,19 @@ public class StoreApplication {
 		
 	}
 	
-	public void login(String username, String password){
+	public boolean login(String username, String password){
 		// authority check
-		try {
-			store.login(username, password);
-		} catch (LoginException e) {
-			
-			e.printStackTrace();
-			return;
-		}
-		
-		
-		// hide login screen 
-		System.out.println("hide login screen");
-		
-		// show main menu
-		System.out.println("show main menu");
+			if (store.login(username, password) == true)
+			{
+				// close login screen 
+				loginScreen.dispose();
+				// show main menu
+				storeWindow = new StoreWindow(this);
+				storeWindow.show();
+				return true;
+			}
+			else
+				return false;
 	}
 	
 	public void showMainMenu(){
