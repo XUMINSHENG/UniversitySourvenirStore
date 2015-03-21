@@ -36,6 +36,10 @@ import sg.edu.nus.iss.usstore.exception.DataFileException;
 
 public class CheckOutPanel extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel JlMemberName;
 	private JLabel JlTotalPriceNum;
 	private JLabel JlDiscountNum;
@@ -43,9 +47,10 @@ public class CheckOutPanel extends JPanel
 	private JLabel JlLoyalPointNum;
 	private JLabel JlRestNum;
 	private JLabel JlChangeNum;
+	private JLabel JlError;
 	private JTable table;
 	private JTextField JtBarCodeID;
-	private JTextField jtQuantity;
+	private JTextField JtQuantity;
 	private JTextField JtMemberID;
 	private JTextField JtPaidNum;
 	private JTextField JtCashNum;
@@ -59,6 +64,8 @@ public class CheckOutPanel extends JPanel
 	private Vector v;
 	private static int i = 1;
 	private int flag=0;
+	private int scrollpanelwidth = 600;
+	private int scrollpanelheight = 400;
 
 	public static int getI()
 	{
@@ -135,8 +142,8 @@ public class CheckOutPanel extends JPanel
 		// jp2
 		JlMemberName = new JLabel("MEMBER  NAME");
 		JLabel JlgetMemberName = new JLabel("PUBLIC");
-		JButton jbMemberSubmit = new JButton("  Enter ");
-		jbMemberSubmit.addActionListener(new ActionListener()
+		JButton JbMemberSubmit = new JButton("  Enter ");
+		JbMemberSubmit.addActionListener(new ActionListener()
 		{
 
 			@Override
@@ -152,7 +159,7 @@ public class CheckOutPanel extends JPanel
 		jp2_2.setLayout(new FlowLayout(FlowLayout.LEFT));
 		jp2_1.add(JlMemberName);
 		jp2_1.add(JlgetMemberName);
-		jp2_2.add(jbMemberSubmit);
+		jp2_2.add(JbMemberSubmit);
 		jp2.add(jp2_1);
 		jp2.add(jp2_2);
 		jpInput.add(jp2);
@@ -171,17 +178,17 @@ public class CheckOutPanel extends JPanel
 		JPanel jp4_2 = new JPanel();
 		jp4_1.setLayout(new FlowLayout(FlowLayout.LEFT));
 		jp4_2.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel jlQuantity = new JLabel("QUANTITY");
-		jtQuantity = new JTextField(6);
-		JButton jbQuantity = new JButton("Submit");
-		jbQuantity.addActionListener(new ActionListener()
+		JLabel JlQuantity = new JLabel("QUANTITY");
+		JtQuantity = new JTextField(6);
+		JButton JbProductSubmit = new JButton("Submit");
+		JbProductSubmit.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				flag=1;
 				String tempBarCode = JtBarCodeID.getText();
-				String tempqty = jtQuantity.getText();
+				String tempqty = JtQuantity.getText();
 				if (tempBarCode.length() == 0 || tempqty.length() == 0)
 					return;
 				else
@@ -190,10 +197,15 @@ public class CheckOutPanel extends JPanel
 					{
 						ProductMgr pm = new ProductMgr();
 						product = pm.getProductByBarCode(tempBarCode);
+						if (product==null)
+						{
+							JlError.setText("No product!");
+							return;
+						}
 					} catch (IOException | DataFileException e1)
 					{
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						JlError.setText("Sorry, we don't have this product!");
 					}
 
 					v = new Vector(5);
@@ -207,15 +219,15 @@ public class CheckOutPanel extends JPanel
 					defaultModel.addRow(v);
 					table.revalidate();
 					JtBarCodeID.setText(null);
-					jtQuantity.setText(null);
+					JtQuantity.setText(null);
 				}
 				flag=0;
 				setOutputValue();
 			}
 		});
-		jp4_1.add(jlQuantity);
-		jp4_1.add(jtQuantity);
-		jp4_2.add(jbQuantity);
+		jp4_1.add(JlQuantity);
+		jp4_1.add(JtQuantity);
+		jp4_2.add(JbProductSubmit);
 		jp4.add(jp4_1);
 		jp4.add(jp4_2);
 		jpInput.add(jp4);
@@ -368,11 +380,11 @@ public class CheckOutPanel extends JPanel
 			column = table.getColumnModel().getColumn(i);
 			if (i==1||i==2)
 			{
-				column.setPreferredWidth(150);
+				column.setPreferredWidth(scrollpanelwidth/4);
 			}
 			else
 			{
-				column.setPreferredWidth(75);
+				column.setPreferredWidth(scrollpanelheight/8);
 			}
 		}
 		defaultModel.addTableModelListener(new TableModelListener()
@@ -421,7 +433,7 @@ public class CheckOutPanel extends JPanel
 			table.getColumn(tableTitle[i]).setCellRenderer(tcr);
 		}
 
-		table.setPreferredScrollableViewportSize(new Dimension(600, 400));// 表格的显示尺寸
+		table.setPreferredScrollableViewportSize(new Dimension(scrollpanelwidth, scrollpanelheight));// 表格的显示尺寸
 
 		// 产生一个带滚动条的面板
 		JScrollPane scrollPane = new JScrollPane();
@@ -432,27 +444,32 @@ public class CheckOutPanel extends JPanel
 
 		JPanel jpButton = new JPanel();
 		jpButton.setLayout(new GridLayout(7, 1));
-		JButton jbDelete = new JButton("    Delete    ");
-		JLabel jlBlank1 = new JLabel(" ");
-		jbDelete.addActionListener(new ActionListener()
-		{
-
+		JButton JbDelete = new JButton("    Delete    ");
+		JLabel JlBlank1 = new JLabel(" ");
+		JbDelete.addActionListener(new ActionListener()
+		{	
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				// TODO Auto-generated method stub
+				if (table.getSelectedRow()==-1)
+				{
+					JlError.setText("Select a row");
+				}
+				else
+				{
 				int rowcount = defaultModel.getRowCount();// getRowCount返回行数，rowcount<0代表已经没有任何行了。
-				System.out.print(rowcount);
 				if (rowcount > 0)
 				{
 					Vector v = defaultModel.getDataVector();
 					v.remove(table.getSelectedRow());
 				}
 				table.revalidate();
+				}
 			}
 		});
-		JButton jbCancel = new JButton("    Cancel    ");
-		jbCancel.addActionListener(new ActionListener()
+		JButton JbCancel = new JButton("    Cancel    ");
+		JbCancel.addActionListener(new ActionListener()
 		{
 
 			@Override
@@ -462,11 +479,11 @@ public class CheckOutPanel extends JPanel
 				cancel();
 			}
 		});
-		JLabel jlBlank2 = new JLabel(" ");
-		JLabel jlerror = new JLabel();
-		JLabel jlBlank3 = new JLabel(" ");
-		JButton jbFinish = new JButton("    Finish     ");
-		jbFinish.addActionListener(new ActionListener()
+		JLabel JlBlank2 = new JLabel(" ");
+		JlError = new JLabel();
+		JLabel JlBlank3 = new JLabel(" ");
+		JButton JbFinish = new JButton("    Finish     ");
+		JbFinish.addActionListener(new ActionListener()
 		{
 
 			@Override
@@ -484,14 +501,15 @@ public class CheckOutPanel extends JPanel
 			}
 
 		});
-		jlerror.setText("");
-		jpButton.add(jlerror);
-		jpButton.add(jlBlank1);
-		jpButton.add(jbDelete);
-		jpButton.add(jlBlank2);
-		jpButton.add(jbCancel);
-		jpButton.add(jlBlank3);
-		jpButton.add(jbFinish);
+		JlError.setText("");
+		JlError.setForeground(Color.RED);
+		jpButton.add(JlError);
+		jpButton.add(JlBlank1);
+		jpButton.add(JbDelete);
+		jpButton.add(JlBlank2);
+		jpButton.add(JbCancel);
+		jpButton.add(JlBlank3);
+		jpButton.add(JbFinish);
 		this.add(jpButton, BorderLayout.EAST);
 	}
 
