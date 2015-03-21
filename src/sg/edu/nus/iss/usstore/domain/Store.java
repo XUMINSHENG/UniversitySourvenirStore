@@ -8,7 +8,6 @@ import java.util.List;
 
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
-import sg.edu.nus.iss.usstore.exception.LoginException;
 
 /**
  * 
@@ -23,7 +22,7 @@ public class Store {
 	private ProductMgr productMgr;
 	//	private CategoryMgr categoryMgr;
 	//	private VendorMgr vendorMgr;
-	//	private DiscountMgr discountMgr;
+		private DiscountMgr discountMgr;
 	
 	public Store() throws IOException, DataFileException {
 		storekeeperMgr = new StoreKeeperMgr();
@@ -32,14 +31,13 @@ public class Store {
 		productMgr = new ProductMgr();
 //		categoryMgr = new CategoryMgr();
 //		vendorMgr = new VendorMgr();
-//		discountMgr = new DiscountMgr();
+		discountMgr = new DiscountMgr();
 	}
 	
 	/**
 	 * 
 	 */
 	public boolean login(String username, String password){
-		// invoke StorekeeperMgr.checkAuthority()
 		return storekeeperMgr.checkAuthority(username, password);
 	}
 	
