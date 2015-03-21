@@ -8,23 +8,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import sg.edu.nus.iss.usstore.domain.Product;
 
 public class CheckInventoryPanel extends JPanel{
 
+	private String[] columnNames = {"Id","Name","Available Quantity","Threshold","Order Quantity"};
 	private StoreApplication manager;
-	private JList<Product> list;
-	private DefaultListModel<Product> listModel;
+	private JTable table;
+	private DefaultTableModel tableModel;
+	private JButton fire = new JButton("Fire");
 	
 	public CheckInventoryPanel(StoreApplication manager){
 		this.manager = manager;
@@ -33,6 +35,7 @@ public class CheckInventoryPanel extends JPanel{
 		add("Center",createCenterPanel());
 		add("South",createSouthPanel());
 		setVisible(true);
+		fire.setEnabled(false);
 	}
 	
 	public JPanel createNorthPanel(){
@@ -42,33 +45,43 @@ public class CheckInventoryPanel extends JPanel{
 	}
 	
 	public Container createCenterPanel(){
-		listModel = new DefaultListModel<Product>();
-		ArrayList<Product> plist = manager.getStore().getPm().getProductList();
-		for(int i=0;i<plist.size();i++){
-			listModel.addElement(plist.get(i));
-		}
-		list = new JList<Product>(listModel);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setLayoutOrientation(JList.VERTICAL);
-		list.setCellRenderer(new ProductListRenderer());
-		list.addListSelectionListener(new ListSelectionListener() {
+		tableModel = new DefaultTableModel(loadData(manager.getProductList()),columnNames){
+			@Override
+			public boolean isCellEditable(int row,int column){
+				return false;
+			}
+		};
+		
+		table = new JTable(tableModel);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
-			public void valueChanged(ListSelectionEvent arg0) {
+			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
-				if(list.isSelectionEmpty()){
-					System.out.println("unselect "+list.getSelectedIndex());
+				if(table.getSelectionModel().isSelectionEmpty()){
+					fire.setEnabled(false);
 				}else{
-					System.out.println("select "+list.getSelectedIndex());
+					fire.setEnabled(true);
 				}
 			}
-		});;;
-		JScrollPane p = new JScrollPane(list);
+
+		});
+		JScrollPane p = new JScrollPane(table);
 		return p;
 	}
 	
 	private JPanel createSouthPanel(){
 		JPanel p = new JPanel(new FlowLayout());
+		fire.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		p.add(fire);
 		JButton b = new JButton("Generate Order List");
 		b.addActionListener(new ActionListener() {
 			
@@ -91,5 +104,17 @@ public class CheckInventoryPanel extends JPanel{
 		});
 		p.add(b);
 		return p;
+	}
+	
+	private Object[][] loadData(ArrayList<Product> products){
+		Object[][] data =  new Object[products.size()][5];
+		for(int i=0;i<products.size();i++){
+			data[i][0] = products.get(i).getProductId();
+			data[i][1] = products.get(i).getName();
+			data[i][2] = products.get(i).getCategory();
+			data[i][3] = products.get(i).getPrice();
+			data[i][4] = products.get(i).getQuantityAvaible();
+		}
+		return data;
 	}
 }

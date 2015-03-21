@@ -102,7 +102,13 @@ public class ProductsListPanel extends JPanel{
 //				{"3","cat","animal","$123","5"}
 //		};
 		
-		tableModel = new DefaultTableModel(data,columnNames);
+		tableModel = new DefaultTableModel(data,columnNames){
+			@Override
+			public boolean isCellEditable(int row, int column){
+				return false;
+			}
+		};
+		
 		productTable = new JTable(tableModel);
 		productTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		productTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
