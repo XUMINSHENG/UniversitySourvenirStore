@@ -105,6 +105,10 @@ public abstract class ProductDialog extends JDialog{
 		
 	}
 	
+	public Product getData(){
+		return null;
+	}
+	
 	protected abstract JPanel createBottomPanel();
 	
 }
