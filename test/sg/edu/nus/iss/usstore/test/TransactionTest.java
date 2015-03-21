@@ -1,8 +1,6 @@
 package sg.edu.nus.iss.usstore.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,7 +101,7 @@ public class TransactionTest extends Transaction
 	{
 		t.setCashAmount(100.11);
 		double CashAmount = t.getCashAmount();
-		assertFalse(100.11!=CashAmount);
+		assertTrue(100.11==CashAmount);
 	}
 	
 	@Test
@@ -111,7 +109,7 @@ public class TransactionTest extends Transaction
 	{
 		t.setCashAmount(100.11);
 		double CashAmount = t.getCashAmount();
-		assertFalse(100.11!=CashAmount);
+		assertTrue(100.11==CashAmount);
 	}
 
 	@Test
@@ -183,7 +181,7 @@ public class TransactionTest extends Transaction
 		t.addItem(p, 2);
 		t.addItem(p2, 3);
 		t.addItem(p3, 4);
-		assertFalse(p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4!=t.calcTotalPrice());
+		assertTrue(p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4==t.calcTotalPrice());
 	}
 
 	@Test
@@ -205,7 +203,7 @@ public class TransactionTest extends Transaction
 		t.addItem(p2, 3);
 		t.addItem(p3, 4);
 		t.setDiscount(10);
-		assertFalse((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/100!=t.calcDiscountPrice());
+		assertTrue((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/100==t.calcDiscountPrice());
 	}
 
 	@Test
@@ -228,7 +226,7 @@ public class TransactionTest extends Transaction
 		t.addItem(p2, 3);
 		t.addItem(p3, 4);
 		t.setDiscount(10);
-		assertFalse((500.20-(p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/100)!=t.calcChange());
+		assertTrue((500.20-(p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/100)==t.calcChange());
 	}
 
 	@Test
@@ -250,7 +248,7 @@ public class TransactionTest extends Transaction
 		t.addItem(p2, 3);
 		t.addItem(p3, 4);
 		t.setDiscount(10);
-		assertFalse((int)((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/10000)!=t.calcGainedPoint());
+		assertTrue((int)((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/10000)==t.calcGainedPoint());
 	}
 
 	@Test
