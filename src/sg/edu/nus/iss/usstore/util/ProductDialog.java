@@ -104,11 +104,53 @@ public abstract class ProductDialog extends JDialog{
 		orderQtyText.setText(Integer.toString(product.getOrderQuantity()));
 		
 	}
-	
-	public Product getData(){
-		return null;
+
+	public boolean validateData(){
+		if(idText.getText()!="" && nameText.getText()!="" && categoryText.getText()!="" && descriptionText.getText()!="" 
+				&& priceText.getText()!="" && quantityText.getText()!="" && barCodeText.getText()!="" 
+				&& reorderQtyText.getText()!="" && orderQtyText.getText()!=""){
+			return true;
+		}
+		return false;
 	}
 	
 	protected abstract JPanel createBottomPanel();
+
+	public String getIdText() {
+		return idText.getText();
+	}
+
+	public String getNameText() {
+		return nameText.getText();
+	}
+
+	public String getCategoryText() {
+		return categoryText.getText();
+	}
+
+	public String getDescriptionText() {
+		return descriptionText.getText();
+	}
+
+	public int getQuantityText() {
+		return Integer.parseInt(quantityText.getText());
+	}
+
+	public Double getPriceText() {
+		return Double.parseDouble(priceText.getText());
+	}
+
+	public String getBarCodeText() {
+		return barCodeText.getText();
+	}
+
+	public int getReorderQtyText() {
+		return Integer.parseInt(reorderQtyText.getText());
+	}
+
+	public int getOrderQtyText() {
+		return Integer.parseInt(orderQtyText.getText());
+	}
+	
 	
 }

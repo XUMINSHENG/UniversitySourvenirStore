@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 
 public class CheckInventoryPanel extends JPanel{
 
@@ -45,7 +46,7 @@ public class CheckInventoryPanel extends JPanel{
 	}
 	
 	public Container createCenterPanel(){
-		tableModel = new DefaultTableModel(loadData(manager.getProductList()),columnNames){
+		tableModel = new DefaultTableModel(loadTableData(manager.getProductList()),columnNames){
 			@Override
 			public boolean isCellEditable(int row,int column){
 				return false;
@@ -53,6 +54,12 @@ public class CheckInventoryPanel extends JPanel{
 		};
 		
 		table = new JTable(tableModel);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		TableColumnAdjuster tca = new TableColumnAdjuster(table);
+		tca.setColumnHeaderIncluded(true);
+		tca.setColumnDataIncluded(true);
+		tca.setOnlyAdjustLarger(true);
+		tca.adjustColumns();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
@@ -106,14 +113,14 @@ public class CheckInventoryPanel extends JPanel{
 		return p;
 	}
 	
-	private Object[][] loadData(ArrayList<Product> products){
+	private Object[][] loadTableData(ArrayList<Product> products){
 		Object[][] data =  new Object[products.size()][5];
 		for(int i=0;i<products.size();i++){
 			data[i][0] = products.get(i).getProductId();
 			data[i][1] = products.get(i).getName();
-			data[i][2] = products.get(i).getCategory();
-			data[i][3] = products.get(i).getPrice();
-			data[i][4] = products.get(i).getQuantityAvaible();
+			data[i][2] = products.get(i).getQuantityAvaible();
+			data[i][3] = products.get(i).getReorderQuantity();
+			data[i][4] = products.get(i).getOrderQuantity();
 		}
 		return data;
 	}

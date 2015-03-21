@@ -12,6 +12,21 @@ public class Product {
 	private int reorderQuantity;
 	private int orderQuantity;	
 	
+	public Product(String category, String name,
+			String briefDescription, int quantityAvaible, double price,
+			String barCodeNumber, int recorderQuantity, int orderQuantity) {
+		super();
+		
+		this.category = category;
+		this.name = name;
+		this.briefDescription = briefDescription;
+		this.quantityAvaible = quantityAvaible;
+		this.price = price;
+		this.barCodeNumber = barCodeNumber;
+		this.reorderQuantity = recorderQuantity;
+		this.orderQuantity = orderQuantity;
+	}
+	
 	public Product(String productId, String category, String name,
 			String briefDescription, int quantityAvaible, double price,
 			String barCodeNumber, int recorderQuantity, int orderQuantity) {
@@ -33,7 +48,20 @@ public class Product {
 		}
 		return true;
 	}
+	
+	public boolean compare(Product p){
+		if(name.equals(p.getName())&&briefDescription.equals(p.getBriefDescription())&&category.equals(p.getCategory())
+				&&price==p.getPrice()&&barCodeNumber.equals(p.getBarCodeNumber())&&reorderQuantity==p.getReorderQuantity()
+				&&orderQuantity==p.getOrderQuantity()){
+			return true;
+		}
+		return false;
+	}
 
+	public void addQuantity(int add){
+		this.quantityAvaible = this.quantityAvaible + add;
+	}
+	
 	public String getProductId() {
 		return productId;
 	}

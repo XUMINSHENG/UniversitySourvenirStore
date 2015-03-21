@@ -63,6 +63,26 @@ public class ProductMgr {
 		}
 	}
 	
+	public void addProduct(String name, String categoryCode, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
+		Product product = new Product(categoryCode, name, 
+				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+		int i = 0;
+		for(;i<this.productList.size();i++){
+			if(product.compare(productList.get(i))){
+				break;
+			}
+		}
+		if(i>=productList.size()){
+			//add new product
+			product.setProductId(categoryCode + "/" + Integer.toString(productList.size()));
+			productList.add(product);
+		}else{
+			//add quantity of existed product
+			productList.get(i).addQuantity(quantityAvailable);
+		}
+	}
+	
 	public void modifyProduct(Product p, int index){
 		this.productList.set(index, p);
 	}

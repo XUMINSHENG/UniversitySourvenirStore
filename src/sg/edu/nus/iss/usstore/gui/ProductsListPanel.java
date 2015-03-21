@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import sg.edu.nus.iss.usstore.domain.*;
+import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 
 
 
@@ -45,7 +46,7 @@ import sg.edu.nus.iss.usstore.domain.*;
 */
 public class ProductsListPanel extends JPanel{
 	
-	private final String[] columnNames = {"Id","Name","Category","Price","Quality"};
+	private final String[] columnNames = {"Id","Name","Description","Price","Quality"};
 	private JButton modifyButton;
 	private JButton deleteButton;
 	private JTable productTable;
@@ -56,17 +57,17 @@ public class ProductsListPanel extends JPanel{
 		this.manager = manager;
 		setLayout(new BorderLayout());
 		add("North",createTopPanel());
-		add("Center",createMiddlePanel(loadData(manager.getStore().getPm().getProductList())));
+		add("Center",createMiddlePanel(loadTableData(manager.getProductList())));
 		add("South",createBottomPanel());
 		setVisible(true);
 	}
 	
-	private Object[][] loadData(ArrayList<Product> products){
+	private Object[][] loadTableData(ArrayList<Product> products){
 		Object[][] data =  new Object[products.size()][5];
 		for(int i=0;i<products.size();i++){
 			data[i][0] = products.get(i).getProductId();
 			data[i][1] = products.get(i).getName();
-			data[i][2] = products.get(i).getCategory();
+			data[i][2] = products.get(i).getBriefDescription();
 			data[i][3] = products.get(i).getPrice();
 			data[i][4] = products.get(i).getQuantityAvaible();
 		}
@@ -110,6 +111,12 @@ public class ProductsListPanel extends JPanel{
 		};
 		
 		productTable = new JTable(tableModel);
+		productTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		TableColumnAdjuster tca = new TableColumnAdjuster(productTable);
+		tca.setColumnHeaderIncluded(true);
+		tca.setColumnDataIncluded(true);
+		//tca.setOnlyAdjustLarger(true);
+		tca.adjustColumns();
 		productTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		productTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
@@ -141,7 +148,7 @@ public class ProductsListPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				AddProductDialog d = new AddProductDialog(manager.getStoreWindow(),manager.getStore().getPm());
+				AddProductDialog d = new AddProductDialog(manager);
 				d.setVisible(true);
 			}
 		});
@@ -202,7 +209,7 @@ public class ProductsListPanel extends JPanel{
 	}
 	
 	public void refreshTable(){
-		tableModel.setDataVector(loadData(manager.getStore().getPm().getProductList()), columnNames);
+		tableModel.setDataVector(loadTableData(manager.getStore().getPm().getProductList()), columnNames);
 		tableModel.fireTableDataChanged();
 	}
 
