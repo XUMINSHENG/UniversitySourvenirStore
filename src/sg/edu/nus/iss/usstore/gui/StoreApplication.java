@@ -2,12 +2,12 @@ package sg.edu.nus.iss.usstore.gui;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
-import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
@@ -127,13 +127,66 @@ public class StoreApplication {
 		
 	}
 	
+	/**
+	 * 
+	 * @param product
+	 */
+	public void addProduct(Product product){
+		store.addProduct(product);
+	}
+	
+	/**
+	 * 
+	 * @param product
+	 * @param indenx
+	 */
+	public void modifyProduct(Product product, int indenx){
+		store.modifyProduct(product, indenx);
+	}
+	
+	/**
+	 * 
+	 * @param index
+	 */
+	public void deleteProduct(int index){
+		store.deleteProduct(index);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Product> getProductList(){
+		return store.getProductList();
+	}
+	
+	/**
+	 * 
+	 * @param productId
+	 * @return
+	 */
+	public Product getProductById(String productId){
+		return store.getProductById(productId);
+	}
+	
+	/**
+	 * 
+	 * @param productId
+	 * @return
+	 */
+	public Product getProductByBarCode(String barCode){
+		return store.getProductByBarCode(barCode);
+	}
+	
+	
 	public static void main(String[] args) {
 		StoreApplication manager = new StoreApplication();
 		manager.startup();	
 		
-		manager.store.getProductList();
-		manager.addProduct("NUS Logo Cup", "CUP", "NUS Logo Cup 300ml", 400, 5.8, "", 50, 200);
 		
+//		manager.store.getProductList();
+//		manager.addProduct("NUS Logo Cup", "CUP", "NUS Logo Cup 300ml", 400, 5.8, "", 50, 200);
+//		
 		System.out.println("helloworld");
 		
 		

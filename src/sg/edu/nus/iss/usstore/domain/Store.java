@@ -199,7 +199,31 @@ public class Store {
 				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 		
 		productMgr.addProduct(product);
-		
+	}
+	
+	/**
+	 * 
+	 * @param product
+	 */
+	public void addProduct(Product product){
+		productMgr.addProduct(product);
+	}
+	
+	/**
+	 * 
+	 * @param product
+	 * @param indenx
+	 */
+	public void modifyProduct(Product product, int indenx){
+		productMgr.modifyProduct(product, indenx);
+	}
+	
+	/**
+	 * 
+	 * @param index
+	 */
+	public void deleteProduct(int index){
+		productMgr.deleteProduct(index);
 	}
 	
 	/**
@@ -209,6 +233,23 @@ public class Store {
 	public ArrayList<Product> getProductList(){
 		return productMgr.getProductList();
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Product getProductById(String productId){
+		return productMgr.getProductById(productId);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Product getProductByBarCode(String productId){
+		return productMgr.getProductById(productId);
+	}
+	
 	
 	/**
 	 * 
