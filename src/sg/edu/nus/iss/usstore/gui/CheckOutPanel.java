@@ -1,3 +1,4 @@
+//CheckOutPanel.java
 package sg.edu.nus.iss.usstore.gui;
 
 import java.awt.BorderLayout;
@@ -33,11 +34,17 @@ import javax.swing.table.TableColumn;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.ProductMgr;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.util.DigitDocument;
+
 
 public class CheckOutPanel extends JPanel
 {
 	/**
+	 * The CheckOutPanel
 	 * 
+	 * @author Liu Xinzhuo
+	 * @author A0136010A
+	 * @version 0.8
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel JlMemberName;
@@ -56,14 +63,14 @@ public class CheckOutPanel extends JPanel
 	private JTextField JtCashNum;
 	private TableColumn column;
 
-	private DecimalFormat df=new DecimalFormat("#.00");
+	private DecimalFormat df = new DecimalFormat("#.00");
 	private int discount = 10;
 	private DefaultTableModel defaultModel = null;
 	private Product product = null;
 	private boolean DEBUG = true;
 	private Vector v;
 	private static int i = 1;
-	private int flag=0;
+	private int flag = 0;
 	private int scrollpanelwidth = 600;
 	private int scrollpanelheight = 400;
 
@@ -99,7 +106,6 @@ public class CheckOutPanel extends JPanel
 		JlDiscountNum.setText(Integer.toString(discount));
 		JlDiscountedPriceNum.setText(df.format(totalPrice - totalPrice * 0.1));
 	}
-
 
 	public void cancel()
 	{
@@ -180,24 +186,32 @@ public class CheckOutPanel extends JPanel
 		jp4_2.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlQuantity = new JLabel("QUANTITY");
 		JtQuantity = new JTextField(6);
+		JtQuantity.setDocument(new DigitDocument());
 		JButton JbProductSubmit = new JButton("Submit");
 		JbProductSubmit.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				flag=1;
+				flag = 1;
 				String tempBarCode = JtBarCodeID.getText();
 				String tempqty = JtQuantity.getText();
-				if (tempBarCode.length() == 0 || tempqty.length() == 0)
-					return;
-				else
+				if (tempBarCode.length() == 0)
+				{
+					JlError.setText("Bar Code can't be empty!");
+				} else if (tempqty.length() == 0)
+				{
+					JlError.setText("Quantity can't be empty!");
+				} else if (Integer.valueOf(JtQuantity.getText()).intValue() < 1)
+				{
+					JlError.setText("Quantity Format Error");
+				} else
 				{
 					try
 					{
 						ProductMgr pm = new ProductMgr();
 						product = pm.getProductByBarCode(tempBarCode);
-						if (product==null)
+						if (product == null)
 						{
 							JlError.setText("No product!");
 							return;
@@ -221,7 +235,7 @@ public class CheckOutPanel extends JPanel
 					JtBarCodeID.setText(null);
 					JtQuantity.setText(null);
 				}
-				flag=0;
+				flag = 0;
 				setOutputValue();
 			}
 		});
@@ -280,6 +294,7 @@ public class CheckOutPanel extends JPanel
 		jp9.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlPaid = new JLabel("Use Point");
 		JtPaidNum = new JTextField(6);
+		JtPaidNum.setDocument(new DigitDocument());
 		JtPaidNum.getDocument().addDocumentListener(new DocumentListener()
 		{
 			public void insertUpdate(DocumentEvent e)
@@ -287,12 +302,19 @@ public class CheckOutPanel extends JPanel
 
 				// 在这里写相应的处理代码
 				String tempLoyalPaid = JtPaidNum.getText();
-				double tempLoyalPaidNum = Double.valueOf(tempLoyalPaid)
-						.doubleValue();
-				double tempDiscountedPriceNum = Double.valueOf(
-						JlDiscountedPriceNum.getText()).doubleValue();
-				JlRestNum.setText(df.format(tempDiscountedPriceNum
-						- tempLoyalPaidNum / 100));
+				int tempLoyalPaidNum = Integer.valueOf(tempLoyalPaid)
+						.intValue();
+				if (tempLoyalPaidNum < 1)
+				{
+					JlError.setText("Point Format Error!");
+					JlChangeNum.setText("**.**");
+				} else
+				{
+					double tempDiscountedPriceNum = Double.valueOf(
+							JlDiscountedPriceNum.getText()).doubleValue();
+					JlRestNum.setText(df.format(tempDiscountedPriceNum
+							- tempLoyalPaidNum / 100));
+				}
 			}
 
 			public void removeUpdate(DocumentEvent e)
@@ -322,6 +344,7 @@ public class CheckOutPanel extends JPanel
 		jp11.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlCash = new JLabel("Cash:");
 		JtCashNum = new JTextField(6);
+		JtCashNum.setDocument(new DigitDocument());
 		JtCashNum.getDocument().addDocumentListener(new DocumentListener()
 		{
 
@@ -330,10 +353,24 @@ public class CheckOutPanel extends JPanel
 				// 在这里写相应的处理代码
 				String ScashNum = JtCashNum.getText();
 				double DcashNum = Double.valueOf(ScashNum).doubleValue();
-				double DchangeNum = Double.valueOf(JlRestNum.getText()).doubleValue();
-				double tempChange = DcashNum- DchangeNum;
-				
-				JlChangeNum.setText(df.format(tempChange));
+				if (DcashNum > 0)
+				{
+					double DchangeNum = Double.valueOf(JlRestNum.getText())
+							.doubleValue();
+					double tempChange = DcashNum - DchangeNum;
+					if (tempChange > 0)
+					{
+						JlChangeNum.setText(df.format(tempChange));
+					} else
+					{
+						JlError.setText("Cash isn't Enough!");
+						JlChangeNum.setText("**.**");
+					}
+				} else
+				{
+					JlError.setText("Cash Format Error!");
+					JlChangeNum.setText("**.**");
+				}
 			}
 
 			public void removeUpdate(DocumentEvent e)
@@ -374,17 +411,16 @@ public class CheckOutPanel extends JPanel
 			}
 		};
 		table = new JTable(defaultModel);// 表格对象table的数据来源是myModel对象
-		//table.setFont(new Font("Times new Romer", Font.PLAIN, 10));
-		for(int i = 0;i<table.getColumnCount();i++)
+		// table.setFont(new Font("Times new Romer", Font.PLAIN, 10));
+		for (int i = 0; i < table.getColumnCount(); i++)
 		{
 			column = table.getColumnModel().getColumn(i);
-			if (i==1||i==2)
+			if (i == 1 || i == 2)
 			{
-				column.setPreferredWidth(scrollpanelwidth/4);
-			}
-			else
+				column.setPreferredWidth(scrollpanelwidth / 4);
+			} else
 			{
-				column.setPreferredWidth(scrollpanelheight/8);
+				column.setPreferredWidth(scrollpanelheight / 8);
 			}
 		}
 		defaultModel.addTableModelListener(new TableModelListener()
@@ -393,24 +429,27 @@ public class CheckOutPanel extends JPanel
 			@Override
 			public void tableChanged(TableModelEvent e)
 			{
-				int row =e.getFirstRow();
+				int row = e.getFirstRow();
 				// TODO Auto-generated method stub
-				if(flag==0)
+				if (flag == 0)
 				{
-//					System.out.println(defaultModel.getValueAt(row,3));
-//					System.out.println(defaultModel.getValueAt(row,4));
-					int num = Integer.valueOf((String)defaultModel.getValueAt(row,3)).intValue();
-					double price =(double) defaultModel.getValueAt(row,4);
+					// System.out.println(defaultModel.getValueAt(row,3));
+					// System.out.println(defaultModel.getValueAt(row,4));
+					int num = Integer.valueOf(
+							(String) defaultModel.getValueAt(row, 3))
+							.intValue();
+					double price = (double) defaultModel.getValueAt(row, 4);
 
-				Vector v1 = defaultModel.getDataVector();
-				//System.out.print(v1);
-				Vector v2 = (Vector) v1.get(e.getFirstRow());
-				v2.set(5, num*price);
-				//System.out.print(v2);
-				table.validate();
-				table.repaint();}
-				setOutputValue();
+					Vector v1 = defaultModel.getDataVector();
+					// System.out.print(v1);
+					Vector v2 = (Vector) v1.get(e.getFirstRow());
+					v2.set(5, num * price);
+					// System.out.print(v2);
+					table.validate();
+					table.repaint();
 				}
+				setOutputValue();
+			}
 		});
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer()
 		{
@@ -433,7 +472,8 @@ public class CheckOutPanel extends JPanel
 			table.getColumn(tableTitle[i]).setCellRenderer(tcr);
 		}
 
-		table.setPreferredScrollableViewportSize(new Dimension(scrollpanelwidth, scrollpanelheight));// 表格的显示尺寸
+		table.setPreferredScrollableViewportSize(new Dimension(
+				scrollpanelwidth, scrollpanelheight));// 表格的显示尺寸
 
 		// 产生一个带滚动条的面板
 		JScrollPane scrollPane = new JScrollPane();
@@ -447,24 +487,23 @@ public class CheckOutPanel extends JPanel
 		JButton JbDelete = new JButton("    Delete    ");
 		JLabel JlBlank1 = new JLabel(" ");
 		JbDelete.addActionListener(new ActionListener()
-		{	
+		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				// TODO Auto-generated method stub
-				if (table.getSelectedRow()==-1)
+				if (table.getSelectedRow() == -1)
 				{
 					JlError.setText("Select a row");
-				}
-				else
+				} else
 				{
-				int rowcount = defaultModel.getRowCount();// getRowCount返回行数，rowcount<0代表已经没有任何行了。
-				if (rowcount > 0)
-				{
-					Vector v = defaultModel.getDataVector();
-					v.remove(table.getSelectedRow());
-				}
-				table.revalidate();
+					int rowcount = defaultModel.getRowCount();// getRowCount返回行数，rowcount<0代表已经没有任何行了。
+					if (rowcount > 0)
+					{
+						Vector v = defaultModel.getDataVector();
+						v.remove(table.getSelectedRow());
+					}
+					table.revalidate();
 				}
 			}
 		});
@@ -513,24 +552,14 @@ public class CheckOutPanel extends JPanel
 		this.add(jpButton, BorderLayout.EAST);
 	}
 
-	public static void main(String[] args) throws InterruptedException
-	{
-		// Object[][] data = { { "***", "***", 0, 0.00, new Boolean(false) },
-		// { "***", "***", 0, 0.00, new Boolean(false) },
-		// { "***", "***", 0, 0.00, new Boolean(false) } };
-		// Object[][] data2 = { { "***", "***", 0, 0.00, new Boolean(false) },
-		// { "***", "***", 0, 0.00, new Boolean(false) },
-		// { "***", "***", 0, 0.00, new Boolean(false) },
-		// { "***", "***", 0, 0.00, new Boolean(false) } };
-		JFrame jf = new JFrame();
-		jf.setVisible(true);
-		jf.setSize(800, 600);
-		// frame.setResizable(false);
-		CheckOutPanel ck = new CheckOutPanel();
-		jf.add(ck);
-		ck.updateUI();
-		// Thread.sleep(2000);
-		// ck.setData(data2);
-		// ck.table.repaint();
-	}
-}
+//	public static void main(String[] args) throws InterruptedException
+//	{
+//		JFrame jf = new JFrame();
+//		jf.setVisible(true);
+//		jf.setSize(800, 600);
+//		CheckOutPanel ck = new CheckOutPanel();
+//		jf.add(ck);
+//		ck.updateUI();
+//	}
+	
+}///~

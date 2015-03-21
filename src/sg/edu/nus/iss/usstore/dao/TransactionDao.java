@@ -1,3 +1,4 @@
+//TransactionDao.java
 package sg.edu.nus.iss.usstore.dao;
 
 import java.io.IOException;
@@ -18,7 +19,8 @@ import sg.edu.nus.iss.usstore.util.Util;
  * provide Data Access to file for Product entity
  * 
  * @author Liu Xinzhuo
- * 
+ * @author A0136010A
+ * @version 1.0
  */
 public class TransactionDao extends BaseDao
 {
@@ -31,9 +33,10 @@ public class TransactionDao extends BaseDao
 	// determine if the No. of fields of a record is correct
 	private static final int C_Field_No = 6;
 
-	/**
-	 * 
-	 * @return
+	/** 
+	 * @param no param
+	 * @return ArrayList
+	 * @exception DataInputException IOException DataFileException
 	 * @throws DataInputException
 	 * @throws IOException
 	 * @throws DataFileException
@@ -132,4 +135,4 @@ public class TransactionDao extends BaseDao
 		super.saveStringToFile(super.getcDatafolderpath() + C_File_Name,
 				stringList);
 	}
-}
+}///~

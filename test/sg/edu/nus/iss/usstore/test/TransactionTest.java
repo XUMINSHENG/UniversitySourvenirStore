@@ -1,3 +1,4 @@
+//TransactionTest.java
 package sg.edu.nus.iss.usstore.test;
 
 import static org.junit.Assert.*;
@@ -17,6 +18,13 @@ import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 public class TransactionTest extends Transaction
 {
+	/**
+	 * Unit Test of Transaction
+	 * 
+	 * @author Liu Xinzhuo
+	 * @author A0136010A
+	 * @version 1.0
+	 */
 
 	Date date = new Date();
 	Transaction t = new Transaction(1,"costumer",date);
@@ -265,4 +273,4 @@ public class TransactionTest extends Transaction
 		assertEquals("customer1",t.getCostomerID());
 	}
 
-}
+}///~

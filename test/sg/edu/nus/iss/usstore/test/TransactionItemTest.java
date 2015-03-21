@@ -1,3 +1,4 @@
+//TransactionItem.java
 package sg.edu.nus.iss.usstore.test;
 
 import static org.junit.Assert.*;
@@ -15,6 +16,13 @@ import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 public class TransactionItemTest extends TransactionItem
 {
+	/**
+	 * Unit Test of TransactionItem
+	 * 
+	 * @author Liu Xinzhuo
+	 * @author A0136010A
+	 * @version 1.0
+	 */
 	Product product1 = new Product("1","2","3","4",5,6.7,"8",9,10);
 	Product product2 = new Product("11","12","13","14",15,16.17,"18",19,20);
 	@Test
@@ -78,4 +86,4 @@ public class TransactionItemTest extends TransactionItem
 		assertTrue(10.5*4==ti.calculateAmount());
 	}
 
-}
+}///~

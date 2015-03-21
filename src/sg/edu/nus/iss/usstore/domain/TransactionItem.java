@@ -1,3 +1,4 @@
+//TransactionItem.java
 package sg.edu.nus.iss.usstore.domain;
 
 import java.io.IOException;
@@ -7,6 +8,13 @@ import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 public class TransactionItem
 {
+	/**
+	 * TransactionItem Class
+	 * 
+	 * @author Liu Xinzhuo
+	 * @author A0136010A
+	 * @version 1.0
+	 */
 	private Product product = null;
 	private double price =0;
 	private int qty = 0;
@@ -52,4 +60,4 @@ public class TransactionItem
 		return this.price*this.qty;
 	}
 	
-}
+}///~

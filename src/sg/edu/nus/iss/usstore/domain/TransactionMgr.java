@@ -1,3 +1,4 @@
+//TransactionMgr.java
 package sg.edu.nus.iss.usstore.domain;
 
 import java.io.IOException;
@@ -11,6 +12,13 @@ import sg.edu.nus.iss.usstore.exception.DataFileException;
 
 public class TransactionMgr
 {
+	/**
+	 * TransactionMgr Class
+	 * 
+	 * @author Liu Xinzhuo
+	 * @author A0136010A
+	 * @version 1.0
+	 */
 	private ArrayList<Transaction> transactionList = new ArrayList<Transaction>();
 	private TransactionDao td;
 	
@@ -80,4 +88,4 @@ public class TransactionMgr
 //		
 //		tm.finalize();
 //	}
-}
+}///~
