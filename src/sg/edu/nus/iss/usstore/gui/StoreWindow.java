@@ -25,6 +25,15 @@ import sg.edu.nus.iss.usstore.domain.*;
 
 /*
  * Main Window with CardLayout and MenuBar
+ * 
+ * Register Panel here
+ * 
+ * For example:
+ * ProductListPanel productListPanel = new ProductListPanel(manager);
+ * cards.add(productListPanel,"cardName");
+ * 
+ * When call the panel, using changeCard(cardName) method
+ * 
  * @ XIE JIABAO 
  */
 public class StoreWindow extends JFrame{

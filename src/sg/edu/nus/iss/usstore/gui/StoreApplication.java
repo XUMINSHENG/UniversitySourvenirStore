@@ -12,7 +12,7 @@ import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 import sg.edu.nus.iss.usstore.exception.LoginException;
 
 /**
- * 
+ * Main method here
  * @author Xu Minsheng
  *
  */
