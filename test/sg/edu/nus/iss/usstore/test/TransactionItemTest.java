@@ -9,6 +9,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.ProductMgr;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 
@@ -20,12 +21,16 @@ public class TransactionItemTest extends TransactionItem
 	 * @author Liu Xinzhuo
 	 * @author A0136010A
 	 * @version 1.0
+	 * @throws DataFileException 
+	 * @throws IOException 
 	 */
-	Product product1 = new Product("1","2","3","4",5,6.7,"8",9,10);
-	Product product2 = new Product("11","12","13","14",15,16.17,"18",19,20);
+	
 	@Test
-	public void testTransactionItemProductDoubleInt()
+	public void testTransactionItemProductDoubleInt() throws IOException, DataFileException
 	{
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		assertEquals(product1,ti.getProduct());
 		assertTrue(10.5==ti.getPrice());
@@ -33,8 +38,11 @@ public class TransactionItemTest extends TransactionItem
 	}
 
 	@Test
-	public void testGetProduct()
+	public void testGetProduct() throws IOException, DataFileException
 	{
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		assertEquals(product1,ti.getProduct());
 	}
@@ -42,6 +50,9 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testSetProduct() throws IOException, DataFileException
 	{
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		ti.setProduct(product2);
 		assertEquals(product2,ti.getProduct());
@@ -50,6 +61,9 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testGetPrice() throws IOException, DataFileException
 	{
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		assertTrue(10.5==ti.getPrice());
 	}
@@ -57,29 +71,40 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testSetPrice() throws IOException, DataFileException
 	{
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		ti.setPrice(888.99);
 		assertTrue(888.99==ti.getPrice());
 	}
 
 	@Test
-	public void testGetQty()
+	public void testGetQty() throws IOException, DataFileException
 	{
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		assertTrue(4==ti.getQty());
 	}
 
 	@Test
-	public void testSetQty()
+	public void testSetQty() throws IOException, DataFileException
 	{
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		ti.setQty(99);
 		assertTrue(99==ti.getQty());
 	}
 
 	@Test
-	public void testCalculateAmount()
+	public void testCalculateAmount() throws IOException, DataFileException
 	{
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		assertTrue(10.5*4==ti.calculateAmount());
 	}

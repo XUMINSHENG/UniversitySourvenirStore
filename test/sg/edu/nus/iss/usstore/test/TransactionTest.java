@@ -9,6 +9,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.ProductMgr;
 import sg.edu.nus.iss.usstore.domain.Transaction;
@@ -76,8 +77,9 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testSetItemList() throws IOException, DataFileException, DataInputException
 	{
-		Product product1 = new Product("1","2","3","4",5,6.7,"8",9,10);
-		Product product2 = new Product("11","12","13","14",15,16.17,"18",19,20);
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti1 = new TransactionItem(product1,2.3,4);
 		TransactionItem ti2 = new TransactionItem(product2,5.6,7);
 		ArrayList<TransactionItem> al1 = new ArrayList<TransactionItem>();
@@ -88,10 +90,11 @@ public class TransactionTest extends Transaction
 		assertEquals(al1,al2);
 	}
 	@Test
-	public void testGetItemList()
+	public void testGetItemList() throws IOException, DataFileException
 	{
-		Product product1 = new Product("1","2","3","4",5,6.7,"8",9,10);
-		Product product2 = new Product("11","12","13","14",15,16.17,"18",19,20);
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti1 = new TransactionItem(product1,2.3,4);
 		TransactionItem ti2 = new TransactionItem(product2,5.6,7);
 		ArrayList<TransactionItem> al1 = new ArrayList<TransactionItem>();
@@ -137,37 +140,32 @@ public class TransactionTest extends Transaction
 	}
 
 	@Test
-	public void testAddItemProductInt()
+	public void testAddItemProductInt() throws IOException, DataFileException
 	{
-		ProductMgr pm = null;
-		try
-		{
-			pm = new ProductMgr();
-		} catch (IOException | DataFileException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Product p = pm.getProductById("CLO/1");
-		t.addItem(p, 2);
-		assertEquals(t.getItemList().get(0).getProduct(),p);
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		t.addItem(product1, 2);
+		assertEquals(t.getItemList().get(0).getProduct(),product1);
 	}
 
 	@Test
-	public void testAddItemProductDoubleInt()
+	public void testAddItemProductDoubleInt() throws IOException, DataFileException
 	{
-		Product product3 = new Product("31","32","33","34",35,36.37,"38",39,40);
-		t.addItem(product3,40.41,42);
-		Product product4 = t.getItemList().get(0).getProduct();
-		assertEquals(product3,product4);
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		t.addItem(product1,40.41,42);
+		Product product2 = t.getItemList().get(0).getProduct();
+		assertEquals(product1,product2);
 	}
 
 	@Test
-	public void testRemoveItem()
+	public void testRemoveItem() throws IOException, DataFileException
 	{
-		Product product3 = new Product("31","32","33","34",35,36.37,"38",39,40);
-		t.addItem(product3,40.41,42);
-		t.removeItem(product3);
+		ProductMgr pm  = new ProductMgr();
+		Product product1 = pm.getProductByBarCode("1234");
+		Product product2 = pm.getProductByBarCode("6789");
+		t.addItem(product1,40.41,42);
+		t.removeItem(product1);
 		assertEquals(0,t.getItemList().size());
 	}
 
