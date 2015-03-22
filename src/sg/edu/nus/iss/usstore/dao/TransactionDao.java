@@ -67,7 +67,7 @@ public class TransactionDao extends BaseDao
 			{
 				int id = Util.castInt(fields[0]);
 				String productID = fields[1];
-				String costomerID = fields[2];
+				String customerID = fields[2];
 				int qty = Util.castInt(fields[3]);
 				Date date = Util.castDate(fields[4]);
 				double price = Util.castDouble(fields[5]);
@@ -84,7 +84,7 @@ public class TransactionDao extends BaseDao
 				} else
 				{
 					TransactionItem ti = new TransactionItem(product,price,qty);
-					Transaction t = new Transaction(id, costomerID, date);
+					Transaction t = new Transaction(id, customerID, date);
 					t.addItem(product,price,qty);
 					dataList.add(t);
 					tflag = t;
@@ -125,7 +125,7 @@ public class TransactionDao extends BaseDao
 				StringBuffer line;
 				line = new StringBuffer(dataList.get(i).getId() + Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getProduct().getProductId() + Util.C_Separator);
-				line.append(dataList.get(i).getCostomerID() + Util.C_Separator);
+				line.append(dataList.get(i).getCustomerID() + Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getQty() + Util.C_Separator);
 				line.append(df.format(dataList.get(i).getDate())+Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getPrice());

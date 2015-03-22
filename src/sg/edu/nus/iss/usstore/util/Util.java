@@ -2,6 +2,7 @@ package sg.edu.nus.iss.usstore.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import sg.edu.nus.iss.usstore.exception.DataInputException;
@@ -106,10 +107,17 @@ public class Util {
 		return sdf.format(date);
 	}
 	
+	public static Date addDays(Date date,int period){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, period);
+		return cal.getTime();
+	}
+	
+	}
 	
 	
 	
 	
 	
-	
-}
+

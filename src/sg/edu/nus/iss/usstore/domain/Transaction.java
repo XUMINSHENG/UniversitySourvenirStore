@@ -162,12 +162,12 @@ public class Transaction
 		return (int) (calcDiscountPrice() / 100);
 	}
 
-	public String getCostomerID()
+	public String getCustomerID()
 	{
 		return customerID;
 	}
 
-	public void setCostomerID(String costomerID)
+	public void setCustomerID(String costomerID)
 	{
 		this.customerID = costomerID;
 	}

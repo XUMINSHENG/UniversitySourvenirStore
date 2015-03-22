@@ -42,7 +42,7 @@ public class TransactionTest extends Transaction
 		Date date = new Date();
 		Transaction t2 = new Transaction(1,"customer",date);
 		assertEquals(1,t2.getId());
-		assertEquals("customer",t2.getCostomerID());
+		assertEquals("customer",t2.getCustomerID());
 		assertEquals(date,t2.getDate());	
 	}
 
@@ -262,15 +262,15 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testGetCostomerID()
 	{
-		t.setCostomerID("customer1");
-		assertEquals("customer1",t.getCostomerID());
+		t.setCustomerID("customer1");
+		assertEquals("customer1",t.getCustomerID());
 	}
 
 	@Test
 	public void testSetCostomerID()
 	{
-		t.setCostomerID("customer1");
-		assertEquals("customer1",t.getCostomerID());
+		t.setCustomerID("customer1");
+		assertEquals("customer1",t.getCustomerID());
 	}
 
 }///~

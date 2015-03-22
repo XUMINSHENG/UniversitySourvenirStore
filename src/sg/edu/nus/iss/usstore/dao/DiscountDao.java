@@ -123,17 +123,24 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 
 	public static void main(String[] arg){
 		//DiscountDao testDao = new DiscountDao();
-		ArrayList<Discount> discList = new ArrayList<Discount>();
+	//	ArrayList<Discount> discList = new ArrayList<Discount>();
+		double mDisc ;
 		
 		try {
 			//discList=testDao.loadDataFromFile();
 			DiscountMgr discountMgrObject= new DiscountMgr();
-			discList=discountMgrObject.getDiscountlist();
+			
+			mDisc=discountMgrObject.getMaxDiscount("abc567", 9);
+		/*	discList=discountMgrObject.getDiscountlist();
 			for(Discount d:discList)
 			{
 				System.out.println(d.getDiscountcode()+","+d.getDiscountDescription()+","+
 			d.getStartDate()+","+d.getPeriod()+","+d.getApplicable());
-			}
+		
+			}*/
+		
+		System.out.println(mDisc);
+		
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,6 +148,6 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		}
-		}
+
+}
