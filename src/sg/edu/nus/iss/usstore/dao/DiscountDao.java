@@ -21,7 +21,7 @@ import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
 
 public class DiscountDao extends BaseDao {
-	private static final  String C_File_Name = "Discount.dat";
+	private static final  String C_File_Name = "Discounts.dat";
 	private static final int  C_Field_No  = 6;
 	//private Discount discount;
 
@@ -108,7 +108,7 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 		line.append(discount.getStartDate() + Util.C_Separator);
 		line.append(discount.getPercent()+Util.C_Separator);
 		line.append(discount.getPeriod()+Util.C_Separator);
-		line.append(discount.getApplicable()+Util.C_Separator);
+		line.append(discount.getApplicable());
 		
 		stringList.add(line.toString());
 	}

@@ -37,6 +37,7 @@ public class CategoryMgr {
 	public void loadData() throws IOException, DataFileException{
 		// load category basic info.
 		categoryList = categoryDao.loadDataFromFile();
+		// load vendor and set to category
 		vendorList = vendorDao.loadDataFromFile(categoryList);
 	}
 	
@@ -57,7 +58,7 @@ public class CategoryMgr {
 	 */
 	public Category getCategoryByCode(String code){
 		for(Category category : this.categoryList){
-			if(category.getCode() == code){
+			if(code.equals(category.getCode())){
 				return category;
 			}
 		}
@@ -68,7 +69,10 @@ public class CategoryMgr {
 		return this.categoryList;
 	}
 	
+	
 	public ArrayList<Vendor> getVendorList(){
 		return this.vendorList;
 	}
+	
+	
 }

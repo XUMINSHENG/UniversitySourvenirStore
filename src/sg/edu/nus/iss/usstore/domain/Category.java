@@ -38,6 +38,19 @@ public class Category {
 		this.vendorList = vendorList;
 	}
 	
-	
+	/**
+	 * 
+	 * @return most preference vendor
+	 */
+	public Vendor getFirstVendor(){
+		Vendor vendor = null;
+		
+		// has vendor
+		if (!this.vendorList.isEmpty()){
+			vendor = this.vendorList.get(0);
+		}
+		
+		return vendor;
+	}
 	
 }

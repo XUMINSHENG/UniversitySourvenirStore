@@ -75,7 +75,7 @@ public class CategoryDao extends BaseDao {
 			StringBuffer line;
 			
 			line = new StringBuffer(category.getCode() + Util.C_Separator);
-			line.append(category.getName() + Util.C_Separator);
+			line.append(category.getName());
 			
 			stringList.add(line.toString());
 		}
