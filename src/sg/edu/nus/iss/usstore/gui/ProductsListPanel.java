@@ -160,7 +160,7 @@ public class ProductsListPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ModifyProductDialog d = new ModifyProductDialog(manager.getStoreWindow(), manager.getStore().getPm(), productTable.getSelectedRow());
+				ModifyProductDialog d = new ModifyProductDialog(manager, productTable.getSelectedRow());
 				d.setVisible(true);
 			}
 		});
