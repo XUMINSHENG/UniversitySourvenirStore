@@ -3,6 +3,7 @@ package sg.edu.nus.iss.usstore.dao;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.exception.DataFileException;

@@ -16,21 +16,16 @@ public class CategoryMgr {
 	private ArrayList<Category> categoryList;
 	// this VendorList only exist for maintain data consistency
 	// for example, if CLO and MUG share one vendor Nancy's , 
-	// then in CLO and MUG their vendors should reference to one instance of vendor  
+	// then in CLO and MUG, their vendors should reference to same instance of vendor  
 	private ArrayList<Vendor> vendorList;
 	
 	private CategoryDao categoryDao;
 	private VendorDao vendorDao;
 	
-	
 	public CategoryMgr() throws IOException, DataFileException{
 		categoryDao = new CategoryDao();
 		vendorDao = new VendorDao();
 		loadData();
-	}
-	
-	public CategoryMgr(ArrayList<Category> list){
-		this.categoryList = list;
 	}
 	
 	/**
@@ -40,6 +35,7 @@ public class CategoryMgr {
 	 * @throws DataFileException
 	 */
 	public void loadData() throws IOException, DataFileException{
+		// load category basic info.
 		categoryList = categoryDao.loadDataFromFile();
 		vendorList = vendorDao.loadDataFromFile(categoryList);
 	}
@@ -52,6 +48,20 @@ public class CategoryMgr {
 	public void saveData() throws IOException{
 		categoryDao.saveDataToFile(categoryList);
 		vendorDao.saveDataToFile(categoryList);
+	}
+	
+	/**
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public Category getCategoryByCode(String code){
+		for(Category category : this.categoryList){
+			if(category.getCode() == code){
+				return category;
+			}
+		}
+		return null;
 	}
 	
 	public ArrayList<Category> getCategoryList(){

@@ -70,22 +70,28 @@ public class Store {
 	}
 	
 	/**
+	 * set Customer info. and according to it, get Highest Discount 
 	 * 
+	 * @param transaction
+	 * @param memberId
+	 * @return
+	 * @throws DataNotFoundException 
 	 */
-	public Transaction setBillCustomer(Transaction transaction, String memberId){
+	public Transaction setBillCustomer(Transaction transaction, String memberId) throws DataNotFoundException{
 		
-		//Customer customer;
-		//Discount discount;
+		Customer customer;
+		Discount discount;
 				
 		if (memberId==null){
-			//customer = new Public();
+			customer = new Public("");
 		}else{
-			//customer = memberMgr.getMemberById();
-			//if (customer == null) 
-			//{
-			//	throw new DataNotFoundException("Customer",memberId);
-			//}
+			customer = memberMgr.getMemberByID(memberId);
+			if (customer == null) {
+				throw new DataNotFoundException("Member",memberId);
+			}
 			// invoke transaction.setCustomer();
+			// transaction.setCostomerID(costomerID);
+			
 		}
 		
 		
@@ -312,6 +318,10 @@ public class Store {
 		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<Category> getCategoryList(){
 		return categoryMgr.getCategoryList();
 	}
