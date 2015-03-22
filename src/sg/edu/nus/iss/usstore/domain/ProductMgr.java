@@ -83,8 +83,9 @@ public class ProductMgr {
 		}
 	}
 	
-	public void modifyProduct(Product p, int index){
-		this.productList.set(index, p);
+	public void modifyProduct(String name, String categoryCode, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity, int index){
+			this.productList.get(index).modifyData(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity, index);
 	}
 	
 	public void deleteProduct(int index){

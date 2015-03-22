@@ -217,10 +217,10 @@ public class Store {
 		// invoke categoryMgr.getCategoryByCode() to get category
 		// if () throw new DataNotFoundException("Category",categoryCode);
 		
-		Product product = new Product(categoryCode + "\3", categoryCode, name, 
-				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
-		
-		productMgr.addProduct(product);
+//		Product product = new Product(categoryCode + "\3", categoryCode, name, 
+//				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+//		
+		productMgr.addProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 	}
 	
 	/**
@@ -236,10 +236,15 @@ public class Store {
 	 * @param product
 	 * @param indenx
 	 */
-	public void modifyProduct(Product product, int indenx){
-		productMgr.modifyProduct(product, indenx);
-	}
 	
+	public void modifyProduct(String name, String categoryCode, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
+		// 
+		productMgr.modifyProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity,index);
+		
+		//
+		
+	}
 	/**
 	 * 
 	 * @param index

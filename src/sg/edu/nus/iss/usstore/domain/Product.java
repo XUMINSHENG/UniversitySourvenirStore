@@ -57,6 +57,19 @@ public class Product {
 		}
 		return false;
 	}
+	
+	public void modifyData(String name, String categoryCode, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
+		setProductId(categoryCode+ "/" + Integer.toString(index));
+		setName(name);
+		setCategory(categoryCode);
+		setBarCodeNumber(barCode);
+		setBriefDescription(briefDescription);
+		setQuantityAvaible(quantityAvailable);
+		setPrice(price);
+		setRecorderQuantity(threshold);
+		setOrderQuantity(orderQuantity);
+	}
 
 	public void addQuantity(int add){
 		this.quantityAvaible = this.quantityAvaible + add;

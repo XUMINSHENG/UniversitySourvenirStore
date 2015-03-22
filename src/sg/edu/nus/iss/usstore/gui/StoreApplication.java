@@ -152,6 +152,14 @@ public class StoreApplication {
 		store.modifyProduct(product, indenx);
 	}
 	
+	public void modifyProduct(String name, String categoryCode, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
+		// 
+		store.modifyProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+		
+		//
+		
+	}
 	/**
 	 * 
 	 * @param index

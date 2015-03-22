@@ -37,11 +37,10 @@ public class ModifyProductDialog extends ProductDialog{
 				//Product newProduct = new Product("4","animal","pig","something",12,20,"c123",100,200);
 				
 				if(validateData()){
-					Product newProduct = 
-						new Product(getIdText(),getNameText(),getCategoryText(),getDescriptionText(),getQuantityText(),
+					manager.modifyProduct(getNameText(),getCategoryText(),getDescriptionText(),getQuantityText(),
 								getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
 				
-					manager.modifyProduct(newProduct, index);
+					//manager.modifyProduct(newProduct, index);
 					mainScreen.getProductListPanel().refreshTable();
 				}else{
 					System.out.println("invalid data");
