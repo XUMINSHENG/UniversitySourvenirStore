@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import sg.edu.nus.iss.usstore.dao.CustomerDao;
+import sg.edu.nus.iss.usstore.dao.MemberDao;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 
 /**
@@ -13,32 +13,32 @@ import sg.edu.nus.iss.usstore.exception.DataFileException;
 
 public class MemberMgr {
 
-	private ArrayList<Member> member;
-	private CustomerDao customerDao;
+	private ArrayList<Member> memberList;
+	private MemberDao customerDao;
 
 	public MemberMgr() throws IOException, DataFileException {
 
-		member = new ArrayList<Member>();
-		customerDao = new CustomerDao();
+		memberList = new ArrayList<Member>();
+		customerDao = new MemberDao();
 		readFile();
 	}
 
 	public ArrayList<Member> registerMember(String name, String memberID,
 			int loyaltyPoint) throws IOException {
 
-		member.add(new Member(name, memberID, loyaltyPoint));
+		memberList.add(new Member(name, memberID, loyaltyPoint));
 		writeFile();
-		return member;
+		return memberList;
 	}
 
 	public ArrayList<Member> getMemberList() {
 
-		return member;
+		return memberList;
 
 	}
 
 	public Member getMemberByID(String memID) {
-		Iterator<Member> i = member.iterator();
+		Iterator<Member> i = memberList.iterator();
 		while (i.hasNext()) {
 			Member mem = i.next();
 			if (mem.getMemberID() == memID)
@@ -48,11 +48,11 @@ public class MemberMgr {
 	}
 
 	public void writeFile() throws IOException {
-		customerDao.saveDataToFile(member);
+		customerDao.saveDataToFile(memberList);
 	}
 
 	public void readFile() throws IOException, DataFileException {
-		member = customerDao.loadDataFromFile();
+		memberList = customerDao.loadDataFromFile();
 	}
 
 	/**

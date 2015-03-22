@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.usstore.domain.Member;
-import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
@@ -12,24 +11,15 @@ import sg.edu.nus.iss.usstore.util.Util;
 /**
  * provide Data Access to file for Product entity
  * 
- * @author Xu Minsheng
+ * @author  Achyut Suresh Rao
  * 
  */
-public class CustomerDao extends BaseDao {
+public class MemberDao extends BaseDao {
 
 	// datafile name
-	private static final String C_File_Name = "Member.dat";
+	private static final String C_File_Name = "Members.dat";
 	// determine if the No. of fields of a record is correct
 	private static final int C_Field_No = 3;
-	// use store to get relevant category objects
-	private Store store;
-
-	public CustomerDao() {
-	}
-
-	public CustomerDao(Store store) {
-		this.store = store;
-	}
 
 	/**
 	 * 
