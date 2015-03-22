@@ -1,18 +1,16 @@
 //TransactionItem.java
 package sg.edu.nus.iss.usstore.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
 import org.junit.Test;
 
 import sg.edu.nus.iss.usstore.domain.Product;
-import sg.edu.nus.iss.usstore.domain.ProductMgr;
-import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
-import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 public class TransactionItemTest extends TransactionItem
 {

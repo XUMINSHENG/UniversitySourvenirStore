@@ -55,34 +55,23 @@ public class CheckOutPanel extends JPanel
 	private JLabel JlRestNum;
 	private JLabel JlChangeNum;
 	private JLabel JlError;
-	private JTable table;
 	private JTextField JtBarCodeID;
 	private JTextField JtQuantity;
 	private JTextField JtMemberID;
 	private JTextField JtPaidNum;
 	private JTextField JtCashNum;
+	private JTable table;
 	private TableColumn column;
 
 	private DecimalFormat df = new DecimalFormat("#.00");
 	private int discount = 10;
 	private DefaultTableModel defaultModel = null;
 	private Product product = null;
-	private boolean DEBUG = true;
 	private Vector v;
 	private static int i = 1;
 	private int flag = 0;
 	private int scrollpanelwidth = 600;
 	private int scrollpanelheight = 400;
-
-	public static int getI()
-	{
-		return i;
-	}
-
-	public static void setI(int i)
-	{
-		CheckOutPanel.i = i;
-	}
 
 	// 表格中各行的内容保存在二维数组data中
 	private Object[][] data = {};
@@ -96,6 +85,7 @@ public class CheckOutPanel extends JPanel
 	{
 		this.data = data;
 	}
+	
 
 	public void setOutputValue()
 	{
@@ -104,14 +94,49 @@ public class CheckOutPanel extends JPanel
 			totalPrice = totalPrice + (double) table.getValueAt(i, 5);
 		JlTotalPriceNum.setText(df.format(totalPrice));
 		JlDiscountNum.setText(Integer.toString(discount));
-		JlDiscountedPriceNum.setText(df.format(totalPrice - totalPrice * 0.1));
+		JlDiscountedPriceNum.setText(df.format(totalPrice - totalPrice * discount/100));
 	}
 
 	public void cancel()
 	{
-
+		//refresh data
+		{
+			Vector v = new Vector();
+			v = defaultModel.getDataVector();
+			v.clear();
+			table.validate();
+			table.repaint();
+			i=1;
+		}
+		//refresh para
+		{
+			flag = 0;
+			discount = 0;	
+		}
+		//refresh UI
+		{
+			JlMemberName.setText(null);
+			JlTotalPriceNum.setText("00.00");
+			JlDiscountNum.setText("00.00");
+			JlDiscountedPriceNum.setText("00.00");
+			JlLoyalPointNum.setText("0");;
+			JlRestNum.setText("00.00");;
+			JlChangeNum.setText("00.00");;
+			JtBarCodeID.setText(null);
+			JtQuantity.setText(null);
+			JtMemberID.setText(null);
+			JtPaidNum.setText(null);
+			JtCashNum.setText(null);
+			JlError.setText(null);
+		}
+		
 	}
 
+	public void checkError()
+	{
+		
+	}
+	
 	public CheckOutPanel()
 	{ // 实现构造方法
 
@@ -299,11 +324,10 @@ public class CheckOutPanel extends JPanel
 		{
 			public void insertUpdate(DocumentEvent e)
 			{
-
 				// 在这里写相应的处理代码
 				String tempLoyalPaid = JtPaidNum.getText();
-				int tempLoyalPaidNum = Integer.valueOf(tempLoyalPaid)
-						.intValue();
+				Double tempLoyalPaidNum = Double.valueOf(tempLoyalPaid)
+						.doubleValue();
 				if (tempLoyalPaidNum < 1)
 				{
 					JlError.setText("Point Format Error!");
@@ -319,13 +343,12 @@ public class CheckOutPanel extends JPanel
 
 			public void removeUpdate(DocumentEvent e)
 			{
-				// 如果希望对文本框内容的删除事件做处理
-				// 在这里写代码
+
 			}
 
 			public void changedUpdate(DocumentEvent e)
 			{
-				// 一般用不到这个方法
+
 			}
 		});
 		jp9.add(JlPaid);
@@ -502,8 +525,11 @@ public class CheckOutPanel extends JPanel
 					{
 						Vector v = defaultModel.getDataVector();
 						v.remove(table.getSelectedRow());
+						i--;
 					}
 					table.revalidate();
+					setOutputValue();
+
 				}
 			}
 		});
@@ -552,14 +578,14 @@ public class CheckOutPanel extends JPanel
 		this.add(jpButton, BorderLayout.EAST);
 	}
 
-//	public static void main(String[] args) throws InterruptedException
-//	{
-//		JFrame jf = new JFrame();
-//		jf.setVisible(true);
-//		jf.setSize(800, 600);
-//		CheckOutPanel ck = new CheckOutPanel();
-//		jf.add(ck);
-//		ck.updateUI();
-//	}
+	public static void main(String[] args) throws InterruptedException
+	{
+		JFrame jf = new JFrame();
+		jf.setVisible(true);
+		jf.setSize(800, 600);
+		CheckOutPanel ck = new CheckOutPanel();
+		jf.add(ck);
+		ck.updateUI();
+	}
 	
 }///~
