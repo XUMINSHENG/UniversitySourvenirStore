@@ -50,7 +50,7 @@ public class Store {
 		productMgr.saveData();
 		categoryMgr.saveData();
 		//vendorMgr
-		//discountMgr
+		discountMgr.saveData();
 	}
 	
 	/**

@@ -5,6 +5,7 @@ import java.util.Date;
 public abstract class Discount {
 	private String discountCode;
 	private String discountDescription;
+	//private String startDate;
 	private Date startDate;
 	private int period;
 	private double percent;
@@ -30,7 +31,7 @@ public abstract class Discount {
 		// TODO Auto-generated method stub
 		return discountDescription;
 	}
-
+//	public String getStartDate() {
 	public Date getStartDate() {
 		// TODO Auto-generated method stub
 		return startDate;

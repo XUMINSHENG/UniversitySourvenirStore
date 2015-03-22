@@ -1,10 +1,19 @@
 package sg.edu.nus.iss.usstore.dao;
 
 import java.io.IOException;
+//import java.text.DateFormat;
+//import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+//import java.util.Calendar;
 import java.util.Date;
 
+//import java.util.Date;
+
+
+
+
 import sg.edu.nus.iss.usstore.domain.Discount;
+import sg.edu.nus.iss.usstore.domain.DiscountMgr;
 import sg.edu.nus.iss.usstore.domain.MemberDiscount;
 import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
@@ -29,7 +38,7 @@ public ArrayList<Discount> loadDataFromFile() throws IOException, DataFileExcept
 	ArrayList<Discount> discountlist = new ArrayList<Discount>();
 	
 	StringBuffer errMsg = new StringBuffer();
-	
+		
 	for(int lineNo = 0; lineNo < stringList.size() ; lineNo++){
 		
 		String line = stringList.get(lineNo);
@@ -45,13 +54,21 @@ public ArrayList<Discount> loadDataFromFile() throws IOException, DataFileExcept
 		try {
 			String discountCode = fields[0];
 			String discountDescription = fields[1];
-			Date startDate = Util.castDate(fields[2]);
-			int period = Util.castInt(fields[3]);
+			Date startDate;
+			if (!fields[2].equalsIgnoreCase("ALWAYS"))	
+				startDate = Util.castDate(fields[2]);
+			else
+			 	startDate = new Date();
+			
+		    int period = 0;		    
+		    if (!fields[3].equalsIgnoreCase("ALWAYS"))			
+		    	period = Util.castInt(fields[3]);
+		    		
 			double percent = Util.castDouble(fields[4]);
 			String Applicable=(fields[5]);
 			 
 			Discount discount;
-			if(discountCode.contains("MEMBER")){
+			if(Applicable.contains("M")){
 				
 				discount = new MemberDiscount(discountCode,discountDescription, startDate,period,percent,Applicable);
 			}else{
@@ -70,6 +87,7 @@ public ArrayList<Discount> loadDataFromFile() throws IOException, DataFileExcept
 		String exceptionMsg = "Following data in file is not correct:" + System.getProperty("line.separator") + errMsg;
 		throw new DataFileException(exceptionMsg);
 	}
+	
 	
     return discountlist;
 
@@ -98,27 +116,29 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 	
 	super.saveStringToFile(super.getcDatafolderpath() + C_File_Name, stringList);
 	
+
+
 }
-public static void main(String[] arg){
-	DiscountDao testDao = new DiscountDao();
-	ArrayList<Discount> discList = new ArrayList<Discount>();
-	try {
-		discList=testDao.loadDataFromFile();
-		for(Discount d:discList)
-		{
-			System.out.println(d.getDiscountcode());
+
+
+	public static void main(String[] arg){
+		//DiscountDao testDao = new DiscountDao();
+		ArrayList<Discount> discList = new ArrayList<Discount>();
+		
+		try {
+			//discList=testDao.loadDataFromFile();
+			DiscountMgr discountMgrObject= new DiscountMgr();
+			discList=discountMgrObject.getDiscountlist();
+			for(Discount d:discList)
+			{
+				System.out.println(d.getDiscountDescription()+"$"+d.getDiscountcode()+""+d.getStartDate());
+			}
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DataFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (DataFileException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-}
-
-
-}
-	
-
-	
+		
+		}}

@@ -10,4 +10,5 @@ public class MemberDiscount extends Discount{
 		// TODO Auto-generated constructor stub
 	}
 
+
 }
