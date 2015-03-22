@@ -21,7 +21,7 @@ import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
 
 public class DiscountDao extends BaseDao {
-	private static final  String C_File_Name = "Discount.dat";
+	private static final  String C_File_Name = "Discounts.dat";
 	private static final int  C_Field_No  = 6;
 	//private Discount discount;
 
@@ -121,7 +121,7 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 }
 
 
-/*	public static void main(String[] arg){
+	public static void main(String[] arg){
 		//DiscountDao testDao = new DiscountDao();
 		ArrayList<Discount> discList = new ArrayList<Discount>();
 		
@@ -131,7 +131,8 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 			discList=discountMgrObject.getDiscountlist();
 			for(Discount d:discList)
 			{
-				System.out.println(d.getDiscountDescription()+"$"+d.getDiscountcode()+""+d.getStartDate());
+				System.out.println(d.getDiscountcode()+","+d.getDiscountDescription()+","+
+			d.getStartDate()+","+d.getPeriod()+","+d.getApplicable());
 			}
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -141,5 +142,5 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 			e.printStackTrace();
 		}
 		
-		}*/
+		}
 		}

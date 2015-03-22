@@ -1,0 +1,5 @@
+MEMBER_FIRST,First purchase by member,ALWAYS,ALWAYS,60,M
+MEMBER_SUBSEQ,Subsequent purchase by member,ALWAYS,ALWAYS,10,M
+CENTENARY,Centenary Celebration in 2014,2014-01-01,365,15,A
+PRESIDENT_BDAY,University President's birthday,2015-03-13,1,20,A
+ORIENTATION_DAY,Oriendation Day,2015-03-17,1,50,A
