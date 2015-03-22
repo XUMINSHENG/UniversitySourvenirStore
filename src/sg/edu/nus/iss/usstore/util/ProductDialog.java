@@ -2,7 +2,10 @@ package sg.edu.nus.iss.usstore.util;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,6 +22,7 @@ public abstract class ProductDialog extends JDialog{
 	private JTextField idText;
 	private JTextField nameText;
 	private JTextField categoryText;
+	private JComboBox categoryList;
 	private JTextField descriptionText;
 	private JTextField quantityText;
 	private JTextField priceText;
@@ -61,6 +65,15 @@ public abstract class ProductDialog extends JDialog{
 		panel.add(new JLabel("Order Quantity: "));
 		p.add("West",panel);
 		
+		categoryList = new JComboBox();
+		categoryList.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("combo box");
+			}
+		});
 		nameText = new JTextField();
 		idText = new JTextField();
 		idText.setEditable(false);
@@ -92,6 +105,7 @@ public abstract class ProductDialog extends JDialog{
 	
 	public void setData(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
+		//categoryList.setSelectedItem(categoryCode);
 		nameText.setText(name);
 		idText.setText(id);
 		categoryText.setText(categoryCode);
