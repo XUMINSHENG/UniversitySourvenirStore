@@ -118,7 +118,7 @@ public class CheckInventoryPanel extends JPanel{
 		for(int i=0;i<products.size();i++){
 			data[i][0] = products.get(i).getProductId();
 			data[i][1] = products.get(i).getName();
-			data[i][2] = products.get(i).getQuantityAvaible();
+			data[i][2] = products.get(i).getQuantityAvailable();
 			data[i][3] = products.get(i).getReorderQuantity();
 			data[i][4] = products.get(i).getOrderQuantity();
 		}

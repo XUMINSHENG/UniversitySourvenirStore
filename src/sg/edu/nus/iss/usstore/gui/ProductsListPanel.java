@@ -14,14 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import sg.edu.nus.iss.usstore.domain.*;
 import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
@@ -64,12 +59,14 @@ public class ProductsListPanel extends JPanel{
 	
 	private Object[][] loadTableData(ArrayList<Product> products){
 		Object[][] data =  new Object[products.size()][5];
+		Product p;
 		for(int i=0;i<products.size();i++){
-			data[i][0] = products.get(i).getProductId();
-			data[i][1] = products.get(i).getName();
-			data[i][2] = products.get(i).getBriefDescription();
-			data[i][3] = products.get(i).getPrice();
-			data[i][4] = products.get(i).getQuantityAvaible();
+			p = products.get(i);
+			data[i][0] = p.getProductId();
+			data[i][1] = p.getName();
+			data[i][2] = p.getBriefDescription();
+			data[i][3] = p.getPrice();
+			data[i][4] = p.getQuantityAvailable();
 		}
 		return data;
 	}
@@ -161,6 +158,9 @@ public class ProductsListPanel extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				ModifyProductDialog d = new ModifyProductDialog(manager, productTable.getSelectedRow());
+				Product p = manager.getProductList().get(productTable.getSelectedRow());
+				d.setData(p.getProductId(), p.getName(), p.getCategory(), p.getBriefDescription(), p.getQuantityAvailable(), 
+						p.getPrice(), p.getBarCodeNumber(), p.getReorderQuantity(), p.getOrderQuantity());
 				d.setVisible(true);
 			}
 		});
@@ -223,57 +223,5 @@ public class ProductsListPanel extends JPanel{
 	
 	
 
-//	class ProductTableModel extends AbstractTableModel{
-//
-//		private String[] columnNames = {"Id","Name","Category","Price","Quality"};
-//		private Object[][] data = {
-//				{"1","cat","animal","$123","5"},
-//				{"2","dog","animal","$123","5"},
-//				{"3","cat","animal","$123","5"}
-//		};
-//		
-//		public ProductTableModel(){
-//			super();
-//		}
-//		
-//		public ProductTableModel(Object[][] data){
-//			super();
-//			//this.columnNames = column;
-//			this.data = data;
-//			addTableModelListener(new TableModelListener() {
-//				
-//				@Override
-//				public void tableChanged(TableModelEvent arg0) {
-//					// TODO Auto-generated method stub
-//					
-//				}
-//			});
-//			
-//		}
-//	
-//		@Override
-//		public int getColumnCount() {
-//			// TODO Auto-generated method stub
-//			return columnNames.length;
-//		}
-//		@Override
-//		public int getRowCount() {
-//			// TODO Auto-generated method stub
-//			return data.length;
-//		}
-//		@Override
-//		public String getColumnName(int columnIndex){
-//			return columnNames[columnIndex];
-//		}
-//		@Override
-//		public Object getValueAt(int rowIndex, int columnIndex) {
-//			// TODO Auto-generated method stub
-//			return data[rowIndex][columnIndex];
-//		}
-//		@Override
-//		public boolean isCellEditable(int rowIndex, int columnIndex){
-//			return false;
-//		}
-//		
-//	}
+
 }

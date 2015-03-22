@@ -157,7 +157,7 @@ public class Store {
 		// update product's quantity
 		ArrayList<TransactionItem> itemList = transaction.getItemList();
 		for(TransactionItem item : itemList){
-			productMgr.changeProductQty(item.getProduct(), item.getProduct().getQuantityAvaible() - item.getQty());
+			productMgr.changeProductQty(item.getProduct(), item.getProduct().getQuantityAvailable() - item.getQty());
 		}
 		
 		// update Member's loyalty point

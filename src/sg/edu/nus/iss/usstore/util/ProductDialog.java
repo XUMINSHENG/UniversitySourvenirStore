@@ -63,6 +63,7 @@ public abstract class ProductDialog extends JDialog{
 		
 		nameText = new JTextField();
 		idText = new JTextField();
+		idText.setEditable(false);
 		categoryText = new JTextField();
 		descriptionText = new JTextField();
 		priceText = new JTextField();
@@ -89,16 +90,17 @@ public abstract class ProductDialog extends JDialog{
 		return p;
 	}
 	
-	public void setData(Product product){
-		nameText.setText(product.getName());
-		idText.setText(product.getProductId());
-		categoryText.setText(product.getCategory());
-		descriptionText.setText(product.getBriefDescription());
-		priceText.setText(Double.toString(product.getPrice()));
-		quantityText.setText(Integer.toString(product.getQuantityAvaible()));
-		barCodeText.setText(product.getBarCodeNumber());
-		reorderQtyText.setText(Integer.toString(product.getReorderQuantity()));
-		orderQtyText.setText(Integer.toString(product.getOrderQuantity()));
+	public void setData(String id,String name, String categoryCode, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
+		nameText.setText(name);
+		idText.setText(id);
+		categoryText.setText(categoryCode);
+		descriptionText.setText(briefDescription);
+		priceText.setText(Double.toString(price));
+		quantityText.setText(Integer.toString(quantityAvailable));
+		barCodeText.setText(barCode);
+		reorderQtyText.setText(Integer.toString(threshold));
+		orderQtyText.setText(Integer.toString(orderQuantity));
 		
 	}
 

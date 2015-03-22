@@ -56,8 +56,8 @@ public class ProductMgr {
 	public void addProduct(Product p){
 		if(productList.contains(p)){
 			int i = productList.indexOf(p);
-			int add = productList.get(i).getQuantityAvaible();
-			productList.get(i).setQuantityAvaible(p.getQuantityAvaible()+add);
+			int add = productList.get(i).getQuantityAvailable();
+			productList.get(i).setQuantityAvailable(p.getQuantityAvailable()+add);
 		}else{
 			this.productList.add(p);
 		}
@@ -96,7 +96,7 @@ public class ProductMgr {
 	public void changeProductQty(Product p, int qty){
 		if(productList.contains(p)){
 			int i = productList.indexOf(p);
-			productList.get(i).setQuantityAvaible(qty);
+			productList.get(i).setQuantityAvailable(qty);
 		}
 		
 	}

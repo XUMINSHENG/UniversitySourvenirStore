@@ -20,7 +20,6 @@ public class ModifyProductDialog extends ProductDialog{
 		this.manager = manager;
 		this.mainScreen = manager.getStoreWindow();
 		this.index = index;
-		setData(manager.getProductList().get(index));
 	}
 	
 	@Override
