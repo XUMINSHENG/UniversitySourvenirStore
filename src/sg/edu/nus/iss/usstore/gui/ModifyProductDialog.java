@@ -20,6 +20,19 @@ public class ModifyProductDialog extends ProductDialog{
 		this.manager = manager;
 		this.mainScreen = manager.getStoreWindow();
 		this.index = index;
+		loadCategoryListData();
+	}
+	
+	public void loadCategoryListData(){
+		int lenght = manager.getCategoryList().size();
+		if(lenght>0){
+			String[] data = new String[lenght+1];
+			data[0] = "";
+			for(int i=0;i<lenght;i++){
+				data[i+1] = manager.getCategoryList().get(i).getCode();
+			}
+			setCateogryList(data);
+		}
 	}
 	
 	@Override

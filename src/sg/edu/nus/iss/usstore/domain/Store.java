@@ -226,7 +226,7 @@ public class Store {
 //		Product product = new Product(categoryCode + "\3", categoryCode, name, 
 //				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 //		
-		productMgr.addProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+		productMgr.addProduct(name, categoryMgr.getCategoryByCode(categoryCode), briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 	}
 	
 	/**
@@ -246,7 +246,8 @@ public class Store {
 	public void modifyProduct(String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
 		// 
-		productMgr.modifyProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity,index);
+		productMgr.modifyProduct(name, categoryMgr.getCategoryByCode(categoryCode), briefDescription
+				, quantityAvailable, price, barCode, threshold, orderQuantity,index);
 		
 		//
 		

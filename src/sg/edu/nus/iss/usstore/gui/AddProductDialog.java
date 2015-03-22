@@ -21,6 +21,19 @@ public class AddProductDialog extends ProductDialog {
 		super(manager.getStoreWindow(),"Add Product");
 		this.manager = manager;
 		this.mainScreen = manager.getStoreWindow();
+		loadCategoryListData();
+	}
+	
+	public void loadCategoryListData(){
+		int lenght = manager.getCategoryList().size();
+		if(lenght>0){
+			String[] data = new String[lenght+1];
+			data[0] = "";
+			for(int i=0;i<lenght;i++){
+				data[i+1] = manager.getCategoryList().get(i).getCode();
+			}
+			setCateogryList(data);
+		}
 	}
 
 	@Override
