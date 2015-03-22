@@ -148,14 +148,11 @@ public class StoreApplication {
 	 * @param product
 	 * @param indenx
 	 */
-	public void modifyProduct(Product product, int indenx){
-		store.modifyProduct(product, indenx);
-	}
 	
 	public void modifyProduct(String name, String categoryCode, String briefDescription, 
-			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
 		// 
-		store.modifyProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+		store.modifyProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity,index);
 		
 		//
 		

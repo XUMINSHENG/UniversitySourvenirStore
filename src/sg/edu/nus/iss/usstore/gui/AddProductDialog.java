@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import sg.edu.nus.iss.usstore.domain.*;
 import sg.edu.nus.iss.usstore.util.ProductDialog;
 
 public class AddProductDialog extends ProductDialog {

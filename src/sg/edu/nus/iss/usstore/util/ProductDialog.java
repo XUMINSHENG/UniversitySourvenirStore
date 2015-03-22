@@ -11,9 +11,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import sg.edu.nus.iss.usstore.domain.Product;
-import sg.edu.nus.iss.usstore.domain.ProductMgr;
-import sg.edu.nus.iss.usstore.gui.StoreApplication;
-import sg.edu.nus.iss.usstore.gui.StoreWindow;
 
 public abstract class ProductDialog extends JDialog{
 

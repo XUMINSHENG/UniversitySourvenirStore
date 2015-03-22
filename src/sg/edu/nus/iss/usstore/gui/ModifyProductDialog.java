@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.util.ProductDialog;
 
 public class ModifyProductDialog extends ProductDialog{
@@ -38,7 +37,7 @@ public class ModifyProductDialog extends ProductDialog{
 				
 				if(validateData()){
 					manager.modifyProduct(getNameText(),getCategoryText(),getDescriptionText(),getQuantityText(),
-								getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
+								getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText(),index);
 				
 					//manager.modifyProduct(newProduct, index);
 					mainScreen.getProductListPanel().refreshTable();
