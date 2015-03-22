@@ -4,6 +4,7 @@ package sg.edu.nus.iss.usstore.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Store;
@@ -203,6 +204,12 @@ public class StoreApplication {
 		return store.getMemberList();
 	}
 	
+	public ArrayList<Category> getCategoryList(){
+		return store.getCategoryList();
+	}
+	
+	
+	
 	public static void main(String[] args) {
 		StoreApplication manager = new StoreApplication();
 		manager.startup();	
@@ -213,7 +220,7 @@ public class StoreApplication {
 //		
 		System.out.println("helloworld");
 		
-		manager.getMemberList();
+		manager.getCategoryList();
 		
 	}
 

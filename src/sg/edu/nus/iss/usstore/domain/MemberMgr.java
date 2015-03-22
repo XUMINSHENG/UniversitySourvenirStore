@@ -14,12 +14,12 @@ import sg.edu.nus.iss.usstore.exception.DataFileException;
 public class MemberMgr {
 
 	private ArrayList<Member> memberList;
-	private MemberDao customerDao;
+	private MemberDao memberDao;
 
 	public MemberMgr() throws IOException, DataFileException {
 
 		memberList = new ArrayList<Member>();
-		customerDao = new MemberDao();
+		memberDao = new MemberDao();
 		readFile();
 	}
 
@@ -47,11 +47,11 @@ public class MemberMgr {
 	}
 
 	public void writeFile() throws IOException {
-		customerDao.saveDataToFile(memberList);
+		memberDao.saveDataToFile(memberList);
 	}
 
 	public void readFile() throws IOException, DataFileException {
-		memberList = customerDao.loadDataFromFile();
+		memberList = memberDao.loadDataFromFile();
 	}
 
 	/**

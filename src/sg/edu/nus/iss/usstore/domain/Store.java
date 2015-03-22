@@ -19,7 +19,7 @@ public class Store {
 	private MemberMgr memberMgr;
 	private TransactionMgr transactionMgr;
 	private ProductMgr productMgr;
-	//	private CategoryMgr categoryMgr;
+	private CategoryMgr categoryMgr;
 	//	private VendorMgr vendorMgr;
 	private DiscountMgr discountMgr;
 	
@@ -33,7 +33,7 @@ public class Store {
 		memberMgr = new MemberMgr();
 		transactionMgr = new TransactionMgr(this);
 		productMgr = new ProductMgr();
-//		categoryMgr = new CategoryMgr();
+		categoryMgr = new CategoryMgr();
 //		vendorMgr = new VendorMgr();
 		discountMgr = new DiscountMgr();
 	}
@@ -266,6 +266,7 @@ public class Store {
 	
 	/**
 	 * 
+	 * @param productId
 	 * @return
 	 */
 	public Product getProductByBarCode(String productId){
@@ -304,6 +305,10 @@ public class Store {
 		// invoke categoryMgr.newCategory
 		
 		
+	}
+	
+	public ArrayList<Category> getCategoryList(){
+		return categoryMgr.getCategoryList();
 	}
 	
 	/**
