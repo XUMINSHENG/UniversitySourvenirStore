@@ -115,7 +115,7 @@ public class ProductDao extends BaseDao{
 			line.append(product.getPrice() + Util.C_Separator);
 			line.append(product.getBarCodeNumber() + Util.C_Separator);
 			line.append(product.getReorderQuantity() + Util.C_Separator);
-			line.append(product.getOrderQuantity() + Util.C_Separator);
+			line.append(product.getOrderQuantity());
 			
 			stringList.add(line.toString());
 		}

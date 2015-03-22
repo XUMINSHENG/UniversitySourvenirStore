@@ -48,7 +48,7 @@ public class Store {
 		//transactionMgr.
 		
 		productMgr.saveData();
-		//categoryMgr
+		categoryMgr.saveData();
 		//vendorMgr
 		//discountMgr
 	}

@@ -81,6 +81,7 @@ public class VendorDao extends BaseDao {
 	}
 
 	/**
+	 * get Vendors from category and save them to file
 	 * 
 	 * @param dataList
 	 * @throws IOException 
@@ -97,7 +98,7 @@ public class VendorDao extends BaseDao {
 				StringBuffer line;
 				
 				line = new StringBuffer(vendor.getName() + Util.C_Separator);
-				line.append(vendor.getDescription() + Util.C_Separator);
+				line.append(vendor.getDescription());
 				
 				stringList.add(line.toString());
 			}

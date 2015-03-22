@@ -220,8 +220,8 @@ public class StoreApplication {
 //		
 		System.out.println("helloworld");
 		
-		manager.getCategoryList();
-		
+		//manager.getCategoryList();
+		//manager.shutdown();
 	}
 
 	public Store getStore() {
