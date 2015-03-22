@@ -121,7 +121,7 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 }
 
 
-	public static void main(String[] arg){
+/*	public static void main(String[] arg){
 		//DiscountDao testDao = new DiscountDao();
 		ArrayList<Discount> discList = new ArrayList<Discount>();
 		
@@ -141,4 +141,5 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 			e.printStackTrace();
 		}
 		
-		}}
+		}*/
+		}
