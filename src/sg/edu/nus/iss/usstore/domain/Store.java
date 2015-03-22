@@ -3,6 +3,7 @@ package sg.edu.nus.iss.usstore.domain;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import sg.edu.nus.iss.usstore.exception.DataFileException;
@@ -20,7 +21,6 @@ public class Store {
 	private TransactionMgr transactionMgr;
 	private ProductMgr productMgr;
 	private CategoryMgr categoryMgr;
-	//	private VendorMgr vendorMgr;
 	private DiscountMgr discountMgr;
 	
 	/**
@@ -34,7 +34,6 @@ public class Store {
 		transactionMgr = new TransactionMgr(this);
 		productMgr = new ProductMgr();
 		categoryMgr = new CategoryMgr();
-//		vendorMgr = new VendorMgr();
 		discountMgr = new DiscountMgr();
 	}
 	
@@ -46,15 +45,16 @@ public class Store {
 		//
 		memberMgr.writeFile();
 		//transactionMgr.
-		
 		productMgr.saveData();
 		categoryMgr.saveData();
-		//vendorMgr
 		discountMgr.saveData();
 	}
 	
 	/**
 	 * 
+	 * @param username
+	 * @param password
+	 * @return
 	 */
 	public boolean login(String username, String password){
 		return storekeeperMgr.checkAuthority(username, password);
@@ -226,7 +226,7 @@ public class Store {
 //		Product product = new Product(categoryCode + "\3", categoryCode, name, 
 //				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 //		
-		productMgr.addProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+		productMgr.addProduct(name, categoryMgr.getCategoryByCode(categoryCode), briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 	}
 	
 	/**
@@ -246,7 +246,8 @@ public class Store {
 	public void modifyProduct(String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
 		// 
-		productMgr.modifyProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity,index);
+		productMgr.modifyProduct(name, categoryMgr.getCategoryByCode(categoryCode), briefDescription
+				, quantityAvailable, price, barCode, threshold, orderQuantity,index);
 		
 		//
 		
@@ -286,13 +287,13 @@ public class Store {
 	
 	public PurchaseOrder getPurchaseOrder(){
 		
-		PurchaseOrder purchaseOrder = new PurchaseOrder();;
+		PurchaseOrder purchaseOrder = new PurchaseOrder();
 		
 		ArrayList<Product> productList = null;
 		productList = productMgr.checkInventory();
 
 		
-		// HashMap<Product,Vendor> purchaseList = new HashMap<Product,Vendor>();
+		HashMap<Product,Vendor> purchaseList = new HashMap<Product,Vendor>();
 		
 		// foreach product in productList, 
 		// purchaseList.add(product, product.getCategory().getPreferenceVendor())
@@ -324,6 +325,14 @@ public class Store {
 	 */
 	public ArrayList<Category> getCategoryList(){
 		return categoryMgr.getCategoryList();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Category getCategoryByCode(String code){
+		return categoryMgr.getCategoryByCode(code);
 	}
 	
 	/**

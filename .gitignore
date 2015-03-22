@@ -3,3 +3,4 @@
 #do not manage following folder
 /bin/
 data/Discount.dat
+src/sg/edu/nus/iss/usstore/dao/DiscountDao - Copy.java

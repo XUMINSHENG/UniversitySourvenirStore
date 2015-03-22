@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.ProductMgr;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
@@ -64,6 +65,7 @@ public class CheckOutPanel extends JPanel
 	private TableColumn column;
 
 	private DecimalFormat df = new DecimalFormat("#.00");
+	private Customer costomer;
 	private int discount = 10;
 	private DefaultTableModel defaultModel = null;
 	private Product product = null;
@@ -176,7 +178,8 @@ public class CheckOutPanel extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// Fine Member & get discount
+				//Member & discount
+				
 			}
 		});
 		jp2.setLayout(new GridLayout(1, 2));

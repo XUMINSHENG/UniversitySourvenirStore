@@ -27,6 +27,11 @@ public class TransactionMgr
 		td.saveDataToFile(transactionList);
 	}
 	
+	public void save() throws IOException
+	{
+		td.saveDataToFile(transactionList);
+	}
+	
 	public TransactionMgr(Store store) throws IOException, DataFileException
 	{
 		td = new TransactionDao(store);

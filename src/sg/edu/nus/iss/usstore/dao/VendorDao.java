@@ -30,6 +30,7 @@ public class VendorDao extends BaseDao {
 		
 		for(Category category : categoryList){
 			
+			// file name example: vendors MUG .dat
 			String filename = C_File_Name_Prxfix + category.getCode() + C_File_Name_Suffix;
 			
 			ArrayList<String> stringList = null;
@@ -60,10 +61,15 @@ public class VendorDao extends BaseDao {
 				//add to categories' VendorList
 				vendorOfCategoryList.add(vendor);
 				
-				//add to store' VendorList(non-duplicate)
-				if(! allVendorList.contains(vendor) ){
-					allVendorList.add(vendor);
+				//add to store's VendorList(non-duplicate)
+				boolean isExist = false;
+				//check whether vendor with same name already exist
+				for(int i=0; i<allVendorList.size() ;i++){
+					if(name.equals(allVendorList.get(i).getName()))isExist = true;
 				}
+				//add to store's VendorList(non-duplicate)
+				if( !isExist )allVendorList.add(vendor);
+				
 				
 			}
 			

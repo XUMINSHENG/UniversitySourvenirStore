@@ -21,7 +21,7 @@ public abstract class ProductDialog extends JDialog{
 //	private StoreWindow mainScreen;
 	private JTextField idText;
 	private JTextField nameText;
-	private JTextField categoryText;
+	//private JTextField categoryText;
 	private JComboBox categoryList;
 	private JTextField descriptionText;
 	private JTextField quantityText;
@@ -66,18 +66,10 @@ public abstract class ProductDialog extends JDialog{
 		p.add("West",panel);
 		
 		categoryList = new JComboBox();
-		categoryList.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("combo box");
-			}
-		});
 		nameText = new JTextField();
 		idText = new JTextField();
 		idText.setEditable(false);
-		categoryText = new JTextField();
+		//categoryText = new JTextField();
 		descriptionText = new JTextField();
 		priceText = new JTextField();
 		priceText.setDocument(new DigitDocument());
@@ -91,7 +83,7 @@ public abstract class ProductDialog extends JDialog{
 		panel = new JPanel(new GridLayout(9,1));
 		panel.add(nameText);
 		panel.add(idText);
-		panel.add(categoryText);
+		panel.add(categoryList);
 		panel.add(descriptionText);
 		panel.add(priceText);
 		panel.add(quantityText);
@@ -103,12 +95,14 @@ public abstract class ProductDialog extends JDialog{
 		return p;
 	}
 	
+	
+	
 	public void setData(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		//categoryList.setSelectedItem(categoryCode);
 		nameText.setText(name);
 		idText.setText(id);
-		categoryText.setText(categoryCode);
+		categoryList.setSelectedItem(categoryCode);
 		descriptionText.setText(briefDescription);
 		priceText.setText(Double.toString(price));
 		quantityText.setText(Integer.toString(quantityAvailable));
@@ -119,7 +113,7 @@ public abstract class ProductDialog extends JDialog{
 	}
 
 	public boolean validateData(){
-		if(idText.getText()!="" && nameText.getText()!="" && categoryText.getText()!="" && descriptionText.getText()!="" 
+		if(idText.getText()!="" && nameText.getText()!="" && categoryList.getSelectedItem()!="" && descriptionText.getText()!="" 
 				&& priceText.getText()!="" && quantityText.getText()!="" && barCodeText.getText()!="" 
 				&& reorderQtyText.getText()!="" && orderQtyText.getText()!=""){
 			return true;
@@ -128,7 +122,23 @@ public abstract class ProductDialog extends JDialog{
 	}
 	
 	protected abstract JPanel createBottomPanel();
-
+	
+	public void setCateogryList(String[] data){
+		categoryList = new JComboBox<String>(data);
+		categoryList.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(categoryList.getSelectedIndex()==-1){
+					System.out.println("no select");
+				}else{
+					System.out.println(categoryList.getSelectedItem());
+				}
+			}
+		});
+	}
+	
 	public String getIdText() {
 		return idText.getText();
 	}
@@ -138,7 +148,7 @@ public abstract class ProductDialog extends JDialog{
 	}
 
 	public String getCategoryText() {
-		return categoryText.getText();
+		return (String) categoryList.getSelectedItem();
 	}
 
 	public String getDescriptionText() {

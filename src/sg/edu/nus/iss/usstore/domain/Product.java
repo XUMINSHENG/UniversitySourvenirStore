@@ -3,7 +3,7 @@ package sg.edu.nus.iss.usstore.domain;
 public class Product {
 
 	private String productId;
-	private String category;
+	private Category category;
 	private String name;
 	private String briefDescription;
 	private int quantityAvailable;
@@ -12,7 +12,7 @@ public class Product {
 	private int reorderQuantity;
 	private int orderQuantity;	
 	
-	public Product(String category, String name,
+	public Product(Category category, String name,
 			String briefDescription, int quantityAvailable, double price,
 			String barCodeNumber, int recorderQuantity, int orderQuantity) {
 		super();
@@ -27,7 +27,7 @@ public class Product {
 		this.orderQuantity = orderQuantity;
 	}
 	
-	public Product(String productId, String category, String name,
+	public Product(String productId, Category category, String name,
 			String briefDescription, int quantityAvailable, double price,
 			String barCodeNumber, int recorderQuantity, int orderQuantity) {
 		super();
@@ -57,19 +57,6 @@ public class Product {
 		}
 		return false;
 	}
-	
-	public void modifyData(String name, String categoryCode, String briefDescription, 
-			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
-		setProductId(categoryCode+ "/" + Integer.toString(index));
-		setName(name);
-		setCategory(categoryCode);
-		setBarCodeNumber(barCode);
-		setBriefDescription(briefDescription);
-		setQuantityAvailable(quantityAvailable);
-		setPrice(price);
-		setRecorderQuantity(threshold);
-		setOrderQuantity(orderQuantity);
-	}
 
 	public void addQuantity(int add){
 		this.quantityAvailable = this.quantityAvailable + add;
@@ -83,11 +70,11 @@ public class Product {
 		this.productId = productId;
 	}
 
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 

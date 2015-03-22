@@ -1,12 +1,10 @@
 package sg.edu.nus.iss.usstore.domain;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.usstore.dao.ProductDao;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
-import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 /*
  * ProductManager
@@ -63,9 +61,9 @@ public class ProductMgr {
 		}
 	}
 	
-	public void addProduct(String name, String categoryCode, String briefDescription, 
+	public void addProduct(String name, Category category, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
-		Product product = new Product(categoryCode, name, 
+		Product product = new Product(category, name, 
 				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 		int i = 0;
 		for(;i<this.productList.size();i++){
@@ -75,7 +73,7 @@ public class ProductMgr {
 		}
 		if(i>=productList.size()){
 			//add new product
-			product.setProductId(categoryCode + "/" + Integer.toString(productList.size()));
+			product.setProductId(category.getCode() + "/" + Integer.toString(productList.size()));
 			productList.add(product);
 		}else{
 			//add quantity of existed product
@@ -83,9 +81,11 @@ public class ProductMgr {
 		}
 	}
 	
-	public void modifyProduct(String name, String categoryCode, String briefDescription, 
+	public void modifyProduct(String name, Category category, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity, int index){
-			this.productList.get(index).modifyData(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity, index);
+		Product p = new Product(category, name, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+		p.setProductId(category.getCode()+"/"+Integer.toString(index));
+		this.productList.set(index,p);
 	}
 	
 	public void deleteProduct(int index){
