@@ -132,10 +132,6 @@ public class CheckOutPanel extends JPanel
 		
 	}
 
-	public void checkError()
-	{
-		
-	}
 	
 	public CheckOutPanel()
 	{ // 实现构造方法
@@ -234,6 +230,9 @@ public class CheckOutPanel extends JPanel
 				{
 					try
 					{
+						if (JlError.getText()=="No product!"||JlError.getText()=="Bar Code can't be empty!"||
+								JlError.getText()=="Quantity can't be empty!"||JlError.getText()=="Quantity Format Error"	)
+							{JlError.setText(null);}
 						ProductMgr pm = new ProductMgr();
 						product = pm.getProductByBarCode(tempBarCode);
 						if (product == null)
@@ -384,6 +383,10 @@ public class CheckOutPanel extends JPanel
 					if (tempChange > 0)
 					{
 						JlChangeNum.setText(df.format(tempChange));
+						if (JlError.getText()=="Cash isn't Enough!"||JlError.getText()=="Cash Format Error!")
+						{
+							JlError.setText(null);
+						}
 					} else
 					{
 						JlError.setText("Cash isn't Enough!");
@@ -520,6 +523,10 @@ public class CheckOutPanel extends JPanel
 					JlError.setText("Select a row");
 				} else
 				{
+					if (JlError.getText()=="Select a row")
+					{
+						JlError.setText(null);
+					}
 					int rowcount = defaultModel.getRowCount();// getRowCount返回行数，rowcount<0代表已经没有任何行了。
 					if (rowcount > 0)
 					{
