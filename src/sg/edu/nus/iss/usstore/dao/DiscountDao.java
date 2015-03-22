@@ -3,6 +3,7 @@ package sg.edu.nus.iss.usstore.dao;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+
 import sg.edu.nus.iss.usstore.domain.Discount;
 import sg.edu.nus.iss.usstore.domain.MemberDiscount;
 import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
@@ -11,8 +12,8 @@ import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
 
 public class DiscountDao extends BaseDao {
-	private static final String C_File_Name = "Input.dat";
-	private static final int C_Field_No = 6;
+	private static final  String C_File_Name = "Discount.dat";
+	private static final int  C_Field_No  = 6;
 	//private Discount discount;
 
 
@@ -20,7 +21,7 @@ public DiscountDao() {
 	
 }
 
-public ArrayList<Discount> loadDataFromFile(Date date) throws IOException, DataFileException {
+public ArrayList<Discount> loadDataFromFile() throws IOException, DataFileException {
 	ArrayList<String> stringList = null;
 	
 	stringList = super.loadStringFromFile(super.getcDatafolderpath() + C_File_Name);
@@ -59,6 +60,7 @@ public ArrayList<Discount> loadDataFromFile(Date date) throws IOException, DataF
 				
 				
 			discountlist.add(discount);
+					
 		}catch(DataInputException e){
 			errMsg.append("datafile[" + C_File_Name + "] LineNo:" + (lineNo + 1) + System.getProperty("line.separator"));
 		}
@@ -69,8 +71,10 @@ public ArrayList<Discount> loadDataFromFile(Date date) throws IOException, DataF
 		throw new DataFileException(exceptionMsg);
 	}
 	
-	return discountlist;
+    return discountlist;
+
 }
+
 
 public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException {
 	
@@ -84,19 +88,37 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 		line = new StringBuffer(discount.getDiscountcode() + Util.C_Separator);
 		line.append(discount.getDiscountDescription() + Util.C_Separator);
 		line.append(discount.getStartDate() + Util.C_Separator);
-
+		line.append(discount.getPercent()+Util.C_Separator);
+		line.append(discount.getPeriod()+Util.C_Separator);
+		line.append(discount.getApplicable()+Util.C_Separator);
+		
 		stringList.add(line.toString());
 	}
+	
 	
 	super.saveStringToFile(super.getcDatafolderpath() + C_File_Name, stringList);
 	
 }
-
-
+public static void main(String[] arg){
+	DiscountDao testDao = new DiscountDao();
+	ArrayList<Discount> discList = new ArrayList<Discount>();
+	try {
+		discList=testDao.loadDataFromFile();
+		for(Discount d:discList)
+		{
+			System.out.println(d.getDiscountcode());
+		}
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (DataFileException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 }
 
 
-
+}
 	
 
 	

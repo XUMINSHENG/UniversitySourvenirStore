@@ -14,7 +14,11 @@ public abstract class Discount {
 			Date startDate, int period, double percent, String Applicable) {
 		this.discountCode = discountCode;
 		this.discountDescription = discountDescription;
-
+        this.startDate = startDate;
+        this.period=period;
+        this.percent=percent;
+        this.Applicable=Applicable;
+        
 	}
 
 	public String getDiscountcode() {
