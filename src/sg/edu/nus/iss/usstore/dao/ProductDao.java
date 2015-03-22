@@ -70,8 +70,8 @@ public class ProductDao extends BaseDao{
 			try {
 				String productId = fields[0];
 				String categoryCode = productId.substring(0, 3);
-				//store.getCategoryByCode(categoryCode);
-				Category category = null;
+				Category category = store.getCategoryByCode(categoryCode);
+				//Category category = null;
 				
 				
 				String name = fields[1];
@@ -82,7 +82,7 @@ public class ProductDao extends BaseDao{
 				int reorderQuantity = Util.castInt(fields[6]);
 				int orderQuantity = Util.castInt(fields[7]);
 				
-				Product product = new Product(productId, categoryCode, name, briefDescription, 
+				Product product = new Product(productId, category, name, briefDescription, 
 						quantityAvaible, price, barCodeNumber, reorderQuantity, orderQuantity);
 				
 				dataList.add(product);
