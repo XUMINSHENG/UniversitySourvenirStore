@@ -1,7 +1,6 @@
 package sg.edu.nus.iss.usstore.domain;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,21 +16,41 @@ import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 public class Store {
 
 	private StoreKeeperMgr storekeeperMgr;	
-	//	private MemberMgr memberMgr;
+	private MemberMgr memberMgr;
 	private TransactionMgr transactionMgr;
 	private ProductMgr productMgr;
 	//	private CategoryMgr categoryMgr;
 	//	private VendorMgr vendorMgr;
-		private DiscountMgr discountMgr;
+	private DiscountMgr discountMgr;
 	
+	/**
+	 * 
+	 * @throws IOException
+	 * @throws DataFileException
+	 */
 	public Store() throws IOException, DataFileException {
 		storekeeperMgr = new StoreKeeperMgr();
-//		memberMgr = new MemberMgr();
+		memberMgr = new MemberMgr();
 		transactionMgr = new TransactionMgr(this);
 		productMgr = new ProductMgr();
 //		categoryMgr = new CategoryMgr();
 //		vendorMgr = new VendorMgr();
 		discountMgr = new DiscountMgr();
+	}
+	
+	/**
+	 * @throws IOException 
+	 * 
+	 */
+	public void saveData() throws IOException{
+		//
+		memberMgr.writeFile();
+		//transactionMgr.
+		
+		productMgr.saveData();
+		//categoryMgr
+		//vendorMgr
+		//discountMgr
 	}
 	
 	/**
@@ -41,6 +60,8 @@ public class Store {
 		return storekeeperMgr.checkAuthority(username, password);
 	}
 	
+//  -------------------- transaction related methods	-------------------
+
 	/**
 	 * 
 	 */
@@ -149,32 +170,35 @@ public class Store {
 		return transaction;
 	}
 	
-	public PurchaseOrder getPurchaseOrder(){
-		
-		PurchaseOrder purchaseOrder = new PurchaseOrder();;
-		
-		ArrayList<Product> productList = null;
-		productList = productMgr.checkInventory();
 
-		
-		// HashMap<Product,Vendor> purchaseList = new HashMap<Product,Vendor>();
-		
-		// foreach product in productList, 
-		// purchaseList.add(product, product.getCategory().getPreferenceVendor())
-		
-		// purchaseOrder.
-		
-		return purchaseOrder;
-	}
-	
+//  -------------------- member related methods	-------------------
 	/**
 	 * 
 	 * @param name
 	 * @param memberId
 	 */	
 	public void registerMember(String name, String memberId){
-		// invoke TransactionMgr.addTransaction()
+		memberMgr.registerMember(name, memberId, -1);
 	}
+	
+	/**
+	 * 
+	 * @param memberId
+	 * @return
+	 */
+	public Member getMemberById(String memberId){
+		return memberMgr.getMemberByID(memberId);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Member> getMemberList(){
+		return memberMgr.getMemberList();
+	}
+	
+//  -------------------- product related methods	-------------------
 	
 	/**
 	 * 
@@ -248,7 +272,25 @@ public class Store {
 		return productMgr.getProductById(productId);
 	}
 	
+	public PurchaseOrder getPurchaseOrder(){
+		
+		PurchaseOrder purchaseOrder = new PurchaseOrder();;
+		
+		ArrayList<Product> productList = null;
+		productList = productMgr.checkInventory();
+
+		
+		// HashMap<Product,Vendor> purchaseList = new HashMap<Product,Vendor>();
+		
+		// foreach product in productList, 
+		// purchaseList.add(product, product.getCategory().getPreferenceVendor())
+		
+		// purchaseOrder.
+		
+		return purchaseOrder;
+	}
 	
+//  -------------------- category related methods	-------------------
 	/**
 	 * 
 	 * @param code
@@ -268,11 +310,8 @@ public class Store {
 	 * 
 	 * @param date
 	 * @return TransactionList
-	 * @throws ParseException 
 	 */
-	public ArrayList<Transaction> getTransactionByDate(Date date) throws ParseException{
-		
-		//
+	public ArrayList<Transaction> getTransactionByDate(Date date){
 		return transactionMgr.getTransactionListByDate(date);
 	}
 

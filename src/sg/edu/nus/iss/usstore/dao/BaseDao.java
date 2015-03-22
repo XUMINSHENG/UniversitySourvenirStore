@@ -20,8 +20,16 @@ public abstract class BaseDao {
 	
 	/**
 	 * 
+	 * @return default data folder path
+	 */
+	public static String getcDatafolderpath() {
+		return C_DataFolderPath;
+	}
+	
+	/**
+	 * 
 	 * @param filename
-	 * @return 
+	 * @return data 
 	 * @throws IOException
 	 */
 	public ArrayList<String> loadStringFromFile(String fullpath) throws IOException{
@@ -61,14 +69,6 @@ public abstract class BaseDao {
 		
 		pw.close();
 		bw.close();
-	}
-
-	/**
-	 * 
-	 * @return default data folder path
-	 */
-	public static String getcDatafolderpath() {
-		return C_DataFolderPath;
 	}
 	
 	

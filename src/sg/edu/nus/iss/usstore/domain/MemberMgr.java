@@ -24,10 +24,9 @@ public class MemberMgr {
 	}
 
 	public ArrayList<Member> registerMember(String name, String memberID,
-			int loyaltyPoint) throws IOException {
+			int loyaltyPoint){
 
 		memberList.add(new Member(name, memberID, loyaltyPoint));
-		writeFile();
 		return memberList;
 	}
 
