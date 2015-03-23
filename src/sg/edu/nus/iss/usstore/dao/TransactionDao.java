@@ -2,13 +2,11 @@
 package sg.edu.nus.iss.usstore.dao;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Product;
-import sg.edu.nus.iss.usstore.domain.ProductMgr;
 import sg.edu.nus.iss.usstore.domain.Public;
 import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
@@ -127,7 +125,6 @@ public class TransactionDao extends BaseDao
 			throws IOException
 			
 	{
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		ArrayList<String> stringList = new ArrayList<String>();
 		for (int i = 0; i < dataList.size();i++)
 		{
@@ -138,7 +135,7 @@ public class TransactionDao extends BaseDao
 				line.append(dataList.get(i).getItemList().get(j).getProduct().getProductId() + Util.C_Separator);
 				line.append(dataList.get(i).getCustomer().getID() + Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getQty() + Util.C_Separator);
-				line.append(df.format(dataList.get(i).getDate())+Util.C_Separator);
+				line.append(Util.dateToString(dataList.get(i).getDate()) + Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getPrice());
 				stringList.add(line.toString());
 			}

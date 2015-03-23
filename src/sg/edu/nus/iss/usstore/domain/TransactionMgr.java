@@ -56,6 +56,15 @@ public class TransactionMgr
 		}
 		return result;
 	}
+	
+	public int getMaxId(){
+		int maxId = 0;
+		
+		for(Transaction transaction:this.transactionList){
+			if (transaction.getId() > maxId) maxId = transaction.getId();
+		}
+		return maxId;
+	}
 //	public static void main(String[] args) throws IOException, DataFileException, ParseException, InterruptedException
 //	{
 //		

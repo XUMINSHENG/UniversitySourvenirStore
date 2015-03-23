@@ -109,10 +109,15 @@ public class CategoryMgr {
 	public void addCategory(String code, String name, ArrayList<Vendor> vendorList){
 		Category category = new Category(code, name, vendorList);
 		this.categoryList.add(category);
+		
+		this.maintainVendorList();
 	}
 	
 	/**
 	 * 
+	 * @param code
+	 * @param name
+	 * @param vendorList
 	 */
 	public void updCategory(String code, String name, ArrayList<Vendor> vendorList){
 		Category category = this.getCategoryByCode(code);
@@ -125,6 +130,7 @@ public class CategoryMgr {
 	
 	/**
 	 * 
+	 * @param code
 	 */
 	public void delCategory(String code){
 		Category category = this.getCategoryByCode(code);

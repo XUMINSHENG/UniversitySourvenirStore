@@ -41,7 +41,6 @@ public class StoreApplication {
 	 * 
 	 */
 	public void startup(){
-		
 		// show login screen
 		loginScreen = new LoginScreen(this);
 		loginScreen.setVisible(true);
@@ -58,6 +57,7 @@ public class StoreApplication {
 			e.printStackTrace();
 			System.exit(1);
 		}
+		System.exit(0);
 	}
 	
 	/**
@@ -81,58 +81,48 @@ public class StoreApplication {
 			return false;
 	}
 		
-	public void checkOut(){
-		this.store.checkout();
+	public Transaction checkOut(){
+		return store.checkout();
 	}
 	
-	public void addBillItem(){
-		
-		Transaction transaction = null;
-		String productId = null;
-		int quantity = 0;
-		
+	public Transaction setBillCustomer(Transaction transaction, String memberId){
 		try {
-			this.store.addBillItem(transaction, productId, quantity);
+			transaction = store.setBillCustomer(transaction, memberId);
+		} catch (DataNotFoundException e) {
+			e.printStackTrace();
+		}
+		return transaction;
+	}
+	
+	public Transaction addBillItem(Transaction transaction,String productId,int quantity){
+		try {
+			transaction = store.addBillItem(transaction, productId, quantity);
 		} catch (DataNotFoundException e) {
 			// UI action
 			
 			e.printStackTrace();
 		}
-		
-		// UI action
+		return transaction;
 	}
 	
-	public void removeBillItem(){
-		Transaction transaction = null;
-		String productId = null;
-		this.store.removeBillItem(transaction, productId);
-		
-		// UI action
+	public Transaction removeBillItem(Transaction transaction, String productId){
+		transaction = store.removeBillItem(transaction, productId);
+		return transaction;
 	}
 	
-	public void setPayment(){
-		Transaction transaction = null;
-		double cash=0;
-		int redeemLoyaltyPoint=0;
-		this.store.setPayment(transaction, cash, redeemLoyaltyPoint);
-		
-		// UI action
+	public Transaction setPayment(Transaction transaction, double cash, int redeemLoyaltyPoint){
+		return this.store.setPayment(transaction, cash, redeemLoyaltyPoint);
 	}
 	
-	public void confirmPayment(){
-		Transaction transaction = null;
-		this.store.confirmPayment(transaction);
-		
-		// UI action
+	public Transaction confirmPayment(Transaction transaction){
+		return store.confirmPayment(transaction);
 	}
+	
+
 	
 	public void addProduct(String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
-		// 
-		store.addProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
-		
-		//
-		
+		store.addProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);	
 	}
 	
 	/**
@@ -148,15 +138,11 @@ public class StoreApplication {
 	 * @param product
 	 * @param indenx
 	 */
-	
 	public void modifyProduct(String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
-		// 
 		store.modifyProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity,index);
-		
-		//
-		
 	}
+	
 	/**
 	 * 
 	 * @param index
@@ -219,14 +205,18 @@ public class StoreApplication {
 		StoreApplication manager = new StoreApplication();
 		manager.startup();	
 		
+		Transaction tr = manager.checkOut();
+		tr = manager.setBillCustomer(tr, "F42563743156");
 		
-//		manager.store.getProductList();
-//		manager.addProduct("NUS Logo Cup", "CUP", "NUS Logo Cup 300ml", 400, 5.8, "", 50, 200);
-//		
+		tr = manager.addBillItem(tr, "MUG/1", 10);
+		tr = manager.addBillItem(tr, "STA/1", 20);
+		tr = manager.removeBillItem(tr, "MUG/1");
+		tr = manager.setPayment(tr, 200, 100);
+		tr = manager.confirmPayment(tr);
+		
+		
 		System.out.println("helloworld");
 		
-		//manager.getCategoryList();
-		//manager.shutdown();
 	}
 
 	public Store getStore() {

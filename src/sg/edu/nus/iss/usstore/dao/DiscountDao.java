@@ -1,16 +1,8 @@
 package sg.edu.nus.iss.usstore.dao;
 
 import java.io.IOException;
-//import java.text.DateFormat;
-//import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-//import java.util.Calendar;
 import java.util.Date;
-
-//import java.util.Date;
-
-
-
 
 import sg.edu.nus.iss.usstore.domain.Discount;
 import sg.edu.nus.iss.usstore.domain.DiscountMgr;
@@ -105,10 +97,10 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 		
 		line = new StringBuffer(discount.getDiscountcode() + Util.C_Separator);
 		line.append(discount.getDiscountDescription() + Util.C_Separator);
-		line.append(discount.getStartDate() + Util.C_Separator);
-		line.append(discount.getPercent()+Util.C_Separator);
+		line.append(Util.dateToString(discount.getStartDate()) + Util.C_Separator);
 		line.append(discount.getPeriod()+Util.C_Separator);
-		line.append(discount.getApplicable()+Util.C_Separator);
+		line.append(discount.getPercent()+Util.C_Separator);
+		line.append(discount.getApplicable());
 		
 		stringList.add(line.toString());
 	}

@@ -8,7 +8,9 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.security.KeyStore;
 
 import javax.security.auth.kerberos.KerberosKey;
@@ -66,13 +68,21 @@ public class StoreWindow extends JFrame{
 		cards.add(checkInventoryPanel,"checkInventory");
 		setContentPane(cards);
 		
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+		addWindowListener(windorListener);
+		
 		setPreferredSize(new Dimension(500,600));
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 		
 	}
+	
+	private WindowListener windorListener = new WindowAdapter (){
+		public void windowClosing (WindowEvent e) {
+			manager.shutdown();
+        }
+	};
 	
 	//menuBar
 	private JMenuBar createMenu(){
