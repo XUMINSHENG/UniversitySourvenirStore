@@ -30,10 +30,10 @@ public class Store {
 	 */
 	public Store() throws IOException, DataFileException {
 		storekeeperMgr = new StoreKeeperMgr();
+		categoryMgr = new CategoryMgr();
 		memberMgr = new MemberMgr();
 		transactionMgr = new TransactionMgr(this);
 		productMgr = new ProductMgr();
-		categoryMgr = new CategoryMgr();
 		discountMgr = new DiscountMgr();
 	}
 	
@@ -332,6 +332,9 @@ public class Store {
 	 * @return
 	 */
 	public Category getCategoryByCode(String code){
+		if(getCategoryList().size()==0){
+			return null;
+		}
 		return categoryMgr.getCategoryByCode(code);
 	}
 	
