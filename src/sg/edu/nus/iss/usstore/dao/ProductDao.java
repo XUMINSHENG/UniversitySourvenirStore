@@ -28,13 +28,6 @@ public class ProductDao extends BaseDao{
 	/**
 	 * 
 	 */
-	public ProductDao() {
-
-	}
-	
-	/**
-	 * 
-	 */
 	public ProductDao(Store store) {
 		this.store = store;
 	}
@@ -71,8 +64,6 @@ public class ProductDao extends BaseDao{
 				String productId = fields[0];
 				String categoryCode = productId.substring(0, 3);
 				Category category = store.getCategoryByCode(categoryCode);
-				//Category category = null;
-				
 				
 				String name = fields[1];
 				String briefDescription = fields[2];

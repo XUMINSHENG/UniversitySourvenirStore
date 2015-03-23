@@ -75,7 +75,7 @@ public class CheckOutPanel extends JPanel
 	private int scrollpanelwidth = 600;
 	private int scrollpanelheight = 400;
 
-	// ±í¸ñÖĞ¸÷ĞĞµÄÄÚÈİ±£´æÔÚ¶şÎ¬Êı×édataÖĞ
+	// ï¿½ï¿½ï¿½ï¿½Ğ¸ï¿½ï¿½Ğµï¿½ï¿½ï¿½ï¿½İ±ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½Î¬ï¿½ï¿½ï¿½ï¿½dataï¿½ï¿½
 	private Object[][] data = {};
 
 	public Object[][] getData()
@@ -136,7 +136,7 @@ public class CheckOutPanel extends JPanel
 
 	
 	public CheckOutPanel()
-	{ // ÊµÏÖ¹¹Ôì·½·¨
+	{ // Êµï¿½Ö¹ï¿½ï¿½ì·½ï¿½ï¿½
 
 		// OPeration
 		JPanel jpOperation = new JPanel();
@@ -231,6 +231,7 @@ public class CheckOutPanel extends JPanel
 					JlError.setText("Quantity Format Error");
 				} else
 				{
+					/*
 					try
 					{
 						if (JlError.getText()=="No product!"||JlError.getText()=="Bar Code can't be empty!"||
@@ -248,6 +249,7 @@ public class CheckOutPanel extends JPanel
 						// TODO Auto-generated catch block
 						JlError.setText("Sorry, we don't have this product!");
 					}
+					*/
 
 					v = new Vector(5);
 					// TODO Auto-generated method stub
@@ -326,7 +328,7 @@ public class CheckOutPanel extends JPanel
 		{
 			public void insertUpdate(DocumentEvent e)
 			{
-				// ÔÚÕâÀïĞ´ÏàÓ¦µÄ´¦Àí´úÂë
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ´ï¿½ï¿½Ó¦ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				String tempLoyalPaid = JtPaidNum.getText();
 				Double tempLoyalPaidNum = Double.valueOf(tempLoyalPaid)
 						.doubleValue();
@@ -375,7 +377,7 @@ public class CheckOutPanel extends JPanel
 
 			public void insertUpdate(DocumentEvent e)
 			{
-				// ÔÚÕâÀïĞ´ÏàÓ¦µÄ´¦Àí´úÂë
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ´ï¿½ï¿½Ó¦ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				String ScashNum = JtCashNum.getText();
 				double DcashNum = Double.valueOf(ScashNum).doubleValue();
 				if (DcashNum > 0)
@@ -404,13 +406,13 @@ public class CheckOutPanel extends JPanel
 
 			public void removeUpdate(DocumentEvent e)
 			{
-				// Èç¹ûÏ£Íû¶ÔÎÄ±¾¿òÄÚÈİµÄÉ¾³ıÊÂ¼ş×ö´¦Àí
-				// ÔÚÕâÀïĞ´´úÂë
+				// ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İµï¿½É¾ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ´ï¿½ï¿½ï¿½ï¿½
 			}
 
 			public void changedUpdate(DocumentEvent e)
 			{
-				// Ò»°ãÓÃ²»µ½Õâ¸ö·½·¨
+				// Ò»ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			}
 		});
 		jp11.add(JlCash);
@@ -439,7 +441,7 @@ public class CheckOutPanel extends JPanel
 					return false;
 			}
 		};
-		table = new JTable(defaultModel);// ±í¸ñ¶ÔÏótableµÄÊı¾İÀ´Ô´ÊÇmyModel¶ÔÏó
+		table = new JTable(defaultModel);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tableï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½myModelï¿½ï¿½ï¿½ï¿½
 		// table.setFont(new Font("Times new Romer", Font.PLAIN, 10));
 		for (int i = 0; i < table.getColumnCount(); i++)
 		{
@@ -486,10 +488,10 @@ public class CheckOutPanel extends JPanel
 					Object value, boolean isSelected, boolean hasFocus,
 					int row, int column)
 			{
-				// /ÉèÖÃÅ¼ÊıĞĞÑÕÉ«
+				// /ï¿½ï¿½ï¿½ï¿½Å¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
 				if (row % 2 == 0)
 					setBackground(Color.white);
-				// /ÉèÖÃÆæÊıĞĞÑÕÉ«
+				// /ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
 				else if (row % 2 == 1)
 					setBackground(new Color(206, 231, 255));
 				return super.getTableCellRendererComponent(table, value,
@@ -502,13 +504,13 @@ public class CheckOutPanel extends JPanel
 		}
 
 		table.setPreferredScrollableViewportSize(new Dimension(
-				scrollpanelwidth, scrollpanelheight));// ±í¸ñµÄÏÔÊ¾³ß´ç
+				scrollpanelwidth, scrollpanelheight));// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ß´ï¿½
 
-		// ²úÉúÒ»¸ö´ø¹ö¶¯ÌõµÄÃæ°å
+		// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().setBackground(Color.white);
 		scrollPane.getViewport().add(table);
-		// ½«´ø¹ö¶¯ÌõµÄÃæ°åÌí¼ÓÈë´°¿ÚÖĞ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë´°ï¿½ï¿½ï¿½ï¿½
 		this.add(scrollPane, BorderLayout.CENTER);
 
 		JPanel jpButton = new JPanel();
@@ -530,7 +532,7 @@ public class CheckOutPanel extends JPanel
 					{
 						JlError.setText(null);
 					}
-					int rowcount = defaultModel.getRowCount();// getRowCount·µ»ØĞĞÊı£¬rowcount<0´ú±íÒÑ¾­Ã»ÓĞÈÎºÎĞĞÁË¡£
+					int rowcount = defaultModel.getRowCount();// getRowCountï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rowcount<0ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½Ã»ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½Ë¡ï¿½
 					if (rowcount > 0)
 					{
 						Vector v = defaultModel.getDataVector();

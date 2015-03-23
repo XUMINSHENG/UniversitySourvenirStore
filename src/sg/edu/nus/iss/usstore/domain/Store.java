@@ -32,9 +32,9 @@ public class Store {
 		storekeeperMgr = new StoreKeeperMgr();
 		categoryMgr = new CategoryMgr();
 		memberMgr = new MemberMgr();
-		transactionMgr = new TransactionMgr(this);
-		productMgr = new ProductMgr();
 		discountMgr = new DiscountMgr();
+		productMgr = new ProductMgr(this);
+		transactionMgr = new TransactionMgr(this);
 	}
 	
 	/**

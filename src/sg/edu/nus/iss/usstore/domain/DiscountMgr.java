@@ -15,7 +15,7 @@ import sg.edu.nus.iss.usstore.util.Util;
  * @ tanuj
  */
 public class DiscountMgr {
-	private ArrayList<Discount> discountlist;
+	private ArrayList<Discount> discountList;
 	private DiscountDao discountDao;
 	
 	public DiscountMgr() throws IOException, DataFileException{
@@ -24,21 +24,21 @@ public class DiscountMgr {
 	}
 
 	public DiscountMgr(ArrayList<Discount> list){
-		this.discountlist = list;
+		this.discountList = list;
 	}
 
 	public void loadData() throws IOException, DataFileException{
-		discountlist = discountDao.loadDataFromFile();
+		discountList = discountDao.loadDataFromFile();
 	}
 	
 	
 	public void saveData() throws IOException{
-		discountDao.saveDataToFile(discountlist);
+		discountDao.saveDataToFile(discountList);
 		
 	}
 
 	public ArrayList<Discount> getDiscountlist(){
-		return this.discountlist;
+		return this.discountList;
 	}
 
 /* maximum disc*/
@@ -104,8 +104,47 @@ public class DiscountMgr {
 		
 	}
 
-
-
+	/**
+	 * according to customer's type, return the applicable and highest discount
+	 * 
+	 * @param customer
+	 * @return highest discount (may be null)
+	 */
+	public Discount getMaxDiscount(Customer customer){
+		boolean isMember = false;
+		boolean hasTransaction=false;
+		Discount maxDiscount = null;
+	    Date currentDate= new Date();
+		
+		if(customer instanceof Member){
+			isMember=true;
+			if(((Member) customer).getLoyaltyPoint() != -1){
+				hasTransaction=true;
+			}
+		}
+		
+		for(Discount discount:this.discountList){
+			if (discount.getApplicable().equalsIgnoreCase("m") && isMember){
+			    // discount for member only && customer is a member 
+				
+				if(!hasTransaction && discount.getDiscountcode().equalsIgnoreCase("MEMBER_FIRST")){
+					// discount for member's first purchase only
+					maxDiscount = discount.getHigherDiscount(maxDiscount);
+				}
+				else if(!discount.getDiscountcode().equalsIgnoreCase("MEMBER_FIRST")){
+					// discount for member's subseq purchase
+					maxDiscount = discount.getHigherDiscount(maxDiscount);
+				}
+			}
+			else if(discount.getStartDate().compareTo(currentDate) <= 0 && 
+					Util.addDays(discount.getStartDate(), discount.getPeriod()).compareTo(currentDate) >=0 ) {
+				// occasional discount is valid for current date 
+				maxDiscount = discount.getHigherDiscount(maxDiscount);
+			}
+		}
+		
+		return maxDiscount;
+	}
 }
 
 

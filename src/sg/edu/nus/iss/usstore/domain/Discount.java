@@ -48,5 +48,18 @@ public abstract class Discount {
 	public String getApplicable() {
 		return Applicable;
 	}
+	
+	/**
+	 * compare percent with another discount, return the higher one
+	 * 
+	 * @param discount
+	 * @return higher discount
+	 */
+	public Discount getHigherDiscount(Discount discount){
+		if ((discount == null) || (this.getPercent() > discount.getPercent())) 
+			return this;
+		else 
+			return discount;
+	}
 
 }

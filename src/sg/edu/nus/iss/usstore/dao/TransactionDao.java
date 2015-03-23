@@ -26,12 +26,14 @@ public class TransactionDao extends BaseDao
 {
 	public TransactionDao(Store store)
 	{
-		
+		this.store = store;
 	}
 	// datafile name
 	private static final String C_File_Name = "Transactions.dat";
 	// determine if the No. of fields of a record is correct
 	private static final int C_Field_No = 6;
+	// use store to get relevant product objects
+	private Store store;
 
 	/** 
 	 * @param no param
@@ -72,8 +74,8 @@ public class TransactionDao extends BaseDao
 				Date date = Util.castDate(fields[4]);
 				double price = Util.castDouble(fields[5]);
 				//System.out.println("Dao" + date);
-				ProductMgr pm = new ProductMgr();
-				Product product = pm.getProductById(productID);
+				//ProductMgr pm = new ProductMgr();
+				Product product = store.getProductById(productID);
 				if (flag == id)
 				{
 					//TransactionItem ti = new TransactionItem(productID, qty);
