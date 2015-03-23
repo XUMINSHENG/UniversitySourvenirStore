@@ -24,7 +24,7 @@ public class MemberMgr {
 	}
 
 	public ArrayList<Member> registerMember(String name, String memberID,
-			int loyaltyPoint){
+			int loyaltyPoint) {
 
 		memberList.add(new Member(name, memberID, loyaltyPoint));
 		return memberList;
@@ -53,24 +53,5 @@ public class MemberMgr {
 	public void readFile() throws IOException, DataFileException {
 		memberList = memberDao.loadDataFromFile();
 	}
-
-	/**
-	 * public void writeToFile(ArrayList<Member> mem) { try { ObjectOutputStream
-	 * os = new ObjectOutputStream( new FileOutputStream("member.dat"));
-	 * os.writeObject(mem); os.close(); } catch (Exception e) {
-	 * e.printStackTrace(); } }
-	 * 
-	 * public void readFromFile() { try { ObjectInputStream oi = new
-	 * ObjectInputStream(new FileInputStream( "member.dat"));
-	 * 
-	 * @SuppressWarnings("unchecked") ArrayList<Member> mem =
-	 *                                (ArrayList<Member>) oi.readObject();
-	 *                                System.out.println(mem.toString());
-	 *                                oi.close(); } catch (Exception e) { //
-	 *                                TODO Auto-generated catch block
-	 *                                e.printStackTrace(); }
-	 * 
-	 *                                }
-	 **/
 
 }
