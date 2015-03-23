@@ -26,16 +26,17 @@ import sg.edu.nus.iss.usstore.util.Util;
  */
 public class TransactionDao extends BaseDao
 {
-	public TransactionDao(Store store)
-	{
-		this.store = store;
-	}
+	
 	// datafile name
 	private static final String C_File_Name = "Transactions.dat";
 	// determine if the No. of fields of a record is correct
 	private static final int C_Field_No = 6;
 	// use store to get relevant product objects
 	private Store store;
+	
+	public TransactionDao(Store store){
+		this.store = store;
+	}
 
 	/** 
 	 * @param no param
