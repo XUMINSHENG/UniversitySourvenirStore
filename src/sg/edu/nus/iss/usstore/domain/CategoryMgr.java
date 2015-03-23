@@ -22,6 +22,11 @@ public class CategoryMgr {
 	private CategoryDao categoryDao;
 	private VendorDao vendorDao;
 	
+	/**
+	 * 
+	 * @throws IOException
+	 * @throws DataFileException
+	 */
 	public CategoryMgr() throws IOException, DataFileException{
 		categoryDao = new CategoryDao();
 		vendorDao = new VendorDao();
@@ -65,14 +70,81 @@ public class CategoryMgr {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<Category> getCategoryList(){
 		return this.categoryList;
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Vendor getVendorByName(String name){
+		for(Vendor vendor : this.vendorList){
+			if(name.equals(vendor.getName())){
+				return vendor;
+			}
+		}
+		return null;
+	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<Vendor> getVendorList(){
 		return this.vendorList;
 	}
 	
+	/**
+	 * 
+	 * @param code
+	 * @param name
+	 * @param vendorList
+	 */
+	public void addCategory(String code, String name, ArrayList<Vendor> vendorList){
+		Category category = new Category(code, name, vendorList);
+		this.categoryList.add(category);
+	}
+	
+	/**
+	 * 
+	 */
+	public void updCategory(String code, String name, ArrayList<Vendor> vendorList){
+		Category category = this.getCategoryByCode(code);
+		
+		category.setName(name);
+		category.setVendorList(vendorList);
+		
+		this.maintainVendorList();
+	}
+	
+	/**
+	 * 
+	 */
+	public void delCategory(String code){
+		Category category = this.getCategoryByCode(code);
+		this.categoryList.remove(category);
+		this.maintainVendorList();
+	}
+	
+	/**
+	 * When there is any change about category happens,
+	 * this method will be called to maintain a non-duplicate vendor list 
+	 */
+	private void maintainVendorList(){
+		ArrayList<Vendor> newVendorList = new ArrayList<Vendor>();
+		for(Category category : this.categoryList){
+			for(Vendor vendor:category.getVendorList()){
+				if(newVendorList.contains(vendor)) continue;
+				else newVendorList.add(vendor);
+			}
+		}
+		this.vendorList = newVendorList;
+	}
 	
 }

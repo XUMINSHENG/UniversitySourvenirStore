@@ -4,3 +4,4 @@
 /bin/
 data/Discount.dat
 src/sg/edu/nus/iss/usstore/dao/DiscountDao - Copy.java
+*.name
