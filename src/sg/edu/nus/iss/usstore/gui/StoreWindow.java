@@ -145,7 +145,7 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				AddProductDialog d = new AddProductDialog(manager);
+				ProductDialog d = new ProductDialog(manager,"Add Product");
 				d.setVisible(true);
 			}
 		});
@@ -215,7 +215,7 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed (ActionEvent e) {
 				System.out.println("product window");
-				AddProductDialog dialog = new AddProductDialog(manager);
+				ProductDialog dialog = new ProductDialog(manager,"Add Product");
 				dialog.setVisible(true);
 			}
 		});

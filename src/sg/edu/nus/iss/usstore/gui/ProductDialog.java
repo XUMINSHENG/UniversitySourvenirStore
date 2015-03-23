@@ -1,10 +1,12 @@
-package sg.edu.nus.iss.usstore.util;
+package sg.edu.nus.iss.usstore.gui;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -13,16 +15,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.*;
+import sg.edu.nus.iss.usstore.util.DigitDocument;
 
-public abstract class ProductDialog extends JDialog{
+public class ProductDialog extends JDialog{
 
-//	private ProductMgr manager;
-//	private StoreWindow mainScreen;
+	private StoreApplication manager;
+	private StoreWindow mainScreen;
+	private int index;
+	
 	private JTextField idText;
 	private JTextField nameText;
 	//private JTextField categoryText;
-	private JComboBox categoryList;
+	private JComboBox<String> categoryList;
 	private JTextField descriptionText;
 	private JTextField quantityText;
 	private JTextField priceText;
@@ -30,16 +35,31 @@ public abstract class ProductDialog extends JDialog{
 	private JTextField reorderQtyText;
 	private JTextField orderQtyText;
 	
-	public ProductDialog(JFrame parent, String title){
-		super(parent,title);
+	public ProductDialog(StoreApplication manager, String title){
+		super(manager.getStoreWindow(),title);
+		this.manager = manager;
+		this.mainScreen = manager.getStoreWindow();
+		this.index = manager.getProductList().size()+1;
 		initGUI();
+		add("South",createAddBottomPanel());
+	}
+	
+	public ProductDialog(StoreApplication manager,String title,int index){
+		super(manager.getStoreWindow(),title);
+		this.manager = manager;
+		this.mainScreen = manager.getStoreWindow();
+		this.index = index;
+		initGUI();
+		add("South",createModifyBottomPanel());
+		Product p = manager.getProductList().get(index);
+		setData(p.getProductId(), p.getName(), p.getCategory().getCode(), p.getBriefDescription(), p.getQuantityAvailable(), 
+				p.getPrice(), p.getBarCodeNumber(), p.getReorderQuantity(), p.getOrderQuantity());
 	}
 	
 	private void initGUI() {
 		try {
 			setLayout(new BorderLayout());
 			add("Center",createCenterPanel());
-			add("South",createBottomPanel());
 			setSize(400, 300);
 			setLocationRelativeTo(null);
 			setModal(true);
@@ -65,7 +85,8 @@ public abstract class ProductDialog extends JDialog{
 		panel.add(new JLabel("Order Quantity: "));
 		p.add("West",panel);
 		
-		categoryList = new JComboBox();
+		
+		loadCategoryList();
 		nameText = new JTextField();
 		idText = new JTextField();
 		idText.setEditable(false);
@@ -95,7 +116,28 @@ public abstract class ProductDialog extends JDialog{
 		return p;
 	}
 	
-	
+	public void loadCategoryList(){
+		categoryList = new JComboBox<String>();
+		int lenght = manager.getCategoryList().size();
+		if(lenght>0){
+			for(int i=0;i<lenght;i++){
+				categoryList.addItem(manager.getCategoryList().get(i).getCode());
+			}
+			categoryList.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					if(categoryList.getSelectedIndex()==-1){
+						System.out.println("no select");
+					}else{
+						System.out.println(categoryList.getSelectedItem());
+					}
+				}
+			});
+			categoryList.updateUI();
+		}
+	}
 	
 	public void setData(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
@@ -121,22 +163,94 @@ public abstract class ProductDialog extends JDialog{
 		return false;
 	}
 	
-	protected abstract JPanel createBottomPanel();
-	
-	public void setCateogryList(String[] data){
-		categoryList = new JComboBox<String>(data);
-		categoryList.addActionListener(new ActionListener() {
+	private JPanel createAddBottomPanel() {
+		// TODO Auto-generated method stub
+		JPanel panel = new JPanel(new FlowLayout());
+		JButton button = new JButton("Add");
+		button.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				if(categoryList.getSelectedIndex()==-1){
-					System.out.println("no select");
+				//Product newProduct = new Product("4","animal","pig","something",12,20,"c123",100,200);
+				
+				if(validateData()){
+					manager.addProduct(getNameText(),getCategoryText(),getDescriptionText(),
+								getQuantityText(),getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
+				
+					mainScreen.getProductListPanel().refreshTable();
 				}else{
-					System.out.println(categoryList.getSelectedItem());
+					System.out.println("invalid data");
+				}
+				
+			}
+		});
+		panel.add(button);
+		button = new JButton("Cancel");
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				//setVisible(false);
+				dispose();
+			}
+		});
+		panel.add(button);
+		
+		return panel;
+	}
+	
+	private JPanel createModifyBottomPanel() {
+		// TODO Auto-generated method stub
+		JPanel panel = new JPanel(new FlowLayout());
+		JButton button = new JButton("Modify");
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				//Product newProduct = new Product("4","animal","pig","something",12,20,"c123",100,200);
+				
+				if(validateData()){
+					manager.modifyProduct(getNameText(),getCategoryText(),getDescriptionText(),getQuantityText(),
+								getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText(),index);
+				
+					//manager.modifyProduct(newProduct, index);
+					mainScreen.getProductListPanel().refreshTable();
+				}else{
+					System.out.println("invalid data");
 				}
 			}
 		});
+		panel.add(button);
+		
+		button = new JButton("Delete");
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				manager.deleteProduct(index);
+				mainScreen.getProductListPanel().refreshTable();
+				dispose();
+			}
+		});
+		panel.add(button);
+		
+		button = new JButton("Cancel");
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				//setVisible(false);
+				dispose();
+			}
+		});
+		panel.add(button);
+		
+		return panel;
 	}
 	
 	public String getIdText() {
@@ -174,6 +288,5 @@ public abstract class ProductDialog extends JDialog{
 	public int getOrderQtyText() {
 		return Integer.parseInt(orderQtyText.getText());
 	}
-	
 	
 }
