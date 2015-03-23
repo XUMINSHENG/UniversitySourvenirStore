@@ -33,8 +33,6 @@ import javax.swing.table.TableColumn;
 
 import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Product;
-import sg.edu.nus.iss.usstore.domain.ProductMgr;
-import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
 
 
@@ -582,7 +580,9 @@ public class CheckOutPanel extends JPanel
 		JFrame jf = new JFrame();
 		jf.setVisible(true);
 		jf.setSize(800, 600);
-		CheckOutPanel ck = new CheckOutPanel(new StoreApplication());
+		StoreApplication sa = new StoreApplication();
+		System.out.print(sa.getProductByBarCode("1234"));
+		CheckOutPanel ck = new CheckOutPanel(sa);
 		jf.add(ck);
 		ck.updateUI();
 	}
