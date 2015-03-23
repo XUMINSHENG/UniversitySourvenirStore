@@ -145,7 +145,7 @@ public class ProductsListPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				AddProductDialog d = new AddProductDialog(manager);				
+				ProductDialog d = new ProductDialog(manager,"Add Product");				
 				d.setVisible(true);
 			}
 		});
@@ -157,10 +157,7 @@ public class ProductsListPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ModifyProductDialog d = new ModifyProductDialog(manager, productTable.getSelectedRow());
-				Product p = manager.getProductList().get(productTable.getSelectedRow());
-				d.setData(p.getProductId(), p.getName(), p.getCategory().getCode(), p.getBriefDescription(), p.getQuantityAvailable(), 
-						p.getPrice(), p.getBarCodeNumber(), p.getReorderQuantity(), p.getOrderQuantity());
+				ProductDialog d = new ProductDialog(manager,"Modify Product", productTable.getSelectedRow());
 				d.setVisible(true);
 			}
 		});

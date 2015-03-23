@@ -33,8 +33,6 @@ import javax.swing.table.TableColumn;
 
 import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Product;
-import sg.edu.nus.iss.usstore.domain.ProductMgr;
-import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
 
 
@@ -67,6 +65,7 @@ public class CheckOutPanel extends JPanel
 	private DecimalFormat df = new DecimalFormat("#.00");
 	private Customer costomer;
 	private int discount = 10;
+	private String tempBarCode; 
 	private DefaultTableModel defaultModel = null;
 	private Product product = null;
 	private Vector v;
@@ -133,9 +132,8 @@ public class CheckOutPanel extends JPanel
 		}
 		
 	}
-
 	
-	public CheckOutPanel()
+	public CheckOutPanel(final StoreApplication sa)
 	{ // ʵ�ֹ��췽��
 
 		// OPeration
@@ -212,13 +210,16 @@ public class CheckOutPanel extends JPanel
 		JtQuantity = new JTextField(6);
 		JtQuantity.setDocument(new DigitDocument());
 		JButton JbProductSubmit = new JButton("Submit");
+		tempBarCode = JtBarCodeID.getText();
+		product = sa.getProductByBarCode(tempBarCode);
 		JbProductSubmit.addActionListener(new ActionListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(ActionEvent e) 
 			{
 				flag = 1;
-				String tempBarCode = JtBarCodeID.getText();
+				tempBarCode = JtBarCodeID.getText();
+				product = sa.getProductByBarCode(tempBarCode);
 				String tempqty = JtQuantity.getText();
 				if (tempBarCode.length() == 0)
 				{
@@ -231,25 +232,16 @@ public class CheckOutPanel extends JPanel
 					JlError.setText("Quantity Format Error");
 				} else
 				{
-					/*
-					try
+					
+					if (JlError.getText()=="No product!"||JlError.getText()=="Bar Code can't be empty!"||
+							JlError.getText()=="Quantity can't be empty!"||JlError.getText()=="Quantity Format Error"	)
+						{JlError.setText(null);}
+					if (product == null)
 					{
-						if (JlError.getText()=="No product!"||JlError.getText()=="Bar Code can't be empty!"||
-								JlError.getText()=="Quantity can't be empty!"||JlError.getText()=="Quantity Format Error"	)
-							{JlError.setText(null);}
-						ProductMgr pm = new ProductMgr();
-						product = pm.getProductByBarCode(tempBarCode);
-						if (product == null)
-						{
-							JlError.setText("No product!");
-							return;
-						}
-					} catch (IOException | DataFileException e1)
-					{
-						// TODO Auto-generated catch block
-						JlError.setText("Sorry, we don't have this product!");
+						JlError.setText("No product!");
+						return;
 					}
-					*/
+					
 
 					v = new Vector(5);
 					// TODO Auto-generated method stub
@@ -328,7 +320,7 @@ public class CheckOutPanel extends JPanel
 		{
 			public void insertUpdate(DocumentEvent e)
 			{
-				// ������д��Ӧ�Ĵ������
+				// ������д��Ӧ�Ĵ������
 				String tempLoyalPaid = JtPaidNum.getText();
 				Double tempLoyalPaidNum = Double.valueOf(tempLoyalPaid)
 						.doubleValue();
@@ -377,7 +369,6 @@ public class CheckOutPanel extends JPanel
 
 			public void insertUpdate(DocumentEvent e)
 			{
-				// ������д��Ӧ�Ĵ������
 				String ScashNum = JtCashNum.getText();
 				double DcashNum = Double.valueOf(ScashNum).doubleValue();
 				if (DcashNum > 0)
@@ -406,13 +397,10 @@ public class CheckOutPanel extends JPanel
 
 			public void removeUpdate(DocumentEvent e)
 			{
-				// ���ϣ����ı������ݵ�ɾ���¼�������
-				// ������д����
 			}
 
 			public void changedUpdate(DocumentEvent e)
 			{
-				// һ���ò����������
 			}
 		});
 		jp11.add(JlCash);
@@ -488,10 +476,8 @@ public class CheckOutPanel extends JPanel
 					Object value, boolean isSelected, boolean hasFocus,
 					int row, int column)
 			{
-				// /����ż������ɫ
 				if (row % 2 == 0)
 					setBackground(Color.white);
-				// /������������ɫ
 				else if (row % 2 == 1)
 					setBackground(new Color(206, 231, 255));
 				return super.getTableCellRendererComponent(table, value,
@@ -504,13 +490,12 @@ public class CheckOutPanel extends JPanel
 		}
 
 		table.setPreferredScrollableViewportSize(new Dimension(
-				scrollpanelwidth, scrollpanelheight));// ������ʾ�ߴ�
+				scrollpanelwidth, scrollpanelheight));
 
-		// ����һ��������������
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().setBackground(Color.white);
 		scrollPane.getViewport().add(table);
-		// ������������������봰����
+	
 		this.add(scrollPane, BorderLayout.CENTER);
 
 		JPanel jpButton = new JPanel();
@@ -532,7 +517,7 @@ public class CheckOutPanel extends JPanel
 					{
 						JlError.setText(null);
 					}
-					int rowcount = defaultModel.getRowCount();// getRowCount��������rowcount<0����Ѿ�û���κ����ˡ�
+					int rowcount = defaultModel.getRowCount();
 					if (rowcount > 0)
 					{
 						Vector v = defaultModel.getDataVector();
@@ -595,7 +580,9 @@ public class CheckOutPanel extends JPanel
 		JFrame jf = new JFrame();
 		jf.setVisible(true);
 		jf.setSize(800, 600);
-		CheckOutPanel ck = new CheckOutPanel();
+		StoreApplication sa = new StoreApplication();
+		System.out.print(sa.getProductByBarCode("1234"));
+		CheckOutPanel ck = new CheckOutPanel(sa);
 		jf.add(ck);
 		ck.updateUI();
 	}

@@ -157,7 +157,10 @@ public class Store {
 		
 		// verification product
 		
-		// invoke TransactionMgr.addTransaction()
+		
+		// add to transaction list
+		transaction.setId(transactionMgr.getMaxId() + 1);
+		transaction.setDate(new Date());
 		transactionMgr.addTransaction(transaction);
 		
 		// update product's quantity
@@ -177,9 +180,21 @@ public class Store {
 		}
 		
 		// check inventory
+		// productMgr.checkInventory();
 		
 		return transaction;
 	}
+	
+
+	/**
+	 * 
+	 * @param date
+	 * @return TransactionList
+	 */
+	public ArrayList<Transaction> getTransactionByDate(Date date){
+		return transactionMgr.getTransactionListByDate(date);
+	}
+	
 	
 
 //  -------------------- member related methods	-------------------
@@ -225,13 +240,8 @@ public class Store {
 	public void addProduct(String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		
-		// invoke categoryMgr.getCategoryByCode() to get category
-		// if () throw new DataNotFoundException("Category",categoryCode);
-		
-//		Product product = new Product(categoryCode + "\3", categoryCode, name, 
-//				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
-//		
-		productMgr.addProduct(name, categoryMgr.getCategoryByCode(categoryCode), briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+		productMgr.addProduct(name, categoryMgr.getCategoryByCode(categoryCode),
+				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 	}
 	
 	/**
@@ -315,13 +325,26 @@ public class Store {
 	 * @param name
 	 * @param vendorNameList
 	 */
-	public void newCategory(String code, String name, List<String> vendorNameList){
-		
-		// invoke vendorMgr.getVendorByName()
-		
-		// invoke categoryMgr.newCategory
-		
-		
+	public void addCategory(String code, String name, ArrayList<Vendor> vendorList){
+		categoryMgr.addCategory(code, name, vendorList);
+	}
+	
+	/**
+	 * 
+	 * @param code
+	 * @param name
+	 * @param vendorNameList
+	 */
+	public void updCategory(String code, String name, ArrayList<Vendor> vendorList){
+		categoryMgr.updCategory(code, name, vendorList);
+	}
+	
+	/**
+	 * 
+	 * @param code
+	 */
+	public void delCategory(String code){
+		categoryMgr.delCategory(code);
 	}
 	
 	/**
@@ -341,15 +364,6 @@ public class Store {
 			return null;
 		}
 		return categoryMgr.getCategoryByCode(code);
-	}
-	
-	/**
-	 * 
-	 * @param date
-	 * @return TransactionList
-	 */
-	public ArrayList<Transaction> getTransactionByDate(Date date){
-		return transactionMgr.getTransactionListByDate(date);
 	}
 	
 

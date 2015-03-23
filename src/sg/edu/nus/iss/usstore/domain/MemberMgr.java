@@ -40,7 +40,7 @@ public class MemberMgr {
 		Iterator<Member> i = memberList.iterator();
 		while (i.hasNext()) {
 			Member mem = i.next();
-			if (mem.getMemberID() == memID)
+			if (mem.getMemberID().equals(memID))
 				return mem;
 		}
 		return null;
