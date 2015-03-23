@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.ProductMgr;
+import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 
@@ -28,7 +29,7 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testTransactionItemProductDoubleInt() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
@@ -40,7 +41,7 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testGetProduct() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
@@ -50,7 +51,7 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testSetProduct() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
@@ -61,7 +62,7 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testGetPrice() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
@@ -71,7 +72,7 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testSetPrice() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
@@ -82,7 +83,7 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testGetQty() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
@@ -92,7 +93,7 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testSetQty() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
@@ -103,7 +104,7 @@ public class TransactionItemTest extends TransactionItem
 	@Test
 	public void testCalculateAmount() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		assertTrue(10.5*4==ti.calculateAmount());
