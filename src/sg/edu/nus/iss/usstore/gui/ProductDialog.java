@@ -131,7 +131,7 @@ public class ProductDialog extends JDialog{
 					if(categoryList.getSelectedIndex()==-1){
 						System.out.println("no select");
 					}else{
-						System.out.println(categoryList.getSelectedItem());
+						idText.setText(categoryList.getSelectedItem()+"/"+Integer.toString(index));
 					}
 				}
 			});
