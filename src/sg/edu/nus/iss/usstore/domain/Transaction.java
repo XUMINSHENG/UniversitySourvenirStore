@@ -15,17 +15,17 @@ public class Transaction
 	 */
 	private int id;
 	private Date date;
-	private String customerID=null;
-	private int discount;
+	private Customer customer;
+	private Discount discount;
 	private ArrayList<TransactionItem> itemList = new ArrayList<TransactionItem>();
 	private double cashAmount;
 
-	public int getDiscount()
+	public Discount getDiscount()
 	{
 		return discount;
 	}
 
-	public void setDiscount(int discount)
+	public void setDiscount(Discount discount)
 	{
 		this.discount = discount;
 	}
@@ -36,10 +36,10 @@ public class Transaction
 	{
 	}
 	
-	public Transaction(int id,String customerID, Date date)
+	public Transaction(int id,Customer customer, Date date)
 	{
 		this.id = id;
-		this.customerID=customerID;
+		this.customer=customer;
 		this.date = date;
 	}
 
@@ -149,7 +149,7 @@ public class Transaction
 
 	public double calcDiscountPrice()
 	{
-		return calcTotalPrice() * (100 - discount) / 100;
+		return calcTotalPrice() * (100 - discount.getPercent()) / 100;
 	}
 
 	public double calcChange()
@@ -162,13 +162,13 @@ public class Transaction
 		return (int) (calcDiscountPrice() / 100);
 	}
 
-	public String getCustomerID()
+	public Customer getCustomer()
 	{
-		return customerID;
+		return customer;
 	}
 
-	public void setCustomerID(String costomerID)
+	public void setCustomer(Customer customer)
 	{
-		this.customerID = costomerID;
+		this.customer = customer;
 	}
 }///~

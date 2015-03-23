@@ -40,4 +40,8 @@ public class Member extends Customer {
 		return name + "," + memberID + "," + loyaltyPoint;
 	}
 
+	@Override
+	public String getID() {
+		return memberID;
+	}
 }

@@ -12,8 +12,15 @@ public abstract class Customer implements Serializable {
 	public String name;
 
 	// public List<Discount> getDiscount();
+
+	public Customer() {
+
+	}
+	
 	public Customer(String name) {
 		this.name = name;
 	}
+	
+	public abstract String getID();
 
 }

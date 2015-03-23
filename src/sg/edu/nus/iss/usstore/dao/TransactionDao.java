@@ -6,8 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.ProductMgr;
+import sg.edu.nus.iss.usstore.domain.Public;
 import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
@@ -85,8 +87,14 @@ public class TransactionDao extends BaseDao
 					// System.out.println("1");
 				} else
 				{
+					Customer customer;
+					if (customerID.equalsIgnoreCase("PUBLIC"))
+						customer = new Public();
+					else 
+						customer= store.getMemberById(customerID);
+					
 					TransactionItem ti = new TransactionItem(product,price,qty);
-					Transaction t = new Transaction(id, customerID, date);
+					Transaction t = new Transaction(id, customer, date);
 					t.addItem(product,price,qty);
 					dataList.add(t);
 					tflag = t;
@@ -127,7 +135,7 @@ public class TransactionDao extends BaseDao
 				StringBuffer line;
 				line = new StringBuffer(dataList.get(i).getId() + Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getProduct().getProductId() + Util.C_Separator);
-				line.append(dataList.get(i).getCustomerID() + Util.C_Separator);
+				line.append(dataList.get(i).getCustomer().getID() + Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getQty() + Util.C_Separator);
 				line.append(df.format(dataList.get(i).getDate())+Util.C_Separator);
 				line.append(dataList.get(i).getItemList().get(j).getPrice());

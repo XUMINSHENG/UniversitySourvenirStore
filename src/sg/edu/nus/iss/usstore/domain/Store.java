@@ -42,9 +42,8 @@ public class Store {
 	 * 
 	 */
 	public void saveData() throws IOException{
-		//
 		memberMgr.writeFile();
-		//transactionMgr.
+		transactionMgr.save();
 		productMgr.saveData();
 		categoryMgr.saveData();
 		discountMgr.saveData();
@@ -81,7 +80,8 @@ public class Store {
 		
 		Customer customer;
 		Discount discount;
-				
+		
+		// get customer info
 		if (memberId==null){
 			customer = new Public("");
 		}else{
@@ -89,14 +89,14 @@ public class Store {
 			if (customer == null) {
 				throw new DataNotFoundException("Member",memberId);
 			}
-			// invoke transaction.setCustomer();
-			// transaction.setCostomerID(costomerID);
-			
 		}
 		
+		// get max discount
+		discount = discountMgr.getMaxDiscount(customer);
 		
-		// discount = customer.getDiscount(discountMgr.getDiscountList());
-		// invoke transaction.setDiscount();
+		//set customer and discount to transaction
+		transaction.setCustomer(customer);
+		transaction.setDiscount(discount);
 		
 		return transaction;
 	}
@@ -167,8 +167,13 @@ public class Store {
 		}
 		
 		// update Member's loyalty point
-		if (transaction.getCustomerID() != "public"){
-			
+		Customer customer = transaction.getCustomer();
+		if (customer instanceof Member){
+			Member member = (Member) customer;
+			int originalPoint = member.getLoyaltyPoint();
+			int currentPoint = originalPoint
+					- transaction.getRedeemedLoyaltyPoint() + transaction.calcGainedPoint();
+			member.setLoyaltyPoint(currentPoint);
 		}
 		
 		// check inventory
@@ -346,6 +351,7 @@ public class Store {
 	public ArrayList<Transaction> getTransactionByDate(Date date){
 		return transactionMgr.getTransactionListByDate(date);
 	}
+	
 
 	public ProductMgr getPm() {
 		return productMgr;
