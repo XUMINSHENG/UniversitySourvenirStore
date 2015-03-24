@@ -172,8 +172,8 @@ public class ProductsListPanel extends JPanel{
 				// TODO Auto-generated method stub
 				int index = productTable.getSelectedRow();
 				tableModel.removeRow(index);
-				manager.getStore().getPm().deleteProduct(index);
-				manager.getStore().getPm().showData();
+				manager.deleteProduct(index);
+				//manager.getStore().getPm().showData();
 //				deleteButton.setEnabled(false);
 //				modifyButton.setEnabled(false);
 			}
@@ -206,7 +206,7 @@ public class ProductsListPanel extends JPanel{
 	}
 	
 	public void refreshTable(){
-		tableModel.setDataVector(loadTableData(manager.getStore().getPm().getProductList()), columnNames);
+		tableModel.setDataVector(loadTableData(manager.getProductList()), columnNames);
 		tableModel.fireTableDataChanged();
 	}
 

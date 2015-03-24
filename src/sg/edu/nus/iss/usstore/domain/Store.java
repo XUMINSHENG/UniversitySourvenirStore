@@ -260,11 +260,8 @@ public class Store {
 	
 	public void modifyProduct(String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
-		// 
 		productMgr.modifyProduct(name, categoryMgr.getCategoryByCode(categoryCode), briefDescription
 				, quantityAvailable, price, barCode, threshold, orderQuantity,index);
-		
-		//
 		
 	}
 	/**
@@ -367,9 +364,6 @@ public class Store {
 	}
 	
 
-	public ProductMgr getPm() {
-		return productMgr;
-	}
 	
 	
 	

@@ -220,10 +220,6 @@ public class StoreApplication {
 		
 	}
 
-	public Store getStore() {
-		return store;
-	}
-
 	public StoreWindow getStoreWindow() {
 		return storeWindow;
 	}
