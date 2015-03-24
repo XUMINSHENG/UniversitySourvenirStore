@@ -293,11 +293,11 @@ public class Store {
 	
 	/**
 	 * 
-	 * @param productId
+	 * @param barCode
 	 * @return
 	 */
-	public Product getProductByBarCode(String productId){
-		return productMgr.getProductById(productId);
+	public Product getProductByBarCode(String barCode){
+		return productMgr.getProductByBarCode(barCode);
 	}
 	
 	public PurchaseOrder getPurchaseOrder(){

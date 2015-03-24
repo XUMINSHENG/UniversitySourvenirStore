@@ -170,7 +170,7 @@ public class StoreApplication {
 	
 	/**
 	 * 
-	 * @param productId
+	 * @param barCode
 	 * @return
 	 */
 	public Product getProductByBarCode(String barCode){
@@ -205,6 +205,7 @@ public class StoreApplication {
 		StoreApplication manager = new StoreApplication();
 		manager.startup();	
 		
+		/*
 		Transaction tr = manager.checkOut();
 		tr = manager.setBillCustomer(tr, "F42563743156");
 		
@@ -213,7 +214,7 @@ public class StoreApplication {
 		tr = manager.removeBillItem(tr, "MUG/1");
 		tr = manager.setPayment(tr, 200, 100);
 		tr = manager.confirmPayment(tr);
-		
+		*/
 		
 		System.out.println("helloworld");
 		

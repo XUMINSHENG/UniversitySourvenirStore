@@ -47,7 +47,7 @@ public class StoreWindow extends JFrame{
 	private ProductsListPanel productListPanel;
 	private CheckInventoryPanel checkInventoryPanel;
 	//private LoginPanel loginPanel;
-	//private CheckOutPanel checkOutPanel;
+	private CheckOutPanel checkOutPanel;
 	//private MemberListPanel memberListPanel;
 	//private ProductListPanel productListPanel;
 	//private CategoryListPanel categoryListPanel;
@@ -59,11 +59,13 @@ public class StoreWindow extends JFrame{
 		
 		setJMenuBar(createMenu());
 		this.cards = new JPanel(new CardLayout());
+		this.checkOutPanel = new CheckOutPanel(manager);
 		this.productListPanel = new ProductsListPanel(manager);
 		this.checkInventoryPanel = new CheckInventoryPanel(manager);
 		
 		//register cards with cardName
 		cards.add(createMainPanel(),"mainScreen");
+		cards.add(checkOutPanel,"checkOut");
 		cards.add(productListPanel,"productList");
 		cards.add(checkInventoryPanel,"checkInventory");
 		setContentPane(cards);
@@ -71,7 +73,7 @@ public class StoreWindow extends JFrame{
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addWindowListener(windorListener);
 		
-		setPreferredSize(new Dimension(500,600));
+		setPreferredSize(new Dimension(800,800));
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -80,7 +82,7 @@ public class StoreWindow extends JFrame{
 	
 	private WindowListener windorListener = new WindowAdapter (){
 		public void windowClosing (WindowEvent e) {
-			manager.shutdown();
+			exit();
         }
 	};
 	
@@ -186,7 +188,7 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("checkout");
-				//changeCard("memberList");
+				changeCard("checkOut");
 			}
 		});
 		p.add(button);
@@ -346,7 +348,9 @@ public class StoreWindow extends JFrame{
 	
 	public void exit(){
 		//dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
-		System.exit(EXIT_ON_CLOSE);
+		//System.exit(EXIT_ON_CLOSE);
+		manager.shutdown();
+		
 	}
 
 	public JPanel getCards() {
