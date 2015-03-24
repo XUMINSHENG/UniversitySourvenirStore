@@ -10,7 +10,6 @@ import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Public;
 import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
-import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
@@ -80,8 +79,6 @@ public class TransactionDao extends BaseDao
 				if (flag == id)
 				{
 					//TransactionItem ti = new TransactionItem(productID, qty);
-					
-					TransactionItem ti = new TransactionItem(product,price,qty);
 					tflag.addItem(product,price,qty);
 					// System.out.println("1");
 				} else
@@ -92,7 +89,6 @@ public class TransactionDao extends BaseDao
 					else 
 						customer= store.getMemberById(customerID);
 					
-					TransactionItem ti = new TransactionItem(product,price,qty);
 					Transaction t = new Transaction(id, customer, date);
 					t.addItem(product,price,qty);
 					dataList.add(t);
