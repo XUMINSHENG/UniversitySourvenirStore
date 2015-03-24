@@ -169,7 +169,6 @@ public class TransactionTest extends Transaction
 	{
 		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
-		Product product2 = pm.getProductByBarCode("6789");
 		t.addItem(product1,40.41,42);
 		t.removeItem(product1);
 		assertEquals(0,t.getItemList().size());

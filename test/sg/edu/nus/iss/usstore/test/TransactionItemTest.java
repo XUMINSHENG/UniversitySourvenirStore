@@ -31,7 +31,6 @@ public class TransactionItemTest extends TransactionItem
 	{
 		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
-		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		assertEquals(product1,ti.getProduct());
 		assertTrue(10.5==ti.getPrice());
@@ -43,7 +42,6 @@ public class TransactionItemTest extends TransactionItem
 	{
 		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
-		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		assertEquals(product1,ti.getProduct());
 	}
@@ -64,7 +62,6 @@ public class TransactionItemTest extends TransactionItem
 	{
 		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
-		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		assertTrue(10.5==ti.getPrice());
 	}
@@ -74,7 +71,6 @@ public class TransactionItemTest extends TransactionItem
 	{
 		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
-		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		ti.setPrice(888.99);
 		assertTrue(888.99==ti.getPrice());
@@ -85,7 +81,6 @@ public class TransactionItemTest extends TransactionItem
 	{
 		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
-		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		assertTrue(4==ti.getQty());
 	}
@@ -95,7 +90,6 @@ public class TransactionItemTest extends TransactionItem
 	{
 		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
-		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti = new TransactionItem(product1,10.5,4);
 		ti.setQty(99);
 		assertTrue(99==ti.getQty());
