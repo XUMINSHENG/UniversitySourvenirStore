@@ -10,10 +10,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -34,11 +32,8 @@ import javax.swing.table.TableColumn;
 
 import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Product;
-import sg.edu.nus.iss.usstore.domain.Store;
-import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
-
 
 public class CheckOutPanel extends JPanel
 {
@@ -50,6 +45,7 @@ public class CheckOutPanel extends JPanel
 	 * @version 0.8
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private JLabel JlMemberName;
 	private JLabel JlTotalPriceNum;
 	private JLabel JlDiscountNum;
@@ -66,31 +62,20 @@ public class CheckOutPanel extends JPanel
 	private JTable table;
 	private TableColumn column;
 
-	private DecimalFormat df = new DecimalFormat("#.00");
-	private Customer costomer;
-	private int discount = 10;
-	private String tempBarCode; 
+	private DecimalFormat df = new DecimalFormat("0.00");
 	private DefaultTableModel defaultModel = null;
+
+	private Customer customer = null;
 	private Product product = null;
-	private Vector v;
-	private static int i = 1;
-	private int flag = 0;
+	private int discount = 0;
 	private int scrollpanelwidth = 600;
 	private int scrollpanelheight = 400;
-
-	// ����и��е����ݱ����ڶ�ά����data��
-	private Object[][] data = {};
-
-	public Object[][] getData()
-	{
-		return data;
-	}
-
-	public void setData(Object[][] data)
-	{
-		this.data = data;
-	}
-	
+	private int flag = 0;
+	private static int i = 1;
+	private String tempBarCode;
+	private Vector v;
+	private Listener listener = new Listener();
+	private StoreApplication sa = null;
 
 	public void setOutputValue()
 	{
@@ -99,34 +84,37 @@ public class CheckOutPanel extends JPanel
 			totalPrice = totalPrice + (double) table.getValueAt(i, 5);
 		JlTotalPriceNum.setText(df.format(totalPrice));
 		JlDiscountNum.setText(Integer.toString(discount));
-		JlDiscountedPriceNum.setText(df.format(totalPrice - totalPrice * discount/100));
+		JlDiscountedPriceNum.setText(df.format(totalPrice - totalPrice
+				* discount / 100));
 	}
 
-	public void cancel()
+	public void cancelAll()
 	{
-		//refresh data
+		// refresh data
 		{
-			Vector v = new Vector();
 			v = defaultModel.getDataVector();
 			v.clear();
 			table.validate();
 			table.repaint();
-			i=1;
+			i = 1;
 		}
-		//refresh para
+		// refresh para
 		{
 			flag = 0;
-			discount = 0;	
+			discount = 0;
 		}
-		//refresh UI
+		// refresh UI
 		{
 			JlMemberName.setText(null);
 			JlTotalPriceNum.setText("00.00");
 			JlDiscountNum.setText("00.00");
 			JlDiscountedPriceNum.setText("00.00");
-			JlLoyalPointNum.setText("0");;
-			JlRestNum.setText("00.00");;
-			JlChangeNum.setText("00.00");;
+			JlLoyalPointNum.setText("0");
+			;
+			JlRestNum.setText("00.00");
+			;
+			JlChangeNum.setText("00.00");
+			;
 			JtBarCodeID.setText(null);
 			JtQuantity.setText(null);
 			JtMemberID.setText(null);
@@ -134,12 +122,11 @@ public class CheckOutPanel extends JPanel
 			JtCashNum.setText(null);
 			JlError.setText(null);
 		}
-		
 	}
-	
-	public CheckOutPanel(final StoreApplication sa)
-	{ // ʵ�ֹ��췽��
 
+	public CheckOutPanel(StoreApplication sa)
+	{ // ʵ�ֹ��췽��
+		this.sa = sa;
 		// OPeration
 		JPanel jpOperation = new JPanel();
 		this.add(jpOperation, BorderLayout.NORTH);
@@ -174,16 +161,8 @@ public class CheckOutPanel extends JPanel
 		JlMemberName = new JLabel("MEMBER  NAME");
 		JLabel JlgetMemberName = new JLabel("PUBLIC");
 		JButton JbMemberSubmit = new JButton("  Enter ");
-		JbMemberSubmit.addActionListener(new ActionListener()
-		{
-
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				//Member & discount
-				
-			}
-		});
+		JbMemberSubmit.setActionCommand("JbMemberSubmit");
+		JbMemberSubmit.addActionListener(listener);
 		jp2.setLayout(new GridLayout(1, 2));
 		JPanel jp2_1 = new JPanel();
 		JPanel jp2_2 = new JPanel();
@@ -216,54 +195,8 @@ public class CheckOutPanel extends JPanel
 		JButton JbProductSubmit = new JButton("Submit");
 		tempBarCode = JtBarCodeID.getText();
 		product = sa.getProductByBarCode(tempBarCode);
-		JbProductSubmit.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				flag = 1;
-				tempBarCode = JtBarCodeID.getText();
-				product = sa.getProductByBarCode(tempBarCode);
-				String tempqty = JtQuantity.getText();
-				if (tempBarCode.length() == 0)
-				{
-					JlError.setText("Bar Code can't be empty!");
-				} else if (tempqty.length() == 0)
-				{
-					JlError.setText("Quantity can't be empty!");
-				} else if (Integer.valueOf(JtQuantity.getText()).intValue() < 1)
-				{
-					JlError.setText("Quantity Format Error");
-				} else
-				{
-					
-					if (JlError.getText()=="No product!"||JlError.getText()=="Bar Code can't be empty!"||
-							JlError.getText()=="Quantity can't be empty!"||JlError.getText()=="Quantity Format Error"	)
-						{JlError.setText(null);}
-					if (product == null)
-					{
-						JlError.setText("No product!");
-						return;
-					}
-					
-
-					v = new Vector(5);
-					// TODO Auto-generated method stub
-					v.add(i++);
-					v.add(tempBarCode);
-					v.add(product.getName());
-					v.add(Integer.parseInt(tempqty));
-					v.add(product.getPrice());
-					v.add(product.getPrice() * Integer.parseInt(tempqty));
-					defaultModel.addRow(v);
-					table.revalidate();
-					JtBarCodeID.setText(null);
-					JtQuantity.setText(null);
-				}
-				flag = 0;
-				setOutputValue();
-			}
-		});
+		JbProductSubmit.setActionCommand("JbProductSubmit");
+		JbProductSubmit.addActionListener(listener);
 		jp4_1.add(JlQuantity);
 		jp4_1.add(JtQuantity);
 		jp4_2.add(JbProductSubmit);
@@ -317,7 +250,7 @@ public class CheckOutPanel extends JPanel
 
 		// jp9
 		jp9.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel JlPaid = new JLabel("Use Point");
+		JLabel JlPaid = new JLabel("Redeemed Point");
 		JtPaidNum = new JTextField(6);
 		JtPaidNum.setDocument(new DigitDocument());
 		JtPaidNum.getDocument().addDocumentListener(new DocumentListener()
@@ -340,14 +273,31 @@ public class CheckOutPanel extends JPanel
 							- tempLoyalPaidNum / 100));
 				}
 			}
-
 			public void removeUpdate(DocumentEvent e)
 			{
+				System.out.println(JtPaidNum.getText());
+				if (JtPaidNum.getText().length() != 0)
+				{
+					String tempLoyalPaid = JtPaidNum.getText();
 
+					Double tempLoyalPaidNum = Double.valueOf(tempLoyalPaid)
+							.doubleValue();
+					if (tempLoyalPaidNum < 1)
+					{
+						JlError.setText("Point Format Error!");
+						JlChangeNum.setText("**.**");
+					} else
+					{
+						double tempDiscountedPriceNum = Double.valueOf(
+								JlDiscountedPriceNum.getText()).doubleValue();
+						JlRestNum.setText(df.format(tempDiscountedPriceNum
+								- tempLoyalPaidNum / 100));
+					}
+				}
 			}
-
 			public void changedUpdate(DocumentEvent e)
 			{
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -383,7 +333,8 @@ public class CheckOutPanel extends JPanel
 					if (tempChange > 0)
 					{
 						JlChangeNum.setText(df.format(tempChange));
-						if (JlError.getText()=="Cash isn't Enough!"||JlError.getText()=="Cash Format Error!")
+						if (JlError.getText() == "Cash isn't Enough!"
+								|| JlError.getText() == "Cash Format Error!")
 						{
 							JlError.setText(null);
 						}
@@ -398,11 +349,37 @@ public class CheckOutPanel extends JPanel
 					JlChangeNum.setText("**.**");
 				}
 			}
-
 			public void removeUpdate(DocumentEvent e)
 			{
+				if (JtCashNum.getText().length() != 0)
+				{
+					String ScashNum = JtCashNum.getText();
+					double DcashNum = Double.valueOf(ScashNum).doubleValue();
+					if (DcashNum > 0)
+					{
+						double DchangeNum = Double.valueOf(JlRestNum.getText())
+								.doubleValue();
+						double tempChange = DcashNum - DchangeNum;
+						if (tempChange > 0)
+						{
+							JlChangeNum.setText(df.format(tempChange));
+							if (JlError.getText() == "Cash isn't Enough!"
+									|| JlError.getText() == "Cash Format Error!")
+							{
+								JlError.setText(null);
+							}
+						} else
+						{
+							JlError.setText("Cash isn't Enough!");
+							JlChangeNum.setText("**.**");
+						}
+					} else
+					{
+						JlError.setText("Cash Format Error!");
+						JlChangeNum.setText("**.**");
+					}
+				}
 			}
-
 			public void changedUpdate(DocumentEvent e)
 			{
 			}
@@ -420,10 +397,9 @@ public class CheckOutPanel extends JPanel
 		jpOutput.add(jp12);
 
 		// Table
-
 		String[] tableTitle = { "Num", "Bar Code", "Product", "Quantity",
 				"Price", "Total Price" };
-		defaultModel = new DefaultTableModel(data, tableTitle)
+		defaultModel = new DefaultTableModel(null, tableTitle)
 		{
 			public boolean isCellEditable(int row, int column)
 			{
@@ -453,7 +429,6 @@ public class CheckOutPanel extends JPanel
 			public void tableChanged(TableModelEvent e)
 			{
 				int row = e.getFirstRow();
-				// TODO Auto-generated method stub
 				if (flag == 0)
 				{
 					// System.out.println(defaultModel.getValueAt(row,3));
@@ -499,71 +474,24 @@ public class CheckOutPanel extends JPanel
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().setBackground(Color.white);
 		scrollPane.getViewport().add(table);
-	
+
 		this.add(scrollPane, BorderLayout.CENTER);
 
 		JPanel jpButton = new JPanel();
 		jpButton.setLayout(new GridLayout(7, 1));
 		JButton JbDelete = new JButton("    Delete    ");
 		JLabel JlBlank1 = new JLabel(" ");
-		JbDelete.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				// TODO Auto-generated method stub
-				if (table.getSelectedRow() == -1)
-				{
-					JlError.setText("Select a row");
-				} else
-				{
-					if (JlError.getText()=="Select a row")
-					{
-						JlError.setText(null);
-					}
-					int rowcount = defaultModel.getRowCount();
-					if (rowcount > 0)
-					{
-						Vector v = defaultModel.getDataVector();
-						v.remove(table.getSelectedRow());
-						i--;
-					}
-					table.revalidate();
-					setOutputValue();
-
-				}
-			}
-		});
+		JbDelete.setActionCommand("JbDelete");
+		JbDelete.addActionListener(listener);
 		JButton JbCancel = new JButton("    Cancel    ");
-		JbCancel.addActionListener(new ActionListener()
-		{
-
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				// TODO Auto-generated method stub
-				cancel();
-			}
-		});
+		JbCancel.setActionCommand("JbCancel");
+		JbCancel.addActionListener(listener);
 		JLabel JlBlank2 = new JLabel(" ");
 		JlError = new JLabel();
 		JLabel JlBlank3 = new JLabel(" ");
 		JButton JbFinish = new JButton("    Finish     ");
-		JbFinish.addActionListener(new ActionListener()
-		{
-
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				Transaction t = new Transaction();
-				t.setCustomer(costomer);
-				t.setDate(new Date());
-				//t.setDiscount(discount);
-				
-				
-			}
-
-		});
+		JbFinish.setActionCommand("JbFinish");
+		JbFinish.addActionListener(listener);
 		JlError.setText("");
 		JlError.setForeground(Color.RED);
 		jpButton.add(JlError);
@@ -576,7 +504,96 @@ public class CheckOutPanel extends JPanel
 		this.add(jpButton, BorderLayout.EAST);
 	}
 
-	public static void main(String[] args) throws InterruptedException, IOException, DataFileException
+	class Listener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			if (e.getActionCommand().equals("JbMemberSubmit"))
+			{
+				System.out.println("JbMemberSubmit");
+			}
+			if (e.getActionCommand().equals("JbProductSubmit"))
+			{
+				flag = 1;
+				tempBarCode = JtBarCodeID.getText();
+				product = sa.getProductByBarCode(tempBarCode);
+				String tempqty = JtQuantity.getText();
+				if (tempBarCode.length() == 0)
+				{
+					JlError.setText("Bar Code can't be empty!");
+				} else if (tempqty.length() == 0)
+				{
+					JlError.setText("Quantity can't be empty!");
+				} else if (Integer.valueOf(JtQuantity.getText()).intValue() < 1)
+				{
+					JlError.setText("Quantity Format Error");
+				} else
+				{
+
+					if (JlError.getText() == "No product!"
+							|| JlError.getText() == "Bar Code can't be empty!"
+							|| JlError.getText() == "Quantity can't be empty!"
+							|| JlError.getText() == "Quantity Format Error")
+					{
+						JlError.setText(null);
+					}
+					if (product == null)
+					{
+						JlError.setText("No product!");
+						return;
+					}
+
+					v = new Vector(5);
+					// TODO Auto-generated method stub
+					v.add(i++);
+					v.add(tempBarCode);
+					v.add(product.getName());
+					v.add(Integer.parseInt(tempqty));
+					v.add(product.getPrice());
+					v.add(product.getPrice() * Integer.parseInt(tempqty));
+					defaultModel.addRow(v);
+					table.revalidate();
+					JtBarCodeID.setText(null);
+					JtQuantity.setText(null);
+				}
+				flag = 0;
+				setOutputValue();
+			}
+			if (e.getActionCommand().equals("JbDelete"))
+			{
+				if (table.getSelectedRow() == -1)
+				{
+					JlError.setText("Select a row");
+				} else
+				{
+					if (JlError.getText() == "Select a row")
+					{
+						JlError.setText(null);
+					}
+					int rowcount = defaultModel.getRowCount();
+					if (rowcount > 0)
+					{
+						Vector v = defaultModel.getDataVector();
+						v.remove(table.getSelectedRow());
+						i--;
+					}
+					table.revalidate();
+					setOutputValue();
+				}
+			}
+			if (e.getActionCommand().equals("JbCancel"))
+			{
+				cancelAll();
+			}
+			if (e.getActionCommand().equals("JbFinish"))
+			{
+				//
+			}
+		}
+	}
+
+	public static void main(String[] args) throws InterruptedException,
+			IOException, DataFileException
 	{
 		JFrame jf = new JFrame();
 		jf.setVisible(true);
@@ -586,5 +603,5 @@ public class CheckOutPanel extends JPanel
 		jf.add(ck);
 		ck.updateUI();
 	}
-	
-}///~
+
+}// /~

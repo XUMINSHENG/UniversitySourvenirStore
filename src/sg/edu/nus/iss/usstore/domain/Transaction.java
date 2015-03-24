@@ -13,7 +13,8 @@ public class Transaction
 	 * @author A0136010A
 	 * @version 1.0
 	 */
-	private int id;
+	private int id = 0;
+	private int redeemedLoyaltyPoint;;
 	private Date date;
 	private Customer customer;
 	private Discount discount;
@@ -29,8 +30,6 @@ public class Transaction
 	{
 		this.discount = discount;
 	}
-
-	private int redeemedLoyaltyPoint;
 
 	public Transaction()
 	{
@@ -92,29 +91,13 @@ public class Transaction
 	{
 		this.redeemedLoyaltyPoint = redeemedLoyaltyPoint;
 	}
-	
-//	public void addItem(TransactionItem transactionItem)
-//	{
-//		
-//		if (itemList.contains(transactionItem))
-//		{
-//			int i = itemList.indexOf(transactionItem);
-//			int add = itemList.get(i).getQty();
-//			itemList.get(i).setQty(transactionItem.getQty() + add);
-//		} else
-//		{
-//			itemList.add(transactionItem);
-//		}
-//	}
-//	
+		
 	public void addItem(Product product,int qty)
 	{
 		TransactionItem transactionitem = new TransactionItem(product,product.getPrice(),qty);
 		if (itemList.contains(transactionitem))
 		{
-			int i = itemList.indexOf(transactionitem);
-			int add = itemList.get(i).getQty();
-			itemList.get(i).setQty(transactionitem.getQty() + add);
+			
 		} else
 		{
 			itemList.add(transactionitem);
