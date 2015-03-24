@@ -122,7 +122,7 @@ public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException 
 			//discList=testDao.loadDataFromFile();
 			DiscountMgr discountMgrObject= new DiscountMgr();
 			
-			mDisc=discountMgrObject.getMaxDiscount("abc567", 9);
+			mDisc=discountMgrObject.getMaxDiscount("Public", 1);
 		/*	discList=discountMgrObject.getDiscountlist();
 			for(Discount d:discList)
 			{
