@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -31,9 +32,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import sg.edu.nus.iss.usstore.domain.Customer;
+import sg.edu.nus.iss.usstore.domain.Discount;
 import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
+import sg.edu.nus.iss.usstore.util.Util;
 
 public class CheckOutPanel extends JPanel
 {
@@ -67,11 +72,12 @@ public class CheckOutPanel extends JPanel
 
 	private Customer customer = null;
 	private Product product = null;
-	private int discount = 0;
+	private Discount discount;
 	private int scrollpanelwidth = 600;
 	private int scrollpanelheight = 400;
 	private int flag = 0;
 	private static int i = 1;
+	private double amount = 0;
 	private String tempBarCode;
 	private Vector v;
 	private Listener listener = new Listener();
@@ -83,9 +89,9 @@ public class CheckOutPanel extends JPanel
 		for (int i = 0; i < table.getModel().getRowCount(); i++)
 			totalPrice = totalPrice + (double) table.getValueAt(i, 5);
 		JlTotalPriceNum.setText(df.format(totalPrice));
-		JlDiscountNum.setText(Integer.toString(discount));
+		JlDiscountNum.setText(Double.toString(discount.getPercent()));
 		JlDiscountedPriceNum.setText(df.format(totalPrice - totalPrice
-				* discount / 100));
+				* discount.getPercent() / 100));
 	}
 
 	public void cancelAll()
@@ -101,7 +107,7 @@ public class CheckOutPanel extends JPanel
 		// refresh para
 		{
 			flag = 0;
-			discount = 0;
+			discount.getPercent();
 		}
 		// refresh UI
 		{
@@ -587,7 +593,20 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbFinish"))
 			{
-				//
+				Transaction t = new Transaction(0,customer,new Date());
+				try
+				{
+					if (JlDiscountedPriceNum.getText().length()!=0)
+					t.setCashAmount(Util.castDouble(JlDiscountedPriceNum.getText()));
+					if (discount.getPercent()!=0)
+					t.setDiscount(discount);
+					if (JtPaidNum.getText().length()!=0)
+					t.setRedeemedLoyaltyPoint(Util.castInt(JtPaidNum.getText()));
+				} catch (DataInputException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 	}
