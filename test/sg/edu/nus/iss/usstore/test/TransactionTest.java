@@ -1,7 +1,9 @@
 //TransactionTest.java
 package sg.edu.nus.iss.usstore.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,9 +11,11 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import sg.edu.nus.iss.usstore.domain.Category;
+import sg.edu.nus.iss.usstore.domain.Member;
+import sg.edu.nus.iss.usstore.domain.MemberDiscount;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.ProductMgr;
+import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
@@ -28,7 +32,9 @@ public class TransactionTest extends Transaction
 	 */
 
 	Date date = new Date();
-	Transaction t = new Transaction(1,"costumer",date);
+	MemberDiscount discount = new MemberDiscount("1", "2", date,3,4.5,"6");
+	Member customer = new Member("1", "2", 3);
+	Transaction t = new Transaction(1,customer,date);
 	@Test
 	public void testTransaction()
 	{
@@ -41,9 +47,9 @@ public class TransactionTest extends Transaction
 	public void testTransactionIntStringDate()
 	{
 		Date date = new Date();
-		Transaction t2 = new Transaction(1,"customer",date);
+		Transaction t2 = new Transaction(1,customer,date);
 		assertEquals(1,t2.getId());
-		assertEquals("customer",t2.getCustomerID());
+		assertEquals(customer,t2.getCustomer());
 		assertEquals(date,t2.getDate());	
 	}
 
@@ -77,7 +83,7 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testSetItemList() throws IOException, DataFileException, DataInputException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti1 = new TransactionItem(product1,2.3,4);
@@ -92,7 +98,7 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testGetItemList() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti1 = new TransactionItem(product1,2.3,4);
@@ -142,7 +148,7 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testAddItemProductInt() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		t.addItem(product1, 2);
 		assertEquals(t.getItemList().get(0).getProduct(),product1);
@@ -151,7 +157,7 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testAddItemProductDoubleInt() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		t.addItem(product1,40.41,42);
 		Product product2 = t.getItemList().get(0).getProduct();
@@ -161,7 +167,7 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testRemoveItem() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr();
+		ProductMgr pm  = new ProductMgr(new Store());
 		Product product1 = pm.getProductByBarCode("1234");
 		Product product2 = pm.getProductByBarCode("6789");
 		t.addItem(product1,40.41,42);
@@ -175,7 +181,7 @@ public class TransactionTest extends Transaction
 		ProductMgr pm = null;
 		try
 		{
-			pm = new ProductMgr();
+			pm = new ProductMgr(new Store());
 		} catch (IOException | DataFileException e)
 		{
 			// TODO Auto-generated catch block
@@ -196,7 +202,7 @@ public class TransactionTest extends Transaction
 		ProductMgr pm = null;
 		try
 		{
-			pm = new ProductMgr();
+			pm = new ProductMgr(new Store());
 		} catch (IOException | DataFileException e)
 		{
 			// TODO Auto-generated catch block
@@ -208,8 +214,8 @@ public class TransactionTest extends Transaction
 		t.addItem(p, 2);
 		t.addItem(p2, 3);
 		t.addItem(p3, 4);
-		t.setDiscount(10);
-		assertTrue((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/100==t.calcDiscountPrice());
+		t.setDiscount(discount);
+		assertTrue((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - discount.getPercent())/100==t.calcDiscountPrice());
 	}
 
 	@Test
@@ -219,7 +225,7 @@ public class TransactionTest extends Transaction
 		t.setCashAmount(500.20);
 		try
 		{
-			pm = new ProductMgr();
+			pm = new ProductMgr(new Store());
 		} catch (IOException | DataFileException e)
 		{
 			// TODO Auto-generated catch block
@@ -231,8 +237,8 @@ public class TransactionTest extends Transaction
 		t.addItem(p, 2);
 		t.addItem(p2, 3);
 		t.addItem(p3, 4);
-		t.setDiscount(10);
-		assertTrue((500.20-(p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/100)==t.calcChange());
+		t.setDiscount(discount);
+		assertTrue((500.20-(p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - discount.getPercent())/100)==t.calcChange());
 	}
 
 	@Test
@@ -241,7 +247,7 @@ public class TransactionTest extends Transaction
 		ProductMgr pm = null;
 		try
 		{
-			pm = new ProductMgr();
+			pm = new ProductMgr(new Store());
 		} catch (IOException | DataFileException e)
 		{
 			// TODO Auto-generated catch block
@@ -253,22 +259,22 @@ public class TransactionTest extends Transaction
 		t.addItem(p, 2);
 		t.addItem(p2, 3);
 		t.addItem(p3, 4);
-		t.setDiscount(10);
+		t.setDiscount(discount);
 		assertTrue((int)((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/10000)==t.calcGainedPoint());
 	}
 
 	@Test
 	public void testGetCostomerID()
 	{
-		t.setCustomerID("customer1");
-		assertEquals("customer1",t.getCustomerID());
+		t.setCustomer(customer);
+		assertEquals(customer,t.getCustomer());
 	}
 
 	@Test
 	public void testSetCostomerID()
 	{
-		t.setCustomerID("customer1");
-		assertEquals("customer1",t.getCustomerID());
+		t.setCustomer(customer);
+		assertEquals(customer,t.getCustomer());
 	}
 
 }///~

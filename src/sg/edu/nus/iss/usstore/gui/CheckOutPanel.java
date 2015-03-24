@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -33,6 +34,9 @@ import javax.swing.table.TableColumn;
 
 import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.Store;
+import sg.edu.nus.iss.usstore.domain.Transaction;
+import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
 
 
@@ -551,15 +555,12 @@ public class CheckOutPanel extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// TODO Auto-generated method stub
-				try
-				{
-					table.print();
-				} catch (PrinterException e1)
-				{
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				Transaction t = new Transaction();
+				t.setCustomer(costomer);
+				t.setDate(new Date());
+				//t.setDiscount(discount);
+				
+				
 			}
 
 		});
@@ -575,13 +576,12 @@ public class CheckOutPanel extends JPanel
 		this.add(jpButton, BorderLayout.EAST);
 	}
 
-	public static void main(String[] args) throws InterruptedException
+	public static void main(String[] args) throws InterruptedException, IOException, DataFileException
 	{
 		JFrame jf = new JFrame();
 		jf.setVisible(true);
 		jf.setSize(800, 600);
 		StoreApplication sa = new StoreApplication();
-		System.out.print(sa.getProductByBarCode("1234"));
 		CheckOutPanel ck = new CheckOutPanel(sa);
 		jf.add(ck);
 		ck.updateUI();
