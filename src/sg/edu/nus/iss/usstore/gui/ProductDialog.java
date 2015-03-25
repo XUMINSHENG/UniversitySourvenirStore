@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import sg.edu.nus.iss.usstore.domain.*;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
+import sg.edu.nus.iss.usstore.util.StringDocument;
 
 public class ProductDialog extends JDialog{
 
@@ -91,15 +92,18 @@ public class ProductDialog extends JDialog{
 		
 		loadCategoryList();
 		nameText = new JTextField();
+		nameText.setDocument(new StringDocument());
 		idText = new JTextField();
 		idText.setEditable(false);
 		//categoryText = new JTextField();
 		descriptionText = new JTextField();
+		descriptionText.setDocument(new StringDocument());
 		priceText = new JTextField();
 		priceText.setDocument(new DigitDocument());
 		quantityText = new JTextField();
 		quantityText.setDocument(new DigitDocument());
 		barCodeText = new JTextField();
+		barCodeText.setDocument(new StringDocument());
 		reorderQtyText = new JTextField();
 		reorderQtyText.setDocument(new DigitDocument());
 		orderQtyText = new JTextField();

@@ -5,20 +5,20 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 /*
- * Only can input digit and letter to JTextFeild
+ * Limit input comma to JTextField
  * 
- * @ XIE JIABAO
+ *  @ XIE JIABAO
  */
 
-public class LetterAndDigtilDocument extends PlainDocument{
+public class StringDocument extends PlainDocument{
+
+private int limitedLength;
 	
-	private int limitedLength;
-	
-	public LetterAndDigtilDocument(){
+	public StringDocument(){
 		super();
 	}
 	
-	public LetterAndDigtilDocument(int length){
+	public StringDocument(int length){
 		super();
 		this.limitedLength = length;
 	}
@@ -30,10 +30,11 @@ public class LetterAndDigtilDocument extends PlainDocument{
 		}
 		if(limitedLength<=0){
 			char[] upper = str.toCharArray();  
-            int length = 0;  
+            int length = 0;
+            Character comma = new Character(',');
             for (int i = 0; i < upper.length; i++)
             {  
-            	if (Character.isLetterOrDigit(upper[i]))
+            	if (!comma.equals(upper[i]))
                 {  
                     upper[length++] = upper[i];
                 }  
@@ -43,9 +44,10 @@ public class LetterAndDigtilDocument extends PlainDocument{
 			if(this.getLength()+str.length()<=limitedLength){
 				char[] upper = str.toCharArray();  
 				int length = 0;  
+				Character comma = new Character(',');
 				for (int i = 0; i < upper.length; i++)
 				{  
-					if (Character.isLetterOrDigit(upper[i]))
+					if (!comma.equals(upper[i]))
 					{  
 						upper[length++] = upper[i];  
 					}  
