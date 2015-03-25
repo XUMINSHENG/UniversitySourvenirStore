@@ -82,6 +82,7 @@ public class CheckOutPanel extends JPanel
 	private Vector v;
 	private Listener listener = new Listener();
 	private StoreApplication sa = null;
+	private Transaction transaction;
 
 	public void setOutputValue()
 	{
@@ -89,9 +90,19 @@ public class CheckOutPanel extends JPanel
 		for (int i = 0; i < table.getModel().getRowCount(); i++)
 			totalPrice = totalPrice + (double) table.getValueAt(i, 5);
 		JlTotalPriceNum.setText(df.format(totalPrice));
-		JlDiscountNum.setText(Double.toString(discount.getPercent()));
-		JlDiscountedPriceNum.setText(df.format(totalPrice - totalPrice
-				* discount.getPercent() / 100));
+		//JlDiscountNum.setText(Double.toString(discount.getPercent()));
+		//JlDiscountedPriceNum.setText(df.format(totalPrice - totalPrice
+		//		* discount.getPercent() / 100));
+	}
+
+	public Transaction getTransaction()
+	{
+		return transaction;
+	}
+
+	public void setTransaction(Transaction transaction)
+	{
+		this.transaction = transaction;
 	}
 
 	public void cancelAll()
@@ -516,7 +527,9 @@ public class CheckOutPanel extends JPanel
 		{
 			if (e.getActionCommand().equals("JbMemberSubmit"))
 			{
-				System.out.println("JbMemberSubmit");
+				transaction = sa.setBillCustomer(transaction, "F42563753156");
+				System.out.println(transaction.getCustomer().name);
+				
 			}
 			if (e.getActionCommand().equals("JbProductSubmit"))
 			{
@@ -593,15 +606,14 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbFinish"))
 			{
-				Transaction t = new Transaction(0,customer,new Date());
 				try
 				{
 					if (JlDiscountedPriceNum.getText().length()!=0)
-					t.setCashAmount(Util.castDouble(JlDiscountedPriceNum.getText()));
+					transaction.setCashAmount(Util.castDouble(JlDiscountedPriceNum.getText()));
 					if (discount.getPercent()!=0)
-					t.setDiscount(discount);
+					transaction.setDiscount(discount);
 					if (JtPaidNum.getText().length()!=0)
-					t.setRedeemedLoyaltyPoint(Util.castInt(JtPaidNum.getText()));
+					transaction.setRedeemedLoyaltyPoint(Util.castInt(JtPaidNum.getText()));
 				} catch (DataInputException e1)
 				{
 					// TODO Auto-generated catch block

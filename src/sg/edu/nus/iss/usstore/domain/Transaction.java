@@ -4,6 +4,8 @@ package sg.edu.nus.iss.usstore.domain;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
+
 public class Transaction
 {
 	/**
@@ -14,12 +16,21 @@ public class Transaction
 	 * @version 1.0
 	 */
 	private int id = 0;
-	private int redeemedLoyaltyPoint;;
+	private int redeemedLoyaltyPoint;
 	private Date date;
 	private Customer customer;
 	private Discount discount;
 	private ArrayList<TransactionItem> itemList = new ArrayList<TransactionItem>();
-	private double cashAmount;
+	
+	private double cashAmount = 0;
+	private double totalPrice = 0;
+	private double discountedPirce = 0;
+	private int gainedPoint = 0;
+	private double rest = 0;
+	private double change = 0;
+	
+	private static final double DOLLAR_TO_POINT = 0.1;
+	private static final double POINTS_TO_DOLLAR = 0.05;
 
 	public Discount getDiscount()
 	{
@@ -42,6 +53,16 @@ public class Transaction
 		this.date = date;
 	}
 
+	public Customer getCustomer()
+	{
+		return customer;
+	}
+
+	public void setCustomer(Customer customer)
+	{
+		this.customer = customer;
+	}
+	
 	public int getId()
 	{
 		return id;
@@ -91,7 +112,8 @@ public class Transaction
 	{
 		this.redeemedLoyaltyPoint = redeemedLoyaltyPoint;
 	}
-		
+	
+	
 	public void addItem(Product product,int qty)
 	{
 		TransactionItem transactionitem = new TransactionItem(product,product.getPrice(),qty);
@@ -107,7 +129,13 @@ public class Transaction
 	public void addItem(Product product,double price,int qty)
 	{
 		TransactionItem transactionitem = new TransactionItem(product,price,qty);
-		itemList.add(transactionitem);
+		if (itemList.contains(transactionitem))
+		{
+			
+		} else
+		{
+			itemList.add(transactionitem);
+		}
 	}
 
 	public void removeItem(Product product)
@@ -127,31 +155,32 @@ public class Transaction
 			TransactionItem it = (TransactionItem) itemList.get(i);
 			sum = sum + it.calculateAmount();
 		}
+		sum = totalPrice;
 		return sum;
 	}
 
 	public double calcDiscountPrice()
 	{
-		return calcTotalPrice() * (100 - discount.getPercent()) / 100;
+		discountedPirce = calcTotalPrice() * (100 - discount.getPercent()) / 100;
+		return discountedPirce;
 	}
 
 	public double calcChange()
 	{
-		return cashAmount - calcDiscountPrice();
+		change =  cashAmount - calcRest();
+		return change;
 	}
 
 	public int calcGainedPoint()
 	{
-		return (int) (calcDiscountPrice() / 100);
+		gainedPoint = (int) (calcRest()*DOLLAR_TO_POINT);
+		return gainedPoint;
 	}
 
-	public Customer getCustomer()
+	public double calcRest()
 	{
-		return customer;
+		rest = discountedPirce - redeemedLoyaltyPoint*POINTS_TO_DOLLAR;
+		return rest;
 	}
-
-	public void setCustomer(Customer customer)
-	{
-		this.customer = customer;
-	}
+	
 }///~

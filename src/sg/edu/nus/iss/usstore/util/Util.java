@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.usstore.util;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,6 +18,8 @@ public class Util {
 	public static final String C_Separator = ",";
 		
 	public static final String C_Date_Format = "yyyy-MM-dd";
+	
+	public static final DecimalFormat df = new DecimalFormat("0.00");
 	
 	/**
 	 * throw Exception when Component's text contains "," 
@@ -120,6 +123,16 @@ public class Util {
 		cal.setTime(date);
 		cal.add(Calendar.DATE, period);
 		return cal.getTime();
+	}
+	
+	/**
+	 * 
+	 * @param price
+	 * @return
+	 */
+	public static String priceFormat(double price)
+	{
+		return df.format(price);
 	}
 	
 	}
