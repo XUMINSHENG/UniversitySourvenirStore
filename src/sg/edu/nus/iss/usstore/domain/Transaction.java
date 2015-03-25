@@ -155,8 +155,8 @@ public class Transaction
 			TransactionItem it = (TransactionItem) itemList.get(i);
 			sum = sum + it.calculateAmount();
 		}
-		sum = totalPrice;
-		return sum;
+		totalPrice = sum;
+		return totalPrice;
 	}
 
 	public double calcDiscountPrice()

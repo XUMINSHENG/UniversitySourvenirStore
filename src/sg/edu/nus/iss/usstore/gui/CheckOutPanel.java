@@ -10,13 +10,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -35,7 +33,7 @@ import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Discount;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Transaction;
-import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
 import sg.edu.nus.iss.usstore.util.Util;
@@ -76,25 +74,67 @@ public class CheckOutPanel extends JPanel
 	private int scrollpanelwidth = 600;
 	private int scrollpanelheight = 400;
 	private int flag = 0;
-	private static int i = 1;
 	private double amount = 0;
 	private String tempBarCode;
-	private Vector v;
+	private Vector vector = new Vector();
 	private Listener listener = new Listener();
 	private StoreApplication sa = null;
 	private Transaction transaction;
 
 	public void setOutputValue()
 	{
-		double totalPrice = 0;
-		for (int i = 0; i < table.getModel().getRowCount(); i++)
-			totalPrice = totalPrice + (double) table.getValueAt(i, 5);
-		JlTotalPriceNum.setText(df.format(totalPrice));
-		//JlDiscountNum.setText(Double.toString(discount.getPercent()));
-		//JlDiscountedPriceNum.setText(df.format(totalPrice - totalPrice
-		//		* discount.getPercent() / 100));
+		JlTotalPriceNum.setText(df.format(transaction.calcTotalPrice()));
+		JlDiscountNum.setText(Double.toString(transaction.getDiscount().getPercent()));
+		JlDiscountedPriceNum.setText(df.format(transaction.calcDiscountPrice()));
+	}
+	
+	public void tableDataBinding()
+	{	
+		flag=1;
+		ArrayList itemList = transaction.getItemList();
+		Vector dataVector = defaultModel.getDataVector();
+		dataVector.clear();
+		
+		for (int i = 0;i< itemList.size();i++)
+		{
+			Vector subVector = new Vector();
+			subVector.add(i+1);
+			TransactionItem transactionitem = (TransactionItem) itemList.get(i);
+			product = transactionitem.getProduct();
+			subVector.add(product.getBarCodeNumber());
+			subVector.add(product.getName());
+			subVector.add(Integer.toString(transactionitem.getQty()));
+			subVector.add(product.getPrice());
+			subVector.add(transactionitem.getQty()*product.getPrice());
+			defaultModel.addRow(subVector);
+		}
+		table.validate();
+		table.repaint();
+		flag=0;
+		setOutputValue();
 	}
 
+	public void addProduct(ArrayList<TransactionItem> arrayList,int qty)
+	{
+		int productAddFlag = -1;
+		for (int m = 0;m < arrayList.size();m++)
+		{
+			if(arrayList.get(m).getProduct()==product)
+			{
+				productAddFlag = m;
+			}
+		}
+		if (productAddFlag==-1)
+		{
+			arrayList.add(new TransactionItem(product,product.getPrice(),qty));
+		}
+		else
+		{
+			TransactionItem tempTransactionItem = arrayList.get(productAddFlag);
+			tempTransactionItem.setQty(tempTransactionItem.getQty()+qty);
+		}
+	}
+	
 	public Transaction getTransaction()
 	{
 		return transaction;
@@ -109,29 +149,25 @@ public class CheckOutPanel extends JPanel
 	{
 		// refresh data
 		{
-			v = defaultModel.getDataVector();
-			v.clear();
+			vector = defaultModel.getDataVector();
+			vector.clear();
 			table.validate();
 			table.repaint();
-			i = 1;
 		}
 		// refresh para
 		{
 			flag = 0;
-			discount.getPercent();
+			transaction.getDiscount().getPercent();
 		}
 		// refresh UI
 		{
 			JlMemberName.setText(null);
-			JlTotalPriceNum.setText("00.00");
-			JlDiscountNum.setText("00.00");
-			JlDiscountedPriceNum.setText("00.00");
+			JlTotalPriceNum.setText(Double.toString(transaction.calcTotalPrice()));
+			JlDiscountNum.setText(Double.toString(transaction.getDiscount().getPercent()));
+			JlDiscountedPriceNum.setText(Double.toString(transaction.calcDiscountPrice()));
 			JlLoyalPointNum.setText("0");
-			;
-			JlRestNum.setText("00.00");
-			;
-			JlChangeNum.setText("00.00");
-			;
+			JlRestNum.setText(Double.toString(transaction.calcRest()));
+			JlChangeNum.setText(Double.toString(transaction.calcChange()));
 			JtBarCodeID.setText(null);
 			JtQuantity.setText(null);
 			JtMemberID.setText(null);
@@ -448,24 +484,14 @@ public class CheckOutPanel extends JPanel
 				int row = e.getFirstRow();
 				if (flag == 0)
 				{
-					// System.out.println(defaultModel.getValueAt(row,3));
-					// System.out.println(defaultModel.getValueAt(row,4));
-					int num = Integer.valueOf(
-							(String) defaultModel.getValueAt(row, 3))
-							.intValue();
-					double price = (double) defaultModel.getValueAt(row, 4);
-
-					Vector v1 = defaultModel.getDataVector();
-					// System.out.print(v1);
-					Vector v2 = (Vector) v1.get(e.getFirstRow());
-					v2.set(5, num * price);
-					// System.out.print(v2);
-					table.validate();
-					table.repaint();
+					int num = Integer.valueOf((String) defaultModel.getValueAt(row, 3)).intValue();
+					transaction.getItemList().get(row).setQty(num);
+					tableDataBinding();
 				}
 				setOutputValue();
 			}
 		});
+		
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer()
 		{
 			public Component getTableCellRendererComponent(JTable table,
@@ -480,6 +506,7 @@ public class CheckOutPanel extends JPanel
 						isSelected, hasFocus, row, column);
 			}
 		};
+		
 		for (int i = 0; i <= 5; i++)
 		{
 			table.getColumn(tableTitle[i]).setCellRenderer(tcr);
@@ -537,6 +564,7 @@ public class CheckOutPanel extends JPanel
 				tempBarCode = JtBarCodeID.getText();
 				product = sa.getProductByBarCode(tempBarCode);
 				String tempqty = JtQuantity.getText();
+				int intqty = Integer.parseInt(tempqty);
 				if (tempBarCode.length() == 0)
 				{
 					JlError.setText("Bar Code can't be empty!");
@@ -561,17 +589,9 @@ public class CheckOutPanel extends JPanel
 						JlError.setText("No product!");
 						return;
 					}
-
-					v = new Vector(5);
-					// TODO Auto-generated method stub
-					v.add(i++);
-					v.add(tempBarCode);
-					v.add(product.getName());
-					v.add(Integer.parseInt(tempqty));
-					v.add(product.getPrice());
-					v.add(product.getPrice() * Integer.parseInt(tempqty));
-					defaultModel.addRow(v);
-					table.revalidate();
+					ArrayList<TransactionItem> tempTransactionList = transaction.getItemList();
+					addProduct(tempTransactionList,intqty);
+					tableDataBinding();
 					JtBarCodeID.setText(null);
 					JtQuantity.setText(null);
 				}
@@ -592,9 +612,8 @@ public class CheckOutPanel extends JPanel
 					int rowcount = defaultModel.getRowCount();
 					if (rowcount > 0)
 					{
-						Vector v = defaultModel.getDataVector();
-						v.remove(table.getSelectedRow());
-						i--;
+						transaction.getItemList().remove(table.getSelectedRow());
+						tableDataBinding();
 					}
 					table.revalidate();
 					setOutputValue();
@@ -623,16 +642,5 @@ public class CheckOutPanel extends JPanel
 		}
 	}
 
-	public static void main(String[] args) throws InterruptedException,
-			IOException, DataFileException
-	{
-		JFrame jf = new JFrame();
-		jf.setVisible(true);
-		jf.setSize(800, 600);
-		StoreApplication sa = new StoreApplication();
-		CheckOutPanel ck = new CheckOutPanel(sa);
-		jf.add(ck);
-		ck.updateUI();
-	}
 
 }// /~
