@@ -4,6 +4,7 @@ package sg.edu.nus.iss.usstore.domain;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import sg.edu.nus.iss.usstore.dao.DiscountDao;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
@@ -41,7 +42,69 @@ public class DiscountMgr {
 		return this.discountList;
 	}
 
-/* maximum disc*/
+
+	
+	
+
+	public ArrayList<Discount> registerDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, double percent, String Applicable) {
+
+		discountList.add(new MemberDiscount(discountCode, discountDescription, startDate, period, percent, Applicable));
+		return discountList;
+	}
+
+	public ArrayList<Discount> getdiscountList(){
+
+		return discountList;
+
+	}
+
+	public Discount getdiscountCode(String discountCode) {
+		Iterator<Discount> i = discountList.iterator();
+		while (i.hasNext()) {
+			Discount disc = i.next();
+			if (disc.getDiscountcode().equals(discountCode))
+				return disc;
+		}
+		return null;
+	}
+
+	public void writeFile() throws IOException {
+		discountDao.saveDataToFile(discountList);
+	}
+
+	public void readFile() throws IOException, DataFileException {
+		discountList = discountDao.loadDataFromFile();
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/* maximum disc*/
 	public double getMaxDiscount(String customerId,int loyaltyPoint){
 		boolean isMember = false;
 		boolean hasTransaction=false;
@@ -144,6 +207,17 @@ public class DiscountMgr {
 		}
 		
 		return maxDiscount;
+	}
+
+	public void modifyDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, double percent, String applicable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteDiscount(int index) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

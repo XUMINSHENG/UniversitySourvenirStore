@@ -377,4 +377,55 @@ public class Store {
 	
 	
 
+
+/** discount related 
+ * 
+ * 
+ * 
+ * 
+ */
+public void addDiscount(String discountCode, String discountDescription,
+		Date startDate, int period, double percent, String Applicable ){
+	
+	discountMgr.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
+}
+
+/**
+*
+ * 
+ */
+
+public void addDiscount(Discount discount){
+	discountMgr.getdiscountList();
+}
+
+
+
+public void modifyDiscount(String discountCode, String discountDescription,
+		Date startDate, int period, double percent, String Applicable){
+	discountMgr.modifyDiscount( discountCode,  discountDescription,
+			 startDate, period,  percent,  Applicable);
+	
+}
+/**
+ * 
+ * @param index
+ */
+public void deleteDiscount(int index){
+	discountMgr.deleteDiscount(index);
+}
+
+/**
+ * 
+ * @return
+ */
+public ArrayList<Discount> getDiscountList(){
+	return discountMgr.getDiscountlist();
+}
+
+/**
+ * 
+ * @return
+ */
+
 }

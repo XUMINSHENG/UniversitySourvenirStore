@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.usstore.domain.Category;
+import sg.edu.nus.iss.usstore.domain.Discount;
 import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Store;
@@ -225,6 +226,11 @@ public class StoreApplication {
 
 	public StoreWindow getStoreWindow() {
 		return storeWindow;
+	}
+
+	public Discount get(int index) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
