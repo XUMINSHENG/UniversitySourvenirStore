@@ -188,7 +188,9 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("checkout");
+				checkOutPanel.setTransaction(manager.checkOut());
 				changeCard("checkOut");
+				
 			}
 		});
 		p.add(button);

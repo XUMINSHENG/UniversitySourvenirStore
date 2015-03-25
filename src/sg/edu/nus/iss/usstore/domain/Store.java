@@ -65,7 +65,11 @@ public class Store {
 	 * 
 	 */
 	public Transaction checkout(){
-		return new Transaction();
+		Transaction transaction = new Transaction();
+		transaction.setCustomer(new Public(""));
+		Discount discount = discountMgr.getMaxDiscount(transaction.getCustomer());
+		transaction.setDiscount(discount);
+		return transaction;
 	}
 	
 	/**
