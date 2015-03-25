@@ -119,6 +119,9 @@ public class StoreApplication {
 	}
 	
 
+	public int getNewProductIdByCategory(String code){
+		return store.getNewProductIdByCategory(code);
+	}
 	
 	public void addProduct(String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){

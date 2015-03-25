@@ -50,6 +50,24 @@ public class ProductMgr {
 		return orderList;
 	}
 	
+	public int getNewProductIdByCategory(String categoryCode){
+		int i = 1;
+		int j = -1;
+		for(Product p:this.productList){
+			if(categoryCode.equals(p.getCategory().getCode().substring(0, 3))){
+				if(i==1){
+					i = Integer.parseInt(p.getProductId().substring(4))+1;
+				}else{
+					j = Integer.parseInt(p.getProductId().substring(4))+1;
+					if(j>i){
+						i = j;
+					}
+				}
+			}
+		}
+		return i;
+	}
+	
 	//add new product or implement product quantity if product exists
 	public void addProduct(Product p){
 		if(productList.contains(p)){
@@ -73,7 +91,8 @@ public class ProductMgr {
 		}
 		if(i>=productList.size()){
 			//add new product
-			product.setProductId(category.getCode() + "/" + Integer.toString(productList.size()));
+			String code = category.getCode();
+			product.setProductId(code+"/"+Integer.toString(getNewProductIdByCategory(code)));
 			productList.add(product);
 		}else{
 			//add quantity of existed product
