@@ -54,7 +54,7 @@ public class ProductMgr {
 		int i = 1;
 		int j = -1;
 		for(Product p:this.productList){
-			if(categoryCode.equals(p.getCategory().getCode().substring(0, 3))){
+			if(categoryCode.equals(p.getCategory().getCode())){
 				if(i==1){
 					i = Integer.parseInt(p.getProductId().substring(4))+1;
 				}else{
