@@ -73,7 +73,7 @@ public class StoreWindow extends JFrame{
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addWindowListener(windorListener);
 		
-		setPreferredSize(new Dimension(800,800));
+		setPreferredSize(new Dimension(800,600));
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);

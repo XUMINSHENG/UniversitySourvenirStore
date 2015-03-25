@@ -39,9 +39,11 @@ public class ProductDialog extends JDialog{
 		super(manager.getStoreWindow(),title);
 		this.manager = manager;
 		this.mainScreen = manager.getStoreWindow();
-		this.index = manager.getProductList().size()+1;
 		initGUI();
 		add("South",createAddBottomPanel());
+		String code = (String)categoryList.getSelectedItem();
+		this.index = manager.getNewProductIdByCategory(code);
+		idText.setText(code+"/"+Integer.toString(index));
 	}
 	
 	public ProductDialog(StoreApplication manager,String title,int index){
@@ -54,6 +56,7 @@ public class ProductDialog extends JDialog{
 		Product p = manager.getProductList().get(index);
 		setData(p.getProductId(), p.getName(), p.getCategory().getCode(), p.getBriefDescription(), p.getQuantityAvailable(), 
 				p.getPrice(), p.getBarCodeNumber(), p.getReorderQuantity(), p.getOrderQuantity());
+		categoryList.setEnabled(false);
 	}
 	
 	private void initGUI() {
@@ -123,18 +126,6 @@ public class ProductDialog extends JDialog{
 			for(int i=0;i<lenght;i++){
 				categoryList.addItem(manager.getCategoryList().get(i).getCode());
 			}
-			categoryList.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
-					if(categoryList.getSelectedIndex()==-1){
-						System.out.println("no select");
-					}else{
-						idText.setText(categoryList.getSelectedItem()+"/"+Integer.toString(index));
-					}
-				}
-			});
 			categoryList.updateUI();
 		}
 	}
@@ -197,7 +188,17 @@ public class ProductDialog extends JDialog{
 			}
 		});
 		panel.add(button);
-		
+		categoryList.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(categoryList.getSelectedIndex()!=-1){
+					String code = (String)categoryList.getSelectedItem();
+					idText.setText(code+"/"+Integer.toString(manager.getNewProductIdByCategory(code)));
+				}
+			}
+		});
 		return panel;
 	}
 	
@@ -249,7 +250,15 @@ public class ProductDialog extends JDialog{
 			}
 		});
 		panel.add(button);
-		
+//		categoryList.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				 
+//				idText.setText(categoryList.getSelectedItem()+"/"+manager.getProductById(idText.getText()).getProductId().substring(4));
+//			}
+//		});
 		return panel;
 	}
 	
