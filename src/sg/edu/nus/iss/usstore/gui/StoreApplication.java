@@ -199,11 +199,21 @@ public class StoreApplication {
 		return store.getMemberList();
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<Category> getCategoryList(){
 		return store.getCategoryList();
 	}
 	
-	
+	/**
+	 * 
+	 * @param code
+	 */
+	public void deleteCategory(String code){
+		store.delCategory(code);
+	}
 	
 	public static void main(String[] args) {
 		StoreApplication manager = new StoreApplication();

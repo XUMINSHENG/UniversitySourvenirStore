@@ -50,7 +50,7 @@ public class StoreWindow extends JFrame{
 	private CheckOutPanel checkOutPanel;
 	//private MemberListPanel memberListPanel;
 	//private ProductListPanel productListPanel;
-	//private CategoryListPanel categoryListPanel;
+	private CategoryListPanel categoryListPanel;
 	//private ReportPanel reportPanel;
 	
 	public StoreWindow(StoreApplication manager){
@@ -62,12 +62,14 @@ public class StoreWindow extends JFrame{
 		this.checkOutPanel = new CheckOutPanel(manager);
 		this.productListPanel = new ProductsListPanel(manager);
 		this.checkInventoryPanel = new CheckInventoryPanel(manager);
+		this.categoryListPanel = new CategoryListPanel(manager);
 		
 		//register cards with cardName
 		cards.add(createMainPanel(),"mainScreen");
 		cards.add(checkOutPanel,"checkOut");
 		cards.add(productListPanel,"productList");
 		cards.add(checkInventoryPanel,"checkInventory");
+		cards.add(categoryListPanel,"categoryList");
 		setContentPane(cards);
 		
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -283,8 +285,7 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Category list");
-				//changeCard("discountList");
+				changeCard("categoryList");
 			}
 		});
 		p.add(button);
