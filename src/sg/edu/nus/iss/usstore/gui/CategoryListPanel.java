@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import sg.edu.nus.iss.usstore.domain.*;
+import sg.edu.nus.iss.usstore.util.DialogMode;
 import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 
 
@@ -63,6 +64,7 @@ public class CategoryListPanel extends JPanel{
 		add("North",createTopPanel());
 		add("Center",createMiddlePanel(loadTableData(manager.getCategoryList())));
 		add("South",createBottomPanel());
+		refreshTable();
 		setVisible(true);
 	}
 	
@@ -164,8 +166,8 @@ public class CategoryListPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				CategoryDialog d = new CategoryDialog(manager,"Add Category");				
-				d.setVisible(true);
+				CategoryDialog categoryDlg = new CategoryDialog(manager,"Add Category", null, DialogMode.ADD);				
+				categoryDlg.setVisible(true);
 			}
 		});
 		p.add(b);
@@ -176,8 +178,11 @@ public class CategoryListPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				CategoryDialog d = new CategoryDialog(manager,"Modify Category", categoryTable.getSelectedRow());
-				d.setVisible(true);
+				String code = (String) categoryTable.getValueAt(categoryTable.getSelectedRow(), 0);
+				CategoryDialog categoryDlg = 
+						new CategoryDialog(manager,"Modify Category", manager.getCategoryByCode(code), DialogMode.MODIFY);
+				
+				categoryDlg.setVisible(true);
 			}
 		});
 		modifyButton.setEnabled(false);
@@ -223,17 +228,6 @@ public class CategoryListPanel extends JPanel{
 		manager.deleteCategory(code);
 		refreshTable();
 	}
-	
-
-	public JTable getcategoryTable() {
-		return categoryTable;
-	}
-
-	public DefaultTableModel getTableModel() {
-		return tableModel;
-	}
-	
-	
 
 
 }

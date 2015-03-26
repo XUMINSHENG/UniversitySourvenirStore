@@ -210,6 +210,14 @@ public class StoreApplication {
 	
 	/**
 	 * 
+	 * @return
+	 */
+	public Category getCategoryByCode(String code){
+		return store.getCategoryByCode(code);
+	}
+	
+	/**
+	 * 
 	 * @param code
 	 */
 	public void deleteCategory(String code){
