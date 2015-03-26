@@ -109,11 +109,7 @@ public class ProductsListPanel extends JPanel{
 		
 		productTable = new JTable(tableModel);
 		productTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		TableColumnAdjuster tca = new TableColumnAdjuster(productTable);
-		tca.setColumnHeaderIncluded(true);
-		tca.setColumnDataIncluded(true);
-		//tca.setOnlyAdjustLarger(true);
-		tca.adjustColumns();
+		setTableFormat();
 		productTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		productTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
@@ -205,9 +201,18 @@ public class ProductsListPanel extends JPanel{
 		return p;
 	}
 	
+	private void setTableFormat(){
+		TableColumnAdjuster tca = new TableColumnAdjuster(productTable);
+		tca.setColumnHeaderIncluded(true);
+		tca.setColumnDataIncluded(true);
+		//tca.setOnlyAdjustLarger(true);
+		tca.adjustColumns();
+	}
+	
 	public void refreshTable(){
 		tableModel.setDataVector(loadTableData(manager.getProductList()), columnNames);
 		tableModel.fireTableDataChanged();
+		setTableFormat();
 	}
 
 	public JTable getProductTable() {
