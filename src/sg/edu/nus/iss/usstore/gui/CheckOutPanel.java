@@ -66,7 +66,7 @@ public class CheckOutPanel extends JPanel
 	private JTable table;
 	private TableColumn column;
 
-	private DecimalFormat df = new DecimalFormat("0.00");
+	private DecimalFormat df = new DecimalFormat("#.00");
 	private DefaultTableModel defaultModel = null;
 
 	private Customer customer = null;
@@ -106,7 +106,7 @@ public class CheckOutPanel extends JPanel
 			subVector.add(product.getName());
 			subVector.add(Integer.toString(transactionitem.getQty()));
 			subVector.add(product.getPrice());
-			subVector.add(CalcUtil.add(transactionitem.getQty(),product.getPrice()));
+			subVector.add(transactionitem.calculateAmount());
 			defaultModel.addRow(subVector);
 		}
 		table.validate();
