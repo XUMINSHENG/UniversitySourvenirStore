@@ -81,7 +81,18 @@ public class CheckOutPanel extends JPanel
 	private Listener listener = new Listener();
 	private StoreApplication sa = null;
 	private Transaction transaction;
-
+	
+	private static final String ERRORMASSAGE_MEMBER_NOT_EXIST = "Error MemberID!";
+	private static final String ERRORMASSAGE_PRODCUT_NOT_EXIST = "No product!";
+	private static final String ERRORMASSAGE_BARCODE_ERROR = "Bar Code Error!";
+	private static final String ERRORMASSAGE_QUANTITY_FORMAT_ERROR = "Quantity Format Error";
+	private static final String ERRORMASSAGE_QUANTITY_NOT_ENOUGH = "Quantity is not Enough!";
+	private static final String ERRORMASSAGE_POINT_FORMAT_ERROR = "Point Format Error!";
+	private static final String ERRORMASSAGE_POINT_NOT_ENOUGH = "Point is not Enough!";
+	private static final String ERRORMASSAGE_CASH_FORMAT_ERROR = "Cash Format Error!";
+	private static final String ERRORMASSAGE_CASH_NOT_ENOUGH = "Cash is not enough!";
+	private static final String ERRORMASSAGE_SELECT_ROW = "Select a Row!";
+	
 	public void setOutputValue()
 	{
 		JlTotalPriceNum.setText(df.format(transaction.calcTotalPrice()));
@@ -555,9 +566,9 @@ public class CheckOutPanel extends JPanel
 		{
 			if (e.getActionCommand().equals("JbMemberSubmit"))
 			{
-				transaction = sa.setBillCustomer(transaction, "F42563753156");
-				System.out.println(transaction.getCustomer().name);
-				
+				String MemberID = JtMemberID.getText();
+				transaction = sa.setBillCustomer(transaction, MemberID);
+
 			}
 			if (e.getActionCommand().equals("JbProductSubmit"))
 			{

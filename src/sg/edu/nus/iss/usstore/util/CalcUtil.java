@@ -16,7 +16,7 @@ public class CalcUtil
 	 * add method
 	 * @param v1
 	 * @param v2
-	 * @return
+	 * @return double
 	 */
 	public static double add(double v1, double v2) 
 	{
@@ -28,7 +28,7 @@ public class CalcUtil
 	 * sub method
 	 * @param v1
 	 * @param v2
-	 * @return
+	 * @return double
 	 */
 	public static double sub(double v1, double v2)
 	{
@@ -40,7 +40,7 @@ public class CalcUtil
 	 * mul method
 	 * @param v1
 	 * @param v2
-	 * @return
+	 * @return double
 	 */
 	public static double mul(double v1, double v2) 
 	{
@@ -52,7 +52,7 @@ public class CalcUtil
 	 * div method
 	 * @param v1
 	 * @param v2
-	 * @return
+	 * @return double
 	 */
 	public static double div(double v1, double v2)
 	{
