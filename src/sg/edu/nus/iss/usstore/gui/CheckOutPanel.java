@@ -35,6 +35,7 @@ import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
+import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
 import sg.edu.nus.iss.usstore.util.Util;
 
@@ -50,6 +51,7 @@ public class CheckOutPanel extends JPanel
 	private static final long serialVersionUID = 1L;
 
 	private JLabel JlMemberName;
+	private JLabel JlgetMemberName;
 	private JLabel JlTotalPriceNum;
 	private JLabel JlDiscountNum;
 	private JLabel JlDiscountedPriceNum;
@@ -224,7 +226,7 @@ public class CheckOutPanel extends JPanel
 
 		// jp2
 		JlMemberName = new JLabel("MEMBER  NAME");
-		JLabel JlgetMemberName = new JLabel("PUBLIC");
+		JlgetMemberName = new JLabel("PUBLIC");
 		JButton JbMemberSubmit = new JButton("  Enter ");
 		JbMemberSubmit.setActionCommand("JbMemberSubmit");
 		JbMemberSubmit.addActionListener(listener);
@@ -566,16 +568,37 @@ public class CheckOutPanel extends JPanel
 			if (e.getActionCommand().equals("JbMemberSubmit"))
 			{
 				String MemberID = JtMemberID.getText();
-				transaction = sa.setBillCustomer(transaction, MemberID);
-
-			}
+				if (JtMemberID.getText().length()==0)
+				{
+					JlError.setText(ERR_MSG_MEMBER_NOT_EXIST);
+				}
+				else
+				{
+					try
+					{
+						transaction = sa.setBillCustomer(transaction, MemberID);
+					}
+					catch (NullPointerException e2)
+					{
+						JlError.setText(ERR_MSG_MEMBER_NOT_EXIST);
+					}
+				}
+//					if (transaction.getCustomer().toString().length()==0)
+//					{
+//						JlError.setText(ERR_MSG_MEMBER_NOT_EXIST);
+//						JlgetMemberName.setText("PUBLIC");
+//					}
+//					else
+//					{
+//					JlgetMemberName.setText(transaction.getCustomer().name);
+//					}
+				}
 			if (e.getActionCommand().equals("JbProductSubmit"))
 			{
 				flag = 1;
 				tempBarCode = JtBarCodeID.getText();
 				product = sa.getProductByBarCode(tempBarCode);
 				String tempqty = JtQuantity.getText();
-				int intqty = Integer.parseInt(tempqty);
 				if (tempBarCode.length() == 0)
 				{
 					JlError.setText(ERR_MSG_BARCODE_ERROR);
@@ -587,6 +610,7 @@ public class CheckOutPanel extends JPanel
 					JlError.setText(ERR_MSG_QUANTITY_FORMAT_ERROR);
 				} else
 				{
+					int intqty = Integer.parseInt(tempqty);
 
 					if (JlError.getText() ==ERR_MSG_PRODCUT_NOT_EXIST
 							|| JlError.getText() == ERR_MSG_BARCODE_ERROR
