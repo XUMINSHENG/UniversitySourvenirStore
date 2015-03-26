@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
 
+import sg.edu.nus.iss.usstore.util.CalcUtil;
+
 public class Transaction
 {
 	/**
@@ -153,7 +155,7 @@ public class Transaction
 		for (int i = 0; i < itemList.size(); i++)
 		{
 			TransactionItem it = (TransactionItem) itemList.get(i);
-			sum = sum + it.calculateAmount();
+			sum = CalcUtil.add(sum,it.calculateAmount());
 		}
 		totalPrice = sum;
 		return totalPrice;

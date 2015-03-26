@@ -35,6 +35,7 @@ import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
+import sg.edu.nus.iss.usstore.util.CalcUtil;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
 import sg.edu.nus.iss.usstore.util.Util;
 
@@ -105,7 +106,7 @@ public class CheckOutPanel extends JPanel
 			subVector.add(product.getName());
 			subVector.add(Integer.toString(transactionitem.getQty()));
 			subVector.add(product.getPrice());
-			subVector.add(transactionitem.getQty()*product.getPrice());
+			subVector.add(CalcUtil.add(transactionitem.getQty(),product.getPrice()));
 			defaultModel.addRow(subVector);
 		}
 		table.validate();

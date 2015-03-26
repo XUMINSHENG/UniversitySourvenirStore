@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
+import sg.edu.nus.iss.usstore.util.CalcUtil;
 
 public class TransactionItem
 {
@@ -57,7 +58,7 @@ public class TransactionItem
 	}
 	public double calculateAmount()
 	{
-		return this.price*this.qty;
+		return CalcUtil.mul(this.price, this.qty);
 	}
 	
 }///~
