@@ -35,7 +35,6 @@ import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
-import sg.edu.nus.iss.usstore.util.CalcUtil;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
 import sg.edu.nus.iss.usstore.util.Util;
 
@@ -57,7 +56,6 @@ public class CheckOutPanel extends JPanel
 	private JLabel JlLoyalPointNum;
 	private JLabel JlRestNum;
 	private JLabel JlChangeNum;
-	private JLabel JlError;
 	private JTextField JtBarCodeID;
 	private JTextField JtQuantity;
 	private JTextField JtMemberID;
@@ -82,16 +80,18 @@ public class CheckOutPanel extends JPanel
 	private StoreApplication sa = null;
 	private Transaction transaction;
 	
-	private static final String ERRORMASSAGE_MEMBER_NOT_EXIST = "Error MemberID!";
-	private static final String ERRORMASSAGE_PRODCUT_NOT_EXIST = "No product!";
-	private static final String ERRORMASSAGE_BARCODE_ERROR = "Bar Code Error!";
-	private static final String ERRORMASSAGE_QUANTITY_FORMAT_ERROR = "Quantity Format Error";
-	private static final String ERRORMASSAGE_QUANTITY_NOT_ENOUGH = "Quantity is not Enough!";
-	private static final String ERRORMASSAGE_POINT_FORMAT_ERROR = "Point Format Error!";
-	private static final String ERRORMASSAGE_POINT_NOT_ENOUGH = "Point is not Enough!";
-	private static final String ERRORMASSAGE_CASH_FORMAT_ERROR = "Cash Format Error!";
-	private static final String ERRORMASSAGE_CASH_NOT_ENOUGH = "Cash is not enough!";
-	private static final String ERRORMASSAGE_SELECT_ROW = "Select a Row!";
+	private final String ERR_MSG_MEMBER_NOT_EXIST = "Error MemberID!";
+	private final String ERR_MSG_PRODCUT_NOT_EXIST = "No product!";
+	private final String ERR_MSG_BARCODE_ERROR = "Bar Code Error!";
+	private final String ERR_MSG_QUANTITY_FORMAT_ERROR = "Quantity Format Error";
+	private final String ERR_MSG_QUANTITY_NOT_ENOUGH = "Quantity is not Enough!";
+	private final String ERR_MSG_POINT_FORMAT_ERROR = "Point Format Error!";
+	private final String ERR_MSG_POINT_NOT_ENOUGH = "Point is not Enough!";
+	private final String ERR_MSG_CASH_FORMAT_ERROR = "Cash Format Error!";
+	private final String ERR_MSG_CASH_NOT_ENOUGH = "Cash is not enough!";
+	private final String ERR_MSG_SELECT_ROW = "Select a Row!";
+	
+	public static JLabel JlError;
 	
 	public void setOutputValue()
 	{
@@ -328,7 +328,7 @@ public class CheckOutPanel extends JPanel
 						.doubleValue();
 				if (tempLoyalPaidNum < 1)
 				{
-					JlError.setText("Point Format Error!");
+					JlError.setText(ERR_MSG_POINT_FORMAT_ERROR);
 					JlChangeNum.setText("**.**");
 				} else
 				{
@@ -349,7 +349,7 @@ public class CheckOutPanel extends JPanel
 							.doubleValue();
 					if (tempLoyalPaidNum < 1)
 					{
-						JlError.setText("Point Format Error!");
+						JlError.setText(ERR_MSG_POINT_FORMAT_ERROR);
 						JlChangeNum.setText("**.**");
 					} else
 					{
@@ -398,19 +398,19 @@ public class CheckOutPanel extends JPanel
 					if (tempChange > 0)
 					{
 						JlChangeNum.setText(df.format(tempChange));
-						if (JlError.getText() == "Cash isn't Enough!"
-								|| JlError.getText() == "Cash Format Error!")
+						if (JlError.getText() == ERR_MSG_CASH_NOT_ENOUGH
+								|| JlError.getText() == ERR_MSG_CASH_FORMAT_ERROR)
 						{
 							JlError.setText(null);
 						}
 					} else
 					{
-						JlError.setText("Cash isn't Enough!");
+						JlError.setText(ERR_MSG_CASH_NOT_ENOUGH);
 						JlChangeNum.setText("**.**");
 					}
 				} else
 				{
-					JlError.setText("Cash Format Error!");
+					JlError.setText(ERR_MSG_CASH_FORMAT_ERROR);
 					JlChangeNum.setText("**.**");
 				}
 			}
@@ -428,19 +428,19 @@ public class CheckOutPanel extends JPanel
 						if (tempChange > 0)
 						{
 							JlChangeNum.setText(df.format(tempChange));
-							if (JlError.getText() == "Cash isn't Enough!"
-									|| JlError.getText() == "Cash Format Error!")
+							if (JlError.getText() == ERR_MSG_CASH_NOT_ENOUGH
+									|| JlError.getText() == ERR_MSG_CASH_FORMAT_ERROR)
 							{
 								JlError.setText(null);
 							}
 						} else
 						{
-							JlError.setText("Cash isn't Enough!");
+							JlError.setText(ERR_MSG_CASH_NOT_ENOUGH);
 							JlChangeNum.setText("**.**");
 						}
 					} else
 					{
-						JlError.setText("Cash Format Error!");
+						JlError.setText(ERR_MSG_CASH_FORMAT_ERROR);
 						JlChangeNum.setText("**.**");
 					}
 				}
@@ -474,8 +474,7 @@ public class CheckOutPanel extends JPanel
 					return false;
 			}
 		};
-		table = new JTable(defaultModel);// ������table�������Դ��myModel����
-		// table.setFont(new Font("Times new Romer", Font.PLAIN, 10));
+		table = new JTable(defaultModel);
 		for (int i = 0; i < table.getColumnCount(); i++)
 		{
 			column = table.getColumnModel().getColumn(i);
@@ -579,26 +578,26 @@ public class CheckOutPanel extends JPanel
 				int intqty = Integer.parseInt(tempqty);
 				if (tempBarCode.length() == 0)
 				{
-					JlError.setText("Bar Code can't be empty!");
+					JlError.setText(ERR_MSG_BARCODE_ERROR);
 				} else if (tempqty.length() == 0)
 				{
-					JlError.setText("Quantity can't be empty!");
+					JlError.setText(ERR_MSG_QUANTITY_FORMAT_ERROR);
 				} else if (Integer.valueOf(JtQuantity.getText()).intValue() < 1)
 				{
-					JlError.setText("Quantity Format Error");
+					JlError.setText(ERR_MSG_QUANTITY_FORMAT_ERROR);
 				} else
 				{
 
-					if (JlError.getText() == "No product!"
-							|| JlError.getText() == "Bar Code can't be empty!"
-							|| JlError.getText() == "Quantity can't be empty!"
-							|| JlError.getText() == "Quantity Format Error")
+					if (JlError.getText() ==ERR_MSG_PRODCUT_NOT_EXIST
+							|| JlError.getText() == ERR_MSG_BARCODE_ERROR
+							|| JlError.getText() == ERR_MSG_QUANTITY_NOT_ENOUGH
+							|| JlError.getText() == ERR_MSG_QUANTITY_FORMAT_ERROR)
 					{
 						JlError.setText(null);
 					}
 					if (product == null)
 					{
-						JlError.setText("No product!");
+						JlError.setText(ERR_MSG_PRODCUT_NOT_EXIST);
 						return;
 					}
 					ArrayList<TransactionItem> tempTransactionList = transaction.getItemList();
@@ -617,7 +616,7 @@ public class CheckOutPanel extends JPanel
 					JlError.setText("Select a row");
 				} else
 				{
-					if (JlError.getText() == "Select a row")
+					if (JlError.getText() == ERR_MSG_SELECT_ROW)
 					{
 						JlError.setText(null);
 					}
