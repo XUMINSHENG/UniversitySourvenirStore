@@ -183,7 +183,7 @@ public class ProductsListPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("check inventory");
+				manager.getStoreWindow().changeCard("checkInventory");
 			}
 		});
 		p.add(b);

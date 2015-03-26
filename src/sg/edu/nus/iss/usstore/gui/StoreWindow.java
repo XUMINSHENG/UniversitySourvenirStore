@@ -122,22 +122,20 @@ public class StoreWindow extends JFrame{
 		
 		//member menu
 		menu = new JMenu("Member");
-		menuItem = new JMenuItem("MemberList");
+		menuItem = new JMenuItem("Member List",KeyEvent.VK_M);
 		menu.add(menuItem);
 		menuBar.add(menu);
 		
 		//product menu
 		menu = new JMenu("Product");
-		menu.setMnemonic(KeyEvent.VK_P);
-		menuItem = new JMenuItem("Product List",KeyEvent.VK_L);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,ActionEvent.ALT_MASK));
+		//menu.setMnemonic(KeyEvent.VK_P);
+		menuItem = new JMenuItem("Product List",KeyEvent.VK_P);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,ActionEvent.ALT_MASK));
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("product list");
-				//manager.callProductsListScreen();
 				changeCard("productList");
 			}
 		});
@@ -155,7 +153,65 @@ public class StoreWindow extends JFrame{
 		});
 		menu.add(menuItem);
 		menuItem = new JMenuItem("Check Inventory",KeyEvent.VK_C);
+		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,ActionEvent.ALT_MASK));
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				changeCard("checkInventory");
+			}
+		});
+		menu.add(menuItem);
+		menuBar.add(menu);
+		
+		//Category menu
+		menu = new JMenu("Category");
+		//menu.setMnemonic(KeyEvent.VK_C);
+		menuItem = new JMenuItem("Category List",KeyEvent.VK_C);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,ActionEvent.ALT_MASK));
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("Category List");
+			}
+		});
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Add Category",KeyEvent.VK_A);
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("add category");
+			}
+		});
+		menu.add(menuItem);
+		menuBar.add(menu);
+		
+		menu = new JMenu("Discount");
+		menuItem = new JMenuItem("Discount List",KeyEvent.VK_D);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,ActionEvent.ALT_MASK));
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("Discount List");
+			}
+		});
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Add Discount",KeyEvent.VK_A);
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("Add Discount");
+			}
+		});
 		menu.add(menuItem);
 		menuBar.add(menu);
 		
@@ -232,7 +288,6 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("check inventory");
 				changeCard("checkInventory");
 			}
 		});
@@ -250,7 +305,18 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("product list");
+				System.out.println("member list");
+				//changeCard("memberList");
+			}
+		});
+		p.add(button);
+		button = new JButton("Add Member");
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("add member");
 				//changeCard("memberList");
 			}
 		});
@@ -272,6 +338,17 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		p.add(button);
+		button = new JButton("Add Discount");
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("add discount");
+				//changeCard("memberList");
+			}
+		});
+		p.add(button);
 		return p;
 	
 	}
@@ -286,6 +363,17 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				changeCard("categoryList");
+			}
+		});
+		p.add(button);
+		button = new JButton("Add Category");
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("add category");
+				//changeCard("memberList");
 			}
 		});
 		p.add(button);

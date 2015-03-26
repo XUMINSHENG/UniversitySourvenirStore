@@ -44,6 +44,7 @@ public class StoreApplication {
 	public void startup(){
 		// show login screen
 		loginScreen = new LoginScreen(this);
+		loginScreen.setLocationRelativeTo(null);
 		loginScreen.setVisible(true);
 	}
 	
