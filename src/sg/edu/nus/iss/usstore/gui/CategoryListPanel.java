@@ -46,13 +46,15 @@ public class CategoryListPanel extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
 	private final String[] columnNames = {"Code","Name"};
+	
+	private StoreApplication manager;
+	
 	private JButton modifyButton;
 	private JButton deleteButton;
 	private JTable categoryTable;
 	private DefaultTableModel tableModel;
-	private StoreApplication manager;
+	
 	
 	/**
 	 * 
@@ -195,13 +197,12 @@ public class CategoryListPanel extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
-				delCategory();
+				delCateBtnClicked();
 			}
 		});
 		deleteButton.setEnabled(false);
 		p.add(deleteButton);
 
-		
 		b = new JButton("Back");
 		b.addActionListener(new ActionListener() {
 			
@@ -215,6 +216,13 @@ public class CategoryListPanel extends JPanel{
 		return p;
 	}
 	
+	private void setTableFormat(JTable table){
+		TableColumnAdjuster tca = new TableColumnAdjuster(table);
+		tca.setColumnHeaderIncluded(true);
+		tca.setColumnDataIncluded(true);
+		tca.adjustColumns();
+	}
+	
 	public void refreshTable(){
 		tableModel.setDataVector(loadTableData(manager.getCategoryList()), columnNames);
 		tableModel.fireTableDataChanged();
@@ -223,7 +231,7 @@ public class CategoryListPanel extends JPanel{
 	/**
 	 * 
 	 */
-	private void delCategory(){
+	private void delCateBtnClicked(){
 		String code = (String) categoryTable.getValueAt(categoryTable.getSelectedRow(), 0);
 		manager.deleteCategory(code);
 		refreshTable();
