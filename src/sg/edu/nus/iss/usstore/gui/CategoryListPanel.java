@@ -36,7 +36,7 @@ import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 /**
-* cardName: productList
+* cardName: categoryList
 * @ Xu Minsheng
 */
 public class CategoryListPanel extends JPanel{

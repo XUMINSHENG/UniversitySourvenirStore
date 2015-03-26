@@ -175,7 +175,7 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("Category List");
+				changeCard("categoryList");
 			}
 		});
 		menu.add(menuItem);
