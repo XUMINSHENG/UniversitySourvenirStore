@@ -23,7 +23,29 @@ public class VendorDialog extends javax.swing.JDialog {
     private Category selectedCategory;
     private ArrayList<Category> CategoryList = new ArrayList<Category>();
     private ArrayList<Vendor> UI_VendorList = new ArrayList<Vendor>();
-    private DefaultTableModel tableModel = new DefaultTableModel();
+    private DefaultTableModel tableModel = 
+    		new javax.swing.table.DefaultTableModel(new Object [][] { },columnNames) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		@SuppressWarnings("rawtypes")
+		Class[] types = new Class [] {
+            java.lang.String.class, java.lang.String.class
+        };
+        boolean[] canEdit = new boolean [] {
+            false, false
+        };
+
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+		public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return canEdit [columnIndex];
+        }
+    };
     
     public VendorDialog(StoreApplication manager, String categoryCode) {
     	this.manager = manager;
@@ -35,8 +57,6 @@ public class VendorDialog extends javax.swing.JDialog {
         
     }
 
-    
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -62,26 +82,7 @@ public class VendorDialog extends javax.swing.JDialog {
 
         T_SSA_VendorTable.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         T_SSA_VendorTable.setForeground(new java.awt.Color(51, 51, 51));
-        T_SSA_VendorTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-            },
-            columnNames
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        T_SSA_VendorTable.setModel(tableModel);
         T_SSA_VendorTable.setSelectionBackground(new java.awt.Color(51, 51, 51));
         T_SSA_VendorTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -283,11 +284,10 @@ public class VendorDialog extends javax.swing.JDialog {
        else if(this.init())
        {              
            if(!this.validName()){
-               this.tableModel = (DefaultTableModel) this.T_SSA_VendorTable.getModel();
                this.tableModel.setValueAt(this.VendorName,selectedIndex, 0);
                this.tableModel.setValueAt(this.VendorDescription,selectedIndex, 1);
                this.UI_VendorList.clear();
-               this.UI_VendorList = this.getTableData();               
+           
                     
            }
        }
@@ -300,9 +300,8 @@ public class VendorDialog extends javax.swing.JDialog {
        else
        {
            	this.tableModel.removeRow(selectedIndex);
-            this.tableModel = (DefaultTableModel) this.T_SSA_VendorTable.getModel();
             this.UI_VendorList.clear();
-            this.UI_VendorList = this.getTableData();// init category list with current table data             
+                
        }
     }//GEN-LAST:event_BT_SSA_DeleteVendorMouseClicked
 
@@ -314,7 +313,7 @@ public class VendorDialog extends javax.swing.JDialog {
         String categoryCode = this.COMBO_Category.getSelectedItem().toString();
         this.TF_SSA_VendorName.setText("");
         this.TF_SSA_VendorDescription.setText("");
-        this.ClearTable();
+
        
         this.selectedCategory = getSelectedCategory(categoryCode);
         this.TF_CategoryCode.setText(this.selectedCategory.getCode());
@@ -325,8 +324,6 @@ public class VendorDialog extends javax.swing.JDialog {
         
         if(this.UI_VendorList.isEmpty())
             this.UI_VendorList = new ArrayList<Vendor>();
-        
-        this.tableModel = (DefaultTableModel) this.T_SSA_VendorTable.getModel();//Creating Table model
         
         this.LoadTable();
             
@@ -392,31 +389,22 @@ public class VendorDialog extends javax.swing.JDialog {
     
     private void LoadTable()
     {
-        int  i = 0;
-        this.ClearTable();
-        this.tableModel = new DefaultTableModel();
-        this.tableModel = (DefaultTableModel)this.T_SSA_VendorTable.getModel();
-         if(this.UI_VendorList != null) 
-            {  
-            if(!this.UI_VendorList.isEmpty())
-            {
-                for(i = 0;i < this.UI_VendorList.size() ; i++)
-                {   
-                    this.tableModel.addRow(new Object[]{this.UI_VendorList.get(i).getName(),this.UI_VendorList.get(i).getDescription()});
-                }
-            }
+        tableModel.setRowCount(0);
+        if(this.UI_VendorList != null) 
+	    {  
+		    if(!this.UI_VendorList.isEmpty())
+		    {
+		        for(int i = 0;i < this.UI_VendorList.size() ; i++)
+		        {   
+		            this.tableModel.addRow(new Object[]{this.UI_VendorList.get(i).getName(),this.UI_VendorList.get(i).getDescription()});
+		        }
+		    }
         }
         else
-            System.out.println(this.UI_VendorList.get(i).getDescription());
+            System.out.println("this.UI_VendorList is null");
     }
     
-    private void ClearTable()
-    {
-        int i = 0;
-        if(this.tableModel.getRowCount()>0)
-        for(;i<this.tableModel.getRowCount();)
-            this.tableModel.removeRow(i);
-    }
+    
     private void LoadList()
     {
         int selectedIndex = 0;
@@ -441,17 +429,6 @@ public class VendorDialog extends javax.swing.JDialog {
         else
             return true;
         return false;
-    }
-
- 
-    private ArrayList<Vendor> getTableData() {
-        
-        ArrayList<Vendor> VL = new ArrayList<Vendor>();
-        for(int i = 0;i < this.tableModel.getRowCount();i++)
-        {
-            VL.add(new Vendor(this.tableModel.getValueAt(i,0).toString(), this.tableModel.getValueAt(i,1).toString()));
-        }
-        return VL;
     }
 
     private boolean validName() {
