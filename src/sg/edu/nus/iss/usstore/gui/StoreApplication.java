@@ -10,6 +10,7 @@ import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
+import sg.edu.nus.iss.usstore.domain.Vendor;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 
@@ -194,14 +195,6 @@ public class StoreApplication {
 	
 	/**
 	 * 
-	 * @param categoryList
-	 */
-	public void setCategoryList(ArrayList<Category> categoryList){
-		store.setCategoryList(categoryList);
-	}
-	
-	/**
-	 * 
 	 * @return
 	 */
 	public ArrayList<Category> getCategoryList(){
@@ -219,9 +212,29 @@ public class StoreApplication {
 	/**
 	 * 
 	 * @param code
+	 * @param name
+	 * @param vendorList
 	 */
-	public void deleteCategory(String code){
-		store.delCategory(code);
+	public void addCategory(String code, String name, ArrayList<Vendor> vendorList){
+		store.addCategory(code, name, vendorList);
+	}
+	
+	/**
+	 * 
+	 * @param code
+	 * @param name
+	 * @param vendorList
+	 */
+	public void updCategory(String code, String name){
+		store.updCategory(code, name);
+	}
+	
+	/**
+	 * 
+	 * @param code
+	 */
+	public void deleteCategoryByCode(String code){
+		store.delCategoryByCode(code);
 	}
 	
 	public static void main(String[] args) {

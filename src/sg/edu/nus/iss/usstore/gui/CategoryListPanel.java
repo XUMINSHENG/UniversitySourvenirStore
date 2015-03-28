@@ -2,6 +2,8 @@ package sg.edu.nus.iss.usstore.gui;
 
 
 import sg.edu.nus.iss.usstore.domain.Category;
+import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.Vendor;
 
 import java.util.ArrayList;
 
@@ -29,10 +31,10 @@ public class CategoryListPanel extends javax.swing.JPanel {
   
         initComponents();
         initLook();
-        initData();
+        reloadData();
     }
 
-    @SuppressWarnings("unchecked")
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -54,14 +56,19 @@ public class CategoryListPanel extends javax.swing.JPanel {
         T_SSA_CategoryTable.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         T_SSA_CategoryTable.setForeground(new java.awt.Color(12, 12, 12));
         T_SSA_CategoryTable.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {},  columnNames ) {
-            Class[] types = new Class [] {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
+			Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false
             };
 
-            public Class getColumnClass(int columnIndex) {
+            public Class<?> getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
 
@@ -194,16 +201,14 @@ public class CategoryListPanel extends javax.swing.JPanel {
       
         if(this.init())
         {
-            if(!this.validID())
+            if(!this.validAdd())
             {
                 UI_ErrorDialogBox.openDialog("Duplicate Category ID `"+categoryCode+"`");
             }
             else
             {
-                Category tempCat = new Category(this.categoryCode,this.categoryName);
-                this.UI_CategoryList.add(tempCat);
-                this.manager.setCategoryList(this.UI_CategoryList);
-                this.tableModel.addRow(new Object[]{this.categoryCode,this.categoryName});
+                this.manager.addCategory(this.categoryCode,this.categoryName, new ArrayList<Vendor>());
+                reloadData();
             }           
         }
     }//GEN-LAST:event_BT_SSA_AddNewCategoryMouseClicked
@@ -214,15 +219,14 @@ public class CategoryListPanel extends javax.swing.JPanel {
            UI_ErrorDialogBox.openDialog("Please select an item.");
        else if(this.init())
        {
-           if(this.validID())
-           {
-        	   this.tableModel = (DefaultTableModel) this.T_SSA_CategoryTable.getModel();
-               this.tableModel.setValueAt(this.categoryCode,selectedIndex, 0);
-               this.tableModel.setValueAt(this.categoryName,selectedIndex, 1);
-               this.UI_CategoryList.clear();
-               this.UI_CategoryList = this.getTableData();  
-               
-           }
+           if(this.validUpd())
+           {	
+        	   String code = this.tableModel.getValueAt(this.T_SSA_CategoryTable.getSelectedRow(),0).toString();
+        	   String name = this.TF_SSA_CategoryName.getText().toString();
+               this.manager.updCategory(code, name);
+               reloadData();
+           }else
+        	   UI_ErrorDialogBox.openDialog("Category Code should not be changed");
        }
     }//GEN-LAST:event_BT_SSA_UpdateMouseClicked
 
@@ -236,21 +240,18 @@ public class CategoryListPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_T_SSA_CategoryTableMouseClicked
 
     private void BT_SSA_DeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_DeleteMouseClicked
-       int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
-       if(selectedIndex == -1 || this.T_SSA_CategoryTable.getRowCount() == 0)
-           UI_ErrorDialogBox.openDialog("Please select an item.");
-       else
-       {
-           	//Category CT = new Category(this.tableModel.getValueAt(selectedIndex, 0).toString(),this.tableModel.getValueAt(selectedIndex, 1).toString());
-          
-           	this.tableModel.removeRow(selectedIndex);
-			this.tableModel = (DefaultTableModel) this.T_SSA_CategoryTable.getModel();
-			System.out.println("DELETE: "+this.tableModel.getRowCount());
-			this.UI_CategoryList.clear();
-			this.UI_CategoryList = this.getTableData();// init category list with current table data             
-			System.out.println("DELETE: "+this.UI_CategoryList.size());
-          
-           
+	   int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+	   if(selectedIndex == -1 || this.T_SSA_CategoryTable.getRowCount() == 0)
+	       UI_ErrorDialogBox.openDialog("Please select an item.");
+	   else
+	   {	
+		   	String code = this.tableModel.getValueAt(this.T_SSA_CategoryTable.getSelectedRow(),0).toString();
+			if(validDel(code)){
+				manager.deleteCategoryByCode(code);
+				reloadData();
+			}else
+			   UI_ErrorDialogBox.openDialog("there have product in this Category `"+ code + "`, should not be deleted");
+    	   	
        }
     }//GEN-LAST:event_BT_SSA_DeleteMouseClicked
 
@@ -281,7 +282,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_BT_SSA_ManageVendorMouseClicked
         
     
-    public void initLook(){
+    private void initLook(){
     	try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -299,7 +300,8 @@ public class CategoryListPanel extends javax.swing.JPanel {
             java.util.logging.Logger.getLogger(CategoryListPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
-    public void initData() {
+    
+    private void reloadData() {
         
         this.UI_CategoryList = this.manager.getCategoryList();//Retriving Saved UI_CategoryList form File
         if(this.UI_CategoryList.isEmpty())
@@ -325,13 +327,13 @@ public class CategoryListPanel extends javax.swing.JPanel {
 
     private void LoadTable()
     {
-        int  i = 0;
-        this.T_SSA_CategoryTable.removeAll();
+        
+        tableModel.setRowCount(0);
         if(this.UI_CategoryList != null) 
         {  
             if(!this.UI_CategoryList.isEmpty())
             {
-                for(i = 0;i < this.UI_CategoryList.size() ; i++)
+                for(int  i = 0; i < this.UI_CategoryList.size() ; i++)
                 {   
                     this.tableModel.addRow(new Object[]{this.UI_CategoryList.get(i).getCode(),this.UI_CategoryList.get(i).getName()});
                 }
@@ -339,6 +341,8 @@ public class CategoryListPanel extends javax.swing.JPanel {
         }
         else
             System.out.println(this.UI_CategoryList);
+        
+        tableModel.fireTableDataChanged();
     }
     
     private boolean init() 
@@ -357,7 +361,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
         return false;
     }
 
-    private boolean validID()
+    private boolean validAdd()
     {
     	boolean result = true;
     	
@@ -370,15 +374,25 @@ public class CategoryListPanel extends javax.swing.JPanel {
         }
         return result;
     }
-
-    public ArrayList<Category> getTableData()
+    
+    private boolean validUpd()
     {
-        int i = 0;
-        ArrayList<Category> CL = new ArrayList<Category>();
-        for(;i < this.tableModel.getRowCount();i++)
-        {
-            CL.add(new Category(this.tableModel.getValueAt(i,0).toString(), this.tableModel.getValueAt(i,1).toString()));
-        }
-        return CL;
+    	String originCode = this.tableModel.getValueAt(this.T_SSA_CategoryTable.getSelectedRow(),0).toString();
+        return (originCode.equals(this.categoryCode));
     }
+    
+    private boolean validDel(String code)
+    {
+    	boolean result = true;
+    	
+    	// check whether any product in this category
+        for(Product product : this.manager.getProductList()){
+        	if(product.getCategory().getCode().equals(code)){
+        		result = false;
+            	break;
+        	}
+        }
+        return result;
+    }
+ 
 }

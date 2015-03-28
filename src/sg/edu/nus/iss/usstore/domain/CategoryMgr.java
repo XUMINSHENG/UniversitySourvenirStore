@@ -124,12 +124,9 @@ public class CategoryMgr {
 	 * @param name
 	 * @param vendorList
 	 */
-	public void updCategory(String code, String name, ArrayList<Vendor> vendorList){
+	public void updCategory(String code, String name){
 		Category category = this.getCategoryByCode(code);
-		
 		category.setName(name);
-		category.setVendorList(vendorList);
-		
 		this.maintainVendorList();
 	}
 	
@@ -137,7 +134,7 @@ public class CategoryMgr {
 	 * 
 	 * @param code
 	 */
-	public void delCategory(String code){
+	public void delCategoryByCode(String code){
 		Category category = this.getCategoryByCode(code);
 		this.categoryList.remove(category);
 		this.maintainVendorList();

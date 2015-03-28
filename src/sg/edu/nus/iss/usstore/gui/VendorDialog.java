@@ -311,20 +311,15 @@ public class VendorDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_COMBO_CategoryMouseClicked
 
     private void COMBO_CategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_COMBO_CategoryActionPerformed
-        String categoryName = this.COMBO_Category.getSelectedItem().toString();
+        String categoryCode = this.COMBO_Category.getSelectedItem().toString();
         this.TF_SSA_VendorName.setText("");
         this.TF_SSA_VendorDescription.setText("");
         this.ClearTable();
-        int i = 0;
-        for(;i< this.CategoryList.size();i++){
-            if(this.CategoryList.get(i).getName().equals(categoryName))
-            {
-                this.selectedCategory = new Category(this.CategoryList.get(i).getCode(),categoryName);
-                this.TF_CategoryCode.setText(this.selectedCategory.getCode());
-                this.TF_CategoryName.setText(this.selectedCategory.getName());
-            }
-        }
-        
+       
+        this.selectedCategory = getSelectedCategory(categoryCode);
+        this.TF_CategoryCode.setText(this.selectedCategory.getCode());
+        this.TF_CategoryName.setText(this.selectedCategory.getName());
+           
         this.UI_VendorList.clear();
         this.UI_VendorList = selectedCategory.getVendorList();
         
@@ -378,10 +373,9 @@ public class VendorDialog extends javax.swing.JDialog {
     
     private void initData(String categoryCode){
     	
-    	this.selectedCategory = this.manager.getCategoryByCode(categoryCode);
         this.CategoryList = this.manager.getCategoryList();
-        this.LoadList();
-        
+       
+        this.selectedCategory = getSelectedCategory(categoryCode);
         this.TF_CategoryCode.setText(selectedCategory.getCode());
         this.TF_CategoryName.setText(selectedCategory.getName());
         
@@ -390,6 +384,7 @@ public class VendorDialog extends javax.swing.JDialog {
         if(this.UI_VendorList.isEmpty())
         	this.UI_VendorList = new ArrayList<Vendor>();
         
+        this.LoadList();
         this.tableModel = (DefaultTableModel) this.T_SSA_VendorTable.getModel();//Creating Table model
         
         this.LoadTable();
@@ -424,9 +419,15 @@ public class VendorDialog extends javax.swing.JDialog {
     }
     private void LoadList()
     {
-        int i = 0;
-        for(;i< this.CategoryList.size();i++)
-            this.COMBO_Category.addItem(this.CategoryList.get(i).getCode());
+        int selectedIndex = 0;
+        for(int i = 0;i< this.CategoryList.size();i++){
+        	String code = this.CategoryList.get(i).getCode();
+        	this.COMBO_Category.addItem(code);
+        	if (this.CategoryList.get(i) == this.selectedCategory)
+        		selectedIndex = i;
+        }
+        this.COMBO_Category.setSelectedIndex(selectedIndex);
+            
     }
     
     private boolean init() 
@@ -444,9 +445,9 @@ public class VendorDialog extends javax.swing.JDialog {
 
  
     private ArrayList<Vendor> getTableData() {
-        int i = 0;
+        
         ArrayList<Vendor> VL = new ArrayList<Vendor>();
-        for(;i < this.tableModel.getRowCount();i++)
+        for(int i = 0;i < this.tableModel.getRowCount();i++)
         {
             VL.add(new Vendor(this.tableModel.getValueAt(i,0).toString(), this.tableModel.getValueAt(i,1).toString()));
         }
@@ -465,6 +466,18 @@ public class VendorDialog extends javax.swing.JDialog {
         	}
         }
         return result;
+    }
+    
+    private Category getSelectedCategory(String code){
+    	Category result = null;
+    	for(Category category : CategoryList){
+    		if(code.equals(category.getCode())){
+    			result = category;
+    			break;
+    		}
+    	}
+    	return result;
+    	
     }
 
 }

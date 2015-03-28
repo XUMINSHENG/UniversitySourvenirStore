@@ -17,11 +17,6 @@ public class Category {
 		this.name = "";
 	}
 	
-	public Category(String code, String name) {
-		this.code = code;
-		this.name = name;
-		this.vendorList = new ArrayList<Vendor>();
-	}
 	
 	public Category(String code, String name, ArrayList<Vendor> vendorList) {
 		super();

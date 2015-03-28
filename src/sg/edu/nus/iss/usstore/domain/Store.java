@@ -333,16 +333,16 @@ public class Store {
 	 * @param name
 	 * @param vendorNameList
 	 */
-	public void updCategory(String code, String name, ArrayList<Vendor> vendorList){
-		categoryMgr.updCategory(code, name, vendorList);
+	public void updCategory(String code, String name){
+		categoryMgr.updCategory(code, name);
 	}
 	
 	/**
 	 * 
 	 * @param code
 	 */
-	public void delCategory(String code){
-		categoryMgr.delCategory(code);
+	public void delCategoryByCode(String code){
+		categoryMgr.delCategoryByCode(code);
 	}
 	
 	/**

@@ -6,7 +6,6 @@ public class UI_ErrorDialogBox extends javax.swing.JFrame {
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
         L_SSA_ErrorMessage = new javax.swing.JLabel();
