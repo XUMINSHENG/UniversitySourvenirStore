@@ -51,6 +51,7 @@ public class StoreWindow extends JFrame{
 	//private MemberListPanel memberListPanel;
 	//private ProductListPanel productListPanel;
 	private CategoryListPanel categoryListPanel;
+	
 	//private ReportPanel reportPanel;
 	
 	public StoreWindow(StoreApplication manager){
@@ -63,6 +64,7 @@ public class StoreWindow extends JFrame{
 		this.productListPanel = new ProductsListPanel(manager);
 		this.checkInventoryPanel = new CheckInventoryPanel(manager);
 		this.categoryListPanel = new CategoryListPanel(manager);
+		
 		
 		//register cards with cardName
 		cards.add(createMainPanel(),"mainScreen");

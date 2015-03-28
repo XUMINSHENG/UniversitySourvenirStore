@@ -347,6 +347,14 @@ public class Store {
 	
 	/**
 	 * 
+	 * @param categoryList
+	 */
+	public void setCategoryList(ArrayList<Category> categoryList){
+		categoryMgr.setCategoryList(categoryList);
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public ArrayList<Category> getCategoryList(){

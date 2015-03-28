@@ -4,13 +4,24 @@ import java.util.ArrayList;
 
 /**
  * 
- * @author Xu Minsheng
+ * @author 
  *
  */
 public class Category {
 	private String code;
 	private String name;
 	private ArrayList<Vendor> vendorList;
+	
+	public Category(){
+		this.code = "";
+		this.name = "";
+	}
+	
+	public Category(String code, String name) {
+		this.code = code;
+		this.name = name;
+		this.vendorList = new ArrayList<Vendor>();
+	}
 	
 	public Category(String code, String name, ArrayList<Vendor> vendorList) {
 		super();
@@ -42,7 +53,7 @@ public class Category {
 	 * 
 	 * @return most preference vendor
 	 */
-	public Vendor getFirstVendor(){
+	public Vendor getPreferenceVendor(){
 		Vendor vendor = null;
 		
 		// has vendor
@@ -52,5 +63,17 @@ public class Category {
 		
 		return vendor;
 	}
+	
+    
+    public boolean equalsCode(Category CATOBJ)
+    {
+        return this.code.equalsIgnoreCase(CATOBJ.code);
+    }
+    
+    public boolean equals(Category CATOBJ)
+    {
+        return this.code.equalsIgnoreCase(CATOBJ.code) && this.name.equalsIgnoreCase(CATOBJ.name);
+    }
+
 	
 }

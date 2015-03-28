@@ -194,6 +194,14 @@ public class StoreApplication {
 	
 	/**
 	 * 
+	 * @param categoryList
+	 */
+	public void setCategoryList(ArrayList<Category> categoryList){
+		store.setCategoryList(categoryList);
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public ArrayList<Category> getCategoryList(){
@@ -232,6 +240,8 @@ public class StoreApplication {
 		*/
 		
 		System.out.println("helloworld");
+		
+		//UI_CategoryManager.openCategoryManagerUI(manager);
 		
 	}
 

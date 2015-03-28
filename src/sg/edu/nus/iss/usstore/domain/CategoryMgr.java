@@ -56,6 +56,11 @@ public class CategoryMgr {
 		vendorDao.saveDataToFile(categoryList);
 	}
 	
+	
+	public void setCategoryList(ArrayList<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
+	
 	/**
 	 * 
 	 * @param code
