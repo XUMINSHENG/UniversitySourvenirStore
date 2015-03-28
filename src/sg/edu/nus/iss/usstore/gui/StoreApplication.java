@@ -133,14 +133,6 @@ public class StoreApplication {
 	/**
 	 * 
 	 * @param product
-	 */
-	public void addProduct(Product product){
-		store.addProduct(product);
-	}
-	
-	/**
-	 * 
-	 * @param product
 	 * @param indenx
 	 */
 	public void modifyProduct(String id,String name, String categoryCode, String briefDescription, 

@@ -8,7 +8,6 @@ import sg.edu.nus.iss.usstore.exception.DataFileException;
 
 /*
  * ProductManager
- * ProductListScreen's Manager
  * @ XIE JIABAO
  */
 
@@ -71,16 +70,6 @@ public class ProductMgr {
 	}
 	
 	//add new product or implement product quantity if product exists
-	public void addProduct(Product p){
-		if(productList.contains(p)){
-			int i = productList.indexOf(p);
-			int add = productList.get(i).getQuantityAvailable();
-			productList.get(i).setQuantityAvailable(p.getQuantityAvailable()+add);
-		}else{
-			this.productList.add(p);
-		}
-	}
-	
 	public void addProduct(String id,String name, Category category, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		Product product = new Product(category, name, 

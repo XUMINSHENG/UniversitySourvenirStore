@@ -256,14 +256,6 @@ public class Store {
 	/**
 	 * 
 	 * @param product
-	 */
-	public void addProduct(Product product){
-		productMgr.addProduct(product);
-	}
-	
-	/**
-	 * 
-	 * @param product
 	 * @param indenx
 	 */
 	
