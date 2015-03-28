@@ -121,13 +121,13 @@ public class StoreApplication {
 	}
 	
 
-	public int getNewProductIdByCategory(String code){
+	public String getNewProductIdByCategory(String code){
 		return store.getNewProductIdByCategory(code);
 	}
 	
-	public void addProduct(String name, String categoryCode, String briefDescription, 
+	public void addProduct(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
-		store.addProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);	
+		store.addProduct(id,name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);	
 	}
 	
 	/**
@@ -143,17 +143,17 @@ public class StoreApplication {
 	 * @param product
 	 * @param indenx
 	 */
-	public void modifyProduct(String name, String categoryCode, String briefDescription, 
-			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
-		store.modifyProduct(name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity,index);
+	public void modifyProduct(String id,String name, String categoryCode, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
+		store.modifyProduct(id,name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 	}
 	
 	/**
 	 * 
 	 * @param index
 	 */
-	public void deleteProduct(int index){
-		store.deleteProduct(index);
+	public void deleteProduct(String id){
+		store.deleteProduct(id);
 	}
 	
 	/**

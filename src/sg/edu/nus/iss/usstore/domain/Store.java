@@ -242,14 +242,14 @@ public class Store {
 	 * @param orderQuantity
 	 */
 	
-	public int getNewProductIdByCategory(String code){
+	public String getNewProductIdByCategory(String code){
 		return productMgr.getNewProductIdByCategory(code);
 	}
 	
-	public void addProduct(String name, String categoryCode, String briefDescription, 
+	public void addProduct(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		
-		productMgr.addProduct(name, categoryMgr.getCategoryByCode(categoryCode),
+		productMgr.addProduct(id,name, categoryMgr.getCategoryByCode(categoryCode),
 				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
 	}
 	
@@ -267,18 +267,18 @@ public class Store {
 	 * @param indenx
 	 */
 	
-	public void modifyProduct(String name, String categoryCode, String briefDescription, 
-			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
-		productMgr.modifyProduct(name, categoryMgr.getCategoryByCode(categoryCode), briefDescription
-				, quantityAvailable, price, barCode, threshold, orderQuantity,index);
+	public void modifyProduct(String id,String name, String categoryCode, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
+		productMgr.modifyProduct(id,name, categoryMgr.getCategoryByCode(categoryCode), briefDescription
+				, quantityAvailable, price, barCode, threshold, orderQuantity);
 		
 	}
 	/**
 	 * 
 	 * @param index
 	 */
-	public void deleteProduct(int index){
-		productMgr.deleteProduct(index);
+	public void deleteProduct(String id){
+		productMgr.deleteProduct(id);
 	}
 	
 	/**
