@@ -242,23 +242,15 @@ public class Store {
 	 * @param orderQuantity
 	 */
 	
-	public int getNewProductIdByCategory(String code){
+	public String getNewProductIdByCategory(String code){
 		return productMgr.getNewProductIdByCategory(code);
 	}
 	
-	public void addProduct(String name, String categoryCode, String briefDescription, 
+	public void addProduct(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		
-		productMgr.addProduct(name, categoryMgr.getCategoryByCode(categoryCode),
+		productMgr.addProduct(id,name, categoryMgr.getCategoryByCode(categoryCode),
 				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
-	}
-	
-	/**
-	 * 
-	 * @param product
-	 */
-	public void addProduct(Product product){
-		productMgr.addProduct(product);
 	}
 	
 	/**
@@ -267,18 +259,18 @@ public class Store {
 	 * @param indenx
 	 */
 	
-	public void modifyProduct(String name, String categoryCode, String briefDescription, 
-			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity,int index){
-		productMgr.modifyProduct(name, categoryMgr.getCategoryByCode(categoryCode), briefDescription
-				, quantityAvailable, price, barCode, threshold, orderQuantity,index);
+	public void modifyProduct(String id,String name, String categoryCode, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
+		productMgr.modifyProduct(id,name, categoryMgr.getCategoryByCode(categoryCode), briefDescription
+				, quantityAvailable, price, barCode, threshold, orderQuantity);
 		
 	}
 	/**
 	 * 
 	 * @param index
 	 */
-	public void deleteProduct(int index){
-		productMgr.deleteProduct(index);
+	public void deleteProduct(String id){
+		productMgr.deleteProduct(id);
 	}
 	
 	/**
@@ -341,16 +333,24 @@ public class Store {
 	 * @param name
 	 * @param vendorNameList
 	 */
-	public void updCategory(String code, String name, ArrayList<Vendor> vendorList){
-		categoryMgr.updCategory(code, name, vendorList);
+	public void updCategory(String code, String name){
+		categoryMgr.updCategory(code, name);
 	}
 	
 	/**
 	 * 
 	 * @param code
 	 */
-	public void delCategory(String code){
-		categoryMgr.delCategory(code);
+	public void delCategoryByCode(String code){
+		categoryMgr.delCategoryByCode(code);
+	}
+	
+	/**
+	 * 
+	 * @param categoryList
+	 */
+	public void setCategoryList(ArrayList<Category> categoryList){
+		categoryMgr.setCategoryList(categoryList);
 	}
 	
 	/**

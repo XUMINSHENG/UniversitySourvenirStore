@@ -1,233 +1,398 @@
 package sg.edu.nus.iss.usstore.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import sg.edu.nus.iss.usstore.domain.Category;
+import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.Vendor;
+
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import sg.edu.nus.iss.usstore.domain.*;
-import sg.edu.nus.iss.usstore.util.DialogMode;
-import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
+public class CategoryListPanel extends javax.swing.JPanel {
 
-
-
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
-/**
-* cardName: categoryList
-* @ Xu Minsheng
-*/
-public class CategoryListPanel extends JPanel{
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private final String[] columnNames = {"Category Code", "Categry Name"};
 	
-	private final String[] columnNames = {"Code","Name"};
-	private JButton modifyButton;
-	private JButton deleteButton;
-	private JTable categoryTable;
-	private DefaultTableModel tableModel;
 	private StoreApplication manager;
 	
-	/**
-	 * 
-	 * @param manager
-	 */
-	public CategoryListPanel(StoreApplication manager){
-		this.manager = manager;
-		setLayout(new BorderLayout());
-		add("North",createTopPanel());
-		add("Center",createMiddlePanel(loadTableData(manager.getCategoryList())));
-		add("South",createBottomPanel());
-		refreshTable();
-		setVisible(true);
-	}
-	
-	/**
-	 * 
-	 * @param categoryList
-	 * @return
-	 */
-	private Object[][] loadTableData(ArrayList<Category> categoryList){
-		Object[][] data =  new Object[categoryList.size()][2];
-		Category category;
-		for(int i=0;i<categoryList.size();i++){
-			category = categoryList.get(i);
-			data[i][0] = category.getCode();
-			data[i][1] = category.getName();
-		}
-		return data;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	private JPanel createTopPanel(){
-		JPanel p = new JPanel(new BorderLayout());
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(new JLabel("Category List"));
-		p.add("Center",panel);
-		JButton b = new JButton("Refresh");
-		b.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				refreshTable();
-			}
-		});
-		panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		panel.add(b);
-		p.add("East",panel);
-		
-		return p;
-	}
-	
-	/**
-	 * 
-	 * @param data
-	 * @return
-	 */
-	private Container createMiddlePanel(Object[][] data){
+    private String categoryName = new String();
+    private String categoryCode  = new String();
+    
+    //private CategoryMgr CAT_MAN = new CategoryMgr();
+    private ArrayList<Category> UI_CategoryList = new ArrayList<Category>();
+    private DefaultTableModel tableModel = new DefaultTableModel();
+    
+    public CategoryListPanel(StoreApplication manager) {
+    	this.manager = manager;
+  
+        initComponents();
+        initLook();
+        reloadData();
+    }
 
-		tableModel = new DefaultTableModel(data,columnNames){
-			/**
+    
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        T_SSA_CategoryTable = new javax.swing.JTable();
+        BT_SSA_AddNewCategory = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        TF_SSA_CategoryName = new javax.swing.JTextField();
+        TF_SSA_CategoryCode = new javax.swing.JTextField();
+        BT_SSA_Update = new javax.swing.JButton();
+        BT_SSA_Delete = new javax.swing.JButton();
+        BT_SSA_ManageVendor = new javax.swing.JButton();
+
+        //setTitle("Category Manager");
+        setBounds(new java.awt.Rectangle(300, 100, 600, 400));
+        //setResizable(false);
+
+        T_SSA_CategoryTable.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        T_SSA_CategoryTable.setForeground(new java.awt.Color(12, 12, 12));
+        T_SSA_CategoryTable.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {},  columnNames ) {
+            /**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
+			Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
 
-			@Override
-			public boolean isCellEditable(int row, int column){
-				return false;
-			}
-		};
-		
-		categoryTable = new JTable(tableModel);
-		categoryTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		TableColumnAdjuster tca = new TableColumnAdjuster(categoryTable);
-		tca.setColumnHeaderIncluded(true);
-		tca.setColumnDataIncluded(true);
-		//tca.setOnlyAdjustLarger(true);
-		tca.adjustColumns();
-		categoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		categoryTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				if(categoryTable.getSelectionModel().isSelectionEmpty()){
-					modifyButton.setEnabled(false);
-					deleteButton.setEnabled(false);
-				}else{
-					modifyButton.setEnabled(true);
-					deleteButton.setEnabled(true);
-				}
-			}
-		});;
-		categoryTable.setFillsViewportHeight(true);
-		categoryTable.setAutoCreateRowSorter(true);
-		
-		JScrollPane p = new JScrollPane(categoryTable);
-		
-		return p;
-	}
-	
-	private JPanel createBottomPanel(){
-		JPanel p = new JPanel();
-		JButton b = new JButton("Add");
-		b.addActionListener(new ActionListener() {
-			 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				CategoryDialog categoryDlg = new CategoryDialog(manager,"Add Category", null, DialogMode.ADD);				
-				categoryDlg.setVisible(true);
-			}
-		});
-		p.add(b);
-		
-		modifyButton = new JButton("Modify");
-		modifyButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				String code = (String) categoryTable.getValueAt(categoryTable.getSelectedRow(), 0);
-				CategoryDialog categoryDlg = 
-						new CategoryDialog(manager,"Modify Category", manager.getCategoryByCode(code), DialogMode.MODIFY);
-				
-				categoryDlg.setVisible(true);
-			}
-		});
-		modifyButton.setEnabled(false);
-		p.add(modifyButton);
-		
-		deleteButton = new JButton("Delete");
-		deleteButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-				delCategory();
-			}
-		});
-		deleteButton.setEnabled(false);
-		p.add(deleteButton);
+            public Class<?> getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-		
-		b = new JButton("Back");
-		b.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				manager.getStoreWindow().changeCard("mainScreen");
-			}
-		});
-		p.add(b);
-		return p;
-	}
-	
-	public void refreshTable(){
-		tableModel.setDataVector(loadTableData(manager.getCategoryList()), columnNames);
-		tableModel.fireTableDataChanged();
-	}
-	
-	/**
-	 * 
-	 */
-	private void delCategory(){
-		String code = (String) categoryTable.getValueAt(categoryTable.getSelectedRow(), 0);
-		manager.deleteCategory(code);
-		refreshTable();
-	}
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        T_SSA_CategoryTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        T_SSA_CategoryTable.setSelectionBackground(new java.awt.Color(51, 51, 51));
+        T_SSA_CategoryTable.setSelectionForeground(new java.awt.Color(204, 204, 204));
+        T_SSA_CategoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                T_SSA_CategoryTableMouseClicked(evt);
+            }
+        });
+        T_SSA_CategoryTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                T_SSA_CategoryTableKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                T_SSA_CategoryTableKeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(T_SSA_CategoryTable);
 
+        BT_SSA_AddNewCategory.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_AddNewCategory.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_AddNewCategory.setText("Add New");
+        BT_SSA_AddNewCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_AddNewCategoryMouseClicked(evt);
+            }
+        });
 
+        jLabel2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setText("Category Code");
+
+        jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setText("Category Name");
+        
+        TF_SSA_CategoryCode.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        TF_SSA_CategoryCode.setForeground(new java.awt.Color(51, 51, 51));
+
+        TF_SSA_CategoryName.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        TF_SSA_CategoryName.setForeground(new java.awt.Color(51, 51, 51));
+
+        BT_SSA_Update.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_Update.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_Update.setText("Update");
+        BT_SSA_Update.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_UpdateMouseClicked(evt);
+            }
+        });
+
+        BT_SSA_Delete.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_Delete.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_Delete.setText("Delete");
+        BT_SSA_Delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_DeleteMouseClicked(evt);
+            }
+        });
+
+        BT_SSA_ManageVendor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_ManageVendor.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_ManageVendor.setText("Manage Vendor");
+        BT_SSA_ManageVendor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_ManageVendorMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 798, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(TF_SSA_CategoryCode, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TF_SSA_CategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BT_SSA_AddNewCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                    .addComponent(BT_SSA_Update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BT_SSA_ManageVendor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BT_SSA_Delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(134, 134, 134))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(BT_SSA_AddNewCategory)
+                            .addComponent(BT_SSA_Delete)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(TF_SSA_CategoryCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TF_SSA_CategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(BT_SSA_Update)
+                    .addComponent(BT_SSA_ManageVendor))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        //pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void BT_SSA_AddNewCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_AddNewCategoryMouseClicked
+      
+        if(this.init())
+        {
+            if(!this.validAdd())
+            {
+                UI_ErrorDialogBox.openDialog("Duplicate Category ID `"+categoryCode+"`");
+            }
+            else
+            {
+                this.manager.addCategory(this.categoryCode,this.categoryName, new ArrayList<Vendor>());
+                reloadData();
+            }           
+        }
+    }//GEN-LAST:event_BT_SSA_AddNewCategoryMouseClicked
+
+    private void BT_SSA_UpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_UpdateMouseClicked
+       int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+       if(selectedIndex == -1 || this.T_SSA_CategoryTable.getRowCount() == 0)
+           UI_ErrorDialogBox.openDialog("Please select an item.");
+       else if(this.init())
+       {
+           if(this.validUpd())
+           {	
+        	   String code = this.tableModel.getValueAt(this.T_SSA_CategoryTable.getSelectedRow(),0).toString();
+        	   String name = this.TF_SSA_CategoryName.getText().toString();
+               this.manager.updCategory(code, name);
+               reloadData();
+           }else
+        	   UI_ErrorDialogBox.openDialog("Category Code should not be changed");
+       }
+    }//GEN-LAST:event_BT_SSA_UpdateMouseClicked
+
+    private void T_SSA_CategoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_T_SSA_CategoryTableMouseClicked
+       int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+       if(selectedIndex > -1)
+       {
+           this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
+           this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());
+       }
+    }//GEN-LAST:event_T_SSA_CategoryTableMouseClicked
+
+    private void BT_SSA_DeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_DeleteMouseClicked
+	   int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+	   if(selectedIndex == -1 || this.T_SSA_CategoryTable.getRowCount() == 0)
+	       UI_ErrorDialogBox.openDialog("Please select an item.");
+	   else
+	   {	
+		   	String code = this.tableModel.getValueAt(this.T_SSA_CategoryTable.getSelectedRow(),0).toString();
+			if(validDel(code)){
+				manager.deleteCategoryByCode(code);
+				reloadData();
+			}else
+			   UI_ErrorDialogBox.openDialog("there have product in this Category `"+ code + "`, should not be deleted");
+    	   	
+       }
+    }//GEN-LAST:event_BT_SSA_DeleteMouseClicked
+
+    private void T_SSA_CategoryTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T_SSA_CategoryTableKeyReleased
+        int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+       if(selectedIndex > -1)
+       {this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
+       this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());}
+    }//GEN-LAST:event_T_SSA_CategoryTableKeyReleased
+
+    private void T_SSA_CategoryTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T_SSA_CategoryTableKeyPressed
+        int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+       if(selectedIndex > -1)
+       {this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
+       this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());}
+    }//GEN-LAST:event_T_SSA_CategoryTableKeyPressed
+
+    private void BT_SSA_ManageVendorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_ManageVendorMouseClicked
+        int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+        if(selectedIndex == -1 || this.T_SSA_CategoryTable.getRowCount() == 0)
+            UI_ErrorDialogBox.openDialog("Please select an item.");
+        else
+        { 
+            VendorDialog vendorDlg = new VendorDialog(manager, this.tableModel.getValueAt(selectedIndex,0).toString());
+            vendorDlg.setVisible(true);
+            
+        }
+    }//GEN-LAST:event_BT_SSA_ManageVendorMouseClicked
+        
+    
+    private void initLook(){
+    	try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CategoryListPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CategoryListPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CategoryListPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CategoryListPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void reloadData() {
+        
+        this.UI_CategoryList = this.manager.getCategoryList();//Retriving Saved UI_CategoryList form File
+        if(this.UI_CategoryList.isEmpty())
+        	this.UI_CategoryList = new ArrayList<Category>();
+        this.tableModel = (DefaultTableModel) this.T_SSA_CategoryTable.getModel();//Creating Table model
+        
+        this.LoadTable();
+        
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BT_SSA_AddNewCategory;
+    private javax.swing.JButton BT_SSA_Delete;
+    private javax.swing.JButton BT_SSA_ManageVendor;
+    private javax.swing.JButton BT_SSA_Update;
+    private javax.swing.JTextField TF_SSA_CategoryCode;
+    private javax.swing.JTextField TF_SSA_CategoryName;
+    private javax.swing.JTable T_SSA_CategoryTable;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    // End of variables declaration//GEN-END:variables
+
+    private void LoadTable()
+    {
+        
+        tableModel.setRowCount(0);
+        if(this.UI_CategoryList != null) 
+        {  
+            if(!this.UI_CategoryList.isEmpty())
+            {
+                for(int  i = 0; i < this.UI_CategoryList.size() ; i++)
+                {   
+                    this.tableModel.addRow(new Object[]{this.UI_CategoryList.get(i).getCode(),this.UI_CategoryList.get(i).getName()});
+                }
+            }
+        }
+        else
+            System.out.println(this.UI_CategoryList);
+        
+        tableModel.fireTableDataChanged();
+    }
+    
+    private boolean init() 
+    {
+    	this.categoryCode = this.TF_SSA_CategoryCode.getText().trim().toUpperCase();
+        this.categoryName = this.TF_SSA_CategoryName.getText().trim();
+       
+        if(this.categoryName.isEmpty() || this.categoryCode.isEmpty())
+            UI_ErrorDialogBox.openDialog("Category Name or ID should not be empty.");
+        else if(this.categoryCode.length()!= 3)
+            UI_ErrorDialogBox.openDialog(" ID Should be 3 characters long!!");
+        else if(this.categoryName.contains(",") || this.categoryCode.contains(","))
+            UI_ErrorDialogBox.openDialog("Please avoid COMMA(,)!!");
+        else
+            return true;
+        return false;
+    }
+
+    private boolean validAdd()
+    {
+    	boolean result = true;
+    	
+    	// duplicate check
+        for(Category category : this.UI_CategoryList){
+        	if(category.getCode().equals(this.categoryCode)){
+        		result = false;
+            	break;
+        	}
+        }
+        return result;
+    }
+    
+    private boolean validUpd()
+    {
+    	String originCode = this.tableModel.getValueAt(this.T_SSA_CategoryTable.getSelectedRow(),0).toString();
+        return (originCode.equals(this.categoryCode));
+    }
+    
+    private boolean validDel(String code)
+    {
+    	boolean result = true;
+    	
+    	// check whether any product in this category
+        for(Product product : this.manager.getProductList()){
+        	if(product.getCategory().getCode().equals(code)){
+        		result = false;
+            	break;
+        	}
+        }
+        return result;
+    }
+ 
 }

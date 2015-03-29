@@ -8,7 +8,6 @@ import sg.edu.nus.iss.usstore.exception.DataFileException;
 
 /*
  * ProductManager
- * ProductListScreen's Manager
  * @ XIE JIABAO
  */
 
@@ -50,12 +49,13 @@ public class ProductMgr {
 		return orderList;
 	}
 	
-	public int getNewProductIdByCategory(String categoryCode){
-		int i = 1;
+	public String getNewProductIdByCategory(String categoryCode){
+		String newId;
+		int i = -1;
 		int j = -1;
 		for(Product p:this.productList){
 			if(categoryCode.equals(p.getCategory().getCode())){
-				if(i==1){
+				if(i==-1){
 					i = Integer.parseInt(p.getProductId().substring(4))+1;
 				}else{
 					j = Integer.parseInt(p.getProductId().substring(4))+1;
@@ -65,21 +65,12 @@ public class ProductMgr {
 				}
 			}
 		}
-		return i;
+		newId = categoryCode + "/" + Integer.toString(i);
+		return newId;
 	}
 	
 	//add new product or implement product quantity if product exists
-	public void addProduct(Product p){
-		if(productList.contains(p)){
-			int i = productList.indexOf(p);
-			int add = productList.get(i).getQuantityAvailable();
-			productList.get(i).setQuantityAvailable(p.getQuantityAvailable()+add);
-		}else{
-			this.productList.add(p);
-		}
-	}
-	
-	public void addProduct(String name, Category category, String briefDescription, 
+	public void addProduct(String id,String name, Category category, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		Product product = new Product(category, name, 
 				briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
@@ -91,8 +82,8 @@ public class ProductMgr {
 		}
 		if(i>=productList.size()){
 			//add new product
-			String code = category.getCode();
-			product.setProductId(code+"/"+Integer.toString(getNewProductIdByCategory(code)));
+			//String code = category.getCode();
+			product.setProductId(id);
 			productList.add(product);
 		}else{
 			//add quantity of existed product
@@ -100,15 +91,25 @@ public class ProductMgr {
 		}
 	}
 	
-	public void modifyProduct(String name, Category category, String briefDescription, 
-			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity, int index){
-		Product p = new Product(category, name, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
-		p.setProductId(category.getCode()+"/"+Integer.toString(index));
-		this.productList.set(index,p);
+	public void modifyProduct(String id, String name, Category category, String briefDescription, 
+			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
+		Product product = new Product(id,category, name, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+		String code = category.getCode();
+		for(Product p:this.productList){
+			if(code.equals(p.getCategory().getCode())){
+				this.productList.set(productList.indexOf(p),product);
+				break;
+			}
+		}
 	}
 	
-	public void deleteProduct(int index){
-		this.productList.remove(index);
+	public void deleteProduct(String id){
+		for(int i =0;i<productList.size();i++){
+			if(id.equals(productList.get(i).getProductId())){
+				this.productList.remove(i);
+				break;
+			}
+		}
 	}
 	
 	//change quantity of product when checkout 

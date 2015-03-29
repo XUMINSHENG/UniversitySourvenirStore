@@ -2,7 +2,7 @@ package sg.edu.nus.iss.usstore.domain;
 
 /**
  * 
- * @author Xu Minsheng
+ * @author 
  *
  */
 public class Vendor {
@@ -18,15 +18,25 @@ public class Vendor {
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getDescription() {
 		return description;
 	}
+	
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	 boolean equalsName(Vendor VENOBJ) {
+        return this.name.equalsIgnoreCase(VENOBJ.name);
+    }
+	    
+    boolean equals(Vendor VENOBJ) {
+        return this.name.equalsIgnoreCase(VENOBJ.name) &&  this.description.equalsIgnoreCase(VENOBJ.description);
+    }
 	
 }

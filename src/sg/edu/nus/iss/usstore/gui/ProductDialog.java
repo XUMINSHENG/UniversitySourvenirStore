@@ -23,7 +23,7 @@ public class ProductDialog extends JDialog{
 
 	private StoreApplication manager;
 	private StoreWindow mainScreen;
-	private int index;
+	private String id;
 	
 	private JTextField idText;
 	private JTextField nameText;
@@ -46,18 +46,23 @@ public class ProductDialog extends JDialog{
 		initGUI();
 		getContentPane().add("South",createAddBottomPanel());
 		String code = (String)categoryList.getSelectedItem();
-		this.index = manager.getNewProductIdByCategory(code);
-		idText.setText(code+"/"+Integer.toString(index));
+		this.id = manager.getNewProductIdByCategory(code);
+		idText.setText(id);
 	}
 	
-	public ProductDialog(StoreApplication manager,String title,int index){
+	public ProductDialog(StoreApplication manager,String title,String id){
 		super(manager.getStoreWindow(),title);
 		this.manager = manager;
 		this.mainScreen = manager.getStoreWindow();
-		this.index = index;
+		this.id = id;
 		initGUI();
+<<<<<<< HEAD
 		getContentPane().add("South",createModifyBottomPanel());
 		Product p = manager.getProductList().get(index);
+=======
+		add("South",createModifyBottomPanel());
+		Product p = manager.getProductById(id);
+>>>>>>> origin/master
 		setData(p.getProductId(), p.getName(), p.getCategory().getCode(), p.getBriefDescription(), p.getQuantityAvailable(), 
 				p.getPrice(), p.getBarCodeNumber(), p.getReorderQuantity(), p.getOrderQuantity());
 		categoryList.setEnabled(false);
@@ -173,7 +178,7 @@ public class ProductDialog extends JDialog{
 				//Product newProduct = new Product("4","animal","pig","something",12,20,"c123",100,200);
 				
 				if(validateData()){
-					manager.addProduct(getNameText(),getCategoryText(),getDescriptionText(),
+					manager.addProduct((String)categoryList.getSelectedItem(),getNameText(),getCategoryText(),getDescriptionText(),
 								getQuantityText(),getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
 				
 					mainScreen.getProductListPanel().refreshTable();
@@ -202,7 +207,7 @@ public class ProductDialog extends JDialog{
 				// TODO Auto-generated method stub
 				if(categoryList.getSelectedIndex()!=-1){
 					String code = (String)categoryList.getSelectedItem();
-					idText.setText(code+"/"+Integer.toString(manager.getNewProductIdByCategory(code)));
+					idText.setText(manager.getNewProductIdByCategory(code));
 				}
 			}
 		});
@@ -221,8 +226,8 @@ public class ProductDialog extends JDialog{
 				//Product newProduct = new Product("4","animal","pig","something",12,20,"c123",100,200);
 				
 				if(validateData()){
-					manager.modifyProduct(getNameText(),getCategoryText(),getDescriptionText(),getQuantityText(),
-								getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText(),index);
+					manager.modifyProduct(id,getNameText(),getCategoryText(),getDescriptionText(),getQuantityText(),
+								getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
 				
 					//manager.modifyProduct(newProduct, index);
 					mainScreen.getProductListPanel().refreshTable();
@@ -239,7 +244,7 @@ public class ProductDialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				manager.deleteProduct(index);
+				manager.deleteProduct(id);
 				mainScreen.getProductListPanel().refreshTable();
 				dispose();
 			}

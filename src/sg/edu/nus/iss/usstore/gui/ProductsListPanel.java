@@ -153,7 +153,11 @@ public class ProductsListPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ProductDialog d = new ProductDialog(manager,"Modify Product", productTable.getSelectedRow());
+				int rowIndex = productTable.convertRowIndexToModel(productTable.getSelectedRow());
+				int columnIndex = productTable.getColumnModel().getColumnIndex("Id");
+				String id = (String)tableModel.getValueAt(rowIndex, columnIndex);
+				//int index = Integer.parseInt(id.substring(4));
+				ProductDialog d = new ProductDialog(manager,"Modify Product", id);
 				d.setVisible(true);
 			}
 		});
@@ -166,9 +170,11 @@ public class ProductsListPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				int index = productTable.getSelectedRow();
-				tableModel.removeRow(index);
-				manager.deleteProduct(index);
+				int rowIndex = productTable.convertRowIndexToModel(productTable.getSelectedRow());
+				int columnIndex = productTable.getColumnModel().getColumnIndex("Id");
+				String id = (String)tableModel.getValueAt(rowIndex, columnIndex);
+				tableModel.removeRow(rowIndex);
+				manager.deleteProduct(id);
 				//manager.getStore().getPm().showData();
 //				deleteButton.setEnabled(false);
 //				modifyButton.setEnabled(false);
