@@ -56,18 +56,17 @@ public class ProductDialog extends JDialog{
 		this.mainScreen = manager.getStoreWindow();
 		this.id = id;
 		initGUI();
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 		getContentPane().add("South",createModifyBottomPanel());
 		Product p = manager.getProductList().get(index);
-=======
+
 		add("South",createModifyBottomPanel());
 		Product p = manager.getProductById(id);
->>>>>>> origin/master
-=======
+
+
 		add("South",createModifyBottomPanel());
 		Product p = manager.getProductById(id);
->>>>>>> origin/master
+
 		setData(p.getProductId(), p.getName(), p.getCategory().getCode(), p.getBriefDescription(), p.getQuantityAvailable(), 
 				p.getPrice(), p.getBarCodeNumber(), p.getReorderQuantity(), p.getOrderQuantity());
 		categoryList.setEnabled(false);
