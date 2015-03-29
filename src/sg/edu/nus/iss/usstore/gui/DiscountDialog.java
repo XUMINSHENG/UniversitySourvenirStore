@@ -2,7 +2,6 @@
 package sg.edu.nus.iss.usstore.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -17,41 +16,35 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.Caret;
 
 import sg.edu.nus.iss.usstore.domain.*;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
-
+import sg.edu.nus.iss.usstore.util.StringDocument;
+import sg.edu.nus.iss.usstore.util.Util;
+package sg.edu.nus.iss.usstore.util;
 public class DiscountDialog extends JDialog{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
+	private static final long serialVersionUID = 1L;
 	private StoreApplication manager;
 	private StoreWindow mainScreen;
 	private int index;
-	
-	private JTextField DiscountCode;
-	private JTextField DiscountDescription;
-	//private JTextField categoryText;
-	
 	private JTextField discountCodeText;
-	private JTextField DiscountDescriptionText;
-	private JTextField PercentText;
-	private JTextField ApplicableText;
-	private JTextField PeriodText;
-	private JTextField orderQtyText;
+	private JTextField descriptionDescriptionText;
+	private JTextField percentText;
+	private JTextField startDateText;
+	private JTextField periodText;
+	private JTextField applicableText;
 	
-	private JTextField StartDateText;
 	
 	public DiscountDialog(StoreApplication manager, String title){
 		super(manager.getStoreWindow(),title);
 		this.manager = manager;
 		this.mainScreen = manager.getStoreWindow();
-		this.index = manager.getProductList().size()+1;
 		initGUI();
-		add("South",createCenterPanel());
+		getContentPane().add("South",createAddBottomPanel());
+		
 	}
 	
 	public DiscountDialog(StoreApplication manager,String title,int index){
@@ -60,22 +53,19 @@ public class DiscountDialog extends JDialog{
 		this.mainScreen = manager.getStoreWindow();
 		this.index = index;
 		initGUI();
-		add("South",createModifyBottomPanel());
-		Discount d = manager.get(index);
-		setData(d.getDiscountcode(),d.getDiscountDescription(),d.getStartDate(),d.getPercent(),d.getPeriod(),d.getApplicable());
+		getContentPane().add("South",createModifyBottomPanel());
+		Discount d= manager.getDiscountList().get(index);
+		setData(d.getDiscountcode(),d.getDiscountDescription(),d.getStartDate(),(int) d.getPercent(),d.getPeriod(),d.getApplicable());
+		discountList.setEnabled(false);
 	}
 	
-
-
-	private Component createModifyBottomPanel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+		
+	
 	private void initGUI() {
 		try {
-			setLayout(new BorderLayout());
-			add("Center",createCenterPanel());
+			getContentPane().setLayout(new BorderLayout());
+			getContentPane().add("Center",createCenterPanel());
 			setSize(400, 300);
 			setLocationRelativeTo(null);
 			setModal(true);
@@ -86,61 +76,63 @@ public class DiscountDialog extends JDialog{
 	}
 	
 	private JPanel createCenterPanel(){
-		JPanel d = new JPanel(new BorderLayout());
-		d.setBorder(new EmptyBorder(10, 10, 0, 10));
+		JPanel p = new JPanel(new BorderLayout());
+		p.setBorder(new EmptyBorder(10, 10, 0, 10));
 		
 		JPanel panel = new JPanel(new GridLayout(9,1));
-		panel.add(new JLabel("DiscountCode "));
-		panel.add(new JLabel("DiscountDescription "));
-		panel.add(new JLabel("StartDate "));
-		panel.add(new JLabel("Percentage "));
-		panel.add(new JLabel("Period "));
-		panel.add(new JLabel("Applicable "));
-		d.add("West",panel);
+		panel.add(new JLabel("DiscountCode"));
+		panel.add(new JLabel("Discount Description"));
+		panel.add(new JLabel("Start Date"));
+		panel.add(new JLabel("Percent"));
+		panel.add(new JLabel("Period"));
+		panel.add(new JLabel("Applicable"));
+		p.add("West",panel);
 		
 		
 		loadDiscountList();
 		discountCodeText = new JTextField();
-		discountCodeText.setEditable(false);
-		//categoryText = new JTextField();
-		DiscountDescriptionText = new JTextField();
-		DiscountDescriptionText.setEditable(false);
-		StartDateText = new JTextField();
+		discountCodeText.setDocument(new StringDocument());
+		descriptionDescriptionText = new JTextField();
+		descriptionDescriptionText.setDocument(new StringDocument());
+		startDateText = new JTextField();
+		startDateText.setDocument(Util.castDate(Date);
+		percentText = new JTextField();
+		percentText.setDocument(Util.castDouble(s) );
+		periodText = new JTextField();
+		periodText.setDocument(util.);
+		applicableText = new JTextField();
+		applicableText.setDocument(new StringDocument());
+		panel = new JPanel(new GridLayout(9,1));
+		panel.add(discountCodeText);
+		panel.add(descriptionDescriptionText);
+		panel.add(startDateText);D
+		panel.add(percentText);
+		panel.add(periodText);
+		panel.add(applicableText);
+		p.add("Center",panel);
 		
-		PercentText = new JTextField();
-		PercentText.setEditable(false);
-		PeriodText = new JTextField();
-		PeriodText.setEditable(false);
-		ApplicableText = new JTextField();
-		ApplicableText.setEditable(false);
-		
-		panel = new JPanel(new GridLayout(6,1));
-		panel.add(DiscountCode);
-		panel.add(DiscountDescriptionText);
-		panel.add(StartDateText);
-		panel.add(PercentText);
-		panel.add(PeriodText);
-		panel.add(ApplicableText);
-		;
-		d.add("Center",panel);
-		
-		return d;
+		return p;
 	}
 	
-	
-	
-	private void loadDiscountList() {
-		// TODO Auto-generated method stub
-		
+	public void loadDiscountList(){
+		int lenght = manager.getDiscountList().size();
+		if(lenght>0){
+			for(int i=0;i<lenght;i++){
+				discountList.addItem(manager.getDiscountList());
+			}
+			discountList.updateUI();
+		}
 	}
+	
+	public void setData(String discountCode, String discountDescription,
+			Date startDate, int period, double percent, String Applicable){
+		
+		discountCodeText.setText(discountCode);
+		descriptionDescriptionText.setText(discountDescription);
+		startDateText.setDocument(new DigitDocument() );
+		percentText.setText(Double.toString(percent));
+		periodText.setText(Integer.toString(period));
+		applicableText.setText(Applicable);
+			}
 
-	private void setData(String discountCode, String discountDescription,
-			Date startDate, double percent, int period, String applicable) {
-		// TODO Auto-generated method stub
-	}
 	
-		
-	
-	
-	
-}

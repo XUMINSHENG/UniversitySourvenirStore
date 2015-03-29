@@ -36,12 +36,15 @@ public class ProductDialog extends JDialog{
 	private JTextField reorderQtyText;
 	private JTextField orderQtyText;
 	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public ProductDialog(StoreApplication manager, String title){
 		super(manager.getStoreWindow(),title);
 		this.manager = manager;
 		this.mainScreen = manager.getStoreWindow();
 		initGUI();
-		add("South",createAddBottomPanel());
+		getContentPane().add("South",createAddBottomPanel());
 		String code = (String)categoryList.getSelectedItem();
 		this.index = manager.getNewProductIdByCategory(code);
 		idText.setText(code+"/"+Integer.toString(index));
@@ -53,7 +56,7 @@ public class ProductDialog extends JDialog{
 		this.mainScreen = manager.getStoreWindow();
 		this.index = index;
 		initGUI();
-		add("South",createModifyBottomPanel());
+		getContentPane().add("South",createModifyBottomPanel());
 		Product p = manager.getProductList().get(index);
 		setData(p.getProductId(), p.getName(), p.getCategory().getCode(), p.getBriefDescription(), p.getQuantityAvailable(), 
 				p.getPrice(), p.getBarCodeNumber(), p.getReorderQuantity(), p.getOrderQuantity());
@@ -62,8 +65,8 @@ public class ProductDialog extends JDialog{
 	
 	private void initGUI() {
 		try {
-			setLayout(new BorderLayout());
-			add("Center",createCenterPanel());
+			getContentPane().setLayout(new BorderLayout());
+			getContentPane().add("Center",createCenterPanel());
 			setSize(400, 300);
 			setLocationRelativeTo(null);
 			setModal(true);

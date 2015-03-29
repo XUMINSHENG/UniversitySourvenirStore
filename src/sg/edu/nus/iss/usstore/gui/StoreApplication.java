@@ -3,6 +3,7 @@ package sg.edu.nus.iss.usstore.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Discount;
@@ -224,6 +225,22 @@ public class StoreApplication {
 		store.delCategory(code);
 	}
 	
+	public ArrayList<Discount> getDiscountList(){
+		return store.getDiscountList();
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		StoreApplication manager = new StoreApplication();
 		manager.startup();	
@@ -250,6 +267,12 @@ public class StoreApplication {
 	public Discount get(int index) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void addDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, double percent, String Applicable) {
+		// TODO Auto-generated method stub
+		store.addDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
 	}
 	
 

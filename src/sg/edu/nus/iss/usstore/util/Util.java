@@ -135,10 +135,25 @@ public class Util {
 		return df.format(price);
 	}
 	
-	}
 	
 	
 	
+/**
+ * Getter for virtual field 'startDateText' (yyyy/dd/mm representation of the startDate)
+ * @return
+ */
+public Static String getStartDateText() {
+	return startDate.toString();
+}
+
+/**
+ * Setter for virtual field 'startDateText' (yyyy/dd/mm representation of the startDate)
+ * @param startDateText
+ */
+public void setStartDateText(String startDateText) {
+	this.startDate = DateDay.parse(startDateText);
+}
+}
 	
 	
 

@@ -27,7 +27,7 @@ public ArrayList<Discount> loadDataFromFile() throws IOException, DataFileExcept
 	
 	stringList = super.loadStringFromFile(super.getcDatafolderpath() + C_File_Name);
 	
-	ArrayList<Discount> discountlist = new ArrayList<Discount>();
+	ArrayList<Discount> discountList = new ArrayList<Discount>();
 	
 	StringBuffer errMsg = new StringBuffer();
 		
@@ -68,7 +68,7 @@ public ArrayList<Discount> loadDataFromFile() throws IOException, DataFileExcept
 			}
 				
 				
-			discountlist.add(discount);
+			discountList.add(discount);
 					
 		}catch(DataInputException e){
 			errMsg.append("datafile[" + C_File_Name + "] LineNo:" + (lineNo + 1) + System.getProperty("line.separator"));
@@ -81,22 +81,23 @@ public ArrayList<Discount> loadDataFromFile() throws IOException, DataFileExcept
 	}
 	
 	
-    return discountlist;
+    return discountList;
 
 }
 
 
-public void saveDataToFile(ArrayList<Discount> discountlist) throws IOException {
+public void saveDataToFile(ArrayList<Discount> discountList) throws IOException {
 	
 	ArrayList<String> stringList = new ArrayList<String>();
 	
 
-	for (Discount discount : discountlist) {
+	for (Discount discount : discountList) {
 		//setDiscount(iterator.next());
 		StringBuffer line;
 		
 		line = new StringBuffer(discount.getDiscountcode() + Util.C_Separator);
 		line.append(discount.getDiscountDescription() + Util.C_Separator);
+		//line.append(Util.dateToString(discount.getStartDate()) + Util.C_Separator);
 		line.append(Util.dateToString(discount.getStartDate()) + Util.C_Separator);
 		line.append(discount.getPeriod()+Util.C_Separator);
 		line.append(discount.getPercent()+Util.C_Separator);

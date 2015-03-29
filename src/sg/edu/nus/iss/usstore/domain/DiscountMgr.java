@@ -79,31 +79,7 @@ public class DiscountMgr {
 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	/* maximum disc*/
 	public double getMaxDiscount(String customerId,int loyaltyPoint){
 		boolean isMember = false;
@@ -158,8 +134,8 @@ public class DiscountMgr {
 			}
 			
 			
-			//System.out.println(d.getDiscountcode()+","+d.getDiscountDescription()+","+
-		//d.getStartDate()+","+d.getPeriod()+","+d.getApplicable());
+		//	System.out.println(d.getDiscountcode()+","+d.getDiscountDescription()+","+
+	//	d.getStartDate()+","+d.getPeriod()+","+d.getApplicable());
 			
 		
 					
@@ -218,7 +194,7 @@ public class DiscountMgr {
 	public void deleteDiscount(int index) {
 		// TODO Auto-generated method stub
 		
-	}
+	} 
 }
 
 

@@ -341,6 +341,8 @@ public class StoreWindow extends JFrame{
 		button = new JButton("Add Discount");
 		button.addActionListener(new ActionListener() {
 			
+	
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub

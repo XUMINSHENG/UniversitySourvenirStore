@@ -58,7 +58,7 @@ public abstract class Discount {
 	public Discount getHigherDiscount(Discount discount){
 		if ((discount == null) || (this.getPercent() > discount.getPercent())) 
 			return this;
-		else 
+	else 
 			return discount;
 	}
 
