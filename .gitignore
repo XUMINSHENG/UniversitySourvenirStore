@@ -8,3 +8,4 @@
 test/sg/edu/nus/iss/usstore/test/TransactionItemTest.java
 test/sg/edu/nus/iss/usstore/test/TransactionItemTest.java
 test/sg/edu/nus/iss/usstore/test/TransactionItemTest.java
+src/sg/edu/nus/iss/usstore/gui/ProductDialog.java
