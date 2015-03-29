@@ -57,8 +57,13 @@ public class ProductDialog extends JDialog{
 		this.id = id;
 		initGUI();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		getContentPane().add("South",createModifyBottomPanel());
 		Product p = manager.getProductList().get(index);
+=======
+		add("South",createModifyBottomPanel());
+		Product p = manager.getProductById(id);
+>>>>>>> origin/master
 =======
 		add("South",createModifyBottomPanel());
 		Product p = manager.getProductById(id);
