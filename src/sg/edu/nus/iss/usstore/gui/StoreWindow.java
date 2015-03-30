@@ -89,6 +89,7 @@ public class StoreWindow extends JFrame{
 			exit();
         }
 	};
+	private JMenuItem menuItem_1;
 	
 	//menuBar
 	private JMenuBar createMenu(){
@@ -194,9 +195,10 @@ public class StoreWindow extends JFrame{
 		menuBar.add(menu);
 		
 		menu = new JMenu("Discount");
-		menuItem = new JMenuItem("Discount List",KeyEvent.VK_D);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,ActionEvent.ALT_MASK));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem_1 = new JMenuItem("Discount List",KeyEvent.VK_D);
+		menuItem_1.setSelected(true);
+		menuItem_1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,ActionEvent.ALT_MASK));
+		menuItem_1.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -204,7 +206,7 @@ public class StoreWindow extends JFrame{
 				System.out.println("Discount List");
 			}
 		});
-		menu.add(menuItem);
+		menu.add(menuItem_1);
 		menuItem = new JMenuItem("Add Discount",KeyEvent.VK_A);
 		menuItem.addActionListener(new ActionListener() {
 			
