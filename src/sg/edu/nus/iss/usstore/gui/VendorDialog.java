@@ -6,6 +6,7 @@ import sg.edu.nus.iss.usstore.domain.Category;
 
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 public class VendorDialog extends javax.swing.JDialog {
@@ -286,7 +287,7 @@ public class VendorDialog extends javax.swing.JDialog {
            if(!this.validName()){
                this.tableModel.setValueAt(this.VendorName,selectedIndex, 0);
                this.tableModel.setValueAt(this.VendorDescription,selectedIndex, 1);
-               this.UI_VendorList.clear();
+               //this.UI_VendorList.clear();
            
                     
            }
@@ -300,7 +301,7 @@ public class VendorDialog extends javax.swing.JDialog {
        else
        {
            	this.tableModel.removeRow(selectedIndex);
-            this.UI_VendorList.clear();
+            //this.UI_VendorList.clear();
                 
        }
     }//GEN-LAST:event_BT_SSA_DeleteVendorMouseClicked
@@ -310,16 +311,15 @@ public class VendorDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_COMBO_CategoryMouseClicked
 
     private void COMBO_CategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_COMBO_CategoryActionPerformed
-        String categoryCode = this.COMBO_Category.getSelectedItem().toString();
+        String categoryCode = this.COMBO_Category.getModel().getSelectedItem().toString();
         this.TF_SSA_VendorName.setText("");
         this.TF_SSA_VendorDescription.setText("");
 
-       
         this.selectedCategory = getSelectedCategory(categoryCode);
         this.TF_CategoryCode.setText(this.selectedCategory.getCode());
         this.TF_CategoryName.setText(this.selectedCategory.getName());
            
-        this.UI_VendorList.clear();
+        //this.UI_VendorList.clear();
         this.UI_VendorList = selectedCategory.getVendorList();
         
         if(this.UI_VendorList.isEmpty())
@@ -407,15 +407,18 @@ public class VendorDialog extends javax.swing.JDialog {
     
     private void LoadList()
     {
-        int selectedIndex = 0;
+    	DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+    	
         for(int i = 0;i< this.CategoryList.size();i++){
         	String code = this.CategoryList.get(i).getCode();
-        	this.COMBO_Category.addItem(code);
-        	if (this.CategoryList.get(i) == this.selectedCategory)
-        		selectedIndex = i;
+        	model.addElement(code);
+        	if (this.CategoryList.get(i) == this.selectedCategory){
+        		model.setSelectedItem(code);
+        	}
+        		
         }
-        this.COMBO_Category.setSelectedIndex(selectedIndex);
-            
+        COMBO_Category.setModel(model);
+       
     }
     
     private boolean init() 
@@ -454,6 +457,15 @@ public class VendorDialog extends javax.swing.JDialog {
     		}
     	}
     	return result;
+    	
+    }
+    
+    private void UpdVendorForCategory(){
+    	
+    	
+    	//this.selectedCategory
+    	
+    	
     	
     }
 

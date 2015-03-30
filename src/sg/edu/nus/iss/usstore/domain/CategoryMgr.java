@@ -17,7 +17,7 @@ public class CategoryMgr {
 	// this VendorList only exist for maintain data consistency
 	// for example, if CLO and MUG share one vendor Nancy's , 
 	// then in CLO and MUG, their vendors should reference to same instance of vendor  
-	private ArrayList<Vendor> vendorList;
+	//private ArrayList<Vendor> vendorList;
 	
 	private CategoryDao categoryDao;
 	private VendorDao vendorDao;
@@ -43,7 +43,8 @@ public class CategoryMgr {
 		// load category basic info.
 		categoryList = categoryDao.loadDataFromFile();
 		// load vendor and set to category
-		vendorList = vendorDao.loadDataFromFile(categoryList);
+		//vendorList = vendorDao.loadDataFromFile(categoryList);
+		vendorDao.loadDataFromFile(categoryList);
 	}
 	
 	/**
@@ -89,11 +90,12 @@ public class CategoryMgr {
 	 * @return
 	 */
 	public Vendor getVendorByName(String name){
-		for(Vendor vendor : this.vendorList){
+		
+		/*for(Vendor vendor : this.vendorList){
 			if(name.equals(vendor.getName())){
 				return vendor;
 			}
-		}
+		}*/
 		return null;
 	}
 	
@@ -102,7 +104,8 @@ public class CategoryMgr {
 	 * @return
 	 */
 	public ArrayList<Vendor> getVendorList(){
-		return this.vendorList;
+		//return this.vendorList;
+		return null;
 	}
 	
 	/**
@@ -145,6 +148,7 @@ public class CategoryMgr {
 	 * this method will be called to maintain a non-duplicate vendor list 
 	 */
 	private void maintainVendorList(){
+		/*
 		ArrayList<Vendor> newVendorList = new ArrayList<Vendor>();
 		for(Category category : this.categoryList){
 			for(Vendor vendor:category.getVendorList()){
@@ -153,6 +157,7 @@ public class CategoryMgr {
 			}
 		}
 		this.vendorList = newVendorList;
+		*/
 	}
 	
 }

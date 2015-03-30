@@ -26,7 +26,7 @@ public class VendorDao extends BaseDao {
 	 */
 	public ArrayList<Vendor> loadDataFromFile(ArrayList<Category> categoryList) throws IOException, DataFileException {
 		
-		ArrayList<Vendor> allVendorList = new ArrayList<Vendor>();
+		//ArrayList<Vendor> allVendorList = new ArrayList<Vendor>();
 		
 		for(Category category : categoryList){
 			
@@ -62,13 +62,13 @@ public class VendorDao extends BaseDao {
 				vendorOfCategoryList.add(vendor);
 				
 				//add to store's VendorList(non-duplicate)
-				boolean isExist = false;
+				//boolean isExist = false;
 				//check whether vendor with same name already exist
-				for(int i=0; i<allVendorList.size() ;i++){
-					if(name.equals(allVendorList.get(i).getName()))isExist = true;
-				}
+				//for(int i=0; i<allVendorList.size() ;i++){
+				//	if(name.equals(allVendorList.get(i).getName()))isExist = true;
+				//}
 				//add to store's VendorList(non-duplicate)
-				if( !isExist )allVendorList.add(vendor);
+				//if( !isExist )allVendorList.add(vendor);
 				
 				
 			}
@@ -82,8 +82,8 @@ public class VendorDao extends BaseDao {
 			}
 			
 		}
-		
-		return allVendorList;
+		return null;
+		//return allVendorList;
 	}
 
 	/**
