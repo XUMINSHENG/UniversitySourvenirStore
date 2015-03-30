@@ -207,10 +207,13 @@ public class Store {
 	 * @param name
 	 * @param memberId
 	 */	
-	public void registerMember(String name, String memberId){
-		memberMgr.registerMember(name, memberId, -1);
+	public void registerMember(String name, String memberId,int loyalty){
+		memberMgr.registerMember(name, memberId,loyalty);
 	}
 	
+	public void registerMember(Member mem){
+		memberMgr.registerMember(mem);
+	}
 	/**
 	 * 
 	 * @param memberId
@@ -226,6 +229,18 @@ public class Store {
 	 */
 	public ArrayList<Member> getMemberList(){
 		return memberMgr.getMemberList();
+	}
+	
+	public void removeMember(String memberID){
+		 memberMgr.removeMember(memberID);
+	}
+	
+	public void modifyMember(String name,String memID,int loyaltyPoint,int index){
+		memberMgr.modifyMember(name, memID, loyaltyPoint, index);
+	}
+	
+	public Member getMemberByID(String memID){
+		return memberMgr.getMemberByID(memID);
 	}
 	
 //  -------------------- product related methods	-------------------
