@@ -45,7 +45,16 @@ public class DiscountMgr {
 
 	
 	
-
+	/**
+	 * 
+	 * @param discountCode
+	 * @param discountDescription
+	 * @param startDate
+	 * @param period
+	 * @param percent
+	 * @param Applicable
+	 * @return
+	 */
 	public ArrayList<Discount> registerDiscount(String discountCode, String discountDescription,
 			Date startDate, int period, double percent, String Applicable) {
 
