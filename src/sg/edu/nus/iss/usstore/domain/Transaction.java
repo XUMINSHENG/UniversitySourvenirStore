@@ -181,7 +181,7 @@ public class Transaction
 
 	public double calcRest()
 	{
-		rest = discountedPirce - redeemedLoyaltyPoint*POINTS_TO_DOLLAR;
+		rest = calcDiscountPrice() - redeemedLoyaltyPoint*POINTS_TO_DOLLAR;
 		return rest;
 	}
 	

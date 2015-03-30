@@ -259,7 +259,9 @@ public class TransactionTest extends Transaction
 		t.addItem(p2, 3);
 		t.addItem(p3, 4);
 		t.setDiscount(discount);
-		assertTrue((int)((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/10000)==t.calcGainedPoint());
+		System.out.println((int)((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/1000));
+		System.out.println(t.calcGainedPoint());
+		assertTrue((int)(t.calcRest()*0.1)==t.calcGainedPoint());		
 	}
 
 	@Test
