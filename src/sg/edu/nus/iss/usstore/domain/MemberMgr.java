@@ -26,24 +26,40 @@ public class MemberMgr {
 	public ArrayList<Member> registerMember(String name, String memberID,
 			int loyaltyPoint) {
 
-		memberList.add(new Member(name, memberID, loyaltyPoint));
+		this.memberList.add(new Member(name, memberID, loyaltyPoint));
 		return memberList;
+	}
+	
+	public void registerMember(Member mem){
+		this.memberList.add(mem);
 	}
 
 	public ArrayList<Member> getMemberList() {
 
-		return memberList;
+		return this.memberList;
 
 	}
 
 	public Member getMemberByID(String memID) {
-		Iterator<Member> i = memberList.iterator();
+		Iterator<Member> i = this.memberList.iterator();
 		while (i.hasNext()) {
 			Member mem = i.next();
 			if (mem.getMemberID().equals(memID))
 				return mem;
 		}
 		return null;
+	}
+	
+	public void removeMember(String memID) {
+		Member mem = getMemberByID(memID);
+		if(mem!=null){
+			this.memberList.remove(mem);
+		}
+	}
+	
+	public void modifyMember(String name,String memID,int loyaltyPoint,int index){
+		Member mem = new Member(name, memID, loyaltyPoint);
+		this.memberList.set(index, mem);
 	}
 
 	public void writeFile() throws IOException {

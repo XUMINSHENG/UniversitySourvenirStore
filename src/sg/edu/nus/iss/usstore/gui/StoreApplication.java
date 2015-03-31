@@ -198,6 +198,22 @@ public class StoreApplication {
 	 * 
 	 * @return
 	 */
+	public void removeMember(String memberID){
+		store.removeMember(memberID);
+	}
+	
+	public void registerMember(Member mem){
+		store.registerMember(mem);
+	}
+	
+	public void registerMember(String name,String id,int loyalty){
+		store.registerMember(name, id,loyalty);
+	}
+	
+	public void modifyMember(String name,String memID,int loyaltyPoint,int index){
+		store.modifyMember(name, memID, loyaltyPoint, index);
+	}
+	
 	public ArrayList<Category> getCategoryList(){
 		return store.getCategoryList();
 	}

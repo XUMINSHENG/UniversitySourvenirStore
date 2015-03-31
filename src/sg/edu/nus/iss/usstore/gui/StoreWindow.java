@@ -41,6 +41,10 @@ import sg.edu.nus.iss.usstore.domain.*;
  */
 public class StoreWindow extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private StoreApplication manager;
 	private JMenuBar menuBar;
 	private JPanel cards;
@@ -48,7 +52,7 @@ public class StoreWindow extends JFrame{
 	private CheckInventoryPanel checkInventoryPanel;
 	//private LoginPanel loginPanel;
 	private CheckOutPanel checkOutPanel;
-	//private MemberListPanel memberListPanel;
+	private MemberListPanel memberListPanel;
 	//private ProductListPanel productListPanel;
 	private CategoryListPanel categoryListPanel;
 	
@@ -64,6 +68,7 @@ public class StoreWindow extends JFrame{
 		this.productListPanel = new ProductsListPanel(manager);
 		this.checkInventoryPanel = new CheckInventoryPanel(manager);
 		this.categoryListPanel = new CategoryListPanel(manager);
+		this.memberListPanel = new MemberListPanel(manager);
 		
 		
 		//register cards with cardName
@@ -72,6 +77,7 @@ public class StoreWindow extends JFrame{
 		cards.add(productListPanel,"productList");
 		cards.add(checkInventoryPanel,"checkInventory");
 		cards.add(categoryListPanel,"categoryList");
+		cards.add(memberListPanel,"memberList");
 		setContentPane(cards);
 		
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -128,6 +134,15 @@ public class StoreWindow extends JFrame{
 		menuItem = new JMenuItem("Member List",KeyEvent.VK_M);
 		menu.add(menuItem);
 		menuBar.add(menu);
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				changeCard("memberList");
+				
+			}
+		});
 		
 		//product menu
 		menu = new JMenu("Product");
@@ -307,7 +322,7 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("member list");
-				//changeCard("memberList");
+				changeCard("memberList");
 			}
 		});
 		p.add(button);
@@ -317,6 +332,8 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				MemberDialog memDialog = new MemberDialog(manager, "Add Member");
+				memDialog.setVisible(true);
 				System.out.println("add member");
 				//changeCard("memberList");
 			}
@@ -348,7 +365,7 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("add discount");
-				//changeCard("memberList");
+				//changeCard("discountList");
 			}
 		});
 		p.add(button);
@@ -453,6 +470,10 @@ public class StoreWindow extends JFrame{
 
 	public ProductsListPanel getProductListPanel() {
 		return productListPanel;
+	}
+	
+	public MemberListPanel getMemberPanel(){
+		return memberListPanel;
 	}
 	
 	
