@@ -30,7 +30,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
     	this.manager = manager;
   
         initComponents();
-        initLook();
+        //initLook();
         reloadData();
     }
 

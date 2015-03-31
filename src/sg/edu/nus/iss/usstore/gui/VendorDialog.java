@@ -53,7 +53,7 @@ public class VendorDialog extends javax.swing.JDialog {
     	
         initComponents();
         
-        initLook();
+        //initLook();
         initData(categoryCode);
         
     }
