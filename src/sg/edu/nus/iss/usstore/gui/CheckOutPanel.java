@@ -372,6 +372,7 @@ public class CheckOutPanel extends JPanel
 		jp9.add(JtPaidNum);
 		jpOutput.add(jp9);
 
+		
 		// jp10
 		jp10.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlRest = new JLabel("REST:");
