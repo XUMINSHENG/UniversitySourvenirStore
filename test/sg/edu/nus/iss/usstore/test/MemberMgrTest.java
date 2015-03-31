@@ -36,16 +36,23 @@ public class MemberMgrTest {
 
 	@Test
 	public void testGetMemberList() {
-		member.add(new Member("sam", "a0123654", 100));
-		member.add(new Member("john", "a0223654", 200));
-		assertEquals("[sam,a0123654,100, john,a0223654,200]", member.toString());
+		assertEquals("Suraj Sharma,X437F356,250", memMgr.getMemberList().get(0).toString());
 	}
 
-	/*@Test
+	@Test
 	public void testGetMemberByID() {
+	
+		assertEquals("Suraj Sharma,X437F356,250",memMgr.getMemberByID("X437F356").toString());
 		
 	}
-
+	
+	@Test
+	public void testModifyMember(){
+		assertEquals("Suraj Sharma,X437F356,250",memMgr.getMemberByID("X437F356").toString());
+		memMgr.modifyMember("Suraj Sharma", "X437F356",300, 0);
+		assertNotEquals("Suraj Sharma,X437F356,250",memMgr.getMemberByID("X437F356").toString());
+	}
+/*
 	
 	 * @Test public void testWriteFile() { fail("Not yet implemented"); }
 	 * 
