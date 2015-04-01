@@ -42,6 +42,7 @@ public class AlertMsgPopUp extends javax.swing.JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		setLocationRelativeTo(null);
 	}
 
 }

@@ -9,7 +9,7 @@ import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
 
 /**
- * provide Data Access to file for Product entity
+ * provide Data Access to file for Member entity
  * 
  * @author  Achyut Suresh Rao
  * 

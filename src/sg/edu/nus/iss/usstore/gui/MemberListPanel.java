@@ -40,11 +40,6 @@ public class MemberListPanel extends JPanel {
 		setVisible(true);
 	}
 
-	/**
-	 * 
-	 * @param categoryList
-	 * @return
-	 */
 	private Object[][] loadTableData(ArrayList<Member> memberList) {
 		Object[][] data = new Object[memberList.size()][3];
 		Member member;
@@ -106,7 +101,6 @@ public class MemberListPanel extends JPanel {
 		TableColumnAdjuster tca = new TableColumnAdjuster(memberTable);
 		tca.setColumnHeaderIncluded(true);
 		tca.setColumnDataIncluded(true);
-		// tca.setOnlyAdjustLarger(true);
 		tca.adjustColumns();
 		memberTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		memberTable.getSelectionModel().addListSelectionListener(
@@ -197,12 +191,6 @@ public class MemberListPanel extends JPanel {
 		p.add(b);
 		return p;
 	}
-
-	/*
-	 * private void setTableFormat(JTable table){ TableColumnAdjuster tca = new
-	 * TableColumnAdjuster(table); tca.setColumnHeaderIncluded(true);
-	 * tca.setColumnDataIncluded(true); tca.adjustColumns(); }
-	 */
 
 	public void refreshTable() {
 		tableModel.setDataVector(loadTableData(manager.getMemberList()),
