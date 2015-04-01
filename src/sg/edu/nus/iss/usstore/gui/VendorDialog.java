@@ -49,6 +49,7 @@ public class VendorDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+    	/*
         jScrollPane1 = new javax.swing.JScrollPane();
         T_SSA_VendorTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -63,9 +64,28 @@ public class VendorDialog extends javax.swing.JDialog {
         TF_CategoryName = new javax.swing.JTextField();
         TF_CategoryCode = new javax.swing.JTextField();
         COMBO_Category = new JComboBox<String>();
+        */
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        T_SSA_VendorTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        TF_SSA_VendorName = new javax.swing.JTextField();
+        TF_SSA_VendorDescription = new javax.swing.JTextField();
+        BT_SSA_AddNewVendor = new javax.swing.JButton();
+        BT_SSA_UpdateVendor = new javax.swing.JButton();
+        BT_SSA_DeleteVendor = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        TF_CategoryName = new javax.swing.JTextField();
+        TF_CategoryCode = new javax.swing.JTextField();
+        COMBO_Category = new javax.swing.JComboBox();
+        BT_SSA_UpVendor = new javax.swing.JButton();
+        BT_SSA_DownVendor = new javax.swing.JButton();
+        BT_SSA_Close = new javax.swing.JButton();
 
         setTitle("Vendor Manager");
-        setAlwaysOnTop(true);
+        //setAlwaysOnTop(true);
         setBounds(new java.awt.Rectangle(310, 100, 600, 400));
         setResizable(false);
 
@@ -88,6 +108,7 @@ public class VendorDialog extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(T_SSA_VendorTable);
 
+        /*
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setText("Vendor Name");
@@ -222,6 +243,184 @@ public class VendorDialog extends javax.swing.JDialog {
         );
 
         pack();
+        */
+        jLabel1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel1.setText("Vendor Name");
+
+        jLabel2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setText("Description");
+
+        TF_SSA_VendorName.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        TF_SSA_VendorName.setForeground(new java.awt.Color(51, 51, 51));
+
+        TF_SSA_VendorDescription.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        TF_SSA_VendorDescription.setForeground(new java.awt.Color(51, 51, 51));
+
+        BT_SSA_AddNewVendor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_AddNewVendor.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_AddNewVendor.setText("Add New");
+        BT_SSA_AddNewVendor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_AddNewVendorMouseClicked(evt);
+            }
+        });
+
+        BT_SSA_UpdateVendor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_UpdateVendor.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_UpdateVendor.setText("Update");
+        BT_SSA_UpdateVendor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_UpdateVendorMouseClicked(evt);
+            }
+        });
+
+        BT_SSA_DeleteVendor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_DeleteVendor.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_DeleteVendor.setText("Delete");
+        BT_SSA_DeleteVendor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_DeleteVendorMouseClicked(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel3.setText("Category Name:");
+
+        jLabel4.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel4.setText("Category Code:");
+
+        TF_CategoryName.setEditable(false);
+        TF_CategoryName.setBackground(new java.awt.Color(51, 51, 51));
+        TF_CategoryName.setFont(new java.awt.Font("Verdana", 2, 11)); // NOI18N
+        TF_CategoryName.setForeground(new java.awt.Color(0, 255, 204));
+        TF_CategoryName.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        TF_CategoryName.setSelectionColor(new java.awt.Color(204, 204, 204));
+
+        TF_CategoryCode.setEditable(false);
+        TF_CategoryCode.setBackground(new java.awt.Color(51, 51, 51));
+        TF_CategoryCode.setFont(new java.awt.Font("Verdana", 2, 11)); // NOI18N
+        TF_CategoryCode.setForeground(new java.awt.Color(0, 255, 204));
+        TF_CategoryCode.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        TF_CategoryCode.setSelectionColor(new java.awt.Color(204, 204, 204));
+
+        COMBO_Category.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        COMBO_Category.setForeground(new java.awt.Color(51, 51, 51));
+        COMBO_Category.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                COMBO_CategoryMouseClicked(evt);
+            }
+        });
+        COMBO_Category.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                COMBO_CategoryActionPerformed(evt);
+            }
+        });
+
+        BT_SSA_UpVendor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_UpVendor.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_UpVendor.setText("Up");
+        BT_SSA_UpVendor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_UpVendorMouseClicked(evt);
+            }
+        });
+
+        BT_SSA_DownVendor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_DownVendor.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_DownVendor.setText("Down");
+        BT_SSA_DownVendor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_DownVendorMouseClicked(evt);
+            }
+        });
+
+        BT_SSA_Close.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_Close.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_Close.setText("Close");
+        BT_SSA_Close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_CloseMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(COMBO_Category, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(TF_CategoryCode, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TF_SSA_VendorDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(TF_SSA_VendorName, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BT_SSA_UpdateVendor, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BT_SSA_AddNewVendor, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(BT_SSA_DeleteVendor, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BT_SSA_DownVendor, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BT_SSA_UpVendor, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BT_SSA_Close, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(TF_CategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 828, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 4, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(TF_CategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(TF_CategoryCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(COMBO_Category, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(TF_SSA_VendorName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BT_SSA_AddNewVendor)
+                    .addComponent(BT_SSA_DeleteVendor)
+                    .addComponent(BT_SSA_UpVendor))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(TF_SSA_VendorDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BT_SSA_UpdateVendor)
+                    .addComponent(BT_SSA_DownVendor))
+                .addGap(18, 18, 18)
+                .addComponent(BT_SSA_Close)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        pack();
         
         this.BT_SSA_DeleteVendor.setEnabled(false);
         this.BT_SSA_UpdateVendor.setEnabled(false);
@@ -331,8 +530,20 @@ public class VendorDialog extends javax.swing.JDialog {
         this.LoadTable();
             
     }//GEN-LAST:event_COMBO_CategoryActionPerformed
-   
+    
+    private void BT_SSA_UpVendorMouseClicked(java.awt.event.MouseEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
 
+    private void BT_SSA_DownVendorMouseClicked(java.awt.event.MouseEvent evt) {                                               
+        // TODO add your handling code here:
+    }                                              
+
+    private void BT_SSA_CloseMouseClicked(java.awt.event.MouseEvent evt) {                                          
+        // TODO add your handling code here:
+    }      
+   
+/*
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BT_SSA_AddNewVendor;
     private javax.swing.JButton BT_SSA_DeleteVendor;
@@ -349,6 +560,27 @@ public class VendorDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    
+    */
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton BT_SSA_AddNewVendor;
+    private javax.swing.JButton BT_SSA_Close;
+    private javax.swing.JButton BT_SSA_DeleteVendor;
+    private javax.swing.JButton BT_SSA_DownVendor;
+    private javax.swing.JButton BT_SSA_UpVendor;
+    private javax.swing.JButton BT_SSA_UpdateVendor;
+    private javax.swing.JComboBox COMBO_Category;
+    private javax.swing.JTextField TF_CategoryCode;
+    private javax.swing.JTextField TF_CategoryName;
+    private javax.swing.JTextField TF_SSA_VendorDescription;
+    private javax.swing.JTextField TF_SSA_VendorName;
+    private javax.swing.JTable T_SSA_VendorTable;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    // End of variables declaration                      
         
     private void initData(String categoryCode){
     	
