@@ -360,12 +360,14 @@ public class Store {
 		categoryMgr.delCategoryByCode(code);
 	}
 	
+	
 	/**
 	 * 
-	 * @param categoryList
+	 * @param category
+	 * @param newVendorList
 	 */
-	public void setCategoryList(ArrayList<Category> categoryList){
-		categoryMgr.setCategoryList(categoryList);
+	public void updVendorForCategory(Category category, ArrayList<Vendor> newVendorList){
+		categoryMgr.updVendorForCategory(category, newVendorList);
 	}
 	
 	/**
@@ -389,58 +391,91 @@ public class Store {
 	
 
 	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param vendorName
+	 * @param vendorDesc
+	 */
+	public void addVendorForCategory(String categoryCode, String vendorName, String vendorDesc){
+		categoryMgr.addVendorForCategory(categoryCode, vendorName, vendorDesc);
+	}
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param vendorName
+	 */
+	public void delVendorForCategory(String categoryCode, String vendorName){
+		categoryMgr.delVendorForCategory(categoryCode, vendorName);
+	}
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param oldName
+	 * @param newName
+	 * @param newDesc
+	 */
+	public void updVendorForCategory(String categoryCode, String oldName, String newName, String newDesc){
+		categoryMgr.updVendorForCategory(categoryCode, oldName, newName, newDesc);
+	}
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param upVendorName
+	 * @param downVendorName
+	 */
+	public void switchVendorPrefForCategory(String categoryCode, String upVendorName, String downVendorName){
+		categoryMgr.switchVendorPrefForCategory(categoryCode, upVendorName, downVendorName);
+	}
+	
+
+
+	/** discount related 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	public void addDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, double percent, String Applicable ){
+		
+		discountMgr.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
+	}
+	
+	/**
+	*
+	 * 
+	 */
+	
+	public void addDiscount(Discount discount){
+		discountMgr.getdiscountList();
+	}
 	
 	
-
-
-/** discount related 
- * 
- * 
- * 
- * 
- */
-public void addDiscount(String discountCode, String discountDescription,
-		Date startDate, int period, double percent, String Applicable ){
 	
-	discountMgr.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
-}
-
-/**
-*
- * 
- */
-
-public void addDiscount(Discount discount){
-	discountMgr.getdiscountList();
-}
-
-
-
-public void modifyDiscount(String discountCode, String discountDescription,
-		Date startDate, int period, double percent, String Applicable){
-	discountMgr.modifyDiscount( discountCode,  discountDescription,
-			 startDate, period,  percent,  Applicable);
+	public void modifyDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, double percent, String Applicable){
+		discountMgr.modifyDiscount( discountCode,  discountDescription,
+				 startDate, period,  percent,  Applicable);
+		
+	}
+	/**
+	 * 
+	 * @param index
+	 */
+	public void deleteDiscount(int index){
+		discountMgr.deleteDiscount(index);
+	}
 	
-}
-/**
- * 
- * @param index
- */
-public void deleteDiscount(int index){
-	discountMgr.deleteDiscount(index);
-}
-
-/**
- * 
- * @return
- */
-public ArrayList<Discount> getDiscountList(){
-	return discountMgr.getDiscountlist();
-}
-
-/**
- * 
- * @return
- */
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Discount> getDiscountList(){
+		return discountMgr.getDiscountlist();
+	}
 
 }

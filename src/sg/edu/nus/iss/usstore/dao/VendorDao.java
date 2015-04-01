@@ -2,6 +2,7 @@ package sg.edu.nus.iss.usstore.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Vendor;
@@ -24,7 +25,7 @@ public class VendorDao extends BaseDao {
 	 * @throws IOException
 	 * @throws DataFileException
 	 */
-	public ArrayList<Vendor> loadDataFromFile(ArrayList<Category> categoryList) throws IOException, DataFileException {
+	public void loadDataFromFile(ArrayList<Category> categoryList) throws IOException, DataFileException {
 		
 		//ArrayList<Vendor> allVendorList = new ArrayList<Vendor>();
 		
@@ -55,21 +56,12 @@ public class VendorDao extends BaseDao {
 				
 				String name = fields[0];
 				String description = fields[1];
+				int preference = lineNo + 1;
 				
-				Vendor vendor = new Vendor(name,description);
+				Vendor vendor = new Vendor(name,description,preference);
 				
 				//add to categories' VendorList
 				vendorOfCategoryList.add(vendor);
-				
-				//add to store's VendorList(non-duplicate)
-				//boolean isExist = false;
-				//check whether vendor with same name already exist
-				//for(int i=0; i<allVendorList.size() ;i++){
-				//	if(name.equals(allVendorList.get(i).getName()))isExist = true;
-				//}
-				//add to store's VendorList(non-duplicate)
-				//if( !isExist )allVendorList.add(vendor);
-				
 				
 			}
 			
@@ -82,8 +74,7 @@ public class VendorDao extends BaseDao {
 			}
 			
 		}
-		return null;
-		//return allVendorList;
+		
 	}
 
 	/**
@@ -99,8 +90,9 @@ public class VendorDao extends BaseDao {
 			String filename = C_File_Name_Prxfix + category.getCode() + C_File_Name_Suffix;
 			
 			ArrayList<String> stringList = new ArrayList<String>();
-			
-			for(Vendor vendor : category.getVendorList()){
+			ArrayList<Vendor> sortedVendorList = category.getVendorList();
+			Collections.sort(sortedVendorList);
+			for(Vendor vendor : sortedVendorList){
 				StringBuffer line;
 				
 				line = new StringBuffer(vendor.getName() + Util.C_Separator);

@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.usstore.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * 
@@ -49,26 +50,59 @@ public class Category {
 	 * @return most preference vendor
 	 */
 	public Vendor getPreferenceVendor(){
-		Vendor vendor = null;
+		Vendor result = null;
 		
 		// has vendor
 		if (!this.vendorList.isEmpty()){
-			vendor = this.vendorList.get(0);
+			Collections.sort(this.vendorList);
+			result = this.vendorList.get(0);
 		}
 		
-		return vendor;
+		return result;
+	}
+
+	public void newVendor(String vendorName, String vendorDesc){
+		Vendor newVendor = new Vendor(vendorName, vendorDesc, this.vendorList.size() + 1);
+		this.vendorList.add(newVendor );
 	}
 	
-    
-    public boolean equalsCode(Category CATOBJ)
-    {
-        return this.code.equalsIgnoreCase(CATOBJ.code);
-    }
-    
-    public boolean equals(Category CATOBJ)
-    {
-        return this.code.equalsIgnoreCase(CATOBJ.code) && this.name.equalsIgnoreCase(CATOBJ.name);
-    }
-
+	/**
+	 * 
+	 * @param vendorName
+	 */
+	public void delVendor(String vendorName){
+		this.vendorList.remove(getVendorByName(vendorName));
+		
+		//resort the whole vendor list
+		Collections.sort(this.vendorList);
+		
+		//reset preference order
+		for(int i = 0 ; i<this.vendorList.size();i++){
+			this.vendorList.get(i).setPreference(i+1);
+		}
+	}
 	
+	public void updVendor(String oldName, String newName, String newDesc){
+		Vendor vendor = getVendorByName(oldName);
+		vendor.setName(newName);
+		vendor.setDescription(newDesc);
+	}
+	
+	public void switchVendorPref(String upVendorName, String downVendorName){
+		Vendor upVendor = getVendorByName(upVendorName);
+		Vendor downVendor = getVendorByName(downVendorName);
+		int upPref = upVendor.getPreference();
+		upVendor.setPreference(downVendor.getPreference());
+		downVendor.setPreference(upPref);
+	}
+	
+	private Vendor getVendorByName(String vendorName){
+		Vendor result = null;
+		for(Vendor vendor : this.vendorList){
+			if(vendor.getName().equals(vendorName)){
+				result = vendor;
+			}
+		}
+		return result;
+	}
 }

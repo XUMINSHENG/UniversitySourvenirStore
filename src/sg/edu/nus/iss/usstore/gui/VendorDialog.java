@@ -3,6 +3,8 @@ package sg.edu.nus.iss.usstore.gui;
 
 import sg.edu.nus.iss.usstore.domain.Vendor;
 import sg.edu.nus.iss.usstore.domain.Category;
+import sg.edu.nus.iss.usstore.exception.DataInputException;
+import sg.edu.nus.iss.usstore.util.Util;
 
 import java.util.ArrayList;
 
@@ -15,7 +17,7 @@ public class VendorDialog extends javax.swing.JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final String[] columnNames = new String [] {"Vendor Name", "Description"};
+	private final String[] columnNames = new String [] {"Name", "Description", "Preference"};
 			
 	private StoreApplication manager;
 
@@ -30,21 +32,8 @@ public class VendorDialog extends javax.swing.JDialog {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		@SuppressWarnings("rawtypes")
-		Class[] types = new Class [] {
-            java.lang.String.class, java.lang.String.class
-        };
-        boolean[] canEdit = new boolean [] {
-            false, false
-        };
-
-        @SuppressWarnings({ "rawtypes", "unchecked" })
-		public Class getColumnClass(int columnIndex) {
-            return types [columnIndex];
-        }
-
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return canEdit [columnIndex];
+		public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
         }
     };
     
@@ -53,7 +42,6 @@ public class VendorDialog extends javax.swing.JDialog {
     	
         initComponents();
         
-        //initLook();
         initData(categoryCode);
         
     }
@@ -145,7 +133,7 @@ public class VendorDialog extends javax.swing.JDialog {
         jLabel3.setText("Category Name:");
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel4.setText("Category ID:");
+        jLabel4.setText("Category Code:");
         
         TF_CategoryCode.setEditable(false);
         TF_CategoryCode.setBackground(new java.awt.Color(51, 51, 51));
@@ -234,19 +222,24 @@ public class VendorDialog extends javax.swing.JDialog {
         );
 
         pack();
+        
+        this.BT_SSA_DeleteVendor.setEnabled(false);
+        this.BT_SSA_UpdateVendor.setEnabled(false);
+        setModal(true);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BT_SSA_AddNewVendorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_AddNewVendorMouseClicked
-         if(this.init())
+    	if(this.init())
         {        
-            if(this.validName()){
+            if(!this.validName()){
             	UI_ErrorDialogBox.openDialog("Duplicate vendor name is not possible.");
             }
             else
             {
-                Vendor tempVen = new Vendor(this.VendorName,this.VendorDescription);
-                this.UI_VendorList.add(tempVen);
-                this.tableModel.addRow(new Object[]{this.VendorName,this.VendorDescription});
+                manager.addVendorForCategory(this.selectedCategory.getCode(), this.VendorName,this.VendorDescription);
+                
+                LoadTable();
+                
             }        
         }
     }//GEN-LAST:event_BT_SSA_AddNewVendorMouseClicked
@@ -255,8 +248,14 @@ public class VendorDialog extends javax.swing.JDialog {
        int selectedIndex = this.T_SSA_VendorTable.getSelectedRow();
        if(selectedIndex > -1)
        {
-        this.TF_SSA_VendorName.setText(this.T_SSA_VendorTable.getValueAt(selectedIndex, 0).toString());
-        this.TF_SSA_VendorDescription.setText(this.T_SSA_VendorTable.getValueAt(selectedIndex, 1).toString());
+    	   this.TF_SSA_VendorName.setText(this.T_SSA_VendorTable.getValueAt(selectedIndex, 0).toString());
+    	   this.TF_SSA_VendorDescription.setText(this.T_SSA_VendorTable.getValueAt(selectedIndex, 1).toString());
+    	   
+    	   this.BT_SSA_DeleteVendor.setEnabled(true);
+    	   this.BT_SSA_UpdateVendor.setEnabled(true);
+       }else{
+    	   this.BT_SSA_DeleteVendor.setEnabled(false);
+    	   this.BT_SSA_UpdateVendor.setEnabled(false);
        }
     }//GEN-LAST:event_T_SSA_VendorTableMouseClicked
 
@@ -278,20 +277,25 @@ public class VendorDialog extends javax.swing.JDialog {
        }
     }//GEN-LAST:event_T_SSA_VendorTableKeyReleased
 
-    private void BT_SSA_UpdateVendorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_UpdateVendorMouseClicked
-        int selectedIndex = this.T_SSA_VendorTable.getSelectedRow();
-       if(selectedIndex == -1 || this.T_SSA_VendorTable.getRowCount() == 0)
+	private void BT_SSA_UpdateVendorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_UpdateVendorMouseClicked
+    	int selectedIndex = this.T_SSA_VendorTable.getSelectedRow();
+    	if(selectedIndex == -1 || this.T_SSA_VendorTable.getRowCount() == 0)
            UI_ErrorDialogBox.openDialog("Please select an item.");
-       else if(this.init())
-       {              
-           if(!this.validName()){
-               this.tableModel.setValueAt(this.VendorName,selectedIndex, 0);
-               this.tableModel.setValueAt(this.VendorDescription,selectedIndex, 1);
-               //this.UI_VendorList.clear();
-           
-                    
-           }
-       }
+	    else if(this.init())
+	    {              
+	    	if(!this.validName()){
+	            this.tableModel.setValueAt(this.VendorName,selectedIndex, 0);
+	            this.tableModel.setValueAt(this.VendorDescription,selectedIndex, 1);
+	            
+	            String vendorName = this.tableModel.getValueAt(selectedIndex, 0).toString();
+	            manager.updVendorForCategory(this.selectedCategory.getCode(), 
+	            		vendorName,
+	            		this.VendorName, 
+	            		this.VendorDescription);
+	            
+	            LoadTable();
+	        }
+	    }
     }//GEN-LAST:event_BT_SSA_UpdateVendorMouseClicked
 
     private void BT_SSA_DeleteVendorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_DeleteVendorMouseClicked
@@ -300,9 +304,9 @@ public class VendorDialog extends javax.swing.JDialog {
            UI_ErrorDialogBox.openDialog("Please select an item.");
        else
        {
-           	this.tableModel.removeRow(selectedIndex);
-            //this.UI_VendorList.clear();
-                
+           	String vendorName = this.tableModel.getValueAt(selectedIndex, 0).toString();
+           	manager.delVendorForCategory(this.selectedCategory.getCode(), vendorName);
+           	LoadTable();
        }
     }//GEN-LAST:event_BT_SSA_DeleteVendorMouseClicked
 
@@ -319,7 +323,6 @@ public class VendorDialog extends javax.swing.JDialog {
         this.TF_CategoryCode.setText(this.selectedCategory.getCode());
         this.TF_CategoryName.setText(this.selectedCategory.getName());
            
-        //this.UI_VendorList.clear();
         this.UI_VendorList = selectedCategory.getVendorList();
         
         if(this.UI_VendorList.isEmpty())
@@ -346,28 +349,7 @@ public class VendorDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-    
-    private void initLook(){
-    	 try {
-             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                 if ("Windows".equals(info.getName())) {
-                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                     break;
-                 }
-             }
-         } catch (ClassNotFoundException ex) {
-             java.util.logging.Logger.getLogger(VendorDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-         } catch (InstantiationException ex) {
-             java.util.logging.Logger.getLogger(VendorDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-         } catch (IllegalAccessException ex) {
-             java.util.logging.Logger.getLogger(VendorDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-             java.util.logging.Logger.getLogger(VendorDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-         }
-    	 
-    	 setModal(true);
-    }
-    
+        
     private void initData(String categoryCode){
     	
         this.CategoryList = this.manager.getCategoryList();
@@ -396,12 +378,16 @@ public class VendorDialog extends javax.swing.JDialog {
 		    {
 		        for(int i = 0;i < this.UI_VendorList.size() ; i++)
 		        {   
-		            this.tableModel.addRow(new Object[]{this.UI_VendorList.get(i).getName(),this.UI_VendorList.get(i).getDescription()});
+		            this.tableModel.addRow(
+		            		new Object[]{
+		            				this.UI_VendorList.get(i).getName(),
+		            				this.UI_VendorList.get(i).getDescription(),
+		            				this.UI_VendorList.get(i).getPreference()
+		            				}
+		            		);
 		        }
 		    }
         }
-        else
-            System.out.println("this.UI_VendorList is null");
     }
     
     
@@ -450,8 +436,8 @@ public class VendorDialog extends javax.swing.JDialog {
     
     private Category getSelectedCategory(String code){
     	Category result = null;
-    	for(Category category : CategoryList){
-    		if(code.equals(category.getCode())){
+    	for(Category category : this.CategoryList){
+    		if(category.getCode().equals(code)){
     			result = category;
     			break;
     		}
@@ -460,13 +446,25 @@ public class VendorDialog extends javax.swing.JDialog {
     	
     }
     
-    private void UpdVendorForCategory(){
+    /*
+     * invoke StoreApplication to update vendor list for category
+     */
+    private void UpdVendorForCategory() throws DataInputException{
     	
+    	ArrayList<Vendor> newVendorList = new ArrayList<>();
     	
-    	//this.selectedCategory
+    	for(int i =0; i<this.tableModel.getRowCount(); i++){
+    		String vendorName = this.tableModel.getValueAt(i, 0).toString();
+    		String vendorDesc = this.tableModel.getValueAt(i, 1).toString();
+    		int vendorPref = Util.castInt(this.tableModel.getValueAt(i, 2).toString());
+    		Vendor newVendor = new Vendor(vendorName, vendorDesc, vendorPref);
+    		newVendorList.add(newVendor);
+    	}
+    	    	
+    	manager.UpdVendorForCategory(this.selectedCategory, newVendorList);
     	
-    	
-    	
+    	this.UI_VendorList = this.selectedCategory.getVendorList();
+
     }
 
 }

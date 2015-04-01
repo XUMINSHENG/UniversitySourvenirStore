@@ -18,7 +18,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import sg.edu.nus.iss.usstore.domain.DiscountMgr;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
@@ -203,7 +202,7 @@ public class DiscountDialog extends JDialog {
 		contentPanel.add(btnNewButton_3);
 		{
 			{
-				setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{getContentPane(), contentPanel, rdbtnMemDisc, rdbtnOcaDisc, lblDiscountcode, DiscountCode, lblDiscountDescription, DiscountDescription, lblStartDate, StartDate, lblPeriod, lblPercent, lblApplicable, Period, Percent, Applicable, btnNewButton, btnNewButton_1, btnNewButton_2, btnNewButton_3}));
+				//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{getContentPane(), contentPanel, rdbtnMemDisc, rdbtnOcaDisc, lblDiscountcode, DiscountCode, lblDiscountDescription, DiscountDescription, lblStartDate, StartDate, lblPeriod, lblPercent, lblApplicable, Period, Percent, Applicable, btnNewButton, btnNewButton_1, btnNewButton_2, btnNewButton_3}));
 			}
 		}
 

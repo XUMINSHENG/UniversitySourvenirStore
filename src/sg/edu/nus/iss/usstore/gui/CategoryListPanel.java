@@ -15,7 +15,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final String[] columnNames = {"Category Code", "Categry Name"};
+	private final String[] columnNames = {"Code", "Name"};
 	
 	private StoreApplication manager;
 	
@@ -30,7 +30,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
     	this.manager = manager;
   
         initComponents();
-        //initLook();
+        
         reloadData();
     }
 
@@ -49,9 +49,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
         BT_SSA_Delete = new javax.swing.JButton();
         BT_SSA_ManageVendor = new javax.swing.JButton();
 
-        //setTitle("Category Manager");
-        setBounds(new java.awt.Rectangle(300, 100, 600, 400));
-        //setResizable(false);
+        setBounds(new java.awt.Rectangle(300, 100, 600, 400));   
 
         T_SSA_CategoryTable.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         T_SSA_CategoryTable.setForeground(new java.awt.Color(12, 12, 12));
@@ -193,6 +191,9 @@ public class CategoryListPanel extends javax.swing.JPanel {
                     .addComponent(BT_SSA_ManageVendor))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
+        
+        this.BT_SSA_Delete.setEnabled(false);
+        this.BT_SSA_Update.setEnabled(false);
 
         //pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -236,6 +237,13 @@ public class CategoryListPanel extends javax.swing.JPanel {
        {
            this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
            this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());
+           
+           this.BT_SSA_Delete.setEnabled(true);
+           this.BT_SSA_Update.setEnabled(true);
+       }
+       else{
+    	   this.BT_SSA_Delete.setEnabled(false);
+           this.BT_SSA_Update.setEnabled(false);
        }
     }//GEN-LAST:event_T_SSA_CategoryTableMouseClicked
 
@@ -263,43 +271,35 @@ public class CategoryListPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_T_SSA_CategoryTableKeyReleased
 
     private void T_SSA_CategoryTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T_SSA_CategoryTableKeyPressed
-        int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
-       if(selectedIndex > -1)
-       {this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
-       this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());}
+		int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+		if(selectedIndex > -1)
+		{
+			this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
+		
+			this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());
+		}
     }//GEN-LAST:event_T_SSA_CategoryTableKeyPressed
 
     private void BT_SSA_ManageVendorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_ManageVendorMouseClicked
         int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
-        if(selectedIndex == -1 || this.T_SSA_CategoryTable.getRowCount() == 0)
-            UI_ErrorDialogBox.openDialog("Please select an item.");
-        else
-        { 
-            VendorDialog vendorDlg = new VendorDialog(manager, this.tableModel.getValueAt(selectedIndex,0).toString());
+        String categoryCode;
+        
+        if(this.T_SSA_CategoryTable.getRowCount() == 0){
+        	UI_ErrorDialogBox.openDialog("there is no category at all");
+        }else {
+        
+	        if(selectedIndex == -1){
+	        	categoryCode = this.tableModel.getValueAt(0,0).toString();
+	        }
+	        else
+	        { 
+	        	categoryCode = this.tableModel.getValueAt(selectedIndex,0).toString();   
+	        }
+	        
+	        VendorDialog vendorDlg = new VendorDialog(manager, categoryCode);
             vendorDlg.setVisible(true);
-            
         }
     }//GEN-LAST:event_BT_SSA_ManageVendorMouseClicked
-        
-    
-    private void initLook(){
-    	try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CategoryListPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CategoryListPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CategoryListPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CategoryListPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-    }
     
     private void reloadData() {
         

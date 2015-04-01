@@ -42,8 +42,7 @@ public class CategoryMgr {
 	public void loadData() throws IOException, DataFileException{
 		// load category basic info.
 		categoryList = categoryDao.loadDataFromFile();
-		// load vendor and set to category
-		//vendorList = vendorDao.loadDataFromFile(categoryList);
+		// load vendors and set to category
 		vendorDao.loadDataFromFile(categoryList);
 	}
 	
@@ -84,29 +83,7 @@ public class CategoryMgr {
 		return this.categoryList;
 	}
 	
-	/**
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public Vendor getVendorByName(String name){
-		
-		/*for(Vendor vendor : this.vendorList){
-			if(name.equals(vendor.getName())){
-				return vendor;
-			}
-		}*/
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<Vendor> getVendorList(){
-		//return this.vendorList;
-		return null;
-	}
+
 	
 	/**
 	 * 
@@ -118,7 +95,6 @@ public class CategoryMgr {
 		Category category = new Category(code, name, vendorList);
 		this.categoryList.add(category);
 		
-		this.maintainVendorList();
 	}
 	
 	/**
@@ -130,7 +106,7 @@ public class CategoryMgr {
 	public void updCategory(String code, String name){
 		Category category = this.getCategoryByCode(code);
 		category.setName(name);
-		this.maintainVendorList();
+		
 	}
 	
 	/**
@@ -140,24 +116,61 @@ public class CategoryMgr {
 	public void delCategoryByCode(String code){
 		Category category = this.getCategoryByCode(code);
 		this.categoryList.remove(category);
-		this.maintainVendorList();
 	}
 	
 	/**
-	 * When there is any change about category happens,
-	 * this method will be called to maintain a non-duplicate vendor list 
+	 * 
+	 * @param category
+	 * @param newVendorList
 	 */
-	private void maintainVendorList(){
-		/*
-		ArrayList<Vendor> newVendorList = new ArrayList<Vendor>();
-		for(Category category : this.categoryList){
-			for(Vendor vendor:category.getVendorList()){
-				if(newVendorList.contains(vendor)) continue;
-				else newVendorList.add(vendor);
-			}
-		}
-		this.vendorList = newVendorList;
-		*/
+	public void updVendorForCategory(Category category, ArrayList<Vendor> newVendorList){
+		category.setVendorList(newVendorList);
 	}
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param vendorName
+	 * @param vendorDesc
+	 */
+	public void addVendorForCategory(String categoryCode, String vendorName, String vendorDesc){
+		Category category = getCategoryByCode(categoryCode);
+		category.newVendor(vendorName, vendorDesc);
+	}
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param vendorName
+	 */
+	public void delVendorForCategory(String categoryCode, String vendorName){
+		Category category = getCategoryByCode(categoryCode);
+		category.delVendor(vendorName);
+	}
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param oldName
+	 * @param newName
+	 * @param newDesc
+	 */
+	public void updVendorForCategory(String categoryCode, String oldName, String newName, String newDesc){
+		Category category = getCategoryByCode(categoryCode);
+		category.updVendor(oldName, newName, newDesc);
+	}
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param upVendorName
+	 * @param downVendorName
+	 */
+	public void switchVendorPrefForCategory(String categoryCode, String upVendorName, String downVendorName){
+		Category category = getCategoryByCode(categoryCode);
+		category.switchVendorPref(upVendorName, downVendorName);
+	}
+	
+	
 	
 }

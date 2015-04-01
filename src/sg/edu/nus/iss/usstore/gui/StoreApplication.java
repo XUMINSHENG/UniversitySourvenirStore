@@ -246,6 +246,16 @@ public class StoreApplication {
 		store.updCategory(code, name);
 	}
 	
+
+	/**
+	 * 
+	 * @param category
+	 * @param newVendorList
+	 */
+	public void UpdVendorForCategory(Category category, ArrayList<Vendor> newVendorList){
+		store.updVendorForCategory(category, newVendorList);
+	}
+	
 	/**
 	 * 
 	 * @param code
@@ -253,6 +263,50 @@ public class StoreApplication {
 	public void deleteCategoryByCode(String code){
 		store.delCategoryByCode(code);
 	}
+	
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param vendorName
+	 * @param vendorDesc
+	 */
+	public void addVendorForCategory(String categoryCode, String vendorName, String vendorDesc){
+		store.addVendorForCategory(categoryCode, vendorName, vendorDesc);
+	}
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param vendorName
+	 */
+	public void delVendorForCategory(String categoryCode, String vendorName){
+		store.delVendorForCategory(categoryCode, vendorName);
+	}
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param oldName
+	 * @param newName
+	 * @param newDesc
+	 */
+	public void updVendorForCategory(String categoryCode, String oldName, String newName, String newDesc){
+		store.updVendorForCategory(categoryCode, oldName, newName, newDesc);
+	}
+	
+	/**
+	 * 
+	 * @param categoryCode
+	 * @param upVendorName
+	 * @param downVendorName
+	 */
+	public void switchVendorPrefForCategory(String categoryCode, String upVendorName, String downVendorName){
+		store.switchVendorPrefForCategory(categoryCode, upVendorName, downVendorName);
+	}
+	
+	
+	
 	
 	public ArrayList<Discount> getDiscountList(){
 		return store.getDiscountList();
