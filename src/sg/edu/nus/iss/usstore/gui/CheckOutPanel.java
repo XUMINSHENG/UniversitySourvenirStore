@@ -579,22 +579,15 @@ public class CheckOutPanel extends JPanel
 					try
 					{
 						transaction = sa.setBillCustomer(transaction, MemberID);
+						
 					}
 					catch (NullPointerException e2)
 					{
 						JlError.setText(ERR_MSG_MEMBER_NOT_EXIST);
 					}
-				}
-//					if (transaction.getCustomer().toString().length()==0)
-//					{
-//						JlError.setText(ERR_MSG_MEMBER_NOT_EXIST);
-//						JlgetMemberName.setText("PUBLIC");
-//					}
-//					else
-//					{
-//					JlgetMemberName.setText(transaction.getCustomer().name);
-//					}
-				}
+					setOutputValue();
+				}				
+			}
 			if (e.getActionCommand().equals("JbProductSubmit"))
 			{
 				flag = 1;
