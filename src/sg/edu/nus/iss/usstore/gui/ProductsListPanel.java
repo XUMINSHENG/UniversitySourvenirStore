@@ -6,17 +6,27 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import sg.edu.nus.iss.usstore.domain.*;
 import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
@@ -44,8 +54,10 @@ public class ProductsListPanel extends JPanel{
 	private final String[] columnNames = {"Id","Name","Description","Price","Quality"};
 	private JButton modifyButton;
 	private JButton deleteButton;
+	private JTextField filterText;
 	private JTable productTable;
 	private DefaultTableModel tableModel;
+	private TableRowSorter<DefaultTableModel> sorter;
 	private StoreApplication manager;
 	
 	public ProductsListPanel(StoreApplication manager){
@@ -99,15 +111,28 @@ public class ProductsListPanel extends JPanel{
 //				{"2","dog","animal","$123","5"},
 //				{"3","cat","animal","$123","5"}
 //		};
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		
 		tableModel = new DefaultTableModel(data,columnNames){
 			@Override
 			public boolean isCellEditable(int row, int column){
 				return false;
 			}
+			@Override
+			public Class getColumnClass(int column){
+				Class returnValue;
+				if ((column >= 0) && (column < getColumnCount())) {  
+		            returnValue = getValueAt(0, column).getClass();  
+		        } else {  
+		            returnValue = Object.class;  
+		        }  
+				return returnValue;
+			}
 		};
-		
 		productTable = new JTable(tableModel);
+		sorter = new TableRowSorter<DefaultTableModel>(tableModel);
+		productTable.setRowSorter(sorter);
 		productTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		setTableFormat();
 		productTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -124,13 +149,81 @@ public class ProductsListPanel extends JPanel{
 					deleteButton.setEnabled(true);
 				}
 			}
-		});;
-		productTable.setFillsViewportHeight(true);
-		productTable.setAutoCreateRowSorter(true);
+		});
+		productTable.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				int i = productTable.getSelectedRow();
+				if(arg0.getClickCount() == 2 && i>=0){
+					int rowIndex = productTable.convertRowIndexToModel(i);
+					int columnIndex = productTable.getColumnModel().getColumnIndex("Id");
+					String id = (String)tableModel.getValueAt(rowIndex, columnIndex);
+					ProductDialog d = new ProductDialog(manager,"Modify Product", id);
+					d.setVisible(true);
+				}
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		//productTable.setFillsViewportHeight(true);
+		productTable.setAutoCreateRowSorter(false);
+		
+		JPanel panel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel label = new JLabel("Filter Search: ",SwingConstants.TRAILING);
+		panel1.add(label);
+		filterText = new JTextField(10);
+		filterText.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				newFilter();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				newFilter();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				newFilter();
+			}
+		});
+		label.setLabelFor(filterText);
+		panel1.add(filterText);
+		panel.add(panel1);
 		
 		JScrollPane p = new JScrollPane(productTable);
+		panel.add(p);
 		
-		return p;
+		return panel;
 	}
 	
 	private JPanel createBottomPanel(){
@@ -214,6 +307,19 @@ public class ProductsListPanel extends JPanel{
 		//tca.setOnlyAdjustLarger(true);
 		tca.adjustColumns();
 	}
+	
+	private void newFilter() {
+        RowFilter<DefaultTableModel, Object> rf = null;
+        //If current expression doesn't parse, don't update.
+        try {
+            rf = RowFilter.regexFilter(filterText.getText());
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
+        
+        //sorter.setRowFilter(RowFilter.regexFilter(filterText.getText()));
+    }
 	
 	public void refreshTable(){
 		tableModel.setDataVector(loadTableData(manager.getProductList()), columnNames);

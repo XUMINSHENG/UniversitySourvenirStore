@@ -23,7 +23,7 @@ import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 
 public class CheckInventoryPanel extends JPanel{
 
-	private String[] columnNames = {"Id","Name","Available Quantity","Threshold","Order Quantity"};
+	private final String[] columnNames = {"Id","Name","Available Quantity","Threshold","Order Quantity"};
 	private StoreApplication manager;
 	private JTable table;
 	private DefaultTableModel tableModel;
@@ -51,6 +51,16 @@ public class CheckInventoryPanel extends JPanel{
 			public boolean isCellEditable(int row,int column){
 				return false;
 			}
+			@Override
+			public Class getColumnClass(int column){
+				Class returnValue;
+				if(column>=0 && column<getColumnCount()){
+					returnValue = getValueAt(0, column).getClass();
+				}else{
+					returnValue = Object.class;
+				}
+				return returnValue;
+			}
 		};
 		
 		table = new JTable(tableModel);
@@ -74,6 +84,8 @@ public class CheckInventoryPanel extends JPanel{
 			}
 
 		});
+		table.setFillsViewportHeight(true);
+		table.setAutoCreateRowSorter(true);
 		JScrollPane p = new JScrollPane(table);
 		return p;
 	}
@@ -85,7 +97,8 @@ public class CheckInventoryPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				int rowIndex = table.convertRowIndexToModel(table.getSelectedRow());
+				table.remove(rowIndex);
 			}
 		});
 		p.add(fire);
@@ -114,13 +127,25 @@ public class CheckInventoryPanel extends JPanel{
 	}
 	
 	private Object[][] loadTableData(ArrayList<Product> products){
-		Object[][] data =  new Object[products.size()][5];
-		for(int i=0;i<products.size();i++){
-			data[i][0] = products.get(i).getProductId();
-			data[i][1] = products.get(i).getName();
-			data[i][2] = products.get(i).getQuantityAvailable();
-			data[i][3] = products.get(i).getReorderQuantity();
-			data[i][4] = products.get(i).getOrderQuantity();
+		ArrayList<Product> replenish = new ArrayList<Product>();
+		for(Product p:products){
+			if(p.getQuantityAvailable()<=p.getReorderQuantity()){
+				replenish.add(p);
+			}
+		}
+		int length = replenish.size();
+		Object[][] data;
+		if(length==0){
+			data = new Object[0][5];
+		}else{
+			data =  new Object[length][5];
+			for(int i=0;i<length;i++){
+				data[i][0] = replenish.get(i).getProductId();
+				data[i][1] = replenish.get(i).getName();
+				data[i][2] = replenish.get(i).getQuantityAvailable();
+				data[i][3] = replenish.get(i).getReorderQuantity();
+				data[i][4] = replenish.get(i).getOrderQuantity();
+			}
 		}
 		return data;
 	}
