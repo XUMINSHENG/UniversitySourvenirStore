@@ -94,8 +94,6 @@ public class MemberDialog extends JDialog {
 	public boolean validateData() {
 		if (name.getText().isEmpty() || memberID.getText().isEmpty()
 				|| loyaltyPoint.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(new JFrame(),
-					"Enter All/Correct Details");
 			return false;
 		} else {
 			return true;
@@ -103,20 +101,6 @@ public class MemberDialog extends JDialog {
 
 	}
 
-	private boolean validAdd() {
-		// TODO Auto-generated method stub
-		boolean result = true;
-		for (Member mem : this.memberList) {
-			if (this.memberID.getText().equals(mem.getMemberID()))
-				;
-			{
-				result = false;
-			}
-		}
-		JOptionPane.showMessageDialog(new JFrame(), "Duplicate MemberID");
-		return result;
-
-	}
 
 	private JPanel createAddBottomPanel() {
 		// TODO Auto-generated method stub
@@ -129,7 +113,6 @@ public class MemberDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (validateData() && !validAdd()) {
 					manager.registerMember(getNameText(), getIdText(), -1);
 					mainScreen.getMemberPanel().refreshTable();
 					dispose();
