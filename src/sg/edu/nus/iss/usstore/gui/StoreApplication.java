@@ -84,6 +84,10 @@ public class StoreApplication {
 		else
 			return false;
 	}
+	
+	public void showMenuScreen(){
+		storeWindow.changeCard("mainScreen");
+	}
 		
 	public Transaction checkOut(){
 		return store.checkout();

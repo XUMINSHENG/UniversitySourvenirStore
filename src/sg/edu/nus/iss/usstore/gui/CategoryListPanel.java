@@ -48,6 +48,8 @@ public class CategoryListPanel extends javax.swing.JPanel {
         BT_SSA_Update = new javax.swing.JButton();
         BT_SSA_Delete = new javax.swing.JButton();
         BT_SSA_ManageVendor = new javax.swing.JButton();
+        BT_SSA_Back = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setBounds(new java.awt.Rectangle(300, 100, 600, 400));   
 
@@ -103,17 +105,17 @@ public class CategoryListPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Category Code");
+        jLabel2.setText("Category Name");
 
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setText("Category Name");
-        
-        TF_SSA_CategoryCode.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        TF_SSA_CategoryCode.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setText("Category Code");
 
         TF_SSA_CategoryName.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         TF_SSA_CategoryName.setForeground(new java.awt.Color(51, 51, 51));
+
+        TF_SSA_CategoryCode.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        TF_SSA_CategoryCode.setForeground(new java.awt.Color(51, 51, 51));
 
         BT_SSA_Update.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BT_SSA_Update.setForeground(new java.awt.Color(51, 51, 51));
@@ -142,55 +144,73 @@ public class CategoryListPanel extends javax.swing.JPanel {
             }
         });
 
+        BT_SSA_Back.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        BT_SSA_Back.setForeground(new java.awt.Color(51, 51, 51));
+        BT_SSA_Back.setText("Back");
+        BT_SSA_Back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_SSA_BackMouseClicked(evt);
+            }
+        });
+
+        jLabel1.setText("Category List");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 798, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
                         .addGap(18, 18, 18)
-                        .addComponent(TF_SSA_CategoryCode, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TF_SSA_CategoryName)
+                            .addComponent(TF_SSA_CategoryCode))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(BT_SSA_AddNewCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BT_SSA_Update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BT_SSA_Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BT_SSA_ManageVendor)
+                                .addGap(27, 27, 27)
+                                .addComponent(BT_SSA_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(27, 27, 27))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TF_SSA_CategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BT_SSA_AddNewCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                    .addComponent(BT_SSA_Update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BT_SSA_ManageVendor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BT_SSA_Delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(134, 134, 134))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(20, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(BT_SSA_AddNewCategory)
-                            .addComponent(BT_SSA_Delete)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(TF_SSA_CategoryCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(36, 36, 36)
+                .addGap(8, 8, 8)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BT_SSA_AddNewCategory)
+                    .addComponent(BT_SSA_Delete)
+                    .addComponent(TF_SSA_CategoryCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
                     .addComponent(TF_SSA_CategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
                     .addComponent(BT_SSA_Update)
-                    .addComponent(BT_SSA_ManageVendor))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addComponent(BT_SSA_ManageVendor)
+                    .addComponent(BT_SSA_Back))
+                .addGap(27, 27, 27))
         );
+      
         
         this.BT_SSA_Delete.setEnabled(false);
         this.BT_SSA_Update.setEnabled(false);
@@ -301,6 +321,29 @@ public class CategoryListPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_BT_SSA_ManageVendorMouseClicked
     
+    private void BT_SSA_BackMouseClicked(java.awt.event.MouseEvent evt) {                                         
+        // TODO add your handling code here:
+    	manager.showMenuScreen();
+    }   
+    
+   
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+
+    private javax.swing.JButton BT_SSA_AddNewCategory;
+    private javax.swing.JButton BT_SSA_Back;
+    private javax.swing.JButton BT_SSA_Delete;
+    private javax.swing.JButton BT_SSA_ManageVendor;
+    private javax.swing.JButton BT_SSA_Update;
+    private javax.swing.JTextField TF_SSA_CategoryCode;
+    private javax.swing.JTextField TF_SSA_CategoryName;
+    private javax.swing.JTable T_SSA_CategoryTable;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    // End of variables declaration//GEN-END:variables
+    
     private void reloadData() {
         
         this.UI_CategoryList = this.manager.getCategoryList();//Retriving Saved UI_CategoryList form File
@@ -311,19 +354,6 @@ public class CategoryListPanel extends javax.swing.JPanel {
         this.LoadTable();
         
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BT_SSA_AddNewCategory;
-    private javax.swing.JButton BT_SSA_Delete;
-    private javax.swing.JButton BT_SSA_ManageVendor;
-    private javax.swing.JButton BT_SSA_Update;
-    private javax.swing.JTextField TF_SSA_CategoryCode;
-    private javax.swing.JTextField TF_SSA_CategoryName;
-    private javax.swing.JTable T_SSA_CategoryTable;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    // End of variables declaration//GEN-END:variables
 
     private void LoadTable()
     {
