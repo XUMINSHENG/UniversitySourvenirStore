@@ -14,7 +14,9 @@ import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.Vendor;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
+import sg.edu.nus.iss.usstore.util.Util;
 
 /**
  * Main method here
@@ -326,7 +328,14 @@ public class StoreApplication {
 	
 	}
 	
-	
+	/**
+	 * 
+	 * @param date
+	 * @return TransactionList
+	 */
+	public ArrayList<Transaction> getTransactionListByDate(Date date){
+		return store.getTransactionListByDate(date);
+	}				
 	
 	
 	
@@ -351,6 +360,13 @@ public class StoreApplication {
 		tr = manager.setPayment(tr, 200, 100);
 		tr = manager.confirmPayment(tr);
 		*/
+		
+		try {
+			manager.getTransactionListByDate(Util.castDate("2013-09-28"));
+		} catch (DataInputException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		System.out.println("helloworld");
 		

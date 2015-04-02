@@ -3,11 +3,13 @@ package sg.edu.nus.iss.usstore.gui;
 
 import sg.edu.nus.iss.usstore.domain.Vendor;
 import sg.edu.nus.iss.usstore.domain.Category;
+import sg.edu.nus.iss.usstore.util.StringDocument;
 
 import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 public class VendorDialog extends javax.swing.JDialog {
@@ -53,7 +55,9 @@ public class VendorDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         TF_SSA_VendorName = new javax.swing.JTextField();
+        TF_SSA_VendorName.setDocument(new StringDocument(50));
         TF_SSA_VendorDescription = new javax.swing.JTextField();
+        TF_SSA_VendorDescription.setDocument(new StringDocument(50));
         BT_SSA_AddNewVendor = new javax.swing.JButton();
         BT_SSA_UpdateVendor = new javax.swing.JButton();
         BT_SSA_DeleteVendor = new javax.swing.JButton();
@@ -274,7 +278,8 @@ public class VendorDialog extends javax.swing.JDialog {
     	if(this.init())
         {        
             if(!this.validName()){
-            	UI_ErrorDialogBox.openDialog("Duplicate vendor name is not possible.");
+            	String msg = "Duplicate vendor name is not possible";
+           		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
             }
             else
             {
@@ -332,9 +337,7 @@ public class VendorDialog extends javax.swing.JDialog {
 
 	private void BT_SSA_UpdateVendorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_UpdateVendorMouseClicked
     	int selectedIndex = this.T_SSA_VendorTable.getSelectedRow();
-    	if(selectedIndex == -1 || this.T_SSA_VendorTable.getRowCount() == 0)
-           UI_ErrorDialogBox.openDialog("Please select an item.");
-	    else if(this.init())
+    	if(this.init())
 	    {              
 	    	if(!this.validName()){
 	           
@@ -350,19 +353,22 @@ public class VendorDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_BT_SSA_UpdateVendorMouseClicked
 
     private void BT_SSA_DeleteVendorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_DeleteVendorMouseClicked
+    	
         int selectedIndex = this.T_SSA_VendorTable.getSelectedRow();
-       if(selectedIndex == -1 || this.T_SSA_VendorTable.getRowCount() == 0)
-           UI_ErrorDialogBox.openDialog("Please select an item.");
-       else
-       {
-           	String vendorName = this.tableModel.getValueAt(selectedIndex, 0).toString();
+      
+       	String vendorName = this.tableModel.getValueAt(selectedIndex, 0).toString();
+       	String msg = "The vendor '" + vendorName + "' will be deleted";
+       	int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
+       	if (n == 0){
+       		// proceed deletion
            	manager.delVendorForCategory(this.selectedCategory.getCode(), vendorName);
            	LoadTable();
-       }
+       	}
+       	
+       
     }//GEN-LAST:event_BT_SSA_DeleteVendorMouseClicked
 
  
-
     private void COMBO_CategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_COMBO_CategoryActionPerformed
         String categoryCode = this.COMBO_Category.getModel().getSelectedItem().toString();
         this.TF_SSA_VendorName.setText("");
@@ -505,11 +511,11 @@ public class VendorDialog extends javax.swing.JDialog {
     {
         this.VendorName = this.TF_SSA_VendorName.getText().trim();
         this.VendorDescription = this.TF_SSA_VendorDescription.getText().trim();
-        if(this.VendorName.isEmpty() || this.VendorDescription.isEmpty())
-            UI_ErrorDialogBox.openDialog("Vendor Name or Description should not be empty.");
+        if(this.VendorName.isEmpty() || this.VendorDescription.isEmpty()){
+        	String msg = "Vendor Name or Description should not be empty";
+        	JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+        }
         else if(this.VendorDescription.contains(",") || this.VendorName.contains(","))
-            UI_ErrorDialogBox.openDialog("Please avoid COMMA(,)!!");
-        else
             return true;
         return false;
     }

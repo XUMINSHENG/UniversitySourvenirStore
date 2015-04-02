@@ -31,10 +31,8 @@ public abstract class Discount {
 	}
 //	public String getStartDate() {
 	
-
 	
-
-	public double getPercent() {
+	public int getPercent() {
 		return percent;
 	}
 

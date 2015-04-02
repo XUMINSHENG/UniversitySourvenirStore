@@ -195,7 +195,7 @@ public class Store {
 	 * @param date
 	 * @return TransactionList
 	 */
-	public ArrayList<Transaction> getTransactionByDate(Date date){
+	public ArrayList<Transaction> getTransactionListByDate(Date date){
 		return transactionMgr.getTransactionListByDate(date);
 	}
 	

@@ -4,9 +4,11 @@ package sg.edu.nus.iss.usstore.gui;
 import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Vendor;
+import sg.edu.nus.iss.usstore.util.StringDocument;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class CategoryListPanel extends javax.swing.JPanel {
@@ -43,8 +45,10 @@ public class CategoryListPanel extends javax.swing.JPanel {
         BT_SSA_AddNewCategory = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        TF_SSA_CategoryName = new javax.swing.JTextField();
         TF_SSA_CategoryCode = new javax.swing.JTextField();
+        TF_SSA_CategoryCode.setDocument(new StringDocument(3));
+        TF_SSA_CategoryName = new javax.swing.JTextField();
+        TF_SSA_CategoryName.setDocument(new StringDocument(50));
         BT_SSA_Update = new javax.swing.JButton();
         BT_SSA_Delete = new javax.swing.JButton();
         BT_SSA_ManageVendor = new javax.swing.JButton();
@@ -224,7 +228,8 @@ public class CategoryListPanel extends javax.swing.JPanel {
         {
             if(!this.validAdd())
             {
-                UI_ErrorDialogBox.openDialog("Duplicate Category ID `"+categoryCode+"`");
+            	String msg = "Duplicate Category ID `"+categoryCode+"`";
+            	JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
             }
             else
             {
@@ -235,10 +240,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_BT_SSA_AddNewCategoryMouseClicked
 
     private void BT_SSA_UpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_UpdateMouseClicked
-       int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
-       if(selectedIndex == -1 || this.T_SSA_CategoryTable.getRowCount() == 0)
-           UI_ErrorDialogBox.openDialog("Please select an item.");
-       else if(this.init())
+       if(this.init())
        {
            if(this.validUpd())
            {	
@@ -246,8 +248,10 @@ public class CategoryListPanel extends javax.swing.JPanel {
         	   String name = this.TF_SSA_CategoryName.getText().toString();
                this.manager.updCategory(code, name);
                reloadData();
-           }else
-        	   UI_ErrorDialogBox.openDialog("Category Code should not be changed");
+           }else{
+        	   	String msg = "Category Code should not be changed";
+           		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+           }
        }
     }//GEN-LAST:event_BT_SSA_UpdateMouseClicked
 
@@ -268,19 +272,21 @@ public class CategoryListPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_T_SSA_CategoryTableMouseClicked
 
     private void BT_SSA_DeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_DeleteMouseClicked
-	   int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
-	   if(selectedIndex == -1 || this.T_SSA_CategoryTable.getRowCount() == 0)
-	       UI_ErrorDialogBox.openDialog("Please select an item.");
-	   else
-	   {	
-		   	String code = this.tableModel.getValueAt(this.T_SSA_CategoryTable.getSelectedRow(),0).toString();
-			if(validDel(code)){
+	   
+	   	String code = this.tableModel.getValueAt(this.T_SSA_CategoryTable.getSelectedRow(),0).toString();
+		if(validDel(code)){
+			String msg = "Category '" + code + "' will be deleted";
+			int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
+	       	if (n == 0){
+	       		// proceed deletion
 				manager.deleteCategoryByCode(code);
 				reloadData();
-			}else
-			   UI_ErrorDialogBox.openDialog("there have product in this Category `"+ code + "`, should not be deleted");
+	       	}
+		}else{
+    	   	String msg = "This category `"+ code + "` is associated with some products";
+       		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+		}
     	   	
-       }
     }//GEN-LAST:event_BT_SSA_DeleteMouseClicked
 
     private void T_SSA_CategoryTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T_SSA_CategoryTableKeyReleased
@@ -305,7 +311,8 @@ public class CategoryListPanel extends javax.swing.JPanel {
         String categoryCode;
         
         if(this.T_SSA_CategoryTable.getRowCount() == 0){
-        	UI_ErrorDialogBox.openDialog("there is no category at all");
+        	String msg = "Need to have a category at least";
+       		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
         }else {
         
 	        if(selectedIndex == -1){
@@ -380,12 +387,15 @@ public class CategoryListPanel extends javax.swing.JPanel {
     	this.categoryCode = this.TF_SSA_CategoryCode.getText().trim().toUpperCase();
         this.categoryName = this.TF_SSA_CategoryName.getText().trim();
        
-        if(this.categoryName.isEmpty() || this.categoryCode.isEmpty())
-            UI_ErrorDialogBox.openDialog("Category Name or ID should not be empty.");
-        else if(this.categoryCode.length()!= 3)
-            UI_ErrorDialogBox.openDialog(" ID Should be 3 characters long!!");
-        else if(this.categoryName.contains(",") || this.categoryCode.contains(","))
-            UI_ErrorDialogBox.openDialog("Please avoid COMMA(,)!!");
+        if(this.categoryName.isEmpty() || this.categoryCode.isEmpty()){
+        	String msg = "Category Code or Name should not be empty";
+       		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+        }
+      
+        else if(this.categoryCode.length()!= 3){
+        	String msg = "Category Code Should be 3 characters long";
+       		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+        }
         else
             return true;
         return false;

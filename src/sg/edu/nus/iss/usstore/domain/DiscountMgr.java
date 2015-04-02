@@ -183,7 +183,7 @@ public class DiscountMgr {
 					maxDiscount = discount.getHigherDiscount(maxDiscount);
 				}
 			}
-			else if(discount instanceof MemberDiscount) {
+			else if(discount instanceof OcassionalDiscount) {
 				OcassionalDiscount od = (OcassionalDiscount)discount;
 				if(od.getStartDate().compareTo(currentDate) <= 0 && 
 					Util.addDays(od.getStartDate(), od.getPeriod()).compareTo(currentDate) >=0 ) {

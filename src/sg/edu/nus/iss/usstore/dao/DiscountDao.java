@@ -104,7 +104,7 @@ public void saveDataToFile(ArrayList<Discount> discountList) throws IOException 
 			line.append(Util.dateToString(((OcassionalDiscount)discount).getStartDate()) + Util.C_Separator);
 		}
 		if(discount instanceof MemberDiscount){
-			line.append("Always"+Util.C_Separator);
+			line.append("ALWAYS" + Util.C_Separator);
 		}else if(discount instanceof OcassionalDiscount){
 			line.append((((OcassionalDiscount)discount).getPeriod()) + Util.C_Separator);
 		}
