@@ -258,7 +258,12 @@ public class StoreWindow extends JFrame{
 	private JPanel createTransactionFactory(){
 		JPanel p = new JPanel();
 		p.setBorder(BorderFactory.createTitledBorder("TransactionFactory"));
-		JButton button = new JButton("CheckOut");
+		ImageIcon icon = new ImageIcon("images//checkout.png");
+		JButton button = new JButton("Check Out",icon);
+		button.setHorizontalTextPosition(JButton.CENTER);
+		button.setVerticalTextPosition(JButton.BOTTOM);
+		button.setIconTextGap(2);
+		button.setSize(50, 50);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -283,6 +288,7 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
+		button.setSize(50, 50);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
