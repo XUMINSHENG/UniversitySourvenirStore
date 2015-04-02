@@ -32,6 +32,7 @@ import javax.swing.table.TableColumn;
 import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Discount;
 import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.Public;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
@@ -50,7 +51,6 @@ public class CheckOutPanel extends JPanel
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JLabel JlMemberName;
 	private JLabel JlgetMemberName;
 	private JLabel JlTotalPriceNum;
 	private JLabel JlDiscountNum;
@@ -64,6 +64,7 @@ public class CheckOutPanel extends JPanel
 	private JTextField JtPaidNum;
 	private JTextField JtCashNum;
 	private JTable table;
+	private JButton JbFinish;
 	private TableColumn column;
 
 	private DecimalFormat df = new DecimalFormat("0.00");
@@ -101,7 +102,15 @@ public class CheckOutPanel extends JPanel
 		JlDiscountNum.setText(Double.toString(transaction.getDiscount().getPercent()));
 		JlDiscountedPriceNum.setText(df.format(transaction.calcDiscountPrice()));
 		JlRestNum.setText(df.format(transaction.calcRest()));
-	}
+		if (transaction.getCustomer().name.length()!=0)
+		{
+			JlgetMemberName.setText(transaction.getCustomer().name);
+		}
+		else
+		{
+			JlgetMemberName.setText("PUBLIC");
+		}
+		}
 	
 	public void tableDataBinding()
 	{	
@@ -176,7 +185,7 @@ public class CheckOutPanel extends JPanel
 		}
 		// refresh UI
 		{
-			JlMemberName.setText(null);
+			JlgetMemberName.setText(null);
 			JlTotalPriceNum.setText(Double.toString(transaction.calcTotalPrice()));
 			JlDiscountNum.setText(Double.toString(transaction.getDiscount().getPercent()));
 			JlDiscountedPriceNum.setText(Double.toString(transaction.calcDiscountPrice()));
@@ -226,9 +235,9 @@ public class CheckOutPanel extends JPanel
 		jpInput.add(jp1);
 
 		// jp2
-		JlMemberName = new JLabel("MEMBER  NAME");
+		JLabel JlMemberName = new JLabel("MEMBER  ");
 		JlgetMemberName = new JLabel("PUBLIC");
-		JButton JbMemberSubmit = new JButton("  Enter ");
+		JButton JbMemberSubmit = new JButton("Submit");
 		JbMemberSubmit.setActionCommand("JbMemberSubmit");
 		JbMemberSubmit.addActionListener(listener);
 		jp2.setLayout(new GridLayout(1, 2));
@@ -436,16 +445,19 @@ public class CheckOutPanel extends JPanel
 									|| JlError.getText() == ERR_MSG_CASH_FORMAT_ERROR)
 							{
 								JlError.setText(null);
+								JbFinish.setEnabled(true);
 							}
 						} else
 						{
 							JlError.setText(ERR_MSG_CASH_NOT_ENOUGH);
 							JlChangeNum.setText("**.**");
+							JbFinish.setEnabled(false);
 						}
 					} else
 					{
 						JlError.setText(ERR_MSG_CASH_FORMAT_ERROR);
 						JlChangeNum.setText("**.**");
+						JbFinish.setEnabled(false);
 					}
 				}
 			}
@@ -538,17 +550,17 @@ public class CheckOutPanel extends JPanel
 
 		JPanel jpButton = new JPanel();
 		jpButton.setLayout(new GridLayout(7, 1));
-		JButton JbDelete = new JButton("    Delete    ");
+		JButton JbDelete = new JButton("Delete");
 		JLabel JlBlank1 = new JLabel(" ");
 		JbDelete.setActionCommand("JbDelete");
 		JbDelete.addActionListener(listener);
-		JButton JbCancel = new JButton("    Cancel    ");
+		JButton JbCancel = new JButton("Cancel");
 		JbCancel.setActionCommand("JbCancel");
 		JbCancel.addActionListener(listener);
 		JLabel JlBlank2 = new JLabel(" ");
 		JlError = new JLabel();
 		JLabel JlBlank3 = new JLabel(" ");
-		JButton JbFinish = new JButton("    Finish     ");
+		JbFinish = new JButton("Finish");
 		JbFinish.setActionCommand("JbFinish");
 		JbFinish.addActionListener(listener);
 		JlError.setText("");
@@ -579,7 +591,6 @@ public class CheckOutPanel extends JPanel
 					try
 					{
 						transaction = sa.setBillCustomer(transaction, MemberID);
-						
 					}
 					catch (NullPointerException e2)
 					{
