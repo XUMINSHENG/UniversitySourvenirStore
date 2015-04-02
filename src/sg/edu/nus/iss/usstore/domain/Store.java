@@ -313,22 +313,29 @@ public class Store {
 		return productMgr.getProductByBarCode(barCode);
 	}
 	
-	public PurchaseOrder getPurchaseOrder(){
+	public ArrayList<Product> checkInventory(){
+		return productMgr.checkInventory();
+	}
+	
+	public HashMap<Product,Vendor> getPurchaseOrder(){
 		
-		PurchaseOrder purchaseOrder = new PurchaseOrder();
-		
+		//PurchaseOrder purchaseOrder = new PurchaseOrder();
+		HashMap<Product,Vendor> purchaseList = new HashMap<Product,Vendor>();
 		ArrayList<Product> productList = null;
 		productList = productMgr.checkInventory();
-
+		//Vendor v = null;
+		for(Product p:productList){
+			purchaseList.put(p,p.getCategory().getPreferenceVendor());
+		}
 		
-		HashMap<Product,Vendor> purchaseList = new HashMap<Product,Vendor>();
+		
 		
 		// foreach product in productList, 
 		// purchaseList.add(product, product.getCategory().getPreferenceVendor())
 		
 		// purchaseOrder.
 		
-		return purchaseOrder;
+		return purchaseList;
 	}
 	
 //  -------------------- category related methods	-------------------

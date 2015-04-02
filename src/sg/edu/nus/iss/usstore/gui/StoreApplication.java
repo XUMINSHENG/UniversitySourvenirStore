@@ -4,6 +4,7 @@ package sg.edu.nus.iss.usstore.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Discount;
@@ -126,6 +127,11 @@ public class StoreApplication {
 		return store.confirmPayment(transaction);
 	}
 	
+	/**
+	 * 
+	 * @param product
+	 * @param indenx
+	 */
 
 	public String getNewProductIdByCategory(String code){
 		return store.getNewProductIdByCategory(code);
@@ -136,14 +142,17 @@ public class StoreApplication {
 		store.addProduct(id,name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);	
 	}
 	
-	/**
-	 * 
-	 * @param product
-	 * @param indenx
-	 */
 	public void modifyProduct(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		store.modifyProduct(id,name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
+	}
+	
+	public ArrayList<Product> checkInventory(){
+		return store.checkInventory();
+	}
+	
+	public HashMap<Product,Vendor> getPurchaseOrder(){
+		return store.getPurchaseOrder();
 	}
 	
 	/**

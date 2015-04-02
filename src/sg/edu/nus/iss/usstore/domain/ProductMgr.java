@@ -37,9 +37,6 @@ public class ProductMgr {
 	
 	//check the products below thresholds and return list
 	public ArrayList<Product> checkInventory(){
-		if(productList.size()==0){
-			return null;
-		}
 		ArrayList<Product> orderList = new ArrayList<Product>();
 		for(int i=0;i<productList.size();i++){
 			if(!productList.get(i).checkInventoryLevel()){

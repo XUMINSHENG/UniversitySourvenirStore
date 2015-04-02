@@ -51,7 +51,7 @@ public class CheckInventoryPanel extends JPanel{
 	}
 	
 	public Container createCenterPanel(){
-		tableModel = new DefaultTableModel(loadTableData(manager.getProductList()),columnNames){
+		tableModel = new DefaultTableModel(loadTableData(manager.checkInventory()),columnNames){
 			@Override
 			public boolean isCellEditable(int row,int column){
 				return false;
@@ -113,6 +113,7 @@ public class CheckInventoryPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				OrderListDialog d = new OrderListDialog(manager);
 				
 			}
 		});
@@ -132,24 +133,18 @@ public class CheckInventoryPanel extends JPanel{
 	}
 	
 	private Object[][] loadTableData(ArrayList<Product> products){
-		ArrayList<Product> replenish = new ArrayList<Product>();
-		for(Product p:products){
-			if(p.getQuantityAvailable()<=p.getReorderQuantity()){
-				replenish.add(p);
-			}
-		}
-		int length = replenish.size();
+		int length = products.size();
 		Object[][] data;
 		if(length==0){
 			data = new Object[0][5];
 		}else{
 			data =  new Object[length][5];
 			for(int i=0;i<length;i++){
-				data[i][0] = replenish.get(i).getProductId();
-				data[i][1] = replenish.get(i).getName();
-				data[i][2] = replenish.get(i).getQuantityAvailable();
-				data[i][3] = replenish.get(i).getReorderQuantity();
-				data[i][4] = replenish.get(i).getOrderQuantity();
+				data[i][0] = products.get(i).getProductId();
+				data[i][1] = products.get(i).getName();
+				data[i][2] = products.get(i).getQuantityAvailable();
+				data[i][3] = products.get(i).getReorderQuantity();
+				data[i][4] = products.get(i).getOrderQuantity();
 			}
 		}
 		return data;
