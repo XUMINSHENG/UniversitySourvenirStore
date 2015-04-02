@@ -43,7 +43,7 @@ public class Product {
 	}
 
 	public boolean checkInventoryLevel(){
-		if(this.quantityAvailable < this.reorderQuantity){
+		if(this.quantityAvailable <= this.reorderQuantity){
 			return false;
 		}
 		return true;

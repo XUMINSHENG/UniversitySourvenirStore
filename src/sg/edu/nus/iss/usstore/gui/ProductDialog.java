@@ -18,6 +18,9 @@ import javax.swing.border.EmptyBorder;
 import sg.edu.nus.iss.usstore.domain.*;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
 import sg.edu.nus.iss.usstore.util.StringDocument;
+/*
+ * @ Team FT2 - XIE JIABAO
+ */
 
 public class ProductDialog extends JDialog{
 

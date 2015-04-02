@@ -47,7 +47,7 @@ import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 */
 /**
 * cardName: productList
-* @ XIE JIABAO
+* @ Team FT2 - XIE JIABAO
 */
 public class ProductsListPanel extends JPanel{
 	

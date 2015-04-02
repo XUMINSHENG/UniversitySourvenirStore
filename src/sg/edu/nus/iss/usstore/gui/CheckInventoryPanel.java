@@ -21,6 +21,11 @@ import javax.swing.table.DefaultTableModel;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 
+/*
+ * cardName: checkInventory
+ * @ Team FT2 - XIE JIABAO
+ */
+
 public class CheckInventoryPanel extends JPanel{
 
 	private final String[] columnNames = {"Id","Name","Available Quantity","Threshold","Order Quantity"};
