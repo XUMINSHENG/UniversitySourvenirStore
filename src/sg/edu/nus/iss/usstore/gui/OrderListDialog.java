@@ -2,6 +2,7 @@ package sg.edu.nus.iss.usstore.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,6 +49,8 @@ public class OrderListDialog extends JDialog{
 	}
 	
 	private void initGUI(){
+		//setPreferredSize(new Dimension(600, 400));
+		setSize(600, 400);
 		setLocationRelativeTo(null);
 		setModal(true);
 		setVisible(true);
