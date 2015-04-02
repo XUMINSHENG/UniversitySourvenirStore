@@ -2,7 +2,6 @@ package sg.edu.nus.iss.usstore.domain;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import sg.edu.nus.iss.usstore.dao.CategoryDao;
 import sg.edu.nus.iss.usstore.dao.VendorDao;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
@@ -169,6 +168,7 @@ public class CategoryMgr {
 	public void switchVendorPrefForCategory(String categoryCode, String upVendorName, String downVendorName){
 		Category category = getCategoryByCode(categoryCode);
 		category.switchVendorPref(upVendorName, downVendorName);
+	
 	}
 	
 	

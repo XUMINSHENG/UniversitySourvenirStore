@@ -82,20 +82,38 @@ public class Category {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param oldName
+	 * @param newName
+	 * @param newDesc
+	 */
 	public void updVendor(String oldName, String newName, String newDesc){
 		Vendor vendor = getVendorByName(oldName);
 		vendor.setName(newName);
 		vendor.setDescription(newDesc);
 	}
 	
+	/**
+	 * 
+	 * @param upVendorName
+	 * @param downVendorName
+	 */
 	public void switchVendorPref(String upVendorName, String downVendorName){
 		Vendor upVendor = getVendorByName(upVendorName);
 		Vendor downVendor = getVendorByName(downVendorName);
 		int upPref = upVendor.getPreference();
 		upVendor.setPreference(downVendor.getPreference());
 		downVendor.setPreference(upPref);
+		
+		Collections.sort(this.vendorList);
 	}
 	
+	/**
+	 * 
+	 * @param vendorName
+	 * @return
+	 */
 	private Vendor getVendorByName(String vendorName){
 		Vendor result = null;
 		for(Vendor vendor : this.vendorList){
