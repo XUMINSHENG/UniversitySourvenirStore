@@ -422,6 +422,9 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("Category Report");
+				CategoryReport catReport = new CategoryReport(manager);
+				catReport.show(true);
+				catReport.setVisible(true);
 				//changeCard("discountList");
 			}
 		});
@@ -433,6 +436,9 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("Product Report");
+				ProductReport prodReport = new ProductReport(manager);
+				prodReport.show(true);
+				prodReport.setVisible(true);
 				//changeCard("discountList");
 			}
 		});
@@ -444,6 +450,9 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("Report list");
+				TransactionReport transactionReport = new TransactionReport(manager);
+				transactionReport.show(true);
+				transactionReport.setVisible(true);
 				//changeCard("discountList");
 			}
 		});
@@ -455,6 +464,9 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("Report list");
+				MemberReport memReport = new MemberReport(manager);
+				memReport.show(true);
+				memReport.setVisible(true);
 				//changeCard("discountList");
 			}
 		});
