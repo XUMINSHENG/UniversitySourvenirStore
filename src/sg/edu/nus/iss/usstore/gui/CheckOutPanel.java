@@ -66,7 +66,7 @@ public class CheckOutPanel extends JPanel
 	private JTable table;
 	private TableColumn column;
 
-	private DecimalFormat df = new DecimalFormat("#.00");
+	private DecimalFormat df = new DecimalFormat("0.00");
 	private DefaultTableModel defaultModel = null;
 
 	private Customer customer = null;
@@ -100,6 +100,7 @@ public class CheckOutPanel extends JPanel
 		JlTotalPriceNum.setText(df.format(transaction.calcTotalPrice()));
 		JlDiscountNum.setText(Double.toString(transaction.getDiscount().getPercent()));
 		JlDiscountedPriceNum.setText(df.format(transaction.calcDiscountPrice()));
+		JlRestNum.setText(df.format(transaction.calcRest()));
 	}
 	
 	public void tableDataBinding()

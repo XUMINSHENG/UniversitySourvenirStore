@@ -32,7 +32,7 @@ public class TransactionTest extends Transaction
 	 */
 
 	Date date = new Date();
-	MemberDiscount discount = new MemberDiscount("1", "2", date,3,4.5,"6");
+	MemberDiscount discount = new MemberDiscount("1", "2",34,"5");
 	Member customer = new Member("1", "2", 3);
 	Transaction t = new Transaction(1,customer,date);
 	@Test
