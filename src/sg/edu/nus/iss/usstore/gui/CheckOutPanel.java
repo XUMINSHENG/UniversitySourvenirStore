@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -31,12 +32,12 @@ import javax.swing.table.TableColumn;
 
 import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Discount;
+import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Public;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
-import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
 import sg.edu.nus.iss.usstore.util.Util;
 
@@ -76,13 +77,12 @@ public class CheckOutPanel extends JPanel
 	private int scrollpanelwidth = 600;
 	private int scrollpanelheight = 400;
 	private int flag = 0;
-	private double amount = 0;
 	private String tempBarCode;
-	private Vector vector = new Vector();
+	private Vector vector = new Vector<Object>();
 	private Listener listener = new Listener();
 	private StoreApplication sa = null;
 	private Transaction transaction;
-	
+
 	private final String ERR_MSG_MEMBER_NOT_EXIST = "Error MemberID!";
 	private final String ERR_MSG_PRODCUT_NOT_EXIST = "No product!";
 	private final String ERR_MSG_BARCODE_ERROR = "Bar Code Error!";
@@ -93,36 +93,41 @@ public class CheckOutPanel extends JPanel
 	private final String ERR_MSG_CASH_FORMAT_ERROR = "Cash Format Error!";
 	private final String ERR_MSG_CASH_NOT_ENOUGH = "Cash is not enough!";
 	private final String ERR_MSG_SELECT_ROW = "Select a Row!";
-	
+
 	public static JLabel JlError;
-	
+
 	public void setOutputValue()
 	{
 		JlTotalPriceNum.setText(df.format(transaction.calcTotalPrice()));
-		JlDiscountNum.setText(Double.toString(transaction.getDiscount().getPercent()));
-		JlDiscountedPriceNum.setText(df.format(transaction.calcDiscountPrice()));
+		JlDiscountNum.setText(Double.toString(transaction.getDiscount()
+				.getPercent()));
+		JlDiscountedPriceNum
+				.setText(df.format(transaction.calcDiscountPrice()));
 		JlRestNum.setText(df.format(transaction.calcRest()));
-		if (transaction.getCustomer().name.length()!=0)
+		if (transaction.getCustomer() instanceof Member)
 		{
-			JlgetMemberName.setText(transaction.getCustomer().name);
-		}
-		else
+			Member member = (Member) transaction.getCustomer();
+			JlgetMemberName.setText(member.name);
+			JlLoyalPointNum.setText(Integer.toString(member.getLoyaltyPoint()));
+			JtPaidNum.setEnabled(true);
+		} else
 		{
 			JlgetMemberName.setText("PUBLIC");
+			JtPaidNum.setEnabled(false);
 		}
-		}
-	
+	}
+
 	public void tableDataBinding()
-	{	
-		flag=1;
+	{
+		flag = 1;
 		ArrayList itemList = transaction.getItemList();
 		Vector dataVector = defaultModel.getDataVector();
 		dataVector.clear();
-		
-		for (int i = 0;i< itemList.size();i++)
+
+		for (int i = 0; i < itemList.size(); i++)
 		{
 			Vector subVector = new Vector();
-			subVector.add(i+1);
+			subVector.add(i + 1);
 			TransactionItem transactionitem = (TransactionItem) itemList.get(i);
 			product = transactionitem.getProduct();
 			subVector.add(product.getBarCodeNumber());
@@ -134,31 +139,31 @@ public class CheckOutPanel extends JPanel
 		}
 		table.validate();
 		table.repaint();
-		flag=0;
+		flag = 0;
 		setOutputValue();
 	}
 
-	public void addProduct(ArrayList<TransactionItem> arrayList,int qty)
+	public void addProduct(ArrayList<TransactionItem> arrayList, int qty)
 	{
 		int productAddFlag = -1;
-		for (int m = 0;m < arrayList.size();m++)
+		for (int m = 0; m < arrayList.size(); m++)
 		{
-			if(arrayList.get(m).getProduct()==product)
+			if (arrayList.get(m).getProduct() == product)
 			{
 				productAddFlag = m;
 			}
 		}
-		if (productAddFlag==-1)
+		if (productAddFlag == -1)
 		{
-			arrayList.add(new TransactionItem(product,product.getPrice(),qty));
-		}
-		else
+			arrayList
+					.add(new TransactionItem(product, product.getPrice(), qty));
+		} else
 		{
 			TransactionItem tempTransactionItem = arrayList.get(productAddFlag);
-			tempTransactionItem.setQty(tempTransactionItem.getQty()+qty);
+			tempTransactionItem.setQty(tempTransactionItem.getQty() + qty);
 		}
 	}
-	
+
 	public Transaction getTransaction()
 	{
 		return transaction;
@@ -173,6 +178,8 @@ public class CheckOutPanel extends JPanel
 	{
 		// refresh data
 		{
+			transaction = new Transaction();
+			sa.setBillCustomer(transaction, null);
 			vector = defaultModel.getDataVector();
 			vector.clear();
 			table.validate();
@@ -186,9 +193,12 @@ public class CheckOutPanel extends JPanel
 		// refresh UI
 		{
 			JlgetMemberName.setText(null);
-			JlTotalPriceNum.setText(Double.toString(transaction.calcTotalPrice()));
-			JlDiscountNum.setText(Double.toString(transaction.getDiscount().getPercent()));
-			JlDiscountedPriceNum.setText(Double.toString(transaction.calcDiscountPrice()));
+			JlTotalPriceNum.setText(Double.toString(transaction
+					.calcTotalPrice()));
+			JlDiscountNum.setText(Double.toString(transaction.getDiscount()
+					.getPercent()));
+			JlDiscountedPriceNum.setText(Double.toString(transaction
+					.calcDiscountPrice()));
 			JlLoyalPointNum.setText("0");
 			JlRestNum.setText(Double.toString(transaction.calcRest()));
 			JlChangeNum.setText(Double.toString(transaction.calcChange()));
@@ -196,6 +206,7 @@ public class CheckOutPanel extends JPanel
 			JtQuantity.setText(null);
 			JtMemberID.setText(null);
 			JtPaidNum.setText(null);
+			JtPaidNum.setEnabled(false);
 			JtCashNum.setText(null);
 			JlError.setText(null);
 		}
@@ -329,6 +340,7 @@ public class CheckOutPanel extends JPanel
 		jp9.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlPaid = new JLabel("Redeemed Point");
 		JtPaidNum = new JTextField(6);
+		JtPaidNum.setEnabled(false);
 		JtPaidNum.setDocument(new DigitDocument());
 		JtPaidNum.getDocument().addDocumentListener(new DocumentListener()
 		{
@@ -336,42 +348,65 @@ public class CheckOutPanel extends JPanel
 			{
 				// ������д��Ӧ�Ĵ������
 				String tempLoyalPaid = JtPaidNum.getText();
-				Double tempLoyalPaidNum = Double.valueOf(tempLoyalPaid)
-						.doubleValue();
-				if (tempLoyalPaidNum < 1)
+				int tempLoyalPaidNum = Integer.valueOf(tempLoyalPaid)
+						.intValue();
+				if (tempLoyalPaidNum < 0)
 				{
 					JlError.setText(ERR_MSG_POINT_FORMAT_ERROR);
 					JlChangeNum.setText("**.**");
 				} else
 				{
-					double tempDiscountedPriceNum = Double.valueOf(
-							JlDiscountedPriceNum.getText()).doubleValue();
-					JlRestNum.setText(df.format(tempDiscountedPriceNum
-							- tempLoyalPaidNum / 100));
+					Member member = (Member) transaction.getCustomer();
+					if (member.getLoyaltyPoint() >= tempLoyalPaidNum)
+					{
+						if (JlError.getText() == ERR_MSG_POINT_NOT_ENOUGH)
+							JlError.setText(null);
+						transaction.setRedeemedLoyaltyPoint(tempLoyalPaidNum);
+						JlRestNum.setText(df.format(transaction.calcRest()));
+					} else
+					{
+						JlError.setText(ERR_MSG_POINT_NOT_ENOUGH);
+					}
+
 				}
+				setOutputValue();
 			}
+
 			public void removeUpdate(DocumentEvent e)
 			{
-				System.out.println(JtPaidNum.getText());
+
 				if (JtPaidNum.getText().length() != 0)
 				{
 					String tempLoyalPaid = JtPaidNum.getText();
 
-					Double tempLoyalPaidNum = Double.valueOf(tempLoyalPaid)
-							.doubleValue();
-					if (tempLoyalPaidNum < 1)
+					int tempLoyalPaidNum = Integer.valueOf(tempLoyalPaid)
+							.intValue();
+					if (tempLoyalPaidNum < 0)
 					{
 						JlError.setText(ERR_MSG_POINT_FORMAT_ERROR);
 						JlChangeNum.setText("**.**");
 					} else
 					{
-						double tempDiscountedPriceNum = Double.valueOf(
-								JlDiscountedPriceNum.getText()).doubleValue();
-						JlRestNum.setText(df.format(tempDiscountedPriceNum
-								- tempLoyalPaidNum / 100));
+						Member member = (Member) transaction.getCustomer();
+						if (member.getLoyaltyPoint() >= tempLoyalPaidNum)
+						{
+							if (JlError.getText() == ERR_MSG_POINT_NOT_ENOUGH)
+								JlError.setText(null);
+							transaction
+									.setRedeemedLoyaltyPoint(tempLoyalPaidNum);
+							JlRestNum.setText(df.format(transaction.calcRest()));
+						} else
+						{
+							JlError.setText(ERR_MSG_POINT_NOT_ENOUGH);
+						}
 					}
+				} else
+				{
+					transaction.setRedeemedLoyaltyPoint(0);
 				}
+				setOutputValue();
 			}
+
 			public void changedUpdate(DocumentEvent e)
 			{
 				// TODO Auto-generated method stub
@@ -382,7 +417,6 @@ public class CheckOutPanel extends JPanel
 		jp9.add(JtPaidNum);
 		jpOutput.add(jp9);
 
-		
 		// jp10
 		jp10.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlRest = new JLabel("REST:");
@@ -403,11 +437,10 @@ public class CheckOutPanel extends JPanel
 			{
 				String ScashNum = JtCashNum.getText();
 				double DcashNum = Double.valueOf(ScashNum).doubleValue();
+				transaction.setCashAmount(DcashNum);
 				if (DcashNum > 0)
 				{
-					double DchangeNum = Double.valueOf(JlRestNum.getText())
-							.doubleValue();
-					double tempChange = DcashNum - DchangeNum;
+					double tempChange = transaction.calcChange();
 					if (tempChange > 0)
 					{
 						JlChangeNum.setText(df.format(tempChange));
@@ -427,6 +460,7 @@ public class CheckOutPanel extends JPanel
 					JlChangeNum.setText("**.**");
 				}
 			}
+
 			public void removeUpdate(DocumentEvent e)
 			{
 				if (JtCashNum.getText().length() != 0)
@@ -435,9 +469,7 @@ public class CheckOutPanel extends JPanel
 					double DcashNum = Double.valueOf(ScashNum).doubleValue();
 					if (DcashNum > 0)
 					{
-						double DchangeNum = Double.valueOf(JlRestNum.getText())
-								.doubleValue();
-						double tempChange = DcashNum - DchangeNum;
+						double tempChange = transaction.calcChange();
 						if (tempChange > 0)
 						{
 							JlChangeNum.setText(df.format(tempChange));
@@ -459,8 +491,12 @@ public class CheckOutPanel extends JPanel
 						JlChangeNum.setText("**.**");
 						JbFinish.setEnabled(false);
 					}
+				} else
+				{
+					transaction.setRedeemedLoyaltyPoint(0);
 				}
 			}
+
 			public void changedUpdate(DocumentEvent e)
 			{
 			}
@@ -511,14 +547,16 @@ public class CheckOutPanel extends JPanel
 				int row = e.getFirstRow();
 				if (flag == 0)
 				{
-					int num = Integer.valueOf((String) defaultModel.getValueAt(row, 3)).intValue();
+					int num = Integer.valueOf(
+							(String) defaultModel.getValueAt(row, 3))
+							.intValue();
 					transaction.getItemList().get(row).setQty(num);
 					tableDataBinding();
 				}
 				setOutputValue();
 			}
 		});
-		
+
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer()
 		{
 			public Component getTableCellRendererComponent(JTable table,
@@ -533,7 +571,7 @@ public class CheckOutPanel extends JPanel
 						isSelected, hasFocus, row, column);
 			}
 		};
-		
+
 		for (int i = 0; i <= 5; i++)
 		{
 			table.getColumn(tableTitle[i]).setCellRenderer(tcr);
@@ -582,22 +620,23 @@ public class CheckOutPanel extends JPanel
 			if (e.getActionCommand().equals("JbMemberSubmit"))
 			{
 				String MemberID = JtMemberID.getText();
-				if (JtMemberID.getText().length()==0)
+				if (JtMemberID.getText().length() == 0)
 				{
 					JlError.setText(ERR_MSG_MEMBER_NOT_EXIST);
-				}
-				else
+				} else
 				{
-					try
+					transaction = sa.setBillCustomer(transaction, MemberID);
+					if (transaction.getCustomer() == null)
 					{
-						transaction = sa.setBillCustomer(transaction, MemberID);
-					}
-					catch (NullPointerException e2)
-					{
+						transaction = sa.setBillCustomer(transaction, null);
 						JlError.setText(ERR_MSG_MEMBER_NOT_EXIST);
+					} else
+					{
+						if (JlError.getText() == ERR_MSG_MEMBER_NOT_EXIST)
+							JlError.setText(null);
 					}
 					setOutputValue();
-				}				
+				}
 			}
 			if (e.getActionCommand().equals("JbProductSubmit"))
 			{
@@ -618,7 +657,7 @@ public class CheckOutPanel extends JPanel
 				{
 					int intqty = Integer.parseInt(tempqty);
 
-					if (JlError.getText() ==ERR_MSG_PRODCUT_NOT_EXIST
+					if (JlError.getText() == ERR_MSG_PRODCUT_NOT_EXIST
 							|| JlError.getText() == ERR_MSG_BARCODE_ERROR
 							|| JlError.getText() == ERR_MSG_QUANTITY_NOT_ENOUGH
 							|| JlError.getText() == ERR_MSG_QUANTITY_FORMAT_ERROR)
@@ -630,8 +669,9 @@ public class CheckOutPanel extends JPanel
 						JlError.setText(ERR_MSG_PRODCUT_NOT_EXIST);
 						return;
 					}
-					ArrayList<TransactionItem> tempTransactionList = transaction.getItemList();
-					addProduct(tempTransactionList,intqty);
+					ArrayList<TransactionItem> tempTransactionList = transaction
+							.getItemList();
+					addProduct(tempTransactionList, intqty);
 					tableDataBinding();
 					JtBarCodeID.setText(null);
 					JtQuantity.setText(null);
@@ -653,7 +693,8 @@ public class CheckOutPanel extends JPanel
 					int rowcount = defaultModel.getRowCount();
 					if (rowcount > 0)
 					{
-						transaction.getItemList().remove(table.getSelectedRow());
+						transaction.getItemList()
+								.remove(table.getSelectedRow());
 						tableDataBinding();
 					}
 					table.revalidate();
@@ -666,22 +707,10 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbFinish"))
 			{
-				try
-				{
-					if (JlDiscountedPriceNum.getText().length()!=0)
-					transaction.setCashAmount(Util.castDouble(JlDiscountedPriceNum.getText()));
-					if (discount.getPercent()!=0)
-					transaction.setDiscount(discount);
-					if (JtPaidNum.getText().length()!=0)
-					transaction.setRedeemedLoyaltyPoint(Util.castInt(JtPaidNum.getText()));
-				} catch (DataInputException e1)
-				{
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				sa.confirmPayment(transaction);
+				cancelAll();
 			}
 		}
 	}
-
 
 }// /~

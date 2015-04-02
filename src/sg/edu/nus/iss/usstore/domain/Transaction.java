@@ -4,8 +4,6 @@ package sg.edu.nus.iss.usstore.domain;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
-
 import sg.edu.nus.iss.usstore.util.CalcUtil;
 
 public class Transaction

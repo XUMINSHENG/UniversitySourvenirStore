@@ -1,10 +1,6 @@
 //TransactionItem.java
 package sg.edu.nus.iss.usstore.domain;
 
-import java.io.IOException;
-
-import sg.edu.nus.iss.usstore.exception.DataFileException;
-import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.CalcUtil;
 
 public class TransactionItem

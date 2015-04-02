@@ -31,6 +31,11 @@ public class TransactionDao extends BaseDao
 	// use store to get relevant product objects
 	private Store store;
 	
+	public TransactionDao()
+	{
+		
+	}
+	
 	public TransactionDao(Store store){
 		this.store = store;
 	}

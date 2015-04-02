@@ -2,8 +2,6 @@
 package sg.edu.nus.iss.usstore.domain;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,14 +15,15 @@ public class TransactionMgr
 	 * 
 	 * @author Liu Xinzhuo
 	 * @author A0136010A
-	 * @version 1.0
+	 * @version 1.1
 	 */
 	private ArrayList<Transaction> transactionList = new ArrayList<Transaction>();
 	private TransactionDao td;
 	
-	public void finalize() throws IOException
+	public TransactionMgr() throws IOException, DataFileException
 	{
-		td.saveDataToFile(transactionList);
+		td = new TransactionDao(new Store());
+		transactionList = td.loadDataFromFile();
 	}
 	
 	public void save() throws IOException
@@ -38,7 +37,12 @@ public class TransactionMgr
 		transactionList = td.loadDataFromFile();
 	}
 	
-	public void setTransaction(ArrayList<Transaction> transactionList)
+	public ArrayList<Transaction> getTransactionList()
+	{
+		return transactionList;
+	}
+	
+	public void setTransactionList(ArrayList<Transaction> transactionList)
 	{
 		this.transactionList = transactionList;
 	}

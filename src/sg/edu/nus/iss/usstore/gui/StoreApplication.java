@@ -105,14 +105,8 @@ public class StoreApplication {
 		return transaction;
 	}
 	
-	public Transaction addBillItem(Transaction transaction,String productId,int quantity){
-		try {
-			transaction = store.addBillItem(transaction, productId, quantity);
-		} catch (DataNotFoundException e) {
-			// UI action
-			
-			e.printStackTrace();
-		}
+	public Transaction addBillItem(Transaction transaction,String productId,int quantity) throws DataNotFoundException{
+		transaction = store.addBillItem(transaction, productId, quantity);
 		return transaction;
 	}
 	

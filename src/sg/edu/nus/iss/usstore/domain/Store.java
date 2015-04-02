@@ -90,9 +90,6 @@ public class Store {
 			customer = new Public("");
 		}else{
 			customer = memberMgr.getMemberByID(memberId);
-			if (customer == null) {
-				throw new DataNotFoundException("Member",memberId);
-			}
 		}
 		
 		// get max discount
