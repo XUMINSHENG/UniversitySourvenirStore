@@ -27,6 +27,8 @@ public class StoreKeeperMgr {
 	public boolean checkAuthority(String userName,String Password)
 	{
 		boolean isValidUser = false;
+		if(userName == null || Password == null || userName.trim().equals("") || Password.trim().equals(""))
+			return isValidUser;
 		for(StoreKeeper user:storeKeeperList)
 		{
 			if(user.getUserName().equalsIgnoreCase(userName) && user.getPassword().equalsIgnoreCase(Password))
