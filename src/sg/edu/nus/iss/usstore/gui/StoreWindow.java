@@ -16,6 +16,7 @@ import java.security.KeyStore;
 import javax.security.auth.kerberos.KerberosKey;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -241,7 +242,6 @@ public class StoreWindow extends JFrame{
 	//cardName: mainScreen
 	private Container createMainPanel(){
 		JPanel mainCard;
-		JButton button;
 		
 		mainCard = new JPanel();
 		mainCard.setLayout(new BoxLayout(mainCard, BoxLayout.Y_AXIS));
@@ -278,7 +278,11 @@ public class StoreWindow extends JFrame{
 	private JPanel createProductFactory(){
 		JPanel p = new JPanel(new FlowLayout());
 		p.setBorder(BorderFactory.createTitledBorder("ProductFactory"));
-		JButton button = new JButton("Product List");
+		ImageIcon icon = new ImageIcon("images\\product.png");
+		JButton button = new JButton("Product List",icon);
+		button.setIconTextGap(2);
+		button.setHorizontalTextPosition(JButton.CENTER);
+		button.setVerticalTextPosition(JButton.BOTTOM);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
