@@ -56,13 +56,13 @@ public ArrayList<Discount> loadDataFromFile() throws IOException, DataFileExcept
 		    if (!fields[3].equalsIgnoreCase("ALWAYS"))			
 		    	period = Util.castInt(fields[3]);
 		    		
-			double percent = Util.castDouble(fields[4]);
+			int percent = Util.castInt(fields[4]);
 			String Applicable=(fields[5]);
 			 
 			Discount discount;
 			if(Applicable.contains("M")){
 				
-				discount = new MemberDiscount(discountCode,discountDescription, startDate,period,percent,Applicable);
+				discount = new MemberDiscount(discountCode,discountDescription,percent,Applicable);
 			}else{
 			    discount = new OcassionalDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
 			}
@@ -98,8 +98,16 @@ public void saveDataToFile(ArrayList<Discount> discountList) throws IOException 
 		line = new StringBuffer(discount.getDiscountcode() + Util.C_Separator);
 		line.append(discount.getDiscountDescription() + Util.C_Separator);
 		//line.append(Util.dateToString(discount.getStartDate()) + Util.C_Separator);
-		line.append(Util.dateToString(discount.getStartDate()) + Util.C_Separator);
-		line.append(discount.getPeriod()+Util.C_Separator);
+		if (discount instanceof MemberDiscount){
+			line.append("ALWAYS" + Util.C_Separator);
+		}else if (discount instanceof OcassionalDiscount){
+			line.append(Util.dateToString(((OcassionalDiscount)discount).getStartDate()) + Util.C_Separator);
+		}
+		if(discount instanceof MemberDiscount){
+			line.append("Always"+Util.C_Separator);
+		}else if(discount instanceof OcassionalDiscount){
+			line.append((((OcassionalDiscount)discount).getPeriod()) + Util.C_Separator);
+		}
 		line.append(discount.getPercent()+Util.C_Separator);
 		line.append(discount.getApplicable());
 		
@@ -123,7 +131,7 @@ public void saveDataToFile(ArrayList<Discount> discountList) throws IOException 
 			//discList=testDao.loadDataFromFile();
 			DiscountMgr discountMgrObject= new DiscountMgr();
 			
-			mDisc=discountMgrObject.getMaxDiscount("Public", 1);
+			mDisc=discountMgrObject.getMaxDiscount("abc123", -1);
 		/*	discList=discountMgrObject.getDiscountlist();
 			for(Discount d:discList)
 			{
