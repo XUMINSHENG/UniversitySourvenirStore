@@ -1,22 +1,20 @@
 package sg.edu.nus.iss.usstore.domain;
 
-import java.util.Date;
+
 
 public abstract class Discount {
 	private String discountCode;
 	private String discountDescription;
 	//private String startDate;
-	private Date startDate;
-	private int period;
-	private double percent;
+	
+	private int percent;
 	private String Applicable;
 
 	public Discount(String discountCode, String discountDescription,
-			Date startDate, int period, double percent, String Applicable) {
+			 int percent, String Applicable) {
 		this.discountCode = discountCode;
 		this.discountDescription = discountDescription;
-        this.startDate = startDate;
-        this.period=period;
+        
         this.percent=percent;
         this.Applicable=Applicable;
         
@@ -32,14 +30,9 @@ public abstract class Discount {
 		return discountDescription;
 	}
 //	public String getStartDate() {
-	public Date getStartDate() {
-		// TODO Auto-generated method stub
-		return startDate;
-	}
+	
 
-	public int getPeriod() {
-		return period;
-	}
+	
 
 	public double getPercent() {
 		return percent;
