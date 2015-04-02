@@ -258,8 +258,9 @@ public class StoreWindow extends JFrame{
 	private JPanel createTransactionFactory(){
 		JPanel p = new JPanel();
 		p.setBorder(BorderFactory.createTitledBorder("TransactionFactory"));
-		ImageIcon icon = new ImageIcon("images//checkout.png");
+		ImageIcon icon = new ImageIcon("images//check.png");
 		JButton button = new JButton("Check Out",icon);
+		button.setFocusPainted(false);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
 		button.setIconTextGap(2);
