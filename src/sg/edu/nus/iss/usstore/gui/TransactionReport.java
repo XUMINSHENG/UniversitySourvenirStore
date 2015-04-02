@@ -14,6 +14,7 @@ import javax.swing.JComponent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,8 +26,10 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
 import org.jdatepicker.JDateComponentFactory;
 import org.jdatepicker.JDatePicker;
+
 import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
@@ -141,8 +144,8 @@ public class TransactionReport extends javax.swing.JFrame {
 		
 		if (startDate.after(endDate)) 
 		{
-            AlertMsgPopUp popUp = new AlertMsgPopUp(new JFrame(), "Date Range Errorr", "Start date cannot be greater than end date");
-            popUp.show();
+            String msg="StartDate cannot be greater than EndDate";
+            JOptionPane.showMessageDialog(this, msg, "Date Range Errorr", JOptionPane.WARNING_MESSAGE);
             return;
         }
 		else

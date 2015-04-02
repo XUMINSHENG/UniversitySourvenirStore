@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -54,7 +55,7 @@ public class LoginScreen extends javax.swing.JFrame {
 			{
 				lblName = new JLabel();
 				getContentPane().add(lblName, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-				lblName.setText("Name:");
+				lblName.setText("UserName:");
 			}
 			{
 				txtName = new JTextField();
@@ -93,11 +94,15 @@ public class LoginScreen extends javax.swing.JFrame {
 		System.out.println("Login.actionPerformed, event="+evt);
 		//TODO add your code for Login.actionPerformed
 		String msg;
-		if (storeApp.login(txtName.getText(),PwdField.getText().toString()) == false)
+		if(txtName.getText().equals("") || PwdField.getText().equals(""))
+		{
+			msg="UserName and Password fields cannot be blank";
+			JOptionPane.showMessageDialog(this, msg, "Login status", JOptionPane.WARNING_MESSAGE);
+		}
+		else if (storeApp.login(txtName.getText(),PwdField.getText().toString()) == false)
 		{
 			msg="Invalid UserName/Password";
-			AlertMsgPopUp success = new AlertMsgPopUp(new JFrame(),"Login Status", msg);
-			success.setVisible(true);
+			JOptionPane.showMessageDialog(this, msg, "Login status", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
