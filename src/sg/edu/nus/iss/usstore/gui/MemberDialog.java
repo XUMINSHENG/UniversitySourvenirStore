@@ -3,10 +3,10 @@ package sg.edu.nus.iss.usstore.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import sg.edu.nus.iss.usstore.domain.*;
 import sg.edu.nus.iss.usstore.util.StringDocument;
 
@@ -23,6 +23,8 @@ public class MemberDialog extends JDialog {
 	private JTextField name;
 	private JTextField memberID;
 	private JTextField loyaltyPoint;
+
+	ArrayList<Member> memberList = new ArrayList<Member>();
 
 	public MemberDialog(StoreApplication manager, String title) {
 		super(manager.getStoreWindow(), title);
@@ -92,10 +94,27 @@ public class MemberDialog extends JDialog {
 	public boolean validateData() {
 		if (name.getText().isEmpty() || memberID.getText().isEmpty()
 				|| loyaltyPoint.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Enter All/Correct Details");
 			return false;
 		} else {
 			return true;
 		}
+
+	}
+
+	private boolean validAdd() {
+		// TODO Auto-generated method stub
+		boolean result = true;
+		for (Member mem : this.memberList) {
+			if (this.memberID.getText().equals(mem.getMemberID()))
+				;
+			{
+				result = false;
+			}
+		}
+		JOptionPane.showMessageDialog(new JFrame(), "Duplicate MemberID");
+		return result;
 
 	}
 
@@ -110,16 +129,17 @@ public class MemberDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (validateData()) {
+				if (validateData() && !validAdd()) {
 					manager.registerMember(getNameText(), getIdText(), -1);
 					mainScreen.getMemberPanel().refreshTable();
 					dispose();
 				} else {
 					System.out.println("invalid data");
-					JOptionPane.showMessageDialog(new JFrame(),"Enter All/Correct Details");
+
 				}
 
 			}
+
 		});
 		panel.add(button);
 		button = new JButton("Cancel");
@@ -151,7 +171,7 @@ public class MemberDialog extends JDialog {
 					mainScreen.getMemberPanel().refreshTable();
 					dispose();
 				} else {
-					JOptionPane.showMessageDialog(new JFrame(),"Enter All/Correct Details");
+
 					System.out.println("invalid data");
 				}
 			}
