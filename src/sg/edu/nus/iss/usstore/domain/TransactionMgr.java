@@ -21,8 +21,7 @@ public class TransactionMgr
 	 */
 	private ArrayList<Transaction> transactionList = new ArrayList<Transaction>();
 	private TransactionDao td;
-	private SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-	
+
 	public TransactionMgr() throws IOException, DataFileException
 	{
 		td = new TransactionDao(new Store());
