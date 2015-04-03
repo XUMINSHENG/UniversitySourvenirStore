@@ -277,15 +277,17 @@ public class VendorDialog extends javax.swing.JDialog {
     private void BT_SSA_AddNewVendorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_AddNewVendorMouseClicked
     	if(this.init())
         {        
-            if(!this.validName()){
+            if(!this.validAdd()){
             	String msg = "Duplicate vendor name is not possible";
            		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
             }
             else
             {
                 manager.addVendorForCategory(this.selectedCategory.getCode(), this.VendorName,this.VendorDescription);
-                
                 LoadTable();
+                this.T_SSA_VendorTable.setRowSelectionInterval(
+                		this.T_SSA_VendorTable.getRowCount() -1, this.T_SSA_VendorTable.getRowCount() -1);
+                btnEnableCtl();
             }        
         }
     }//GEN-LAST:event_BT_SSA_AddNewVendorMouseClicked
@@ -339,16 +341,22 @@ public class VendorDialog extends javax.swing.JDialog {
     	int selectedIndex = this.T_SSA_VendorTable.getSelectedRow();
     	if(this.init())
 	    {              
-	    	if(!this.validName()){
-	           
-	            String oldVendorName = this.tableModel.getValueAt(selectedIndex, 0).toString();
+	    	if(!this.validUpd()){
+	    		String msg = "Already exists a vendor named " + this.VendorName;
+           		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+	        
+	        }
+	    	else
+            {
+	    		String oldVendorName = this.tableModel.getValueAt(selectedIndex, 0).toString();
 	            manager.updVendorForCategory(this.selectedCategory.getCode(), 
 	            		oldVendorName,
 	            		this.VendorName, 
 	            		this.VendorDescription);
-	            
-	            LoadTable();
-	        }
+                LoadTable();
+                this.T_SSA_VendorTable.setRowSelectionInterval(selectedIndex, selectedIndex);
+                btnEnableCtl();
+            } 
 	    }
     }//GEN-LAST:event_BT_SSA_UpdateVendorMouseClicked
 
@@ -363,6 +371,7 @@ public class VendorDialog extends javax.swing.JDialog {
        		// proceed deletion
            	manager.delVendorForCategory(this.selectedCategory.getCode(), vendorName);
            	LoadTable();
+            btnEnableCtl();
        	}
        	
        
@@ -474,19 +483,16 @@ public class VendorDialog extends javax.swing.JDialog {
         tableModel.setRowCount(0);
         if(this.UI_VendorList != null) 
 	    {  
-		    if(!this.UI_VendorList.isEmpty())
-		    {
-		        for(int i = 0;i < this.UI_VendorList.size() ; i++)
-		        {   
-		            this.tableModel.addRow(
-		            		new Object[]{
-		            				this.UI_VendorList.get(i).getName(),
-		            				this.UI_VendorList.get(i).getDescription(),
-		            				this.UI_VendorList.get(i).getPreference()
-		            				}
-		            		);
-		        }
-		    }
+	        for(int i = 0;i < this.UI_VendorList.size() ; i++)
+	        {   
+	            this.tableModel.addRow(
+	            		new Object[]{
+	            				this.UI_VendorList.get(i).getName(),
+	            				this.UI_VendorList.get(i).getDescription(),
+	            				this.UI_VendorList.get(i).getPreference()
+	            				}
+	            		);
+	        }
         }
     }
     
@@ -514,18 +520,36 @@ public class VendorDialog extends javax.swing.JDialog {
         if(this.VendorName.isEmpty() || this.VendorDescription.isEmpty()){
         	String msg = "Vendor Name or Description should not be empty";
         	JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+        	return false;
         }
-        else if(this.VendorDescription.contains(",") || this.VendorName.contains(","))
-            return true;
-        return false;
+
+        return true;
     }
 
-    private boolean validName() {
-                
+    private boolean validAdd() {
+
         boolean result = true;
     	
     	// duplicate check
         for(Vendor vendor : this.UI_VendorList){
+        	if(vendor.getName().equals(this.VendorName)){
+        		result = false;
+            	break;
+        	}
+        }
+        return result;
+    }
+    
+    private boolean validUpd() {
+
+        boolean result = true;
+    	
+        String selectedVendorName =  this.tableModel.getValueAt(this.T_SSA_VendorTable.getSelectedRow(),0).toString();
+    	// duplicate check
+        for(Vendor vendor : this.UI_VendorList){
+        	// skip the one that be updated
+        	if (vendor.getName().equals(selectedVendorName))continue;
+        	
         	if(vendor.getName().equals(this.VendorName)){
         		result = false;
             	break;

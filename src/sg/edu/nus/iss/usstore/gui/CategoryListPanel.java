@@ -9,6 +9,7 @@ import sg.edu.nus.iss.usstore.util.StringDocument;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 public class CategoryListPanel extends javax.swing.JPanel {
@@ -59,6 +60,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
 
         T_SSA_CategoryTable.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         T_SSA_CategoryTable.setForeground(new java.awt.Color(12, 12, 12));
+        
         T_SSA_CategoryTable.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {},  columnNames ) {
             /**
 			 * 
@@ -83,6 +85,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
         T_SSA_CategoryTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         T_SSA_CategoryTable.setSelectionBackground(new java.awt.Color(51, 51, 51));
         T_SSA_CategoryTable.setSelectionForeground(new java.awt.Color(204, 204, 204));
+        T_SSA_CategoryTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         T_SSA_CategoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 T_SSA_CategoryTableMouseClicked(evt);
@@ -215,9 +218,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
                 .addGap(27, 27, 27))
         );
       
-        
-        this.BT_SSA_Delete.setEnabled(false);
-        this.BT_SSA_Update.setEnabled(false);
+        btnEnableCtl();
 
         //pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -235,6 +236,9 @@ public class CategoryListPanel extends javax.swing.JPanel {
             {
                 this.manager.addCategory(this.categoryCode,this.categoryName, new ArrayList<Vendor>());
                 reloadData();
+                this.T_SSA_CategoryTable.setRowSelectionInterval(
+                		this.T_SSA_CategoryTable.getRowCount() -1, this.T_SSA_CategoryTable.getRowCount() -1);
+                btnEnableCtl();
             }           
         }
     }//GEN-LAST:event_BT_SSA_AddNewCategoryMouseClicked
@@ -243,11 +247,14 @@ public class CategoryListPanel extends javax.swing.JPanel {
        if(this.init())
        {
            if(this.validUpd())
-           {	
-        	   String code = this.tableModel.getValueAt(this.T_SSA_CategoryTable.getSelectedRow(),0).toString();
+           {
+        	   int selectRowIndex = this.T_SSA_CategoryTable.getSelectedRow();
+        	   String code = this.tableModel.getValueAt(selectRowIndex,0).toString();
         	   String name = this.TF_SSA_CategoryName.getText().toString();
                this.manager.updCategory(code, name);
                reloadData();
+               this.T_SSA_CategoryTable.setRowSelectionInterval(selectRowIndex, selectRowIndex);
+               btnEnableCtl();
            }else{
         	   	String msg = "Category Code should not be changed";
            		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
@@ -261,14 +268,8 @@ public class CategoryListPanel extends javax.swing.JPanel {
        {
            this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
            this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());
-           
-           this.BT_SSA_Delete.setEnabled(true);
-           this.BT_SSA_Update.setEnabled(true);
        }
-       else{
-    	   this.BT_SSA_Delete.setEnabled(false);
-           this.BT_SSA_Update.setEnabled(false);
-       }
+       btnEnableCtl();
     }//GEN-LAST:event_T_SSA_CategoryTableMouseClicked
 
     private void BT_SSA_DeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_DeleteMouseClicked
@@ -281,6 +282,7 @@ public class CategoryListPanel extends javax.swing.JPanel {
 	       		// proceed deletion
 				manager.deleteCategoryByCode(code);
 				reloadData();
+				btnEnableCtl();
 	       	}
 		}else{
     	   	String msg = "This category `"+ code + "` is associated with some products";
@@ -290,20 +292,23 @@ public class CategoryListPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_BT_SSA_DeleteMouseClicked
 
     private void T_SSA_CategoryTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T_SSA_CategoryTableKeyReleased
-        int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
-       if(selectedIndex > -1)
-       {this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
-       this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());}
+    	int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+        if(selectedIndex > -1)
+        {
+            this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
+            this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());
+        }
+        btnEnableCtl();
     }//GEN-LAST:event_T_SSA_CategoryTableKeyReleased
 
     private void T_SSA_CategoryTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T_SSA_CategoryTableKeyPressed
-		int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
-		if(selectedIndex > -1)
-		{
-			this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
-		
-			this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());
-		}
+    	int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+        if(selectedIndex > -1)
+        {
+            this.TF_SSA_CategoryCode.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 0).toString());
+            this.TF_SSA_CategoryName.setText(this.T_SSA_CategoryTable.getValueAt(selectedIndex, 1).toString());
+        }
+        btnEnableCtl();
     }//GEN-LAST:event_T_SSA_CategoryTableKeyPressed
 
     private void BT_SSA_ManageVendorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_SSA_ManageVendorMouseClicked
@@ -434,5 +439,17 @@ public class CategoryListPanel extends javax.swing.JPanel {
         }
         return result;
     }
- 
+    
+    private void btnEnableCtl(){
+    	int selectedIndex = this.T_SSA_CategoryTable.getSelectedRow();
+		if(selectedIndex > -1)
+		{ 	
+	    	this.BT_SSA_Delete.setEnabled(true);
+	    	this.BT_SSA_Update.setEnabled(true);
+	    }
+	    else{
+		   this.BT_SSA_Delete.setEnabled(false);
+		   this.BT_SSA_Update.setEnabled(false);
+	    }
+    }
 }
