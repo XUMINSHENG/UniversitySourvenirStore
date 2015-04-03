@@ -20,10 +20,12 @@ import java.security.KeyStore;
 
 import javax.security.auth.kerberos.KerberosKey;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -63,6 +65,7 @@ public class StoreWindow extends JFrame{
 	//private ProductListPanel productListPanel;
 	private CategoryListPanel categoryListPanel;
 	private final Dimension size = new Dimension(150, 100);
+	private final Dimension space = new Dimension(20, 0);
 	
 	//private ReportPanel reportPanel;
 	
@@ -341,6 +344,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		p.add(button);
+		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\addProduct.png");
 		button = new JButton("Add Product",icon);
 		button.setIconTextGap(2);
@@ -358,6 +362,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		p.add(button);
+		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\checkInventory.png");
 		button = new JButton("Stocktaking",icon);
 		button.setIconTextGap(2);
@@ -401,6 +406,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		p.add(button);
+		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\addMember.png");
 		button = new JButton("Add Member",icon);
 		button.setIconTextGap(2);
@@ -445,6 +451,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		p.add(button);
+		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\addDiscount.png");
 		button = new JButton("Add Discount",icon);
 		button.setIconTextGap(2);
@@ -490,6 +497,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		p.add(button);
+		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\addCategory.png");
 		button = new JButton("Add Category",icon);
 		button.setIconTextGap(2);
@@ -536,6 +544,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		p.add(button);
+		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\productReport.png");
 		button = new JButton("Product Report",icon);
 		button.setIconTextGap(2);
@@ -557,6 +566,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		p.add(button);
+		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\transactionReport.png");
 		button = new JButton("Transaction Report",icon);
 		button.setIconTextGap(2);
@@ -578,6 +588,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		p.add(button);
+		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\memberReport.png");
 		button = new JButton("Member Report",icon);
 		button.setIconTextGap(2);
