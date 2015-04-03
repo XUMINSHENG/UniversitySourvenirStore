@@ -2,11 +2,13 @@
 package sg.edu.nus.iss.usstore.domain;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import sg.edu.nus.iss.usstore.dao.TransactionDao;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.util.Util;
 
 public class TransactionMgr
 {
@@ -19,6 +21,7 @@ public class TransactionMgr
 	 */
 	private ArrayList<Transaction> transactionList = new ArrayList<Transaction>();
 	private TransactionDao td;
+	private SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
 	
 	public TransactionMgr() throws IOException, DataFileException
 	{
@@ -65,8 +68,10 @@ public class TransactionMgr
 		for(int i = 0;i<transactionList.size();i++)
 		{
 			Transaction t = (Transaction) transactionList.get(i);
-			if (date.equals(t.getDate()))
-				result.add(t);
+			String date1 = Util.dateToString(date);
+			String date2 = Util.dateToString(t.getDate());
+			System.out.println(date1);
+			System.out.println(date2);
 		}
 		return result;
 	}
