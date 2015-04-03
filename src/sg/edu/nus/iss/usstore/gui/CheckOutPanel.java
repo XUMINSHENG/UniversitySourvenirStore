@@ -114,29 +114,26 @@ public class CheckOutPanel extends JPanel
 		}
 		JbFinishControl();
 	}
-	
+
 	public void JbFinishControl()
 	{
-		if (transaction.calcChange()<0)
+		if (transaction.calcChange() < 0)
 		{
 			JbFinish.setEnabled(false);
-		}
-		else if(JlError.getText()==ERR_MSG_CASH_FORMAT_ERROR||
-				JlError.getText()==ERR_MSG_CASH_NOT_ENOUGH||
-				JlError.getText()==ERR_MSG_POINT_FORMAT_ERROR||
-				JlError.getText()==ERR_MSG_POINT_NOT_ENOUGH)
+		} else if (JlError.getText() == ERR_MSG_CASH_FORMAT_ERROR
+				|| JlError.getText() == ERR_MSG_CASH_NOT_ENOUGH
+				|| JlError.getText() == ERR_MSG_POINT_FORMAT_ERROR
+				|| JlError.getText() == ERR_MSG_POINT_NOT_ENOUGH)
 		{
 			JbFinish.setEnabled(false);
-		}
-		else if(transaction.getItemList().size()==0)
+		} else if (transaction.getItemList().size() == 0)
 		{
 			JbFinish.setEnabled(false);
-		}
-		else
+		} else
 		{
 			JbFinish.setEnabled(true);
 		}
-			
+
 	}
 
 	public void tableDataBinding()
@@ -618,7 +615,6 @@ public class CheckOutPanel extends JPanel
 		JbCancel.addActionListener(listener);
 		JLabel JlBlank2 = new JLabel(" ");
 		JlError = new JLabel();
-		JLabel JlBlank3 = new JLabel(" ");
 		JbFinish = new JButton("Finish");
 		JbFinish.setActionCommand("JbFinish");
 		JbFinish.addActionListener(listener);
@@ -669,6 +665,7 @@ public class CheckOutPanel extends JPanel
 				tempBarCode = JtBarCodeID.getText();
 				product = sa.getProductByBarCode(tempBarCode);
 				String tempqty = JtQuantity.getText();
+				int intqty = Integer.parseInt(tempqty);
 				if (tempBarCode.length() == 0)
 				{
 					JlError.setText(ERR_MSG_BARCODE_ERROR);
@@ -678,9 +675,12 @@ public class CheckOutPanel extends JPanel
 				} else if (Integer.valueOf(JtQuantity.getText()).intValue() < 1)
 				{
 					JlError.setText(ERR_MSG_QUANTITY_FORMAT_ERROR);
-				} else
+				} else if(product.getQuantityAvailable()<intqty)
 				{
-					int intqty = Integer.parseInt(tempqty);
+					JlError.setText(ERR_MSG_QUANTITY_NOT_ENOUGH);
+				}
+				else
+				{
 
 					if (JlError.getText() == ERR_MSG_PRODCUT_NOT_EXIST
 							|| JlError.getText() == ERR_MSG_BARCODE_ERROR
@@ -737,7 +737,7 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbBack"))
 			{
-				
+
 			}
 		}
 	}
