@@ -157,6 +157,8 @@ public class ProductDialog extends JDialog{
 				&& priceText.getText()!="" && quantityText.getText()!="" && barCodeText.getText()!="" 
 				&& reorderQtyText.getText()!="" && orderQtyText.getText()!=""){
 			return true;
+		}else{
+			
 		}
 		return false;
 	}

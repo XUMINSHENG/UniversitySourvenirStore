@@ -330,7 +330,7 @@ public class StoreWindow extends JFrame{
 		p.setBorder(BorderFactory.createTitledBorder("ProductFactory"));
 		
 		ImageIcon icon = new ImageIcon("images\\product.png");
-		JButton button = new JButton("Product List",icon);
+		JButton button = new JButton("Manage Products",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
