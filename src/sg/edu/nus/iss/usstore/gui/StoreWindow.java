@@ -4,7 +4,11 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,6 +62,7 @@ public class StoreWindow extends JFrame{
 	private MemberListPanel memberListPanel;
 	//private ProductListPanel productListPanel;
 	private CategoryListPanel categoryListPanel;
+	private final Dimension size = new Dimension(150, 100);
 	
 	//private ReportPanel reportPanel;
 	
@@ -246,17 +251,44 @@ public class StoreWindow extends JFrame{
 		JPanel mainCard;
 		
 		mainCard = new JPanel();
-		mainCard.setLayout(new BoxLayout(mainCard, BoxLayout.Y_AXIS));
-		mainCard.add(createTransactionFactory());
-		mainCard.add(createMemberFactory());
-		mainCard.add(createDiscountFactory());
-		mainCard.add(createCategoryFactory());
-		mainCard.add(createProductFactory());
-		mainCard.add(createReportFactory());
-
-		JScrollPane m = new JScrollPane(mainCard);
+		//mainCard.setLayout(new BoxLayout(mainCard, BoxLayout.X_AXIS));
+		GridBagLayout layout = new GridBagLayout();
+		mainCard.setLayout(layout);
 		
-		return m;
+		JPanel transaction = createTransactionFactory();
+		JPanel member = createMemberFactory();
+		JPanel discount = createDiscountFactory();
+		JPanel category = createCategoryFactory();
+		JPanel product = createProductFactory();
+		JPanel report = createReportFactory();
+		mainCard.add(transaction);
+		mainCard.add(category);
+		mainCard.add(member);
+		mainCard.add(discount);
+		mainCard.add(product);
+		mainCard.add(report);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.weighty = 1;
+		
+		c.gridwidth = 1;
+		layout.setConstraints(transaction, c);
+		c.gridwidth = 0;
+		layout.setConstraints(category, c);
+		c.gridwidth = 1;
+		layout.setConstraints(member, c);
+		c.gridwidth = 0;
+		layout.setConstraints(discount, c);
+		c.gridwidth = 0;
+		layout.setConstraints(product, c);
+		c.gridwidth = 0;
+		layout.setConstraints(report, c);
+
+		//JScrollPane m = new JScrollPane(mainCard);
+		
+		return mainCard;
 	}
 	
 	private JPanel createTransactionFactory(){
@@ -268,7 +300,9 @@ public class StoreWindow extends JFrame{
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
 		button.setIconTextGap(2);
-		button.setSize(60, 60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -286,14 +320,18 @@ public class StoreWindow extends JFrame{
 	}
 
 	private JPanel createProductFactory(){
+		//GridLayout layout = new GridLayout(1,3,50,10);
 		JPanel p = new JPanel(new FlowLayout());
 		p.setBorder(BorderFactory.createTitledBorder("ProductFactory"));
+		
 		ImageIcon icon = new ImageIcon("images\\product.png");
 		JButton button = new JButton("Product List",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(60, 60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -308,7 +346,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setVerticalTextPosition(JButton.BOTTOM);
 		button.setHorizontalTextPosition(JButton.CENTER);
-		button.setSize(60, 60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener(){
 			
 			@Override
@@ -323,7 +363,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(60,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -337,6 +379,7 @@ public class StoreWindow extends JFrame{
 		return p;
 	}
 	
+	
 	private JPanel createMemberFactory(){
 		JPanel p = new JPanel();
 		p.setBorder(BorderFactory.createTitledBorder("MemberFactory"));
@@ -345,7 +388,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(60,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -361,7 +406,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(60,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -385,7 +432,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(60,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -401,7 +450,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(60,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 	
@@ -418,6 +469,7 @@ public class StoreWindow extends JFrame{
 	
 	}
 	
+	
 	private JPanel createCategoryFactory(){
 		JPanel p = new JPanel();
 		p.setBorder(BorderFactory.createTitledBorder("CategoryFactory"));
@@ -426,7 +478,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(60,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -441,7 +495,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(60,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -464,7 +520,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(100,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -483,7 +541,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(100,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -502,7 +562,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(100,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
@@ -521,7 +583,9 @@ public class StoreWindow extends JFrame{
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
-		button.setSize(100,60);
+		button.setSize(size);
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
