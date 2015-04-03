@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
@@ -92,6 +93,7 @@ public class StoreWindow extends JFrame{
 		setContentPane(cards);
 		
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(windorListener);
 		
 		setPreferredSize(new Dimension(800,600));
@@ -619,11 +621,12 @@ public class StoreWindow extends JFrame{
 		cl.show(cards, cardName);
 	}
 	
-	public void exit(){
-		//dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
-		//System.exit(EXIT_ON_CLOSE);
-		manager.shutdown();
-		
+	public void exit(){		
+		String msg = "The application will be closed";
+       	int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
+       	if (n == 0){
+       		manager.shutdown();
+       	}
 	}
 
 	public JPanel getCards() {
