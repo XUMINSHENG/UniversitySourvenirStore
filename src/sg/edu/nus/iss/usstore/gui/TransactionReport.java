@@ -218,7 +218,8 @@ public class TransactionReport extends javax.swing.JFrame {
 					TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(transactionListReportTable.getModel());
 					transactionListReportTable.setRowSorter(sorter);
 					List<SortKey> sortKeys = new ArrayList<SortKey>();
-					sortKeys.add(new SortKey(3, SortOrder.ASCENDING));
+					sortKeys.add(new SortKey(0, SortOrder.ASCENDING));
+					sortKeys.add(new SortKey(2, SortOrder.ASCENDING));
 					transactionListReportTable.getRowSorter().setSortKeys(sortKeys);
 				Dimension size = transactionListReportTable.getPreferredScrollableViewportSize();
 				transactionListReportTable.setPreferredScrollableViewportSize(new Dimension(Math.min(getPreferredSize().width, size.width), size.height));
