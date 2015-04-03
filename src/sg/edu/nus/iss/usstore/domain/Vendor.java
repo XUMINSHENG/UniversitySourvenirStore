@@ -41,21 +41,6 @@ public class Vendor implements Comparable<Vendor>{
 		this.preference = preference;
 	}
 
-	public Vendor comparePreference(Vendor anotherVd){
-		Vendor result;
-		if (anotherVd == null){
-			result = this;
-		}
-		else{
-			if (this.getPreference() < anotherVd.getPreference()){
-				result = this;
-			}else{
-				result = anotherVd;
-			}
-		}
-		return result;
-	}
-
 	@Override
 	public int compareTo(Vendor o) {
 		// TODO Auto-generated method stub
