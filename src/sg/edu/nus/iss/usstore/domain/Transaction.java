@@ -23,8 +23,8 @@ public class Transaction
 	private ArrayList<TransactionItem> itemList = new ArrayList<TransactionItem>();
 	
 	private double cashAmount = 0;
-	private double totalPrice = 0;
-	private double discountedPirce = 0;
+	private static double totalPrice = 0;
+	private static double discountedPrice = 0;
 	private int gainedPoint = 0;
 	private double rest = 0;
 	private double change = 0;
@@ -161,8 +161,8 @@ public class Transaction
 
 	public double calcDiscountPrice()
 	{
-		discountedPirce = calcTotalPrice() * (100 - discount.getPercent()) / 100;
-		return discountedPirce;
+		discountedPrice = calcTotalPrice() * (100 - discount.getPercent()) / 100;
+		return discountedPrice;
 	}
 
 	public double calcChange()
@@ -182,5 +182,9 @@ public class Transaction
 		rest = calcDiscountPrice() - redeemedLoyaltyPoint*POINTS_TO_DOLLAR;
 		return rest;
 	}
+
+
+	}
+
 	
-}///~
+

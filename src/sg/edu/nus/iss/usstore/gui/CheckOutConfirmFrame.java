@@ -4,5 +4,7 @@ import javax.swing.JFrame;
 
 public class CheckOutConfirmFrame extends JFrame
 {
+	public CheckOutConfirmFrame() {
+	}
 	
 }
