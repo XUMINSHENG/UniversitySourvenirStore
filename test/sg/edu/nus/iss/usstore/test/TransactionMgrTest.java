@@ -1,7 +1,6 @@
 package sg.edu.nus.iss.usstore.test;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -132,7 +131,17 @@ public class TransactionMgrTest
 	@Test
 	public void testGetMaxId()
 	{
-		fail("Not yet implemented");
+		tm = new TransactionMgr(new Store());
+		int result1 = tm.getMaxId();
+		int result2 = 0;
+		ArrayList<Transaction> testList= new ArrayList();
+		testList = tm.getTransactionList();
+		for (int i = 0; i < testList.size();i++)
+		{
+			if (testList.get(i).getId()>result2)
+				result2 = testList.get(i).getId();
+		}
+		assertEquals(result1,result2);
 	}
 
 }
