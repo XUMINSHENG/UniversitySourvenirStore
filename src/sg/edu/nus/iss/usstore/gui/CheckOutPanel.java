@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -532,8 +533,8 @@ public class CheckOutPanel extends JPanel
 		jpOutput.add(jp12);
 
 		// Table
-		String[] tableTitle = { "Num", "Bar Code", "Product", "Quantity",
-				"Price", "Total Price" };
+		String[] tableTitle = { "Num", "Bar Code", "Product", "Quantity(Editable)",
+				"Price", "Total" };
 		defaultModel = new DefaultTableModel(null, tableTitle)
 		{
 			public boolean isCellEditable(int row, int column)
@@ -548,12 +549,21 @@ public class CheckOutPanel extends JPanel
 		for (int i = 0; i < table.getColumnCount(); i++)
 		{
 			column = table.getColumnModel().getColumn(i);
-			if (i == 1 || i == 2)
+			if (i == 0)
 			{
-				column.setPreferredWidth(scrollpanelwidth / 4);
-			} else
+				column.setPreferredWidth(scrollpanelwidth/16);
+			}
+			if (i == 1 || i == 2 )
 			{
-				column.setPreferredWidth(scrollpanelheight / 8);
+				column.setPreferredWidth(scrollpanelwidth/4);
+			}
+			if (i==3)
+			{
+				column.setPreferredWidth(scrollpanelwidth*3/16);
+			} 
+			if ( i==4 || i==5 )
+			{
+				column.setPreferredWidth(scrollpanelheight/8);
 			}
 		}
 		defaultModel.addTableModelListener(new TableModelListener()
@@ -581,13 +591,17 @@ public class CheckOutPanel extends JPanel
 					Object value, boolean isSelected, boolean hasFocus,
 					int row, int column)
 			{
+
 				if (row % 2 == 0)
-					setBackground(Color.white);
+					setBackground(Color.WHITE);
 				else if (row % 2 == 1)
 					setBackground(new Color(206, 231, 255));
+				if (column==3)
+					setBackground(new Color(160, 255, 160));
 				return super.getTableCellRendererComponent(table, value,
 						isSelected, hasFocus, row, column);
-			}
+
+			}	
 		};
 
 		for (int i = 0; i <= 5; i++)
@@ -732,6 +746,8 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbFinish"))
 			{
+				JFrame confirm = new CheckOutConfirmFrame();
+				confirm.setVisible(true);
 				sa.confirmPayment(transaction);
 				cancelAll();
 			}
