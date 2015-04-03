@@ -51,7 +51,7 @@ import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 */
 public class ProductsListPanel extends JPanel{
 	
-	private final String[] columnNames = {"Id","Name","Description","Price","Quality"};
+	private final String[] columnNames = {"Id","Name","Description","Price","Quantity"};
 	private JButton modifyButton;
 	private JButton deleteButton;
 	private JTextField filterText;

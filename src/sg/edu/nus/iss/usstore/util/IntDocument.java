@@ -21,16 +21,15 @@ import javax.swing.text.PlainDocument;
  * @ XIE JIABAO
  */
 
-public class DigitDocument extends PlainDocument{
+public class IntDocument extends PlainDocument{
 	
 	private int limitedLength;
-	private int position = -1;
 	
-	public DigitDocument(){
+	public IntDocument(){
 		super();
 	}
 	
-	public DigitDocument(int length){
+	public IntDocument(int length){
 		super();
 		this.limitedLength = length;
 	}
@@ -40,24 +39,17 @@ public class DigitDocument extends PlainDocument{
 		if(str == null){
 			return;
 		}
-		if(position==offset){
-			position = -1;
-		}
-        int length = 0;
 		char[] upper = str.toCharArray();
-		Character dot = new Character('.');
-		if(offset==0 && dot.equals(upper[0])){
+		if(upper[0]=='0'&&offset==0){
         	return;
         }
+		int length = 0;
 		if(limitedLength<=0){
             for (int i = 0; i < upper.length; i++)
             {  
             	if (Character.isDigit(upper[i]))
                 {  
                     upper[length++] = upper[i];
-                }else if(dot.equals(upper[i]) && position==-1){
-                	upper[length++] = upper[i];
-                	position = offset;
                 }
             }  
             super.insertString(offset, new String(upper,0,length),a);
@@ -68,10 +60,7 @@ public class DigitDocument extends PlainDocument{
 					if (Character.isDigit(upper[i]))
 					{  
 						upper[length++] = upper[i];  
-					}else if(dot.equals(upper[i]) && position==-1){
-	                	upper[length++] = upper[i];
-	                	position = offset;
-	                }  
+					}
 				}  
 				super.insertString(offset, new String(upper,0,length),a);
 			}

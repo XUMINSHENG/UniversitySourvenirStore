@@ -11,14 +11,15 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import sg.edu.nus.iss.usstore.domain.*;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
-import sg.edu.nus.iss.usstore.util.AlertDialog;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
+import sg.edu.nus.iss.usstore.util.IntDocument;
 import sg.edu.nus.iss.usstore.util.StringDocument;
 /*
  * @ Team FT2 - XIE JIABAO
@@ -106,13 +107,13 @@ public class ProductDialog extends JDialog{
 		priceText = new JTextField();
 		priceText.setDocument(new DigitDocument());
 		quantityText = new JTextField();
-		quantityText.setDocument(new DigitDocument());
+		quantityText.setDocument(new IntDocument());
 		barCodeText = new JTextField();
 		barCodeText.setDocument(new StringDocument());
 		reorderQtyText = new JTextField();
-		reorderQtyText.setDocument(new DigitDocument());
+		reorderQtyText.setDocument(new IntDocument());
 		orderQtyText = new JTextField();
-		orderQtyText.setDocument(new DigitDocument());
+		orderQtyText.setDocument(new IntDocument());
 		panel = new JPanel(new GridLayout(9,1));
 		panel.add(nameText);
 		panel.add(idText);
@@ -155,24 +156,25 @@ public class ProductDialog extends JDialog{
 	}
 
 	public boolean validateData() throws DataInputException{
-		if(idText.getText()==""){
+		if(idText.getText().isEmpty()){
 			throw new DataInputException("Id cannot be void");
-		}else if(nameText.getText()==""){
+		}else if(nameText.getText().isEmpty()){
 			throw new DataInputException("Name cannot be void");
-		}else if(descriptionText.getText()==""){
+		}else if(descriptionText.getText().isEmpty()){
 			throw new DataInputException("description cannot be void");
-		}else if(priceText.getText()==""){
+		}else if(priceText.getText().isEmpty()){
 			throw new DataInputException("price cannot be void");
-		}else if(quantityText.getText()==""){
+		}else if(quantityText.getText().isEmpty()){
 			throw new DataInputException("quantity cannot be void");
-		}else if(barCodeText.getText()==""){
+		}else if(barCodeText.getText().isEmpty()){
 			throw new DataInputException("barCode cannot be void");
-		}else if(reorderQtyText.getText()==""){
+		}else if(reorderQtyText.getText().isEmpty()){
 			throw new DataInputException("reorderQty cannot be void");
-		}else if(orderQtyText.getText()==""){
+		}else if(orderQtyText.getText().isEmpty()){
 			throw new DataInputException("orderQty cannot be void");
+		}else{
+			return true;
 		}
-		return true;
 	}
 	
 	private JPanel createAddBottomPanel() {
@@ -188,20 +190,20 @@ public class ProductDialog extends JDialog{
 				
 				try {
 					if(validateData()){
-						manager.addProduct((String)categoryList.getSelectedItem(),getNameText(),getCategoryText(),getDescriptionText(),
-									getQuantityText(),getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
-					
-						mainScreen.getProductListPanel().refreshTable();
+//						manager.addProduct((String)categoryList.getSelectedItem(),getNameText(),getCategoryText(),getDescriptionText(),
+//									getQuantityText(),getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
+//					
+//						mainScreen.getProductListPanel().refreshTable();
+						System.out.println("finish:"+quantityText.getText()+"end");
 					}else{
 						System.out.println("invalid data");
 					}
 				} catch (DataInputException e) {
 					// TODO Auto-generated catch block
-					//AlertDialog alert = new AlertDialog(e.getMessage());
+					JOptionPane.showMessageDialog(getParent(), e.getMessage(),"Alert",JOptionPane.WARNING_MESSAGE); 
 					System.out.println(e.getMessage());
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
-				
 			}
 		});
 		panel.add(button);
@@ -254,7 +256,8 @@ public class ProductDialog extends JDialog{
 					}
 				} catch (DataInputException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
+					JOptionPane.showMessageDialog(getParent(), e.getMessage(), "Alert", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
