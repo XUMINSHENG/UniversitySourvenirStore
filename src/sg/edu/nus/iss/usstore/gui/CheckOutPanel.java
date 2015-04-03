@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -34,12 +33,9 @@ import sg.edu.nus.iss.usstore.domain.Customer;
 import sg.edu.nus.iss.usstore.domain.Discount;
 import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.Product;
-import sg.edu.nus.iss.usstore.domain.Public;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
-import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
-import sg.edu.nus.iss.usstore.util.Util;
 
 public class CheckOutPanel extends JPanel
 {
@@ -66,6 +62,7 @@ public class CheckOutPanel extends JPanel
 	private JTextField JtCashNum;
 	private JTable table;
 	private JButton JbFinish;
+	private JButton JbBack;
 	private TableColumn column;
 
 	private DecimalFormat df = new DecimalFormat("0.00");
@@ -75,7 +72,7 @@ public class CheckOutPanel extends JPanel
 	private Product product = null;
 	private Discount discount;
 	private int scrollpanelwidth = 600;
-	private int scrollpanelheight = 400;
+	private int scrollpanelheight = 270;
 	private int flag = 0;
 	private String tempBarCode;
 	private Vector vector = new Vector<Object>();
@@ -115,6 +112,31 @@ public class CheckOutPanel extends JPanel
 			JlgetMemberName.setText("PUBLIC");
 			JtPaidNum.setEnabled(false);
 		}
+		JbFinishControl();
+	}
+	
+	public void JbFinishControl()
+	{
+		if (transaction.calcChange()<0)
+		{
+			JbFinish.setEnabled(false);
+		}
+		else if(JlError.getText()==ERR_MSG_CASH_FORMAT_ERROR||
+				JlError.getText()==ERR_MSG_CASH_NOT_ENOUGH||
+				JlError.getText()==ERR_MSG_POINT_FORMAT_ERROR||
+				JlError.getText()==ERR_MSG_POINT_NOT_ENOUGH)
+		{
+			JbFinish.setEnabled(false);
+		}
+		else if(transaction.getItemList().size()==0)
+		{
+			JbFinish.setEnabled(false);
+		}
+		else
+		{
+			JbFinish.setEnabled(true);
+		}
+			
 	}
 
 	public void tableDataBinding()
@@ -188,7 +210,6 @@ public class CheckOutPanel extends JPanel
 		// refresh para
 		{
 			flag = 0;
-			transaction.getDiscount().getPercent();
 		}
 		// refresh UI
 		{
@@ -367,7 +388,6 @@ public class CheckOutPanel extends JPanel
 					{
 						JlError.setText(ERR_MSG_POINT_NOT_ENOUGH);
 					}
-
 				}
 				setOutputValue();
 			}
@@ -459,6 +479,7 @@ public class CheckOutPanel extends JPanel
 					JlError.setText(ERR_MSG_CASH_FORMAT_ERROR);
 					JlChangeNum.setText("**.**");
 				}
+				setOutputValue();
 			}
 
 			public void removeUpdate(DocumentEvent e)
@@ -467,6 +488,7 @@ public class CheckOutPanel extends JPanel
 				{
 					String ScashNum = JtCashNum.getText();
 					double DcashNum = Double.valueOf(ScashNum).doubleValue();
+					transaction.setCashAmount(DcashNum);
 					if (DcashNum > 0)
 					{
 						double tempChange = transaction.calcChange();
@@ -483,18 +505,17 @@ public class CheckOutPanel extends JPanel
 						{
 							JlError.setText(ERR_MSG_CASH_NOT_ENOUGH);
 							JlChangeNum.setText("**.**");
-							JbFinish.setEnabled(false);
 						}
 					} else
 					{
 						JlError.setText(ERR_MSG_CASH_FORMAT_ERROR);
 						JlChangeNum.setText("**.**");
-						JbFinish.setEnabled(false);
 					}
 				} else
 				{
-					transaction.setRedeemedLoyaltyPoint(0);
+					transaction.setCashAmount(0);
 				}
+				setOutputValue();
 			}
 
 			public void changedUpdate(DocumentEvent e)
@@ -601,14 +622,18 @@ public class CheckOutPanel extends JPanel
 		JbFinish = new JButton("Finish");
 		JbFinish.setActionCommand("JbFinish");
 		JbFinish.addActionListener(listener);
+		JbFinish.setEnabled(false);
+		JbBack = new JButton("Back");
+		JbBack.setActionCommand("JbBack");
+		JbBack.addActionListener(listener);
 		JlError.setText("");
 		JlError.setForeground(Color.RED);
 		jpButton.add(JlError);
 		jpButton.add(JlBlank1);
-		jpButton.add(JbDelete);
+		jpButton.add(JbBack);
 		jpButton.add(JlBlank2);
+		jpButton.add(JbDelete);
 		jpButton.add(JbCancel);
-		jpButton.add(JlBlank3);
 		jpButton.add(JbFinish);
 		this.add(jpButton, BorderLayout.EAST);
 	}
@@ -709,6 +734,10 @@ public class CheckOutPanel extends JPanel
 			{
 				sa.confirmPayment(transaction);
 				cancelAll();
+			}
+			if (e.getActionCommand().equals("JbBack"))
+			{
+				
 			}
 		}
 	}
