@@ -19,9 +19,8 @@ public class DiscountMgr {
 	private ArrayList<Discount> discountList;
 	private DiscountDao discountDao;
 	
-	public DiscountMgr() throws IOException, DataFileException{
+	public DiscountMgr(){
 		discountDao = new DiscountDao();
-		loadData();
 	}
 
 	public DiscountMgr(ArrayList<Discount> list){

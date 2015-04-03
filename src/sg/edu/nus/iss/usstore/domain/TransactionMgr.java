@@ -23,6 +23,10 @@ public class TransactionMgr
 	public TransactionMgr() throws IOException, DataFileException
 	{
 		td = new TransactionDao(new Store());
+		transactionList = new ArrayList<>();
+	}
+	
+	public void loadData() throws IOException, DataFileException{
 		transactionList = td.loadDataFromFile();
 	}
 	
@@ -31,10 +35,9 @@ public class TransactionMgr
 		td.saveDataToFile(transactionList);
 	}
 	
-	public TransactionMgr(Store store) throws IOException, DataFileException
+	public TransactionMgr(Store store)
 	{
 		td = new TransactionDao(store);
-		transactionList = td.loadDataFromFile();
 	}
 	
 	public ArrayList<Transaction> getTransactionList()

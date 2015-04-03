@@ -16,9 +16,8 @@ public class ProductMgr {
 	private ArrayList<Product> productList;
 	private ProductDao productDao;
 	
-	public ProductMgr(Store store) throws IOException, DataFileException{
+	public ProductMgr(Store store){
 		productDao = new ProductDao(store);
-		loadData();
 	}
 	
 	public ProductMgr(ArrayList<Product> list){

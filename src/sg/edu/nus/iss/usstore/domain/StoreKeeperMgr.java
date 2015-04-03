@@ -17,10 +17,13 @@ public class StoreKeeperMgr {
 	private ArrayList<StoreKeeper> storeKeeperList;
 	private StoreKeeperDao userDao;
 	
-	public StoreKeeperMgr() throws IOException
+	public StoreKeeperMgr()
 	{
 		userDao = new StoreKeeperDao();
 		storeKeeperList = new ArrayList<StoreKeeper>();
+	}
+	
+	public void loadData() throws IOException{
 		storeKeeperList = userDao.loadDataFromFile();
 	}
 	

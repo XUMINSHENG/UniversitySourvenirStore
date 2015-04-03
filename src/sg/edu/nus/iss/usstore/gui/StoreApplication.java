@@ -30,16 +30,8 @@ public class StoreApplication {
 	private StoreWindow storeWindow;
 	
 	public StoreApplication(){
-		// instantiate attributes
-		
-		try {
-			// instantiate store & load date
-			store = new Store();
-		} catch ( IOException | DataFileException e) {
-			
-			e.printStackTrace();
-			System.exit(0);
-		}
+		// instantiate store
+		store = new Store();
 		
 	}
 	
@@ -47,6 +39,17 @@ public class StoreApplication {
 	 * 
 	 */
 	public void startup(){
+		
+		try {
+			// load date
+			store.loadData();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DataFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// show login screen
 		loginScreen = new LoginScreen(this);
 		loginScreen.setLocationRelativeTo(null);

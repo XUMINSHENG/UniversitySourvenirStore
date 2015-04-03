@@ -181,6 +181,7 @@ public class TransactionTest extends Transaction
 		try
 		{
 			pm = new ProductMgr(new Store());
+			pm.loadData();
 		} catch (IOException | DataFileException e)
 		{
 			// TODO Auto-generated catch block
@@ -202,6 +203,7 @@ public class TransactionTest extends Transaction
 		try
 		{
 			pm = new ProductMgr(new Store());
+			pm.loadData();
 		} catch (IOException | DataFileException e)
 		{
 			// TODO Auto-generated catch block
@@ -225,6 +227,7 @@ public class TransactionTest extends Transaction
 		try
 		{
 			pm = new ProductMgr(new Store());
+			pm.loadData();
 		} catch (IOException | DataFileException e)
 		{
 			// TODO Auto-generated catch block
@@ -247,6 +250,7 @@ public class TransactionTest extends Transaction
 		try
 		{
 			pm = new ProductMgr(new Store());
+			pm.loadData();
 		} catch (IOException | DataFileException e)
 		{
 			// TODO Auto-generated catch block

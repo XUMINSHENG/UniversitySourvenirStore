@@ -27,7 +27,7 @@ public class Store {
 	 * @throws IOException
 	 * @throws DataFileException
 	 */
-	public Store() throws IOException, DataFileException {
+	public Store(){
 		storekeeperMgr = new StoreKeeperMgr();
 		categoryMgr = new CategoryMgr();
 		memberMgr = new MemberMgr();
@@ -37,12 +37,12 @@ public class Store {
 	}
 	
 	public void loadData() throws IOException, DataFileException{
-		//storekeeperMgr.loadData();
+		storekeeperMgr.loadData();
 		categoryMgr.loadData();
 		memberMgr.readFile();
 		discountMgr.loadData();
-		//productMgr.loadData(this);
-		//transactionMgr.loadData(this);
+		productMgr.loadData();
+		transactionMgr.loadData();
 	}
 	
 	/**

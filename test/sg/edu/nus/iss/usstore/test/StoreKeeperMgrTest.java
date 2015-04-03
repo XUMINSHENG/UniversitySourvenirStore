@@ -16,6 +16,7 @@ public class StoreKeeperMgrTest
 		StoreKeeperMgr mgr = null;
 		try {
 			mgr = new  StoreKeeperMgr();
+			mgr.loadData();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

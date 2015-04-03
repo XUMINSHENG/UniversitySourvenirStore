@@ -16,11 +16,9 @@ public class MemberMgr {
 	private ArrayList<Member> memberList;
 	private MemberDao memberDao;
 
-	public MemberMgr() throws IOException, DataFileException {
-
+	public MemberMgr(){
 		memberList = new ArrayList<Member>();
 		memberDao = new MemberDao();
-		readFile();
 	}
 
 	public ArrayList<Member> registerMember(String name, String memberID,
