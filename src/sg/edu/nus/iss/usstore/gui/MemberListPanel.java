@@ -164,16 +164,21 @@ public class MemberListPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-
-				try {
-					delMemBtnClicked();
-				} catch (DataFileException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				int result = JOptionPane.YES_NO_OPTION;
+				int dialogResult = JOptionPane.showConfirmDialog(null,
+						"Do you want to delete the Member?", "Delete Member",
+						result);
+				if(dialogResult == JOptionPane.YES_OPTION){
+					try {
+						delMemBtnClicked();
+					} catch (DataFileException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else{
+				
 				}
+
 			}
 		});
 		deleteButton.setEnabled(false);

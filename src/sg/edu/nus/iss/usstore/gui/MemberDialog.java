@@ -145,6 +145,7 @@ public class MemberDialog extends JDialog {
 		// TODO Auto-generated method stub
 		JPanel panel = new JPanel(new FlowLayout());
 		JButton button = new JButton("Modify");
+		loyaltyPoint.setEditable(false);
 		button.addActionListener(new ActionListener() {
 
 			@Override
