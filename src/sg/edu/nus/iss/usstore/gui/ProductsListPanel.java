@@ -1,8 +1,11 @@
 package sg.edu.nus.iss.usstore.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,6 +25,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -84,24 +89,9 @@ public class ProductsListPanel extends JPanel{
 	}
 	
 	private JPanel createTopPanel(){
-		JPanel p = new JPanel(new BorderLayout());
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(new JLabel("Product List"));
-		p.add("Center",panel);
-		JButton b = new JButton("Refresh");
-		b.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				refreshTable();
-			}
-		});
-		panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		panel.add(b);
-		p.add("East",panel);
-		
-		return p;
+		panel.add(new JLabel("Product List"));	
+		return panel;
 	}
 	
 	private Container createMiddlePanel(Object[][] data){
@@ -111,8 +101,10 @@ public class ProductsListPanel extends JPanel{
 //				{"2","dog","animal","$123","5"},
 //				{"3","cat","animal","$123","5"}
 //		};
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
+		
+		JPanel panel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
 		
 		tableModel = new DefaultTableModel(data,columnNames){
 			@Override
@@ -192,9 +184,9 @@ public class ProductsListPanel extends JPanel{
 		//productTable.setFillsViewportHeight(true);
 		productTable.setAutoCreateRowSorter(false);
 		
-		JPanel panel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel label = new JLabel("Filter Search: ",SwingConstants.TRAILING);
-		panel1.add(label);
+		//label.setBorder(BorderFactory.createLineBorder(Color.black));
+		
 		filterText = new JTextField(10);
 		filterText.getDocument().addDocumentListener(new DocumentListener() {
 			
@@ -217,11 +209,34 @@ public class ProductsListPanel extends JPanel{
 			}
 		});
 		label.setLabelFor(filterText);
-		panel1.add(filterText);
-		panel.add(panel1);
+		
+		JButton b = new JButton("Refresh");
+		b.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				refreshTable();
+			}
+		});
 		
 		JScrollPane p = new JScrollPane(productTable);
-		panel.add(p);
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 0;
+		panel.add(label,c);
+		c.gridx = 1;
+		c.weightx = 1;
+		panel.add(filterText,c);
+		c.gridx = 2;
+		c.weightx = 0;
+		panel.add(b,c);
+		c.gridx = 0;
+		c.gridy = 1;
+		c.weightx = 1;
+		c.gridwidth = 3;
+		panel.add(p,c);
 		
 		return panel;
 	}
