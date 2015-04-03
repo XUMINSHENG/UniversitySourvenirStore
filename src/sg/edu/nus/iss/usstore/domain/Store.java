@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 
@@ -24,6 +22,7 @@ public class Store {
 	private DiscountMgr discountMgr;
 	
 	/**
+	 * Instantiate Mgr and load data from files
 	 * 
 	 * @throws IOException
 	 * @throws DataFileException
@@ -38,8 +37,9 @@ public class Store {
 	}
 	
 	/**
-	 * @throws IOException 
+	 * save all data to files
 	 * 
+	 * @throws IOException
 	 */
 	public void saveData() throws IOException{
 		memberMgr.writeFile();
@@ -62,7 +62,9 @@ public class Store {
 //  -------------------- transaction related methods	-------------------
 
 	/**
+	 * create a new transaction instance with public customer
 	 * 
+	 * @return new transaction
 	 */
 	public Transaction checkout(){
 		Transaction transaction = new Transaction();
@@ -87,7 +89,7 @@ public class Store {
 		
 		// get customer info
 		if (memberId==null){
-			customer = new Public("");
+			customer = new Public();
 		}else{
 			customer = memberMgr.getMemberByID(memberId);
 		}
@@ -208,9 +210,6 @@ public class Store {
 		memberMgr.registerMember(name, memberId,loyalty);
 	}
 	
-	public void registerMember(Member mem){
-		memberMgr.registerMember(mem);
-	}
 	/**
 	 * 
 	 * @param memberId
@@ -253,7 +252,6 @@ public class Store {
 	 * @param threshold
 	 * @param orderQuantity
 	 */
-	
 	public String getNewProductIdByCategory(String code){
 		return productMgr.getNewProductIdByCategory(code);
 	}
@@ -270,7 +268,6 @@ public class Store {
 	 * @param product
 	 * @param indenx
 	 */
-	
 	public void modifyProduct(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		productMgr.modifyProduct(id,name, categoryMgr.getCategoryByCode(categoryCode), briefDescription
@@ -325,13 +322,6 @@ public class Store {
 			purchaseList.put(p,p.getCategory().getPreferenceVendor());
 		}
 		
-		
-		
-		// foreach product in productList, 
-		// purchaseList.add(product, product.getCategory().getPreferenceVendor())
-		
-		// purchaseOrder.
-		
 		return purchaseList;
 	}
 	
@@ -367,15 +357,6 @@ public class Store {
 	
 	/**
 	 * 
-	 * @param category
-	 * @param newVendorList
-	 */
-	public void updVendorForCategory(Category category, ArrayList<Vendor> newVendorList){
-		categoryMgr.updVendorForCategory(category, newVendorList);
-	}
-	
-	/**
-	 * 
 	 * @return
 	 */
 	public ArrayList<Category> getCategoryList(){
@@ -394,7 +375,6 @@ public class Store {
 	}
 	
 
-	
 	/**
 	 * 
 	 * @param categoryCode

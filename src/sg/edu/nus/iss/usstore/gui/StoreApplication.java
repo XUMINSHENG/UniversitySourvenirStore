@@ -211,10 +211,6 @@ public class StoreApplication {
 		store.removeMember(memberID);
 	}
 	
-	public void registerMember(Member mem){
-		store.registerMember(mem);
-	}
-	
 	public void registerMember(String name,String id,int loyalty){
 		store.registerMember(name, id,loyalty);
 	}
@@ -255,15 +251,6 @@ public class StoreApplication {
 		store.updCategory(code, name);
 	}
 	
-
-	/**
-	 * 
-	 * @param category
-	 * @param newVendorList
-	 */
-	public void UpdVendorForCategory(Category category, ArrayList<Vendor> newVendorList){
-		store.updVendorForCategory(category, newVendorList);
-	}
 	
 	/**
 	 * 
