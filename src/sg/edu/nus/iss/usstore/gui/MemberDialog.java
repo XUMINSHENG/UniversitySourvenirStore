@@ -3,8 +3,6 @@ package sg.edu.nus.iss.usstore.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import sg.edu.nus.iss.usstore.domain.*;
@@ -24,7 +22,6 @@ public class MemberDialog extends JDialog {
 	private JTextField memberID;
 	private JTextField loyaltyPoint;
 
-	ArrayList<Member> memberList = new ArrayList<Member>();
 
 	public MemberDialog(StoreApplication manager, String title) {
 		super(manager.getStoreWindow(), title);
@@ -94,6 +91,8 @@ public class MemberDialog extends JDialog {
 	public boolean validateData() {
 		if (name.getText().isEmpty() || memberID.getText().isEmpty()
 				|| loyaltyPoint.getText().isEmpty()) {
+		
+
 			return false;
 		} else {
 			return true;
@@ -101,6 +100,7 @@ public class MemberDialog extends JDialog {
 
 	}
 
+	
 
 	private JPanel createAddBottomPanel() {
 		// TODO Auto-generated method stub
@@ -113,11 +113,14 @@ public class MemberDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
+				if (validateData()) {
 					manager.registerMember(getNameText(), getIdText(), -1);
 					mainScreen.getMemberPanel().refreshTable();
 					dispose();
 				} else {
 					System.out.println("invalid data");
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Enter All/Correct Details");
 
 				}
 

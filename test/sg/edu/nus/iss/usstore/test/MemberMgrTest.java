@@ -2,6 +2,7 @@ package sg.edu.nus.iss.usstore.test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -52,11 +53,11 @@ public class MemberMgrTest {
 		memMgr.modifyMember("Suraj Sharma", "X437F356",300, 0);
 		assertNotEquals("Suraj Sharma,X437F356,250",memMgr.getMemberByID("X437F356").toString());
 	}
-/*
+
 	
-	 * @Test public void testWriteFile() { fail("Not yet implemented"); }
-	 * 
-	 * @Test public void testReadFile() { fail("Not yet implemented"); }
-	 */
+	  //@Test public void testWriteFile() {fail("Not yet implemented");}
+	  
+	 // @Test public void testReadFile() { fail("Not yet implemented"); }
+	 
 
 }
