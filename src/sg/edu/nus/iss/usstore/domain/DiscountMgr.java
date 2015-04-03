@@ -21,10 +21,7 @@ public class DiscountMgr {
 	
 	public DiscountMgr(){
 		discountDao = new DiscountDao();
-	}
-
-	public DiscountMgr(ArrayList<Discount> list){
-		this.discountList = list;
+		discountList = new ArrayList<>();
 	}
 
 	public void loadData() throws IOException, DataFileException{
@@ -139,13 +136,7 @@ public class DiscountMgr {
 			}
 			
 		}
-			
-			
-		//	System.out.println(d.getDiscountcode()+","+d.getDiscountDescription()+","+
-	//	d.getStartDate()+","+d.getPeriod()+","+d.getApplicable());
-			
-		
-					
+						
 		return maxDiscount;
 		
 	}

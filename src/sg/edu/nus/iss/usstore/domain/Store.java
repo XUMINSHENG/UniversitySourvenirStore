@@ -22,10 +22,8 @@ public class Store {
 	private DiscountMgr discountMgr;
 	
 	/**
-	 * Instantiate Mgr and load data from files
-	 * 
-	 * @throws IOException
-	 * @throws DataFileException
+	 * Instantiate Mgr
+	 *
 	 */
 	public Store(){
 		storekeeperMgr = new StoreKeeperMgr();
@@ -36,6 +34,12 @@ public class Store {
 		transactionMgr = new TransactionMgr(this);
 	}
 	
+	/**
+	 * load data from files
+	 * 
+	 * @throws IOException
+	 * @throws DataFileException
+	 */
 	public void loadData() throws IOException, DataFileException{
 		storekeeperMgr.loadData();
 		categoryMgr.loadData();
@@ -77,8 +81,9 @@ public class Store {
 	 */
 	public Transaction checkout(){
 		Transaction transaction = new Transaction();
-		transaction.setCustomer(new Public(""));
-		Discount discount = discountMgr.getMaxDiscount(transaction.getCustomer());
+		Customer newCustomer = new Public();
+		transaction.setCustomer(newCustomer);
+		Discount discount = discountMgr.getMaxDiscount(newCustomer);
 		transaction.setDiscount(discount);
 		return transaction;
 	}
@@ -89,15 +94,14 @@ public class Store {
 	 * @param transaction
 	 * @param memberId
 	 * @return
-	 * @throws DataNotFoundException 
 	 */
-	public Transaction setBillCustomer(Transaction transaction, String memberId) throws DataNotFoundException{
+	public Transaction setBillCustomer(Transaction transaction, String memberId){
 		
 		Customer customer;
 		Discount discount;
 		
 		// get customer info
-		if (memberId==null){
+		if (memberId==null || memberId.equals("")){
 			customer = new Public();
 		}else{
 			customer = memberMgr.getMemberByID(memberId);
@@ -166,10 +170,7 @@ public class Store {
 	 * 
 	 */
 	public Transaction confirmPayment(Transaction transaction){
-		
-		// verification product
-		
-		
+	
 		// add to transaction list
 		transaction.setId(transactionMgr.getMaxId() + 1);
 		transaction.setDate(new Date());
@@ -251,7 +252,18 @@ public class Store {
 //  -------------------- product related methods	-------------------
 	
 	/**
+	 * according to given Category code, return a new product id
 	 * 
+	 * @param code
+	 * @return
+	 */
+	public String getNewProductIdByCategory(String code){
+		return productMgr.getNewProductIdByCategory(code);
+	}
+	
+	/**
+	 * 
+	 * @param id
 	 * @param name
 	 * @param categoryCode
 	 * @param briefDescription
@@ -261,10 +273,6 @@ public class Store {
 	 * @param threshold
 	 * @param orderQuantity
 	 */
-	public String getNewProductIdByCategory(String code){
-		return productMgr.getNewProductIdByCategory(code);
-	}
-	
 	public void addProduct(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		
@@ -274,8 +282,15 @@ public class Store {
 	
 	/**
 	 * 
-	 * @param product
-	 * @param indenx
+	 * @param id
+	 * @param name
+	 * @param categoryCode
+	 * @param briefDescription
+	 * @param quantityAvailable
+	 * @param price
+	 * @param barCode
+	 * @param threshold
+	 * @param orderQuantity
 	 */
 	public void modifyProduct(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
@@ -428,9 +443,6 @@ public class Store {
 
 	/** discount related 
 	 * 
-	 * 
-	 * 
-	 * 
 	 */
 	public void addDiscount(String discountCode, String discountDescription,
 			Date startDate, int period, double percent, String Applicable ){
@@ -438,23 +450,14 @@ public class Store {
 		discountMgr.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
 	}
 	
-	/**
-	*
-	 * 
-	 */
-	
-	public void addDiscount(Discount discount){
-		discountMgr.getdiscountList();
-	}
-	
-	
-	
+
 	public void modifyDiscount(String discountCode, String discountDescription,
 			Date startDate, int period, double percent, String Applicable){
 		discountMgr.modifyDiscount( discountCode,  discountDescription,
 				 startDate, period,  percent,  Applicable);
 		
 	}
+	
 	/**
 	 * 
 	 * @param index

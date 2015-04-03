@@ -100,12 +100,7 @@ public class StoreApplication {
 	}
 	
 	public Transaction setBillCustomer(Transaction transaction, String memberId){
-		try {
-			transaction = store.setBillCustomer(transaction, memberId);
-		} catch (DataNotFoundException e) {
-			e.printStackTrace();
-		}
-		return transaction;
+		return store.setBillCustomer(transaction, memberId);
 	}
 	
 	public Transaction addBillItem(Transaction transaction,String productId,int quantity) throws DataNotFoundException{
