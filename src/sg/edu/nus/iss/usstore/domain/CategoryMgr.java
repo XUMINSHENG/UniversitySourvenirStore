@@ -23,13 +23,10 @@ public class CategoryMgr {
 	
 	/**
 	 * 
-	 * @throws IOException
-	 * @throws DataFileException
 	 */
-	public CategoryMgr() throws IOException, DataFileException{
+	public CategoryMgr(){
 		categoryDao = new CategoryDao();
 		vendorDao = new VendorDao();
-		loadData();
 	}
 	
 	/**

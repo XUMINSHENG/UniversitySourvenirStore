@@ -36,6 +36,15 @@ public class Store {
 		transactionMgr = new TransactionMgr(this);
 	}
 	
+	public void loadData() throws IOException, DataFileException{
+		//storekeeperMgr.loadData();
+		categoryMgr.loadData();
+		memberMgr.readFile();
+		discountMgr.loadData();
+		//productMgr.loadData(this);
+		//transactionMgr.loadData(this);
+	}
+	
 	/**
 	 * save all data to files
 	 * 
