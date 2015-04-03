@@ -770,11 +770,11 @@ public class CheckOutPanel extends JPanel
 				System.out.println("-------------------------------------------------------------------------");
 				}
 				System.out.print(String.format("%0$"+70+"s", "Total Price:"));
-				System.out.println(String.format("%0$"+5+"s", String.format("%1$-" + 5 + "s", transaction.calcTotalPrice())));
+				System.out.println(String.format("%0$"+5+"s", String.format("%1$-" + 5 + "s", Math.round(transaction.calcTotalPrice()))));
 				System.out.print(String.format("%0$"+70+"s", "Discount:"));
-				System.out.println(String.format("%0$"+5+"s", String.format("%1$-" + 5 + "s", (Math.round((transaction.calcTotalPrice()-transaction.calcDiscountPrice()))))));
+				System.out.println(String.format("%0$"+5+"s", String.format("%1$-" + 5 + "s", Math.round((transaction.calcTotalPrice()-transaction.calcDiscountPrice())))));
 				System.out.print(String.format("%0$"+70+"s", "Final Price:"));
-				System.out.println(String.format("%0$"+5+"s", String.format("%1$-" + 5 + "s", transaction.calcDiscountPrice())));
+				System.out.println(String.format("%0$"+5+"s", String.format("%1$-" + 5 + "s",  Math.round( transaction.calcDiscountPrice()))));
 				System.out.println("##############################################################################");
 				 	
 				
