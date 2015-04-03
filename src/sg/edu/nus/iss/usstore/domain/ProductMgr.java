@@ -61,7 +61,11 @@ public class ProductMgr {
 				}
 			}
 		}
-		newId = categoryCode + "/" + Integer.toString(i);
+		if(i==-1){
+			newId = categoryCode + "/1";
+		}else{
+			newId = categoryCode + "/" + Integer.toString(i);
+		}
 		return newId;
 	}
 	
