@@ -2,7 +2,10 @@ package sg.edu.nus.iss.usstore.util;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,6 +13,8 @@ import javax.swing.JLabel;
 public class AlertDialog extends JDialog{
 
 	private JLabel msgLabel;
+	private JButton okButton;
+	
 	public AlertDialog(){
 		super(new JFrame(),"Alert");
 		initGUI();
@@ -37,6 +42,19 @@ public class AlertDialog extends JDialog{
 		setModal(true);
 		setLocationRelativeTo(null);
 		msgLabel = new JLabel();
-		
+		okButton = new JButton("OK");
+		okButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				performOkAction();
+			}
+		});
+	}
+	
+	private void performOkAction(){
+		setVisible(false);
+		dispose();
 	}
 }

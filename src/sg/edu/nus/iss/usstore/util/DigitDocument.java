@@ -24,6 +24,7 @@ import javax.swing.text.PlainDocument;
 public class DigitDocument extends PlainDocument{
 	
 	private int limitedLength;
+	private int position = -1;
 	
 	public DigitDocument(){
 		super();
@@ -39,16 +40,22 @@ public class DigitDocument extends PlainDocument{
 		if(str == null){
 			return;
 		}
+		if(position==offset){
+			position = -1;
+		}
 		if(limitedLength<=0){
 			char[] upper = str.toCharArray();  
-            int length = 0;  
+            int length = 0;
             Character dot = new Character('.');
             for (int i = 0; i < upper.length; i++)
             {  
-            	if (Character.isDigit(upper[i])||dot.equals(upper[i]))
+            	if (Character.isDigit(upper[i]))
                 {  
                     upper[length++] = upper[i];
-                }  
+                }else if(dot.equals(upper[i]) && position==-1){
+                	upper[length++] = upper[i];
+                	position = offset;
+                }
             }  
             super.insertString(offset, new String(upper,0,length),a);
 		}else{
@@ -58,10 +65,13 @@ public class DigitDocument extends PlainDocument{
 				Character dot = new Character('.');
 				for (int i = 0; i < upper.length; i++)
 				{  
-					if (Character.isDigit(upper[i])||dot.equals(upper[i]))
+					if (Character.isDigit(upper[i]))
 					{  
 						upper[length++] = upper[i];  
-					}  
+					}else if(dot.equals(upper[i]) && position==-1){
+	                	upper[length++] = upper[i];
+	                	position = offset;
+	                }  
 				}  
 				super.insertString(offset, new String(upper,0,length),a);
 			}

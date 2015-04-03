@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import sg.edu.nus.iss.usstore.domain.*;
+import sg.edu.nus.iss.usstore.exception.DataInputException;
+import sg.edu.nus.iss.usstore.util.AlertDialog;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
 import sg.edu.nus.iss.usstore.util.StringDocument;
 /*
@@ -152,15 +154,25 @@ public class ProductDialog extends JDialog{
 		
 	}
 
-	public boolean validateData(){
-		if(idText.getText()!="" && nameText.getText()!="" && categoryList.getSelectedItem()!="" && descriptionText.getText()!="" 
-				&& priceText.getText()!="" && quantityText.getText()!="" && barCodeText.getText()!="" 
-				&& reorderQtyText.getText()!="" && orderQtyText.getText()!=""){
-			return true;
-		}else{
-			
+	public boolean validateData() throws DataInputException{
+		if(idText.getText()==""){
+			throw new DataInputException("Id cannot be void");
+		}else if(nameText.getText()==""){
+			throw new DataInputException("Name cannot be void");
+		}else if(descriptionText.getText()==""){
+			throw new DataInputException("description cannot be void");
+		}else if(priceText.getText()==""){
+			throw new DataInputException("price cannot be void");
+		}else if(quantityText.getText()==""){
+			throw new DataInputException("quantity cannot be void");
+		}else if(barCodeText.getText()==""){
+			throw new DataInputException("barCode cannot be void");
+		}else if(reorderQtyText.getText()==""){
+			throw new DataInputException("reorderQty cannot be void");
+		}else if(orderQtyText.getText()==""){
+			throw new DataInputException("orderQty cannot be void");
 		}
-		return false;
+		return true;
 	}
 	
 	private JPanel createAddBottomPanel() {
@@ -174,13 +186,20 @@ public class ProductDialog extends JDialog{
 				// TODO Auto-generated method stub
 				//Product newProduct = new Product("4","animal","pig","something",12,20,"c123",100,200);
 				
-				if(validateData()){
-					manager.addProduct((String)categoryList.getSelectedItem(),getNameText(),getCategoryText(),getDescriptionText(),
-								getQuantityText(),getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
-				
-					mainScreen.getProductListPanel().refreshTable();
-				}else{
-					System.out.println("invalid data");
+				try {
+					if(validateData()){
+						manager.addProduct((String)categoryList.getSelectedItem(),getNameText(),getCategoryText(),getDescriptionText(),
+									getQuantityText(),getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
+					
+						mainScreen.getProductListPanel().refreshTable();
+					}else{
+						System.out.println("invalid data");
+					}
+				} catch (DataInputException e) {
+					// TODO Auto-generated catch block
+					//AlertDialog alert = new AlertDialog(e.getMessage());
+					System.out.println(e.getMessage());
+					e.printStackTrace();
 				}
 				
 			}
@@ -222,14 +241,20 @@ public class ProductDialog extends JDialog{
 				// TODO Auto-generated method stub
 				//Product newProduct = new Product("4","animal","pig","something",12,20,"c123",100,200);
 				
-				if(validateData()){
-					manager.modifyProduct(id,getNameText(),getCategoryText(),getDescriptionText(),getQuantityText(),
-								getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
-				
-					//manager.modifyProduct(newProduct, index);
-					mainScreen.getProductListPanel().refreshTable();
-				}else{
-					System.out.println("invalid data");
+				try {
+					if(validateData()){
+						manager.modifyProduct(id,getNameText(),getCategoryText(),getDescriptionText(),getQuantityText(),
+									getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
+						
+						//manager.modifyProduct(newProduct, index);
+						mainScreen.getProductListPanel().refreshTable();
+						dispose();
+					}else{
+						System.out.println("invalid data");
+					}
+				} catch (DataInputException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		});
@@ -259,15 +284,6 @@ public class ProductDialog extends JDialog{
 			}
 		});
 		panel.add(button);
-//		categoryList.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				// TODO Auto-generated method stub
-//				 
-//				idText.setText(categoryList.getSelectedItem()+"/"+manager.getProductById(idText.getText()).getProductId().substring(4));
-//			}
-//		});
 		return panel;
 	}
 	
