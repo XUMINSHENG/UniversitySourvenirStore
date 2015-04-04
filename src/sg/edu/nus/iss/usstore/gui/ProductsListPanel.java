@@ -3,6 +3,7 @@ package sg.edu.nus.iss.usstore.gui;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -88,9 +89,9 @@ public class ProductsListPanel extends JPanel{
 	}
 	
 	private JPanel createTopPanel(){
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JLabel label = new JLabel("Product List");
-		
+		label.setFont(new Font("JPanel",Font.BOLD,26));
 		panel.add(label);	
 		return panel;
 	}
@@ -190,7 +191,7 @@ public class ProductsListPanel extends JPanel{
 		//productTable.setFillsViewportHeight(true);
 		productTable.setAutoCreateRowSorter(false);
 		
-		JLabel label = new JLabel("Filter Search: ",SwingConstants.TRAILING);
+		JLabel label = new JLabel(" Filter Search: ",SwingConstants.TRAILING);
 		//label.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		filterText = new JTextField(10);
@@ -222,6 +223,7 @@ public class ProductsListPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				filterText.setText("");
 				refreshTable();
 			}
 		});
