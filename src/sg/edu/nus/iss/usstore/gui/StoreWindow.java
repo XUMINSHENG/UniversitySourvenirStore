@@ -391,7 +391,7 @@ public class StoreWindow extends JFrame{
 		JPanel p = new JPanel();
 		p.setBorder(BorderFactory.createTitledBorder("MemberFactory"));
 		ImageIcon icon = new ImageIcon("images\\member.png");
-		JButton button = new JButton("Member List",icon);
+		JButton button = new JButton("Manage Member",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
@@ -410,7 +410,7 @@ public class StoreWindow extends JFrame{
 		p.add(button);
 		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\addMember.png");
-		button = new JButton("Add Member",icon);
+		button = new JButton("New Member",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
@@ -436,7 +436,7 @@ public class StoreWindow extends JFrame{
 		JPanel p = new JPanel();
 		p.setBorder(BorderFactory.createTitledBorder("DiscountFactory"));
 		ImageIcon icon = new ImageIcon("images\\discount.png");
-		JButton button = new JButton("Discount List",icon);
+		JButton button = new JButton("Manage Discount",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
@@ -483,7 +483,7 @@ public class StoreWindow extends JFrame{
 		JPanel p = new JPanel();
 		p.setBorder(BorderFactory.createTitledBorder("CategoryFactory"));
 		ImageIcon icon = new ImageIcon("images\\category.png");
-		JButton button = new JButton("Category List",icon);
+		JButton button = new JButton("Manage Category",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
@@ -501,7 +501,7 @@ public class StoreWindow extends JFrame{
 		p.add(button);
 		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\addCategory.png");
-		button = new JButton("Add Category",icon);
+		button = new JButton("Manage Vendor",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
