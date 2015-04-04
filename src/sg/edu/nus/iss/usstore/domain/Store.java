@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 
@@ -256,6 +257,12 @@ public class Store {
 	
 	public Member getMemberByID(String memID){
 		return memberMgr.getMemberByID(memID);
+	}
+	
+//  -------------------- discount related methods	-------------------
+	public ArrayList<Discount> registerDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, double percent, String Applicable){
+		return discountMgr.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
 	}
 	
 //  -------------------- product related methods	-------------------

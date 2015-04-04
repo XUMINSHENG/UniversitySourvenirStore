@@ -36,30 +36,41 @@ public class DiscountDialog extends JDialog {
 	private JTextField Percent;
 	private JTextField Applicable;
 
-	private DiscountMgr discountlist;
+	//private DiscountMgr discountlist;
 
 	private JRadioButton rdbtnOcaDisc;
 	private JRadioButton rdbtnMemDisc;
+	
+	private StoreApplication manager;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			DiscountDialog dialog = new DiscountDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			DiscountDialog dialog = new DiscountDialog();
+//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//			dialog.setVisible(true);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public DiscountDialog() throws IOException,DataFileException,DataInputException {
-		discountlist = new DiscountMgr();
+	public DiscountDialog(StoreApplication manager) throws IOException,DataFileException,DataInputException {
+		super(manager.getStoreWindow(),"Add New Discount");
+		this.manager = manager;
+		//discountlist = new DiscountMgr();
+		initGUI();
+	}
+
+	private void initGUI(){
 		setBounds(100, 100, 450, 300);
+		setVisible(true);
+		setModal(true);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -176,7 +187,7 @@ public class DiscountDialog extends JDialog {
 					if (startDate == "AWAYS") 
 					
 					
-					discountlist.registerDiscount(code, description,Util.castDate(StartDate.getText()), Util.castInt(Period.getText()),Util.castDouble(Percent.getText()), Applicable.getText());
+					manager.registerDiscount(code, description,Util.castDate(StartDate.getText()), Util.castInt(Period.getText()),Util.castDouble(Percent.getText()), Applicable.getText());
 				} catch (DataInputException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

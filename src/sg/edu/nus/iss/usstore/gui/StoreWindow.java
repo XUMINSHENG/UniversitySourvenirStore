@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.security.KeyStore;
 
 import javax.security.auth.kerberos.KerberosKey;
@@ -24,6 +25,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -35,6 +37,8 @@ import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 
 import sg.edu.nus.iss.usstore.domain.*;
+import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 /*
  * Main Window with CardLayout and MenuBar
@@ -471,14 +475,21 @@ public class StoreWindow extends JFrame{
 		button.setPreferredSize(size);
 		button.setMinimumSize(size);
 		button.addActionListener(new ActionListener() {
-			
-	
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("add discount");
-				//changeCard("discountList");
+				try {
+					DiscountDialog dialog = new DiscountDialog(manager);
+					System.out.println("dialog");
+				} catch (IOException | DataFileException | DataInputException e1) {
+					// TODO Auto-generated catch block
+					//e1.printStackTrace();
+					JOptionPane.showMessageDialog(getParent(), "error","Alert",JOptionPane.WARNING_MESSAGE);
+				}
+				//dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				
 			}
 		});
 		p.add(button);

@@ -201,7 +201,7 @@ public class ProductDialog extends JDialog{
 				} catch (DataInputException e) {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(getParent(), e.getMessage(),"Alert",JOptionPane.WARNING_MESSAGE); 
-					System.out.println(e.getMessage());
+					//System.out.println(e.getMessage());
 					//e.printStackTrace();
 				}
 			}

@@ -4,6 +4,7 @@ package sg.edu.nus.iss.usstore.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+
 import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Discount;
 import sg.edu.nus.iss.usstore.domain.Member;
@@ -297,7 +298,10 @@ public class StoreApplication {
 	}
 	
 	
-	
+	public ArrayList<Discount> registerDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, double percent, String Applicable){
+		return store.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
+	}
 	
 	public ArrayList<Discount> getDiscountList(){
 		return store.getDiscountList();
