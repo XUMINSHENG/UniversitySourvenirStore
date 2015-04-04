@@ -312,17 +312,18 @@ public class StoreApplication {
 	 * @param date
 	 * @return TransactionList
 	 */
+	public ArrayList<Transaction> getTransactionList(){
+		return store.getTransactionList();
+	}
+	
+	/**
+	 * 
+	 * @param date
+	 * @return TransactionList
+	 */
 	public ArrayList<Transaction> getTransactionListByDate(Date date){
 		return store.getTransactionListByDate(date);
 	}				
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public static void main(String[] args) {
