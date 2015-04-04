@@ -10,19 +10,18 @@ public abstract class Discount {
 	private String discountCode;
 	private String discountDescription;
 	//private String startDate;
-	
 	private int percent;
 	private String Applicable;
 
 	public Discount(String discountCode, String discountDescription,
 			 int percent, String Applicable) {
-		this.discountCode = discountCode;
-		this.discountDescription = discountDescription;
+			this.discountCode = discountCode;
+			this.discountDescription = discountDescription;
         
-        this.percent=percent;
-        this.Applicable=Applicable;
+			this.percent=percent;
+			this.Applicable=Applicable;
         
-	}
+		}
 
 	public String getDiscountcode() {
 		// TODO Auto-generated method stub
@@ -33,8 +32,6 @@ public abstract class Discount {
 		// TODO Auto-generated method stub
 		return discountDescription;
 	}
-//	public String getStartDate() {
-	
 	
 	public int getPercent() {
 		return percent;
@@ -45,7 +42,7 @@ public abstract class Discount {
 	}
 	
 	/**
-	 * compare percent with another discount, return the higher one
+	 * compare  percent with another discount, return the higher one
 	 * 
 	 * @param discount
 	 * @return higher discount

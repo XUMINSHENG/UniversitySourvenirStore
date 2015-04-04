@@ -11,7 +11,11 @@ import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
-
+/**
+ * 
+ * @author tanuj
+ *
+ */
 	public class DiscountDao extends BaseDao {
 		private static final  String C_File_Name = "Discounts.dat";
 		private static final int  C_Field_No  = 6;
@@ -23,19 +27,19 @@ import sg.edu.nus.iss.usstore.util.Util;
 	}
 	
 	public ArrayList<Discount> loadDataFromFile() throws IOException, DataFileException {
-		ArrayList<String> stringList = null;
+		   ArrayList<String> stringList = null;
 		
-		stringList = super.loadStringFromFile(super.getcDatafolderpath() + C_File_Name);
+		       stringList = super.loadStringFromFile(super.getcDatafolderpath() + C_File_Name);
 		
-		ArrayList<Discount> discountList = new ArrayList<Discount>();
+		          ArrayList<Discount> discountList = new ArrayList<Discount>();
 		
-		StringBuffer errMsg = new StringBuffer();
+		          StringBuffer errMsg = new StringBuffer();
 			
-		for(int lineNo = 0; lineNo < stringList.size() ; lineNo++){
+		  for(int lineNo = 0; lineNo < stringList.size() ; lineNo++){
 			
-			String line = stringList.get(lineNo);
+			  String line = stringList.get(lineNo);
 			
-			String[] fields = line.split(Util.C_Separator);
+			   String[] fields = line.split(Util.C_Separator);
 			
 			// when the No. of fields of a record is less then C_Field_No, skip this record
 			if (fields.length != C_Field_No) {
@@ -79,10 +83,7 @@ import sg.edu.nus.iss.usstore.util.Util;
 			String exceptionMsg = "Following data in file is not correct:" + System.getProperty("line.separator") + errMsg;
 			throw new DataFileException(exceptionMsg);
 		}
-		
-		
 	    return discountList;
-	
 	}
 	
 	
