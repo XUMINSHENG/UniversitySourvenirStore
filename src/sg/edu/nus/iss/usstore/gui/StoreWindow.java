@@ -100,6 +100,7 @@ public class StoreWindow extends JFrame{
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(windorListener);
 		
+		setIconImage(this.getToolkit().getImage("images\\app_icon.png"));
 		setPreferredSize(new Dimension(800,600));
 		pack();
 		setLocationRelativeTo(null);
@@ -255,7 +256,13 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("Add Discount");
+				try {
+					DiscountDialog dialog = new DiscountDialog(manager);
+				} catch (IOException | DataFileException | DataInputException e1) {
+					// TODO Auto-generated catch block
+					//e1.printStackTrace();
+					JOptionPane.showMessageDialog(getParent(), "error","Alert",JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 		menu.add(menuItem);

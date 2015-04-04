@@ -89,7 +89,9 @@ public class ProductsListPanel extends JPanel{
 	
 	private JPanel createTopPanel(){
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(new JLabel("Product List"));	
+		JLabel label = new JLabel("Product List");
+		
+		panel.add(label);	
 		return panel;
 	}
 	

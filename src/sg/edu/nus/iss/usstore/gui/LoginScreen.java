@@ -85,6 +85,8 @@ public class LoginScreen extends javax.swing.JFrame {
 			}
 			pack();
 			setSize(400, 300);
+			setIconImage(this.getToolkit().getImage("images\\app_icon.png"));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
