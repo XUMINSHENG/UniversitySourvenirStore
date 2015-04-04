@@ -344,18 +344,25 @@ public class Store {
 		return productMgr.checkInventory();
 	}
 	
-	public HashMap<Product,Vendor> getPurchaseOrder(){
+	/**
+	 * 
+	 * @return
+	 */
+	public PurchaseOrder getPurchaseOrder(){
 		
-		//PurchaseOrder purchaseOrder = new PurchaseOrder();
+		PurchaseOrder purchaseOrder = new PurchaseOrder();
 		HashMap<Product,Vendor> purchaseList = new HashMap<Product,Vendor>();
 		ArrayList<Product> productList = null;
 		productList = productMgr.checkInventory();
-		//Vendor v = null;
+
 		for(Product p:productList){
 			purchaseList.put(p,p.getCategory().getPreferenceVendor());
 		}
 		
-		return purchaseList;
+		purchaseOrder.setOrderDate(new Date());
+		purchaseOrder.setOrderList(purchaseList);
+		
+		return purchaseOrder;
 	}
 	
 //  -------------------- category related methods	-------------------

@@ -4,19 +4,16 @@ package sg.edu.nus.iss.usstore.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-
 import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Discount;
 import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.Product;
+import sg.edu.nus.iss.usstore.domain.PurchaseOrder;
 import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.Vendor;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
-import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
-import sg.edu.nus.iss.usstore.util.Util;
 
 /**
  * Main method here
@@ -145,7 +142,7 @@ public class StoreApplication {
 		return store.checkInventory();
 	}
 	
-	public HashMap<Product,Vendor> getPurchaseOrder(){
+	public PurchaseOrder getPurchaseOrder(){
 		return store.getPurchaseOrder();
 	}
 	
@@ -330,38 +327,12 @@ public class StoreApplication {
 		StoreApplication manager = new StoreApplication();
 		manager.startup();	
 		
-		/*
-		Transaction tr = manager.checkOut();
-		tr = manager.setBillCustomer(tr, "F42563743156");
-		
-		tr = manager.addBillItem(tr, "MUG/1", 10);
-		tr = manager.addBillItem(tr, "STA/1", 20);
-		tr = manager.removeBillItem(tr, "MUG/1");
-		tr = manager.setPayment(tr, 200, 100);
-		tr = manager.confirmPayment(tr);
-		*/
-		
-		try {
-			manager.getTransactionListByDate(Util.castDate("2013-09-28"));
-		} catch (DataInputException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println("helloworld");
-		
-		//UI_CategoryManager.openCategoryManagerUI(manager);
-		
 	}
 
 	public StoreWindow getStoreWindow() {
 		return storeWindow;
 	}
 
-	public Discount get(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public void addDiscount(String discountCode, String discountDescription,
 			Date startDate, int period, double percent, String Applicable) {

@@ -63,7 +63,7 @@ public class OrderListDialog extends JDialog{
 	}
 	
 	public Container createCenterPanel(){
-		tableModel = new DefaultTableModel(loadTableData(manager.getPurchaseOrder()),columnNames){
+		tableModel = new DefaultTableModel(loadTableData(manager.getPurchaseOrder().getOrderList()),columnNames){
 			@Override
 			public boolean isCellEditable(int row,int column){
 				return false;
