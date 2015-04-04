@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
-import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 
 /**
  * 
@@ -117,54 +116,6 @@ public class Store {
 		return transaction;
 	}
 	
-	/**
-	 * 
-	 * @param transaction
-	 * @param productId
-	 * @param quantity
-	 * @return
-	 * @throws DataNotFoundException
-	 */
-	public Transaction addBillItem(Transaction transaction, String productId, int quantity) throws DataNotFoundException{
-		
-		Product product = productMgr.getProductById(productId);
-		
-		if (product==null){
-			throw new DataNotFoundException("Product",productId);
-		}
-		
-		transaction.addItem(product, quantity);
-	
-		return transaction;
-	}
-	
-	/**
-	 * 
-	 * @param transaction
-	 * @param productId
-	 * @return
-	 */
-	public Transaction removeBillItem(Transaction transaction, String productId){
-		
-		Product product = productMgr.getProductById(productId);
-		
-		transaction.removeItem(product);
-	
-		return transaction;
-	}
-	
-	/**
-	 * 
-	 * @param transaction
-	 * @param cash
-	 * @param redeemLoyaltyPoint
-	 * @return
-	 */
-	public Transaction setPayment(Transaction transaction, double cash, int redeemLoyaltyPoint){
-		transaction.setRedeemedLoyaltyPoint(redeemLoyaltyPoint);
-		transaction.setCashAmount(cash);
-		return transaction;
-	}
 	
 	/**
 	 * 

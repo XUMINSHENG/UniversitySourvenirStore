@@ -13,7 +13,6 @@ import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.Vendor;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
-import sg.edu.nus.iss.usstore.exception.DataNotFoundException;
 
 /**
  * Main method here
@@ -100,19 +99,7 @@ public class StoreApplication {
 		return store.setBillCustomer(transaction, memberId);
 	}
 	
-	public Transaction addBillItem(Transaction transaction,String productId,int quantity) throws DataNotFoundException{
-		transaction = store.addBillItem(transaction, productId, quantity);
-		return transaction;
-	}
-	
-	public Transaction removeBillItem(Transaction transaction, String productId){
-		transaction = store.removeBillItem(transaction, productId);
-		return transaction;
-	}
-	
-	public Transaction setPayment(Transaction transaction, double cash, int redeemLoyaltyPoint){
-		return this.store.setPayment(transaction, cash, redeemLoyaltyPoint);
-	}
+
 	
 	public Transaction confirmPayment(Transaction transaction){
 		return store.confirmPayment(transaction);

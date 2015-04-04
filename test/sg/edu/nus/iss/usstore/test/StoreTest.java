@@ -28,6 +28,10 @@ import static org.junit.Assert.*;
  *
  * @author Xu Minsheng
  */
+/**
+ * @author XUMS
+ *
+ */
 public class StoreTest {
     
     public StoreTest() {
@@ -166,39 +170,8 @@ public class StoreTest {
         assertEquals(result.getCustomer().getClass(), Member.class);
      
     }
-//
-//    /**
-//     * Test of addBillItem method, of class Store.
-//     */
-//    @Test
-//    public void testAddBillItem() throws Exception {
-//        System.out.println("addBillItem");
-//        Transaction transaction = null;
-//        String productId = "";
-//        int quantity = 0;
-//        Store instance = new Store();
-//        Transaction expResult = null;
-//        Transaction result = instance.addBillItem(transaction, productId, quantity);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of removeBillItem method, of class Store.
-//     */
-//    @Test
-//    public void testRemoveBillItem() {
-//        System.out.println("removeBillItem");
-//        Transaction transaction = null;
-//        String productId = "";
-//        Store instance = new Store();
-//        Transaction expResult = null;
-//        Transaction result = instance.removeBillItem(transaction, productId);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+
+
 //
 //    /**
 //     * Test of setPayment method, of class Store.
