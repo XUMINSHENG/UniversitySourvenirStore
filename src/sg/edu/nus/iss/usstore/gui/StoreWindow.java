@@ -144,9 +144,7 @@ public class StoreWindow extends JFrame{
 		
 		//member menu
 		menu = new JMenu("Member");
-		menuItem = new JMenuItem("Member List",KeyEvent.VK_M);
-		menu.add(menuItem);
-		menuBar.add(menu);
+		menuItem = new JMenuItem("Manage Member",KeyEvent.VK_M);	
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -156,11 +154,24 @@ public class StoreWindow extends JFrame{
 				
 			}
 		});
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Add New Member");
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				MemberDialog memDialog = new MemberDialog(manager, "Add Member");
+				memDialog.setVisible(true);
+			}
+		});
+		menu.add(menuItem);
+		menuBar.add(menu);
 		
 		//product menu
 		menu = new JMenu("Product");
 		//menu.setMnemonic(KeyEvent.VK_P);
-		menuItem = new JMenuItem("Product List",KeyEvent.VK_P);
+		menuItem = new JMenuItem("Manage Product",KeyEvent.VK_P);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,ActionEvent.ALT_MASK));
 		menuItem.addActionListener(new ActionListener() {
 			
@@ -171,8 +182,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		menu.add(menuItem);
-		menuItem = new JMenuItem("Add Product",KeyEvent.VK_A);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,ActionEvent.ALT_MASK));
+		menuItem = new JMenuItem("Add Product");
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -183,8 +193,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		menu.add(menuItem);
-		menuItem = new JMenuItem("Check Inventory",KeyEvent.VK_C);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,ActionEvent.ALT_MASK));
+		menuItem = new JMenuItem("Stocktaking");
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -199,7 +208,7 @@ public class StoreWindow extends JFrame{
 		//Category menu
 		menu = new JMenu("Category");
 		//menu.setMnemonic(KeyEvent.VK_C);
-		menuItem = new JMenuItem("Category List",KeyEvent.VK_C);
+		menuItem = new JMenuItem("Manage Category",KeyEvent.VK_C);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,ActionEvent.ALT_MASK));
 		menuItem.addActionListener(new ActionListener() {
 			
@@ -210,7 +219,8 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		menu.add(menuItem);
-		menuItem = new JMenuItem("Add Category",KeyEvent.VK_A);
+		menuItem = new JMenuItem("Manage Vendor",KeyEvent.VK_V);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,ActionEvent.ALT_MASK));
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -223,7 +233,7 @@ public class StoreWindow extends JFrame{
 		menuBar.add(menu);
 		
 		menu = new JMenu("Discount");
-		menuItem_1 = new JMenuItem("Discount List",KeyEvent.VK_D);
+		menuItem_1 = new JMenuItem("Manage Discount",KeyEvent.VK_D);
 		menuItem_1.setSelected(true);
 		menuItem_1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,ActionEvent.ALT_MASK));
 		menuItem_1.addActionListener(new ActionListener() {
@@ -235,7 +245,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		menu.add(menuItem_1);
-		menuItem = new JMenuItem("Add Discount",KeyEvent.VK_A);
+		menuItem = new JMenuItem("Add New Discount");
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -391,7 +401,7 @@ public class StoreWindow extends JFrame{
 		JPanel p = new JPanel();
 		p.setBorder(BorderFactory.createTitledBorder("MemberFactory"));
 		ImageIcon icon = new ImageIcon("images\\member.png");
-		JButton button = new JButton("Member List",icon);
+		JButton button = new JButton("Manage Member",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
@@ -403,14 +413,13 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("member list");
 				changeCard("memberList");
 			}
 		});
 		p.add(button);
 		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\addMember.png");
-		button = new JButton("Add Member",icon);
+		button = new JButton("Add New Member",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
@@ -424,8 +433,7 @@ public class StoreWindow extends JFrame{
 				// TODO Auto-generated method stub
 				MemberDialog memDialog = new MemberDialog(manager, "Add Member");
 				memDialog.setVisible(true);
-				System.out.println("add member");
-				//changeCard("memberList");
+			
 			}
 		});
 		p.add(button);
@@ -436,7 +444,7 @@ public class StoreWindow extends JFrame{
 		JPanel p = new JPanel();
 		p.setBorder(BorderFactory.createTitledBorder("DiscountFactory"));
 		ImageIcon icon = new ImageIcon("images\\discount.png");
-		JButton button = new JButton("Discount List",icon);
+		JButton button = new JButton("Manage Discount",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
@@ -455,7 +463,7 @@ public class StoreWindow extends JFrame{
 		p.add(button);
 		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\addDiscount.png");
-		button = new JButton("Add Discount",icon);
+		button = new JButton("Add New Discount",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
@@ -483,7 +491,7 @@ public class StoreWindow extends JFrame{
 		JPanel p = new JPanel();
 		p.setBorder(BorderFactory.createTitledBorder("CategoryFactory"));
 		ImageIcon icon = new ImageIcon("images\\category.png");
-		JButton button = new JButton("Category List",icon);
+		JButton button = new JButton("Manage Category",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
@@ -501,7 +509,7 @@ public class StoreWindow extends JFrame{
 		p.add(button);
 		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\addCategory.png");
-		button = new JButton("Add Category",icon);
+		button = new JButton("Manage Vendor",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
