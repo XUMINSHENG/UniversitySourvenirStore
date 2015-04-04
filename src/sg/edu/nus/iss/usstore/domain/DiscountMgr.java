@@ -84,6 +84,18 @@ public class DiscountMgr {
 
 	
 	
+	
+	
+	
+	
+/**
+ * 
+ * @param customerId
+ * @param loyaltyPoint
+ * @return
+ */
+	
+	
 		
 	/* maximum disc*/
 	public double getMaxDiscount(String customerId,int loyaltyPoint){

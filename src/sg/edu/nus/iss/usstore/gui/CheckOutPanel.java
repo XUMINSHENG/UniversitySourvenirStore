@@ -750,6 +750,10 @@ public class CheckOutPanel extends JPanel
 				JFrame confirm = new CheckOutConfirmFrame();
 				confirm.setVisible(true);
 				sa.confirmPayment(transaction);
+			/**
+			 *for console printing of transacion
+			 * @tanuj	
+			 */
 				RecieptPrinter printer = new RecieptPrinter(transaction);
 				printer.print();				 	
 				

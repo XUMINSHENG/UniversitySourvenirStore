@@ -9,7 +9,11 @@ import org.junit.Test;
 
 import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
 import sg.edu.nus.iss.usstore.util.Util;
-
+/**
+ * 
+ * @author tanuj
+ *
+ */
 public class OcassionalDiscountTest {
 
 	

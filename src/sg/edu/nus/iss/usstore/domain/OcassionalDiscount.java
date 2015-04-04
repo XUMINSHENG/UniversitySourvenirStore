@@ -1,7 +1,11 @@
 package sg.edu.nus.iss.usstore.domain;
 
 import java.util.Date;
-
+/**
+ * 
+ * @author tanuj
+ *
+ */
 public class OcassionalDiscount extends Discount {
 
 	private Date startDate;

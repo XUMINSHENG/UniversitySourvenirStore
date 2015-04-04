@@ -1,5 +1,9 @@
 package sg.edu.nus.iss.usstore.domain;
-
+/**
+ * 
+ * @author tanuj
+ *
+ */
 public class RecieptPrinter {
 
 	private Transaction transaction;
