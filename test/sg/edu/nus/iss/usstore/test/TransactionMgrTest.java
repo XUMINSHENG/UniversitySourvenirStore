@@ -25,6 +25,20 @@ public class TransactionMgrTest
 {
 	TransactionMgr tm;
 	@Test
+	public void testTransactionMgr() throws IOException, DataFileException
+	{
+		TransactionMgr tm = new TransactionMgr();
+		assertFalse(tm.toString()==null);
+	}
+	
+	@Test
+	public void testTransactionMgrStore() throws IOException, DataFileException
+	{
+		TransactionMgr tm = new TransactionMgr(new Store());
+		assertFalse(tm.toString()==null);
+	}
+	
+	@Test
 	public void testSetTransactionList() throws IOException, DataFileException
 	{
 		tm = new TransactionMgr();
@@ -87,7 +101,6 @@ public class TransactionMgrTest
 	public void testGetTransactionListByDate() throws IOException, DataFileException, ParseException
 	{
 		tm = new TransactionMgr();
-		tm.loadData();
 		ArrayList<Transaction> testList = new ArrayList();
 		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
 		Date date = df.parse("2013-09-28");
