@@ -784,7 +784,7 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbBack"))
 			{
-
+				sa.getStoreWindow().changeCard("mainScreen");
 			}
 		}
 	}
