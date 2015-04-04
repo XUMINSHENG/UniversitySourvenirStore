@@ -521,8 +521,15 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("add category");
-				//changeCard("memberList");
+				if(manager.getCategoryList().isEmpty()){
+					String msg = "Need to have a category at least";
+		       		JOptionPane.showMessageDialog(getParent(),msg, "Alert",JOptionPane.WARNING_MESSAGE);
+				}else{
+					String code = manager.getCategoryList().get(0).getCode();
+					 VendorDialog vendorDlg = new VendorDialog(manager, code);
+			         vendorDlg.setVisible(true);
+				}
+				
 			}
 		});
 		p.add(button);
