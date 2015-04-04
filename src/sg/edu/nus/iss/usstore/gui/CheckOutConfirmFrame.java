@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -45,18 +46,21 @@ public class CheckOutConfirmFrame extends JFrame
 	private Transaction transaction = new Transaction();
 	private Product product = null;
 	private JTable table;
-	
+	StoreApplication sa;
+	private ArrayList<TransactionItem> List = new ArrayList();
 	private SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
 	//draw UI
-	public CheckOutConfirmFrame(Transaction t) 
+	public CheckOutConfirmFrame(Transaction t,StoreApplication sa) 
 	{
 		this.transaction = t;
+		this.sa = sa;
 		Customer customer = transaction.getCustomer();
 		double cash = transaction.calcRest();
 		Date date = transaction.getDate();
 		Discount discount = transaction.getDiscount();
 		int ID = transaction.getId();
 		int redeemedPoint = transaction.getRedeemedLoyaltyPoint();
+		List = transaction.getItemList();
 		
 		JPanel jpinformation = new JPanel();
 		JPanel jptransaction = new JPanel();
@@ -130,20 +134,26 @@ public class CheckOutConfirmFrame extends JFrame
 		jp3.add(jlReedemedPoint);
 		
 		JButton JbConfirmn = new JButton("Confirm&Print");
-		JbConfirmn.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				RecieptPrinter printer = new RecieptPrinter(transaction);
-				printer.print();
-				dispose();
-			}
-		});
+		JbConfirmn.setActionCommand("confirm");
+		JbConfirmn.addActionListener(new Listener());
 		jp4.add(JbConfirmn);
+		
 		
 		this.pack();
 		
+	}
+	//check rest number of product
+	public ArrayList<Product> checkProductRestNum()
+	{
+		ArrayList<Product> result = new ArrayList();
+		for (int i = 0 ; i < List.size();i++)
+		{
+			TransactionItem t = List.get(i);
+			product = t.getProduct();
+			if(product.getQuantityAvailable()<product.getOrderQuantity())
+				result.add(product);
+		}
+		return result;
 	}
 	//Data Binding
 	public void tableDataBinding()
@@ -164,5 +174,23 @@ public class CheckOutConfirmFrame extends JFrame
 		}
 		table.validate();
 		table.repaint();
+	}
+	class Listener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			if(e.getActionCommand().equals("confirm"))
+			{
+				RecieptPrinter printer = new RecieptPrinter(transaction);
+				printer.print();
+				dispose();
+				if (checkProductRestNum().size()>0)
+				{
+					JDialog jd = new OrderListDialog(sa);
+				}
+			}
+		}
 	}
 }// /~

@@ -780,13 +780,13 @@ public class CheckOutPanel extends JPanel
 					transaction.setCustomer(new Public());
 				}
 				transaction.setDate(new Date());
-				JFrame confirm = new CheckOutConfirmFrame(sa.confirmPayment(transaction));
+				JFrame confirm = new CheckOutConfirmFrame(sa.confirmPayment(transaction),sa);
 				confirm.setVisible(true);
 				cancelAll();
 			}
 			if (e.getActionCommand().equals("JbBack"))
 			{
-				
+				sa.getStoreWindow().changeCard("mainScreen");
 			}
 		}
 	}
