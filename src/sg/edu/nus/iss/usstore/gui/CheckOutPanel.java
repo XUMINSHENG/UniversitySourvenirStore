@@ -93,7 +93,7 @@ public class CheckOutPanel extends JPanel
 	private final String ERR_MSG_CASH_NOT_ENOUGH = "Cash is not enough!";
 	private final String ERR_MSG_SELECT_ROW = "Select a Row!";
 
-	public static JLabel JlError;
+	public static JLabel jlTitle;
 
 	public void setOutputValue()
 	{
@@ -122,10 +122,10 @@ public class CheckOutPanel extends JPanel
 		if (transaction.calcChange() < 0)
 		{
 			JbFinish.setEnabled(false);
-		} else if (JlError.getText() == ERR_MSG_CASH_FORMAT_ERROR
-				|| JlError.getText() == ERR_MSG_CASH_NOT_ENOUGH
-				|| JlError.getText() == ERR_MSG_POINT_FORMAT_ERROR
-				|| JlError.getText() == ERR_MSG_POINT_NOT_ENOUGH)
+		} else if (jlTitle.getText() == ERR_MSG_CASH_FORMAT_ERROR
+				|| jlTitle.getText() == ERR_MSG_CASH_NOT_ENOUGH
+				|| jlTitle.getText() == ERR_MSG_POINT_FORMAT_ERROR
+				|| jlTitle.getText() == ERR_MSG_POINT_NOT_ENOUGH)
 		{
 			JbFinish.setEnabled(false);
 		} else if (transaction.getItemList().size() == 0)
@@ -228,7 +228,8 @@ public class CheckOutPanel extends JPanel
 			JtPaidNum.setText(null);
 			JtPaidNum.setEnabled(false);
 			JtCashNum.setText(null);
-			JlError.setText(null);
+			jlTitle.setForeground(Color.BLACK);
+			jlTitle.setText("Check Out");
 		}
 	}
 
@@ -239,7 +240,7 @@ public class CheckOutPanel extends JPanel
 		JPanel jpOperation = new JPanel();
 		this.add(jpOperation, BorderLayout.NORTH);
 		// Title
-		JLabel jlTitle = new JLabel("Check Out!");
+		jlTitle = new JLabel("Check Out!");
 		jlTitle.setFont(new Font("Bauhaus 93", Font.PLAIN, 30));
 		jlTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		jpOperation.setLayout(new GridLayout(3, 1));
@@ -372,20 +373,25 @@ public class CheckOutPanel extends JPanel
 						.intValue();
 				if (tempLoyalPaidNum < 0)
 				{
-					JlError.setText(ERR_MSG_POINT_FORMAT_ERROR);
+					jlTitle.setForeground(Color.RED);
+					jlTitle.setText(ERR_MSG_POINT_FORMAT_ERROR);
 					JlChangeNum.setText("**.**");
 				} else
 				{
 					Member member = (Member) transaction.getCustomer();
 					if (member.getLoyaltyPoint() >= tempLoyalPaidNum)
 					{
-						if (JlError.getText() == ERR_MSG_POINT_NOT_ENOUGH)
-							JlError.setText(null);
+						if (jlTitle.getText() == ERR_MSG_POINT_NOT_ENOUGH)
+							{
+							jlTitle.setForeground(Color.BLACK);
+							jlTitle.setText("Check Out");
+							}
 						transaction.setRedeemedLoyaltyPoint(tempLoyalPaidNum);
 						JlRestNum.setText(df.format(transaction.calcRest()));
 					} else
 					{
-						JlError.setText(ERR_MSG_POINT_NOT_ENOUGH);
+						jlTitle.setForeground(Color.RED);
+						jlTitle.setText(ERR_MSG_POINT_NOT_ENOUGH);
 					}
 				}
 				setOutputValue();
@@ -402,21 +408,26 @@ public class CheckOutPanel extends JPanel
 							.intValue();
 					if (tempLoyalPaidNum < 0)
 					{
-						JlError.setText(ERR_MSG_POINT_FORMAT_ERROR);
+						jlTitle.setForeground(Color.RED);
+						jlTitle.setText(ERR_MSG_POINT_FORMAT_ERROR);
 						JlChangeNum.setText("**.**");
 					} else
 					{
 						Member member = (Member) transaction.getCustomer();
 						if (member.getLoyaltyPoint() >= tempLoyalPaidNum)
 						{
-							if (JlError.getText() == ERR_MSG_POINT_NOT_ENOUGH)
-								JlError.setText(null);
+							if (jlTitle.getText() == ERR_MSG_POINT_NOT_ENOUGH)
+								{
+								jlTitle.setForeground(Color.BLACK);
+								jlTitle.setText("Check Out");
+								}
 							transaction
 									.setRedeemedLoyaltyPoint(tempLoyalPaidNum);
 							JlRestNum.setText(df.format(transaction.calcRest()));
 						} else
 						{
-							JlError.setText(ERR_MSG_POINT_NOT_ENOUGH);
+							jlTitle.setForeground(Color.RED);
+							jlTitle.setText(ERR_MSG_POINT_NOT_ENOUGH);
 						}
 					}
 				} else
@@ -460,22 +471,25 @@ public class CheckOutPanel extends JPanel
 				if (DcashNum > 0)
 				{
 					double tempChange = transaction.calcChange();
-					if (tempChange > 0)
+					if (tempChange >= 0)
 					{
 						JlChangeNum.setText(df.format(tempChange));
-						if (JlError.getText() == ERR_MSG_CASH_NOT_ENOUGH
-								|| JlError.getText() == ERR_MSG_CASH_FORMAT_ERROR)
+						if (jlTitle.getText() == ERR_MSG_CASH_NOT_ENOUGH
+								|| jlTitle.getText() == ERR_MSG_CASH_FORMAT_ERROR)
 						{
-							JlError.setText(null);
+							jlTitle.setForeground(Color.BLACK);
+							jlTitle.setText("Check Out");
 						}
 					} else
 					{
-						JlError.setText(ERR_MSG_CASH_NOT_ENOUGH);
+						jlTitle.setForeground(Color.RED);
+						jlTitle.setText(ERR_MSG_CASH_NOT_ENOUGH);
 						JlChangeNum.setText("**.**");
 					}
 				} else
 				{
-					JlError.setText(ERR_MSG_CASH_FORMAT_ERROR);
+					jlTitle.setForeground(Color.RED);
+					jlTitle.setText(ERR_MSG_CASH_FORMAT_ERROR);
 					JlChangeNum.setText("**.**");
 				}
 				setOutputValue();
@@ -494,20 +508,23 @@ public class CheckOutPanel extends JPanel
 						if (tempChange > 0)
 						{
 							JlChangeNum.setText(df.format(tempChange));
-							if (JlError.getText() == ERR_MSG_CASH_NOT_ENOUGH
-									|| JlError.getText() == ERR_MSG_CASH_FORMAT_ERROR)
+							if (jlTitle.getText() == ERR_MSG_CASH_NOT_ENOUGH
+									|| jlTitle.getText() == ERR_MSG_CASH_FORMAT_ERROR)
 							{
-								JlError.setText(null);
+								jlTitle.setForeground(Color.BLACK);
+								jlTitle.setText("Check Out");
 								JbFinish.setEnabled(true);
 							}
 						} else
 						{
-							JlError.setText(ERR_MSG_CASH_NOT_ENOUGH);
+							jlTitle.setForeground(Color.RED);
+							jlTitle.setText(ERR_MSG_CASH_NOT_ENOUGH);
 							JlChangeNum.setText("**.**");
 						}
 					} else
 					{
-						JlError.setText(ERR_MSG_CASH_FORMAT_ERROR);
+						jlTitle.setForeground(Color.RED);
+						jlTitle.setText(ERR_MSG_CASH_FORMAT_ERROR);
 						JlChangeNum.setText("**.**");
 					}
 				} else
@@ -629,7 +646,6 @@ public class CheckOutPanel extends JPanel
 		JbCancel.setActionCommand("JbCancel");
 		JbCancel.addActionListener(listener);
 		JLabel JlBlank2 = new JLabel(" ");
-		JlError = new JLabel();
 		JbFinish = new JButton("Finish");
 		JbFinish.setActionCommand("JbFinish");
 		JbFinish.addActionListener(listener);
@@ -637,9 +653,6 @@ public class CheckOutPanel extends JPanel
 		JbBack = new JButton("Back");
 		JbBack.setActionCommand("JbBack");
 		JbBack.addActionListener(listener);
-		JlError.setText("");
-		JlError.setForeground(Color.RED);
-		jpButton.add(JlError);
 		jpButton.add(JlBlank1);
 		jpButton.add(JbBack);
 		jpButton.add(JlBlank2);
@@ -658,18 +671,23 @@ public class CheckOutPanel extends JPanel
 				String MemberID = JtMemberID.getText();
 				if (JtMemberID.getText().length() == 0)
 				{
-					JlError.setText(ERR_MSG_MEMBER_NOT_EXIST);
+					jlTitle.setForeground(Color.RED);
+					jlTitle.setText(ERR_MSG_MEMBER_NOT_EXIST);
 				} else
 				{
 					transaction = sa.setBillCustomer(transaction, MemberID);
 					if (transaction.getCustomer() == null)
 					{
 						transaction = sa.setBillCustomer(transaction, null);
-						JlError.setText(ERR_MSG_MEMBER_NOT_EXIST);
+						jlTitle.setForeground(Color.RED);
+						jlTitle.setText(ERR_MSG_MEMBER_NOT_EXIST);
 					} else
 					{
-						if (JlError.getText() == ERR_MSG_MEMBER_NOT_EXIST)
-							JlError.setText(null);
+						if (jlTitle.getText() == ERR_MSG_MEMBER_NOT_EXIST)
+							{
+							jlTitle.setForeground(Color.BLACK);
+							jlTitle.setText("Check Out");
+							}
 					}
 					setOutputValue();
 				}
@@ -680,33 +698,38 @@ public class CheckOutPanel extends JPanel
 				tempBarCode = JtBarCodeID.getText();
 				product = sa.getProductByBarCode(tempBarCode);
 				String tempqty = JtQuantity.getText();
-				int intqty = Integer.parseInt(tempqty);
 				if (tempBarCode.length() == 0)
 				{
-					JlError.setText(ERR_MSG_BARCODE_ERROR);
+					jlTitle.setForeground(Color.RED);
+					jlTitle.setText(ERR_MSG_BARCODE_ERROR);
 				} else if (tempqty.length() == 0)
 				{
-					JlError.setText(ERR_MSG_QUANTITY_FORMAT_ERROR);
+					jlTitle.setForeground(Color.RED);
+					jlTitle.setText(ERR_MSG_QUANTITY_FORMAT_ERROR);
 				} else if (Integer.valueOf(JtQuantity.getText()).intValue() < 1)
 				{
-					JlError.setText(ERR_MSG_QUANTITY_FORMAT_ERROR);
-				} else if(product.getQuantityAvailable()<intqty)
+					jlTitle.setForeground(Color.RED);
+					jlTitle.setText(ERR_MSG_QUANTITY_FORMAT_ERROR);
+				} else if(product.getQuantityAvailable()<Integer.parseInt(tempqty))
 				{
-					JlError.setText(ERR_MSG_QUANTITY_NOT_ENOUGH);
+					jlTitle.setForeground(Color.RED);
+					jlTitle.setText(ERR_MSG_QUANTITY_NOT_ENOUGH);
 				}
 				else
 				{
-
-					if (JlError.getText() == ERR_MSG_PRODCUT_NOT_EXIST
-							|| JlError.getText() == ERR_MSG_BARCODE_ERROR
-							|| JlError.getText() == ERR_MSG_QUANTITY_NOT_ENOUGH
-							|| JlError.getText() == ERR_MSG_QUANTITY_FORMAT_ERROR)
+					int intqty = Integer.parseInt(tempqty);
+					if (jlTitle.getText() == ERR_MSG_PRODCUT_NOT_EXIST
+							|| jlTitle.getText() == ERR_MSG_BARCODE_ERROR
+							|| jlTitle.getText() == ERR_MSG_QUANTITY_NOT_ENOUGH
+							|| jlTitle.getText() == ERR_MSG_QUANTITY_FORMAT_ERROR)
 					{
-						JlError.setText(null);
+						jlTitle.setForeground(Color.BLACK);
+						jlTitle.setText("Check Out");
 					}
 					if (product == null)
 					{
-						JlError.setText(ERR_MSG_PRODCUT_NOT_EXIST);
+						jlTitle.setForeground(Color.RED);
+						jlTitle.setText(ERR_MSG_PRODCUT_NOT_EXIST);
 						return;
 					}
 					ArrayList<TransactionItem> tempTransactionList = transaction
@@ -723,12 +746,14 @@ public class CheckOutPanel extends JPanel
 			{
 				if (table.getSelectedRow() == -1)
 				{
-					JlError.setText("Select a row");
+					jlTitle.setForeground(Color.RED);
+					jlTitle.setText("Select a row");
 				} else
 				{
-					if (JlError.getText() == ERR_MSG_SELECT_ROW)
+					if (jlTitle.getText() == ERR_MSG_SELECT_ROW)
 					{
-						JlError.setText(null);
+						jlTitle.setForeground(Color.BLACK);
+						jlTitle.setText("Check Out");
 					}
 					int rowcount = defaultModel.getRowCount();
 					if (rowcount > 0)
@@ -761,7 +786,7 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbBack"))
 			{
-
+				
 			}
 		}
 	}
