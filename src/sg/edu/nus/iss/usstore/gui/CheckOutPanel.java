@@ -38,6 +38,7 @@ import sg.edu.nus.iss.usstore.domain.RecieptPrinter;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.util.DigitDocument;
+import sg.edu.nus.iss.usstore.util.IntDocument;
 
 public class CheckOutPanel extends JPanel
 {
@@ -269,7 +270,7 @@ public class CheckOutPanel extends JPanel
 		// jp2
 		JLabel JlMemberName = new JLabel("MEMBER  ");
 		JlgetMemberName = new JLabel("PUBLIC");
-		JButton JbMemberSubmit = new JButton("Submit");
+		JButton JbMemberSubmit = new JButton("Update Member");
 		JbMemberSubmit.setActionCommand("JbMemberSubmit");
 		JbMemberSubmit.addActionListener(listener);
 		jp2.setLayout(new GridLayout(1, 2));
@@ -300,8 +301,8 @@ public class CheckOutPanel extends JPanel
 		jp4_2.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel JlQuantity = new JLabel("QUANTITY");
 		JtQuantity = new JTextField(6);
-		JtQuantity.setDocument(new DigitDocument());
-		JButton JbProductSubmit = new JButton("Submit");
+		JtQuantity.setDocument(new IntDocument());
+		JButton JbProductSubmit = new JButton("Add       Product ");
 		tempBarCode = JtBarCodeID.getText();
 		product = sa.getProductByBarCode(tempBarCode);
 		JbProductSubmit.setActionCommand("JbProductSubmit");
