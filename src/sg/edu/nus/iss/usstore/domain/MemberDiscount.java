@@ -1,6 +1,10 @@
 package sg.edu.nus.iss.usstore.domain;
 
-
+/**
+ * 
+ * @author tanuj
+ *
+ */
 
 public class MemberDiscount extends Discount{
 

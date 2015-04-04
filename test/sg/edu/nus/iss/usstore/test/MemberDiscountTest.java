@@ -6,7 +6,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import sg.edu.nus.iss.usstore.domain.MemberDiscount;
-
+/**
+ * 
+ * @author tanuj
+ *
+ */
 public class MemberDiscountTest {
 	
 	MemberDiscount memDisc1 = new MemberDiscount("Member_First", "FirstPurchase",60,"M" );
