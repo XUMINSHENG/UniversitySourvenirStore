@@ -46,7 +46,7 @@ public class MemberListPanel extends JPanel {
 		for (int i = 0; i < memberList.size(); i++) {
 			member = memberList.get(i);
 			data[i][0] = member.getName();
-			data[i][1] = member.getMemberID();
+			data[i][1] = member.getMemberID().toUpperCase();
 			data[i][2] = member.getLoyaltyPoint();
 		}
 		return data;
