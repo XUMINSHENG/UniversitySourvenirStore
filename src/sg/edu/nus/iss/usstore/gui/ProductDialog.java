@@ -193,13 +193,10 @@ public class ProductDialog extends JDialog{
 				
 				try {
 					if(validateData()){
-//						manager.addProduct((String)categoryList.getSelectedItem(),getNameText(),getCategoryText(),getDescriptionText(),
-//									getQuantityText(),getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
-//					
-//						mainScreen.getProductListPanel().refreshTable();
-						System.out.println("finish:"+quantityText.getText()+"end");
-					}else{
-						System.out.println("invalid data");
+						manager.addProduct((String)categoryList.getSelectedItem(),getNameText(),getCategoryText(),getDescriptionText(),
+									getQuantityText(),getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
+					
+						mainScreen.getProductListPanel().refreshTable();
 					}
 				} catch (DataInputException e) {
 					// TODO Auto-generated catch block
