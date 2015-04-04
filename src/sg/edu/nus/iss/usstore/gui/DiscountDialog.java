@@ -12,12 +12,12 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import sg.edu.nus.iss.usstore.domain.DiscountMgr;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
@@ -66,7 +66,7 @@ public class DiscountDialog extends JDialog {
 		initGUI();
 	}
 
-	private void initGUI(){
+	private void initGUI() {
 		setBounds(100, 100, 450, 300);
 		setVisible(true);
 		setModal(true);
@@ -190,7 +190,8 @@ public class DiscountDialog extends JDialog {
 					manager.registerDiscount(code, description,Util.castDate(StartDate.getText()), Util.castInt(Period.getText()),Util.castDouble(Percent.getText()), Applicable.getText());
 				} catch (DataInputException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					//e1.printStackTrace();
+					JOptionPane.showMessageDialog(getParent(), "Error data","Error",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});

@@ -479,10 +479,8 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("add discount");
 				try {
 					DiscountDialog dialog = new DiscountDialog(manager);
-					System.out.println("dialog");
 				} catch (IOException | DataFileException | DataInputException e1) {
 					// TODO Auto-generated catch block
 					//e1.printStackTrace();
