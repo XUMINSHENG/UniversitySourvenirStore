@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,6 +26,10 @@ import sg.edu.nus.iss.usstore.util.StringDocument;
 
 public class ProductDialog extends JDialog{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private StoreApplication manager;
 	private StoreWindow mainScreen;
 	private String id;
@@ -268,10 +271,7 @@ public class ProductDialog extends JDialog{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				manager.deleteProduct(id);
-				mainScreen.getProductListPanel().refreshTable();
-				dispose();
+				deleteVendorMouseClicked(arg0);
 			}
 		});
 		panel.add(button);
@@ -288,6 +288,36 @@ public class ProductDialog extends JDialog{
 		});
 		panel.add(button);
 		return panel;
+	}
+	
+	private boolean validDel(String productId){
+		boolean result = true;
+		
+		for (Transaction trans : manager.getTransactionList()){
+			for( TransactionItem ti : trans.getItemList()){
+				if(ti.getProduct() == manager.getProductById(productId)){
+					result = false;
+					break;
+				}
+			}
+		}
+		
+		return result;
+	}
+	
+	private void deleteVendorMouseClicked(ActionEvent evt) {
+		if(validDel(id)){
+			String msg = "The product '" + id + "' will be deleted";
+			int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
+	       	if (n == 0){
+				manager.deleteProduct(id);
+				mainScreen.getProductListPanel().refreshTable();
+				dispose();
+	       	}
+		}else{
+			String msg = "This product `"+ id + "` is associated with some transaction";
+       		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+		}
 	}
 	
 	public String getIdText() {

@@ -1,31 +1,26 @@
 package sg.edu.nus.iss.usstore.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
-import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -56,6 +51,10 @@ import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 */
 public class ProductsListPanel extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final String[] columnNames = {"Id","Name","Description","Price","Quantity"};
 	private JButton modifyButton;
 	private JButton deleteButton;
@@ -107,10 +106,15 @@ public class ProductsListPanel extends JPanel{
 		c.fill = GridBagConstraints.BOTH;
 		
 		tableModel = new DefaultTableModel(data,columnNames){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			@Override
 			public boolean isCellEditable(int row, int column){
 				return false;
 			}
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public Class getColumnClass(int column){
 				Class returnValue;
@@ -277,15 +281,8 @@ public class ProductsListPanel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				int rowIndex = productTable.convertRowIndexToModel(productTable.getSelectedRow());
-				int columnIndex = productTable.getColumnModel().getColumnIndex("Id");
-				String id = (String)tableModel.getValueAt(rowIndex, columnIndex);
-				tableModel.removeRow(rowIndex);
-				manager.deleteProduct(id);
-				//manager.getStore().getPm().showData();
-//				deleteButton.setEnabled(false);
-//				modifyButton.setEnabled(false);
+				deleteVendorMouseClicked(arg0);
+				
 			}
 		});
 		deleteButton.setEnabled(false);
@@ -350,7 +347,38 @@ public class ProductsListPanel extends JPanel{
 		return tableModel;
 	}
 	
-	
+	private boolean validDel(String productId){
+		boolean result = true;
+		
+		for (Transaction trans : manager.getTransactionList()){
+			for( TransactionItem ti : trans.getItemList()){
+				if(ti.getProduct() == manager.getProductById(productId)){
+					result = false;
+					break;
+				}
+			}
+		}
+		
+		return result;
+	}
 
+	private void deleteVendorMouseClicked(ActionEvent evt) {
 
+		int rowIndex = productTable.convertRowIndexToModel(productTable.getSelectedRow());
+		int columnIndex = productTable.getColumnModel().getColumnIndex("Id");
+		String id = (String)tableModel.getValueAt(rowIndex, columnIndex);
+		
+		if(validDel(id)){
+			String msg = "The product '" + id + "' will be deleted";
+			int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
+	       	if (n == 0){
+				manager.deleteProduct(id);
+				this.refreshTable();
+	       	}
+		}
+		else{
+			String msg = "This product `"+ id + "` is associated with some transaction";
+       		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+		}
+	}
 }
