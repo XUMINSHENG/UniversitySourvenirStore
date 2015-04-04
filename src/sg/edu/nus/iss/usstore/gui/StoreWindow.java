@@ -144,9 +144,7 @@ public class StoreWindow extends JFrame{
 		
 		//member menu
 		menu = new JMenu("Member");
-		menuItem = new JMenuItem("Member List",KeyEvent.VK_M);
-		menu.add(menuItem);
-		menuBar.add(menu);
+		menuItem = new JMenuItem("Manage Member",KeyEvent.VK_M);
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -156,6 +154,19 @@ public class StoreWindow extends JFrame{
 				
 			}
 		});
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Add New Member");
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				MemberDialog memDialog = new MemberDialog(manager, "Add Member");
+				memDialog.setVisible(true);
+			}
+		});
+		menu.add(menuItem);
+		menuBar.add(menu);
 		
 		//product menu
 		menu = new JMenu("Product");
@@ -231,7 +242,7 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("Discount List");
+				System.out.println("Manager Discount");
 			}
 		});
 		menu.add(menuItem_1);
@@ -241,7 +252,7 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("Add Discount");
+				System.out.println("Manage Vendor");
 			}
 		});
 		menu.add(menuItem);
@@ -410,7 +421,7 @@ public class StoreWindow extends JFrame{
 		p.add(button);
 		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\addMember.png");
-		button = new JButton("New Member",icon);
+		button = new JButton("Add New Member",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);
@@ -424,8 +435,6 @@ public class StoreWindow extends JFrame{
 				// TODO Auto-generated method stub
 				MemberDialog memDialog = new MemberDialog(manager, "Add Member");
 				memDialog.setVisible(true);
-				System.out.println("add member");
-				//changeCard("memberList");
 			}
 		});
 		p.add(button);
