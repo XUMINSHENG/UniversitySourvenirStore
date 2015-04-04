@@ -172,10 +172,10 @@ public class DiscountDialog extends JDialog {
 		contentPanel.add(Applicable);
 		Applicable.setColumns(10);
 
-		JButton btnNewButton = new JButton("Append");
-		btnNewButton.setBounds(6, 194, 89, 23);
-		contentPanel.add(btnNewButton);
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton ADDButton = new JButton("ADD");
+		ADDButton.setBounds(6, 194, 89, 23);
+		contentPanel.add(ADDButton);
+		ADDButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -184,7 +184,7 @@ public class DiscountDialog extends JDialog {
 					String code = DiscountCode.getText();
 					String description = DiscountDescription.getText();
 					String startDate = StartDate.getText();
-					if (startDate == "AWAYS") 
+					if (startDate == "ALWAYS") 
 					
 					
 					manager.registerDiscount(code, description,Util.castDate(StartDate.getText()), Util.castInt(Period.getText()),Util.castDouble(Percent.getText()), Applicable.getText());
@@ -196,17 +196,17 @@ public class DiscountDialog extends JDialog {
 			}
 		});
 
-		JButton btnNewButton_1 = new JButton("Modify");
-		btnNewButton_1.setBounds(104, 194, 89, 23);
-		contentPanel.add(btnNewButton_1);
+		JButton btnModify = new JButton("Modify");
+		btnModify.setBounds(104, 194, 89, 23);
+		contentPanel.add(btnModify);
 
-		JButton btnNewButton_2 = new JButton("Delete");
-		btnNewButton_2.setBounds(203, 194, 89, 23);
-		contentPanel.add(btnNewButton_2);
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.setBounds(203, 194, 89, 23);
+		contentPanel.add(btnDelete);
 
-		JButton btnNewButton_3 = new JButton("Reset");
-		btnNewButton_3.setBounds(298, 194, 89, 23);
-		contentPanel.add(btnNewButton_3);
+		JButton btnReset = new JButton("Reset");
+		btnReset.setBounds(298, 194, 89, 23);
+		contentPanel.add(btnReset);
 		{
 			{
 				//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{getContentPane(), contentPanel, rdbtnMemDisc, rdbtnOcaDisc, lblDiscountcode, DiscountCode, lblDiscountDescription, DiscountDescription, lblStartDate, StartDate, lblPeriod, lblPercent, lblApplicable, Period, Percent, Applicable, btnNewButton, btnNewButton_1, btnNewButton_2, btnNewButton_3}));
