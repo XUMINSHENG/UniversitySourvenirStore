@@ -72,6 +72,7 @@ public class VendorDialog extends javax.swing.JDialog {
 
         setTitle("Vendor Manager");
         //setAlwaysOnTop(true);
+        setLocationRelativeTo(null);
         setBounds(new java.awt.Rectangle(310, 100, 600, 400));
         setResizable(false);
 
