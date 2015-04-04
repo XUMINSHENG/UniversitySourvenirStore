@@ -96,6 +96,17 @@ public class CheckOutPanel extends JPanel
 	private final String ERR_MSG_SELECT_ROW = "Select a Row!";
 
 	public static JLabel jlTitle;
+	//set Transaction
+	public Transaction getTransaction()
+	{
+		return transaction;
+	}
+	//get Transaction
+	public void setTransaction(Transaction transaction)
+	{
+		this.transaction = transaction;
+	}
+	
 	//SET Output Value
 	public void setOutputValue()
 	{
