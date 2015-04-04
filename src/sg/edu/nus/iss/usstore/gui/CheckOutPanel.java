@@ -459,7 +459,7 @@ public class CheckOutPanel extends JPanel
 				if (DcashNum > 0)
 				{
 					double tempChange = transaction.calcChange();
-					if (tempChange > 0)
+					if (tempChange >= 0)
 					{
 						JlChangeNum.setText(df.format(tempChange));
 						if (JlError.getText() == ERR_MSG_CASH_NOT_ENOUGH
@@ -490,7 +490,7 @@ public class CheckOutPanel extends JPanel
 					if (DcashNum > 0)
 					{
 						double tempChange = transaction.calcChange();
-						if (tempChange > 0)
+						if (tempChange >= 0)
 						{
 							JlChangeNum.setText(df.format(tempChange));
 							if (JlError.getText() == ERR_MSG_CASH_NOT_ENOUGH
@@ -746,7 +746,7 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbFinish"))
 			{
-				JFrame confirm = new CheckOutConfirmFrame();
+				JFrame confirm = new CheckOutConfirmFrame(transaction);
 				confirm.setVisible(true);
 				sa.confirmPayment(transaction);
 			/**
