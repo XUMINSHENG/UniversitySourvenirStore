@@ -69,7 +69,7 @@ public class TransactionMgr
 			Transaction t = (Transaction) transactionList.get(i);
 			String date1 = Util.dateToString(date);
 			String date2 = Util.dateToString(t.getDate());
-			if (date1==date2)
+			if (date1.equals(date2))
 				result.add(t);
 		}
 		return result;
