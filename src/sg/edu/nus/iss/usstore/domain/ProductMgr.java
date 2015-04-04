@@ -144,9 +144,4 @@ public class ProductMgr {
 		return this.productList;
 	}
 	
-	public void showData(){
-		for(int i=0;i<productList.size();i++){
-			productList.get(i).show();
-		}
-	}
 }

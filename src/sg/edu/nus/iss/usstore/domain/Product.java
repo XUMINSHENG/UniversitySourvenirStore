@@ -134,7 +134,4 @@ public class Product {
 		this.orderQuantity = orderQuantity;
 	}
 	
-	public void show(){
-		System.out.println(name);
-	}
 }
