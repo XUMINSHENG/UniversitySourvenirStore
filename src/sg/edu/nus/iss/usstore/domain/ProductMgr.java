@@ -94,9 +94,8 @@ public class ProductMgr {
 	public void modifyProduct(String id, String name, Category category, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		Product product = new Product(id,category, name, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
-		String code = category.getCode();
 		for(Product p:this.productList){
-			if(code.equals(p.getCategory().getCode())){
+			if(id.equals(p.getProductId())){
 				this.productList.set(productList.indexOf(p),product);
 				break;
 			}
