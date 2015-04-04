@@ -316,7 +316,14 @@ public class StoreApplication {
 		return store.getTransactionListByDate(date);
 	}				
 	
-	
+	/**
+	 * 
+	 * @param date
+	 * @return TransactionList
+	 */
+	public ArrayList<Transaction> getTransactionList(){
+		return store.getTransactionList();
+	}
 	
 	
 	

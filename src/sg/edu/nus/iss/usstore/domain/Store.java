@@ -198,6 +198,15 @@ public class Store {
 		return transaction;
 	}
 	
+	/**
+	 * 
+	 * @param date
+	 * @return TransactionList
+	 */
+	public ArrayList<Transaction> getTransactionList(){
+		return transactionMgr.getTransactionList();
+	}
+	
 
 	/**
 	 * 
