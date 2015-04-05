@@ -568,6 +568,7 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("Category Report");
+				setEnabled(false);
 				CategoryReport catReport = new CategoryReport(manager);
 				catReport.show(true);
 				catReport.setVisible(true);
@@ -590,6 +591,7 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("Product Report");
+				setEnabled(false);
 				ProductReport prodReport = new ProductReport(manager);
 				prodReport.show(true);
 				prodReport.setVisible(true);
@@ -611,7 +613,8 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Report list");
+				System.out.println("Transaction Report");
+				setEnabled(false);
 				TransactionReport transactionReport = new TransactionReport(manager);
 				transactionReport.show(true);
 				transactionReport.setVisible(true);
@@ -633,7 +636,8 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Report list");
+				System.out.println("Member Report");
+				setEnabled(false);
 				MemberReport memReport = new MemberReport(manager);
 				memReport.show(true);
 				memReport.setVisible(true);

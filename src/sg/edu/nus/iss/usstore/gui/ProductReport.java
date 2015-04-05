@@ -2,6 +2,8 @@ package sg.edu.nus.iss.usstore.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,6 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import sg.edu.nus.iss.usstore.domain.Product;
-import sg.edu.nus.iss.usstore.domain.Store;
 
 
 /**
@@ -33,6 +34,10 @@ import sg.edu.nus.iss.usstore.domain.Store;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class ProductReport extends javax.swing.JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JScrollPane prodReportScrollPane;
 	private JTable productListReportTable;
 	
@@ -42,15 +47,18 @@ public class ProductReport extends javax.swing.JFrame {
 	private Object[][] objData;
 	private String[] columns;
 	
+	private StoreApplication manager;
+	
 	public ProductReport(StoreApplication manager) {
 		super("Product Report");
+		this.manager=manager;
 		this.objList=manager.getProductList();
 		columns = new String[num_col];
 		objData = new Object[objList.size()][num_col];
 		for(int i=0;i<objList.size();i++)
 		{
 			objData[i][0] = objList.get(i).getProductId();
-			objData[i][1] = objList.get(i).getBarCodeNumber();
+			objData[i][1] = Long.valueOf(objList.get(i).getBarCodeNumber());
 			objData[i][2] = objList.get(i).getName();
 			objData[i][3] = objList.get(i).getCategory().getName();
 			objData[i][4] = objList.get(i).getPrice();
@@ -82,12 +90,33 @@ public class ProductReport extends javax.swing.JFrame {
 					TableModel productListReportTableModel = new DefaultTableModel(objData,columns)
 					{
 
+						/**
+						 * 
+						 */
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public boolean isCellEditable(int arg0, int arg1) {
 							// TODO Auto-generated method stub
 							return false;
 						}
-						
+
+						@Override
+						public Class<?> getColumnClass(int colNum) {
+							// TODO Auto-generated method stub
+							switch(colNum)
+							{
+							case 0: return String.class;
+							case 1: return Long.class;
+							case 2: return String.class;
+							case 3: return String.class;
+							case 4: return Double.class;
+							case 5: return Integer.class;
+							case 6: return String.class;
+							case 7: return Integer.class;
+							default: return String.class;
+							}
+						}
 					};
 					productListReportTable = new JTable();
 					prodReportScrollPane.setViewportView(productListReportTable);
@@ -103,7 +132,17 @@ public class ProductReport extends javax.swing.JFrame {
 			}
 			resizeTableColumnWidth(productListReportTable);
 			pack();
+			this.setSize(900, 313);
 			setLocationRelativeTo(null);
+			this.addWindowListener(new WindowAdapter() {
+				@SuppressWarnings("deprecation")
+				public void windowClosed(WindowEvent evt) {
+					System.out.println("this.windowClosed, event="+evt);
+					//TODO add your code for this.windowClosed
+					manager.getStoreWindow().setEnabled(true);
+					manager.getStoreWindow().show();
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,7 +14,6 @@ import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,7 +31,6 @@ import javax.swing.table.TableRowSorter;
 import org.jdatepicker.JDateComponentFactory;
 import org.jdatepicker.JDatePicker;
 
-import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 
@@ -48,6 +48,10 @@ import sg.edu.nus.iss.usstore.domain.TransactionItem;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class TransactionReport extends javax.swing.JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JScrollPane transactionReportScrollPane;
 	private JTable transactionListReportTable;
 	
@@ -205,12 +209,33 @@ public class TransactionReport extends javax.swing.JFrame {
 					TableModel transactionListReportTableModel = new DefaultTableModel(objData,columns)
 					{
 
+						/**
+						 * 
+						 */
+						private static final long serialVersionUID = 1L;
+
+
 						@Override
 						public boolean isCellEditable(int arg0, int arg1) {
 							// TODO Auto-generated method stub
 							return false;
 						}
-						
+					
+
+						@Override
+						public Class<?> getColumnClass(int colNum) {
+							// TODO Auto-generated method stub
+							switch(colNum)
+							{
+							case 0: return Double.class;
+							case 1: return String.class;
+							case 2: return String.class;
+							case 3: return String.class;
+							case 4: return String.class;
+							case 5: return Double.class;
+							default: return String.class;
+							}
+						}
 					};
 					transactionListReportTable = new JTable();
 					transactionReportScrollPane.setViewportView(transactionListReportTable);
@@ -227,6 +252,15 @@ public class TransactionReport extends javax.swing.JFrame {
 			resizeTableColumnWidth(transactionListReportTable);
 			pack();
 			setLocationRelativeTo(null);
+			this.addWindowListener(new WindowAdapter() {
+				@SuppressWarnings("deprecation")
+				public void windowClosed(WindowEvent evt) {
+					System.out.println("this.windowClosed, event="+evt);
+					//TODO add your code for this.windowClosed
+					manager.getStoreWindow().setEnabled(true);
+					manager.getStoreWindow().show();
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -30,6 +31,10 @@ import javax.swing.border.LineBorder;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class LoginScreen extends javax.swing.JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel lblName;
 	private JInternalFrame LoginFrame;
 	private JLabel lblTeamName;
@@ -139,6 +144,7 @@ public class LoginScreen extends javax.swing.JFrame {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void LoginActionPerformed(ActionEvent evt) {
 		System.out.println("Login.actionPerformed, event="+evt);
 		//TODO add your code for Login.actionPerformed

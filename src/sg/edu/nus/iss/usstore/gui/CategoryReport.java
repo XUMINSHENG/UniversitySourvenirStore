@@ -2,6 +2,8 @@ package sg.edu.nus.iss.usstore.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,6 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import sg.edu.nus.iss.usstore.domain.Category;
-import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Vendor;
 
 
@@ -34,6 +35,10 @@ import sg.edu.nus.iss.usstore.domain.Vendor;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class CategoryReport extends javax.swing.JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JScrollPane catReportScrollPane;
 	private JTable CategoryListReportTable;
 	
@@ -42,9 +47,11 @@ public class CategoryReport extends javax.swing.JFrame {
 	private ArrayList<Category> objList;
 	private Object[][] objData;
 	private String[] columns;
+	private StoreApplication manager;
 	
 	public CategoryReport(StoreApplication manager) {
 		super("Category Report");
+		this.manager=manager;
 		this.objList=manager.getCategoryList();
 		columns = new String[num_col];
 		objData = new Object[objList.size()][num_col];
@@ -81,6 +88,11 @@ public class CategoryReport extends javax.swing.JFrame {
 					TableModel CategoryListReportTableModel = new DefaultTableModel(objData,columns)
 					{
 
+						/**
+						 * 
+						 */
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public boolean isCellEditable(int arg0, int arg1) {
 							// TODO Auto-generated method stub
@@ -103,6 +115,15 @@ public class CategoryReport extends javax.swing.JFrame {
 			resizeTableColumnWidth(CategoryListReportTable);
 			pack();
 			setLocationRelativeTo(null);
+			this.addWindowListener(new WindowAdapter() {
+				@SuppressWarnings("deprecation")
+				public void windowClosed(WindowEvent evt) {
+					System.out.println("this.windowClosed, event="+evt);
+					//TODO add your code for this.windowClosed
+					manager.getStoreWindow().setEnabled(true);
+					manager.getStoreWindow().show();
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -136,5 +157,4 @@ public class CategoryReport extends javax.swing.JFrame {
 		    tableColumn.setPreferredWidth(Math.max(preferredWidth,headerComp.getMaximumSize().width));
 		}
 	}
-
 }
