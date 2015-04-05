@@ -4,6 +4,8 @@ package sg.edu.nus.iss.usstore.domain;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.jdatepicker.impl.UtilCalendarModel;
+
 import sg.edu.nus.iss.usstore.util.CalcUtil;
 
 public class Transaction
@@ -161,29 +163,27 @@ public class Transaction
 
 	public double calcDiscountPrice()
 	{
-		discountedPrice = calcTotalPrice() * (100 - discount.getPercent()) / 100;
+		discountedPrice = CalcUtil.div((CalcUtil.mul(calcTotalPrice(),(100 - discount.getPercent()))),100);
 		return discountedPrice;
 	}
 
 	public double calcChange()
 	{
-		change =  cashAmount - calcRest();
+		change =  CalcUtil.sub(cashAmount,calcRest());
 		return change;
 	}
 
 	public int calcGainedPoint()
 	{
-		gainedPoint = (int) (calcRest()*DOLLAR_TO_POINT);
+		gainedPoint = (int) CalcUtil.mul(calcRest(),(double)DOLLAR_TO_POINT);
 		return gainedPoint;
 	}
 
 	public double calcRest()
 	{
-		rest = calcDiscountPrice() - redeemedLoyaltyPoint*POINTS_TO_DOLLAR;
+		rest = calcDiscountPrice() - CalcUtil.mul(redeemedLoyaltyPoint, POINTS_TO_DOLLAR);
 		return rest;
 	}
-
-
 	}
 
 	

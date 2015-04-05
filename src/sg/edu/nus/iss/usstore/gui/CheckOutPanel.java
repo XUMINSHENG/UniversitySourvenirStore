@@ -335,6 +335,7 @@ public class CheckOutPanel extends JPanel
 
 		jpinputSelect.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel jlDateEntity = new JLabel("Date Entry Type:");
+		JLabel jlTips  = new JLabel("If you choose 'Bar Code Reader', please enter data in console screen!");
 		ButtonGroup bg2 = new ButtonGroup();
 		jb3 = new JRadioButton("Manual");
 		jb4 = new JRadioButton("Bar Code Reader");
@@ -348,6 +349,7 @@ public class CheckOutPanel extends JPanel
 		jpinputSelect.add(jlDateEntity);
 		jpinputSelect.add(jb3);
 		jpinputSelect.add(jb4);
+		jpinputSelect.add(jlTips);
 
 		jpTitleSelect.add(jlTitle);
 		jpTitleSelect.add(jpinputSelect);

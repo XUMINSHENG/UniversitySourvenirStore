@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.jdatepicker.impl.UtilCalendarModel;
 import org.junit.Test;
 
+import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.MemberDiscount;
 import sg.edu.nus.iss.usstore.domain.Product;
@@ -20,6 +22,7 @@ import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
+import sg.edu.nus.iss.usstore.util.CalcUtil;
 
 public class TransactionTest extends Transaction
 {
@@ -35,6 +38,8 @@ public class TransactionTest extends Transaction
 	MemberDiscount discount = new MemberDiscount("1", "2",34,"5");
 	Member customer = new Member("1", "2", 3);
 	Transaction t = new Transaction(1,customer,date);
+	Product product1 = new Product(new Category(),"1","2",3,4.5,"6",7,8);
+	Product product2 = new Product(new Category(),"11","12",13,14.15,"16",17,18);
 	@Test
 	public void testTransaction()
 	{
@@ -83,9 +88,6 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testSetItemList() throws IOException, DataFileException, DataInputException
 	{
-		ProductMgr pm  = new ProductMgr(new Store());
-		Product product1 = pm.getProductByBarCode("1234");
-		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti1 = new TransactionItem(product1,2.3,4);
 		TransactionItem ti2 = new TransactionItem(product2,5.6,7);
 		ArrayList<TransactionItem> al1 = new ArrayList<TransactionItem>();
@@ -98,9 +100,6 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testGetItemList() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr(new Store());
-		Product product1 = pm.getProductByBarCode("1234");
-		Product product2 = pm.getProductByBarCode("6789");
 		TransactionItem ti1 = new TransactionItem(product1,2.3,4);
 		TransactionItem ti2 = new TransactionItem(product2,5.6,7);
 		ArrayList<TransactionItem> al1 = new ArrayList<TransactionItem>();
@@ -148,17 +147,13 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testAddItemProductInt() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr(new Store());
-		Product product1 = pm.getProductByBarCode("1234");
-		t.addItem(product1, 2);
+		t.addItem(product1,3.4,5);
 		assertEquals(t.getItemList().get(0).getProduct(),product1);
 	}
 
 	@Test
 	public void testAddItemProductDoubleInt() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr(new Store());
-		Product product1 = pm.getProductByBarCode("1234");
 		t.addItem(product1,40.41,42);
 		Product product2 = t.getItemList().get(0).getProduct();
 		assertEquals(product1,product2);
@@ -167,8 +162,6 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testRemoveItem() throws IOException, DataFileException
 	{
-		ProductMgr pm  = new ProductMgr(new Store());
-		Product product1 = pm.getProductByBarCode("1234");
 		t.addItem(product1,40.41,42);
 		t.removeItem(product1);
 		assertEquals(0,t.getItemList().size());
@@ -178,93 +171,38 @@ public class TransactionTest extends Transaction
 	public void testCalcTotalPrice()
 	{
 		ProductMgr pm = null;
-		try
-		{
-			pm = new ProductMgr(new Store());
-			pm.loadData();
-		} catch (IOException | DataFileException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Product p = pm.getProductById("CLO/1");
-		Product p2 = pm.getProductById("MUG/1");
-		Product p3 = pm.getProductById("STA/1");
-		t.addItem(p, 2);
-		t.addItem(p2, 3);
-		t.addItem(p3, 4);
-		assertTrue(p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4==t.calcTotalPrice());
+		t.addItem(product1,1.2,3);
+		t.addItem(product2,4.5,6);
+		assertTrue(1.2*3+4.5*6==t.calcTotalPrice());
 	}
 
 	@Test
 	public void testCalcDiscountPrice()
 	{
-		ProductMgr pm = null;
-		try
-		{
-			pm = new ProductMgr(new Store());
-			pm.loadData();
-		} catch (IOException | DataFileException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Product p = pm.getProductById("CLO/1");
-		Product p2 = pm.getProductById("MUG/1");
-		Product p3 = pm.getProductById("STA/1");
-		t.addItem(p, 2);
-		t.addItem(p2, 3);
-		t.addItem(p3, 4);
+		t = new Transaction();
+		t.addItem(product1,1.2,3);
+		t.addItem(product2,4.5,6);
 		t.setDiscount(discount);
-		assertTrue((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - discount.getPercent())/100==t.calcDiscountPrice());
+		assertTrue((1.2*3+4.5*6)* (100 - discount.getPercent())/100==t.calcDiscountPrice());
 	}
 
 	@Test
 	public void testCalcChange()
 	{
-		ProductMgr pm = null;
+		t = new Transaction();
 		t.setCashAmount(500.20);
-		try
-		{
-			pm = new ProductMgr(new Store());
-			pm.loadData();
-		} catch (IOException | DataFileException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Product p = pm.getProductById("CLO/1");
-		Product p2 = pm.getProductById("MUG/1");
-		Product p3 = pm.getProductById("STA/1");
-		t.addItem(p, 2);
-		t.addItem(p2, 3);
-		t.addItem(p3, 4);
+		t.addItem(product1,1.2,3);
+		t.addItem(product2,4.5,6);
 		t.setDiscount(discount);
-		assertTrue((500.20-(p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - discount.getPercent())/100)==t.calcChange());
+		assertTrue(CalcUtil.sub(500.2,CalcUtil.div((CalcUtil.mul((1.2*3+4.5*6),(100 - discount.getPercent()))),100))==t.calcChange());
 	}
 
 	@Test
 	public void testCalcGainedPoint()
 	{
-		ProductMgr pm = null;
-		try
-		{
-			pm = new ProductMgr(new Store());
-			pm.loadData();
-		} catch (IOException | DataFileException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Product p = pm.getProductById("CLO/1");
-		Product p2 = pm.getProductById("MUG/1");
-		Product p3 = pm.getProductById("STA/1");
-		t.addItem(p, 2);
-		t.addItem(p2, 3);
-		t.addItem(p3, 4);
+		t.addItem(product1,1.2,3);
+		t.addItem(product2,4.5,6);
 		t.setDiscount(discount);
-		System.out.println((int)((p.getPrice()*2+p2.getPrice()*3+p3.getPrice()*4)* (100 - 10)/1000));
-		System.out.println(t.calcGainedPoint());
 		assertTrue((int)(t.calcRest()*0.1)==t.calcGainedPoint());		
 	}
 
