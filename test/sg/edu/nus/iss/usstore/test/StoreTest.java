@@ -68,35 +68,42 @@ public class StoreTest {
 
     /**
      * Test of saveData method, of class Store.
+     * @throws DataFileException 
+     * @throws IOException 
      */
     @Test
-    public void testSaveData() throws Exception {
-    	/*
+    public void testSaveData() throws IOException, DataFileException {
+    	
         System.out.println("saveData");
         Store instance = new Store();
-        instance.saveData();
+        instance.loadData();
+        
+        try {
+			instance.saveData();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("save data method throws a unexpected exception");
+		}
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-        */
+
     }
 
     /**
      * Test of login method, of class Store.
+     * @throws DataFileException 
+     * @throws IOException 
      */
     @Test
-    public void testLogin() {
+    public void testLogin() throws IOException, DataFileException {
         System.out.println("login");
        
         Store instance = new Store();
         
         // load storekeeper data from file
-        try {
-			instance.loadData();
-		} catch (IOException | DataFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-  
+        
+		instance.loadData();
+		
         assertFalse(instance.login("",""));
 		assertFalse(instance.login(" ","  "));
 		assertFalse(instance.login(null,null));
@@ -166,57 +173,7 @@ public class StoreTest {
         assertEquals(result.getCustomer().getClass(), Member.class);
      
     }
-//
-//    /**
-//     * Test of addBillItem method, of class Store.
-//     */
-//    @Test
-//    public void testAddBillItem() throws Exception {
-//        System.out.println("addBillItem");
-//        Transaction transaction = null;
-//        String productId = "";
-//        int quantity = 0;
-//        Store instance = new Store();
-//        Transaction expResult = null;
-//        Transaction result = instance.addBillItem(transaction, productId, quantity);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of removeBillItem method, of class Store.
-//     */
-//    @Test
-//    public void testRemoveBillItem() {
-//        System.out.println("removeBillItem");
-//        Transaction transaction = null;
-//        String productId = "";
-//        Store instance = new Store();
-//        Transaction expResult = null;
-//        Transaction result = instance.removeBillItem(transaction, productId);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of setPayment method, of class Store.
-//     */
-//    @Test
-//    public void testSetPayment() {
-//        System.out.println("setPayment");
-//        Transaction transaction = null;
-//        double cash = 0.0;
-//        int redeemLoyaltyPoint = 0;
-//        Store instance = new Store();
-//        Transaction expResult = null;
-//        Transaction result = instance.setPayment(transaction, cash, redeemLoyaltyPoint);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
+
 //    /**
 //     * Test of confirmPayment method, of class Store.
 //     */
