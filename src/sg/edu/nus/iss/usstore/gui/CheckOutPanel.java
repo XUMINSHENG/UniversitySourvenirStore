@@ -33,8 +33,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import sg.edu.nus.iss.usstore.domain.Customer;
-import sg.edu.nus.iss.usstore.domain.Discount;
+import sg.edu.nus.iss.usstore.domain.BarCodeReader;
 import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Public;
@@ -76,6 +75,7 @@ public class CheckOutPanel extends JPanel
 	private JRadioButton jb3;
 	private JRadioButton jb4;
 	private TableColumn column;
+	private BarCodeReader br = new BarCodeReader();
 
 	private DecimalFormat df = new DecimalFormat("0.00");
 	private DefaultTableModel defaultModel;
@@ -119,7 +119,6 @@ public class CheckOutPanel extends JPanel
 	// control radio Button's select
 	public void setRadioButton()
 	{
-		System.out.println("start");
 		int sum = 0;
 		if (jb1.isSelected() == true)
 		{
@@ -137,35 +136,35 @@ public class CheckOutPanel extends JPanel
 		{
 			sum = sum + 8;
 		}
-	if (sum==5)
+		if (sum == 5)
 		{
 			JtMemberID.setEnabled(true);
 			JtBarCodeID.setEnabled(true);
 			JtQuantity.setEnabled(true);
 			JbMemberSubmit.setEnabled(true);
 			JbProductSubmit.setEnabled(true);
-		}
-	else if (sum==9)
+		} else if (sum == 9)
 		{
-			JtMemberID.setEnabled(false);
+			JtMemberID.setEnabled(true);
+			JtMemberID.setText(br.scanMemberId());
+			JtMemberID.setEditable(false);
 			JtBarCodeID.setEnabled(false);
 			JtQuantity.setEnabled(false);
 			JbMemberSubmit.setEnabled(true);
 			JbProductSubmit.setEnabled(true);
-		}
-	else if (sum==6)
+		} else if (sum == 6)
 		{
 			JtMemberID.setEnabled(false);
 			JtBarCodeID.setEnabled(true);
 			JtQuantity.setEnabled(true);
 			JbMemberSubmit.setEnabled(false);
 			JbProductSubmit.setEnabled(true);
-		}
-	else if (sum==10)
+		} else if (sum == 10)
 		{
 			JtMemberID.setEnabled(false);
 			JtBarCodeID.setEnabled(false);
 			JtQuantity.setEnabled(false);
+			JtQuantity.setText("1");
 			JbMemberSubmit.setEnabled(false);
 			JbProductSubmit.setEnabled(true);
 		}
@@ -795,7 +794,8 @@ public class CheckOutPanel extends JPanel
 		{
 			if (e.getActionCommand().equals("JbMemberSubmit"))
 			{
-				String MemberID = JtMemberID.getText();
+				String MemberID = null;
+				MemberID = JtMemberID.getText();
 				if (JtMemberID.getText().length() == 0)
 				{
 					jlTitle.setForeground(Color.RED);
@@ -822,7 +822,14 @@ public class CheckOutPanel extends JPanel
 			if (e.getActionCommand().equals("JbProductSubmit"))
 			{
 				flag = 1;
-				tempBarCode = JtBarCodeID.getText();
+				if (jb4.isSelected() == true)
+				{
+					tempBarCode = br.scanProductBarCode();
+					JtQuantity.setText("1");
+				} else
+				{
+					tempBarCode = JtBarCodeID.getText();
+				}
 				product = sa.getProductByBarCode(tempBarCode);
 				String tempqty = JtQuantity.getText();
 				if (tempBarCode.length() == 0)
