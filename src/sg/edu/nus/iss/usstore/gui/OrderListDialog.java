@@ -186,7 +186,7 @@ public class OrderListDialog extends JDialog {
 		System.out.println("\t"+"Vendor Name" +"\t|\t"+ "Product Id" + "\t|\t"+ 
 				"Product Name" + "\t|\t"+ "Order Quantity" + "\t|\t");
 		for(int i=0;i<data.length;i++){
-			System.out.println("\t"+data[i][0] +"\t|\t"+ data[i][1] + "\t|\t"+ 
+			System.out.println("\t"+data[i][0] +"\t|\t"+ data[i][1] + "\t|\t"+
 		data[i][2] + "\t|\t"+ data[i][3] + "\t|\t");
 		}
 		System.out.println("---------------End-----------------");
