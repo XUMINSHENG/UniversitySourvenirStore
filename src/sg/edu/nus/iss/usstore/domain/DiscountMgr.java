@@ -89,7 +89,7 @@ public class DiscountMgr {
 	
 	
 /**
- * 
+ * according to customer id and loyalty point
  * @param customerId
  * @param loyaltyPoint
  * @return
@@ -98,7 +98,7 @@ public class DiscountMgr {
 	
 		
 	/* maximum disc*/
-	public double getMaxDiscount(String customerId,int loyaltyPoint){
+/*	public double getMaxDiscount(String customerId,int loyaltyPoint){
 		boolean isMember = false;
 		boolean hasTransaction=false;
 		double maxDiscount=0;
@@ -151,11 +151,11 @@ public class DiscountMgr {
 						
 		return maxDiscount;
 		
-	}
+	}*/
 
 	/**
 	 * according to customer's type, return the applicable and highest discount
-	 * 
+	 * @tanuj
 	 * @param customer
 	 * @return highest discount (may be null)
 	 */

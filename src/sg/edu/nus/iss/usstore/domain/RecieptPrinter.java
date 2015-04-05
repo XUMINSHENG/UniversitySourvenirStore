@@ -36,11 +36,11 @@ public class RecieptPrinter {
 		System.out.println(String.format("%0$"+12+"s", String.format("%1$-" + 5 + "s", item.calculateAmount())));
 		System.out.println("-------------------------------------------------------------------------------------");
 		}
-		System.out.print(String.format("%0$"+70+"s", "Total Price   :"));
+		System.out.print(String.format("%0$"+70+"s", "Total Price   :S$ "));
 		System.out.println(String.format("%0$"+5+"s", String.format("%1$-" + 5 + "s", Math.round(transaction.calcTotalPrice()))));
-		System.out.print(String.format("%0$"+70+"s", "Discount   :"));
+		System.out.print(String.format("%0$"+70+"s", "Discount   :S$ "));
 		System.out.println(String.format("%0$"+5+"s", String.format("%1$-" + 5 + "s", Math.round((transaction.calcTotalPrice()-transaction.calcDiscountPrice())))));
-		System.out.print(String.format("%0$"+70+"s", "Final Price   :"));
+		System.out.print(String.format("%0$"+70+"s", "Final Price   :S$ "));
 		System.out.println(String.format("%0$"+5+"s", String.format("%1$-" + 5 + "s",  Math.round( transaction.calcDiscountPrice()))));
 		System.out.println("#####################################################################################");
 	}
