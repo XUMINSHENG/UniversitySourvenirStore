@@ -76,6 +76,7 @@ public class CheckOutPanel extends JPanel
 
 	private DecimalFormat df = new DecimalFormat("0.00");
 	private DefaultTableModel defaultModel;
+	private double tempChange;
 
 	private Customer customer = null;
 	private Product product = null;
@@ -121,11 +122,18 @@ public class CheckOutPanel extends JPanel
 		JlDiscountedPriceNum
 				.setText(df.format(transaction.calcDiscountPrice()));
 		JlRestNum.setText(df.format(transaction.calcRest()));
+		if(transaction.calcChange()>=0)
+		JlChangeNum.setText(df.format(transaction.calcChange()));
 		if (transaction.getCustomer() instanceof Member)
 		{
 			Member member = (Member) transaction.getCustomer();
 			JlgetMemberName.setText(member.name);
-			JlLoyalPointNum.setText(Integer.toString(member.getLoyaltyPoint()));
+			if(member.getLoyaltyPoint()==0)
+			JlLoyalPointNum.setText("0");
+			else
+			{
+				JlLoyalPointNum.setText(Integer.toString(member.getLoyaltyPoint()));
+			}
 			JtPaidNum.setEnabled(true);
 		} else
 		{
@@ -496,7 +504,7 @@ public class CheckOutPanel extends JPanel
 				transaction.setCashAmount(DcashNum);
 				if (DcashNum > 0)
 				{
-					double tempChange = transaction.calcChange();
+					tempChange = transaction.calcChange();
 					if (tempChange >= 0)
 					{
 						JlChangeNum.setText(df.format(tempChange));
@@ -715,8 +723,8 @@ public class CheckOutPanel extends JPanel
 							jlTitle.setText("Check Out");
 							}
 					}
-					setOutputValue();
 				}
+				setOutputValue();
 			}
 			if (e.getActionCommand().equals("JbProductSubmit"))
 			{
@@ -789,8 +797,8 @@ public class CheckOutPanel extends JPanel
 						tableDataBinding();
 					}
 					table.revalidate();
-					setOutputValue();
 				}
+				setOutputValue();
 			}
 			if (e.getActionCommand().equals("JbCancel"))
 			{
@@ -815,12 +823,19 @@ public class CheckOutPanel extends JPanel
 			{
 				JtMemberID.setEnabled(true);
 				JbMemberSubmit.setEnabled(true);
+				setOutputValue();
 			}
 			if (e.getActionCommand().equals("jb2"))
 			{
 				transaction = sa.setBillCustomer(transaction,"");
 				JtMemberID.setEnabled(false);
 				JbMemberSubmit.setEnabled(false);
+				if(jlTitle.getText()==ERR_MSG_MEMBER_NOT_EXIST)
+				{
+					jlTitle.setForeground(Color.BLACK);
+					jlTitle.setText("Check Out");
+				}
+				setOutputValue();
 			}
 		}
 	}
