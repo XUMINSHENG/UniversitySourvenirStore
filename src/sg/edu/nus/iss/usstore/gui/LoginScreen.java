@@ -101,7 +101,6 @@ public class LoginScreen extends javax.swing.JFrame {
 					LoginFrame.getContentPane().add(PwdField, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 10, 0, 0), 0, 0));
 					PwdField.setPreferredSize(new java.awt.Dimension(125, 23));
 					PwdField.setSize(125, 23);
-					PwdField.setRequestFocusEnabled(false);
 					PwdField.setMinimumSize(new java.awt.Dimension(125, 23));
 				}
 				LoginFrame.pack();
