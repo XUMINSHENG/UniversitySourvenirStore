@@ -300,7 +300,7 @@ public class CheckOutPanel extends JPanel
 		// jp2
 		JLabel JlMemberName = new JLabel("MEMBER  ");
 		JlgetMemberName = new JLabel("PUBLIC");
-		JbMemberSubmit = new JButton("Update Member");
+		JbMemberSubmit = new JButton("Set Member");
 		JbMemberSubmit.setEnabled(false);
 		JbMemberSubmit.setActionCommand("JbMemberSubmit");
 		JbMemberSubmit.addActionListener(listener);
@@ -333,7 +333,7 @@ public class CheckOutPanel extends JPanel
 		JLabel JlQuantity = new JLabel("QUANTITY");
 		JtQuantity = new JTextField(6);
 		JtQuantity.setDocument(new IntDocument());
-		JButton JbProductSubmit = new JButton("Add       Product ");
+		JButton JbProductSubmit = new JButton("Add Product");
 		tempBarCode = JtBarCodeID.getText();
 		product = sa.getProductByBarCode(tempBarCode);
 		JbProductSubmit.setActionCommand("JbProductSubmit");
