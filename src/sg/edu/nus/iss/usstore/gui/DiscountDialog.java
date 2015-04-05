@@ -86,7 +86,8 @@ public class DiscountDialog extends JDialog {
 					Applicable.setText("M");
 				StartDate.setText("Always");
 				Period.setText("Always");
-				
+				StartDate.setEditable(false);
+				Period.setEditable(false);
 				}
 				
 					
@@ -110,6 +111,8 @@ public class DiscountDialog extends JDialog {
 					Applicable.setText("A");
 				    StartDate.setText(null);
 				    Period.setText(null);
+				    StartDate.setEditable(true);
+				    Period.setEditable(true);
 				}
 			}
 		});
@@ -171,9 +174,10 @@ public class DiscountDialog extends JDialog {
 		Applicable.setBounds(140, 160, 200, 20);
 		contentPanel.add(Applicable);
 		Applicable.setColumns(10);
+		Applicable.setEditable(false);
 
 		JButton ADDButton = new JButton("ADD");
-		ADDButton.setBounds(6, 194, 89, 23);
+		ADDButton.setBounds(180, 194, 89, 23);
 		contentPanel.add(ADDButton);
 		ADDButton.addActionListener(new ActionListener() {
 			
@@ -196,22 +200,22 @@ public class DiscountDialog extends JDialog {
 			}
 		});
 
-		JButton btnModify = new JButton("Modify");
-		btnModify.setBounds(104, 194, 89, 23);
-		contentPanel.add(btnModify);
-
-		JButton btnDelete = new JButton("Delete");
-		btnDelete.setBounds(203, 194, 89, 23);
-		contentPanel.add(btnDelete);
-
-		JButton btnReset = new JButton("Reset");
-		btnReset.setBounds(298, 194, 89, 23);
-		contentPanel.add(btnReset);
-		{
-			{
-				//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{getContentPane(), contentPanel, rdbtnMemDisc, rdbtnOcaDisc, lblDiscountcode, DiscountCode, lblDiscountDescription, DiscountDescription, lblStartDate, StartDate, lblPeriod, lblPercent, lblApplicable, Period, Percent, Applicable, btnNewButton, btnNewButton_1, btnNewButton_2, btnNewButton_3}));
-			}
-		}
+//		JButton btnModify = new JButton("Modify");
+//		btnModify.setBounds(104, 194, 89, 23);
+//		contentPanel.add(btnModify);
+//
+//		JButton btnDelete = new JButton("Delete");
+//		btnDelete.setBounds(203, 194, 89, 23);
+//		contentPanel.add(btnDelete);
+//
+//		JButton btnReset = new JButton("Reset");
+//		btnReset.setBounds(298, 194, 89, 23);
+//		contentPanel.add(btnReset);
+//		{
+//			{
+//				setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{getContentPane(), contentPanel, rdbtnMemDisc, rdbtnOcaDisc, lblDiscountcode, DiscountCode, lblDiscountDescription, DiscountDescription, lblStartDate, StartDate, lblPeriod, lblPercent, lblApplicable, Period, Percent, Applicable, btnNewButton, btnNewButton_1, btnNewButton_2, btnNewButton_3}));
+//			}
+//		}
 
 	}
 }
