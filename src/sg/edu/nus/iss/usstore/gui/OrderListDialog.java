@@ -183,12 +183,28 @@ public class OrderListDialog extends JDialog {
 	
 	private void printer(){
 		System.out.println("Replenish Order List");
-		System.out.println("\t"+"Vendor Name" +"\t|\t"+ "Product Id" + "\t|\t"+ 
-				"Product Name" + "\t|\t"+ "Order Quantity" + "\t|\t");
+	//	System.out.println("\t"+"Vendor Name" +"\t|\t"+ "Product Id" + "\t|\t"+ 
+	//			"Product Name" + "\t|\t"+ "Order Quantity" + "\t|\t");
+		System.out.println("===============================================================================");
+		System.out.print(String.format("%1$-" + 15 + "s", "Vendor Name"  + "\t|" ));
+		System.out.print(String.format("%0$"+10+"s", String.format("%1$-" + 5 + "s",  "Product Id" )));
+		System.out.print(String.format("%0$"+15+"s", String.format("%1$-" + 5+ "s","\t|"+  "Product Name" )));
+		System.out.println(String.format("%0$"+20+"s", String.format("%1$-" + 5 + "s","\t|"+  "Order Quantity"+"\t|")));
+		System.out.println("===============================================================================");
+		
 		for(int i=0;i<data.length;i++){
-			System.out.println("\t"+data[i][0] +"\t|\t"+ data[i][1] + "\t|\t"+
-		data[i][2] + "\t|\t"+ data[i][3] + "\t|\t");
+			System.out.print(String.format("%1$-" + 10 + "s", data[i][0]   ));
+			System.out.print(String.format("%0$"+10+"s", String.format("%1$-" + 5 + "s", "\t|"+ data[i][1] )));
+			System.out.print(String.format("%0$"+10+"s", String.format("%1$-" + 5+ "s","\t|"+  data[i][2] )));
+			System.out.println(String.format("%0$"+10+"s", String.format("%1$-" + 5 + "s","\t|"+  data[i][3]+"\t|")));
+			
+			
+			
+			
+			
+		//	System.out.println("\t"+data[i][0] +"\t|\t"+ data[i][1] + "\t|\t"+
+	//	data[i][2] + "\t|\t"+ data[i][3] + "\t|\t");
 		}
-		System.out.println("---------------End-----------------");
+		System.out.println("----------------------------------------End----------------------------------------");
 	}
 }
