@@ -208,8 +208,8 @@ public class Store {
 	
 //  -------------------- discount related methods	-------------------
 	public ArrayList<Discount> registerDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, int percent, String Applicable){
-		return discountMgr.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
+			int percent, String Applicable){
+		return discountMgr.registerDiscount(discountCode, discountDescription, percent, Applicable);
 	}
 	
 //  -------------------- product related methods	-------------------

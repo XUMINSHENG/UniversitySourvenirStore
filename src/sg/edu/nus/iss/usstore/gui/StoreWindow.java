@@ -470,7 +470,6 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("discount list");
 				changeCard("discountList");
 			}
 		});

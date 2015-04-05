@@ -52,9 +52,9 @@ public class DiscountMgr {
 	 * @return
 	 */
 	public ArrayList<Discount> registerDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, int percent, String Applicable) {
+			int percent, String Applicable) {
 
-		discountList.add(new MemberDiscount(discountCode, discountDescription, period, Applicable));
+		discountList.add(new MemberDiscount(discountCode, discountDescription, percent, Applicable));
 		return discountList;
 	}
 

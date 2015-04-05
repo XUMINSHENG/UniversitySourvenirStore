@@ -325,8 +325,8 @@ public class StoreApplication {
 	 * @param Applicable
 	 */
 	public void addMemberDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, int percent, String Applicable ){
-		store.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
+			int percent, String Applicable ){
+		store.registerDiscount(discountCode, discountDescription, percent, Applicable);
 	}
 	
 	public void addOcassionalDiscount(String discountCode, String discountDescription,
