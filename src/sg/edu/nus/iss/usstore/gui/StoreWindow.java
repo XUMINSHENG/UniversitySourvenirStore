@@ -272,6 +272,61 @@ public class StoreWindow extends JFrame{
 		menu.add(menuItem);
 		menuBar.add(menu);
 		
+		//Reports Menu
+		menu = new JMenu("Reports");
+		menuItem = new JMenuItem("Category Report");
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				setEnabled(false);
+				CategoryReport catReport = new CategoryReport(manager);
+				catReport.setVisible(true);
+			}
+		});
+		menu.add(menuItem);		
+
+		menuItem = new JMenuItem("Product Report");
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				setEnabled(false);
+				ProductReport prodReport = new ProductReport(manager);
+				prodReport.setVisible(true);
+			}
+		});
+		menu.add(menuItem);		
+		menuItem = new JMenuItem("Transaction Report");
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				setEnabled(false);
+				TransactionReport transactionReport = new TransactionReport(manager);
+				transactionReport.setVisible(true);
+			}
+		});
+		menu.add(menuItem);		
+
+		menuItem = new JMenuItem("Member Report");
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				setEnabled(false);
+				MemberReport memReport = new MemberReport(manager);
+				memReport.setVisible(true);
+			}
+		});
+		menu.add(menuItem);		
+
+		menuBar.add(menu);
+		
 		return menuBar;
 	}
 	
@@ -571,7 +626,6 @@ public class StoreWindow extends JFrame{
 				System.out.println("Category Report");
 				setEnabled(false);
 				CategoryReport catReport = new CategoryReport(manager);
-				catReport.show(true);
 				catReport.setVisible(true);
 				//changeCard("discountList");
 			}
@@ -594,7 +648,6 @@ public class StoreWindow extends JFrame{
 				System.out.println("Product Report");
 				setEnabled(false);
 				ProductReport prodReport = new ProductReport(manager);
-				prodReport.show(true);
 				prodReport.setVisible(true);
 				//changeCard("discountList");
 			}
@@ -617,7 +670,6 @@ public class StoreWindow extends JFrame{
 				System.out.println("Transaction Report");
 				setEnabled(false);
 				TransactionReport transactionReport = new TransactionReport(manager);
-				transactionReport.show(true);
 				transactionReport.setVisible(true);
 				//changeCard("discountList");
 			}
@@ -640,7 +692,6 @@ public class StoreWindow extends JFrame{
 				System.out.println("Member Report");
 				setEnabled(false);
 				MemberReport memReport = new MemberReport(manager);
-				memReport.show(true);
 				memReport.setVisible(true);
 				//changeCard("discountList");
 			}
