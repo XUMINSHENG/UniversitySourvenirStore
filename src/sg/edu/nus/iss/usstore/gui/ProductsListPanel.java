@@ -217,7 +217,7 @@ public class ProductsListPanel extends JPanel{
 		});
 		label.setLabelFor(filterText);
 		
-		JButton b = new JButton("Refresh");
+		JButton b = new JButton("RELOAD");
 		b.addActionListener(new ActionListener() {
 			
 			@Override

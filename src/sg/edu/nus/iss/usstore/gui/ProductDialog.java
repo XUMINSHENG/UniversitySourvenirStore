@@ -32,7 +32,7 @@ public class ProductDialog extends JDialog{
 	private static final long serialVersionUID = 1L;
 	private StoreApplication manager;
 	private StoreWindow mainScreen;
-	private String id;
+	//private String id;
 	
 	private JTextField idText;
 	private JTextField nameText;
@@ -52,15 +52,13 @@ public class ProductDialog extends JDialog{
 		initGUI();
 		add("South",createAddBottomPanel());
 		String code = (String)categoryList.getSelectedItem();
-		this.id = manager.getNewProductIdByCategory(code);
-		idText.setText(id);
+		idText.setText(manager.getNewProductIdByCategory(code));
 	}
 	
 	public ProductDialog(StoreApplication manager,String title,String id){
 		super(manager.getStoreWindow(),title);
 		this.manager = manager;
 		this.mainScreen = manager.getStoreWindow();
-		this.id = id;
 		initGUI();
 		add("South",createModifyBottomPanel());
 		Product p = manager.getProductById(id);
@@ -87,9 +85,9 @@ public class ProductDialog extends JDialog{
 		p.setBorder(new EmptyBorder(10, 10, 0, 10));
 		
 		JPanel panel = new JPanel(new GridLayout(9,1));
-		panel.add(new JLabel("Name: "));
-		panel.add(new JLabel("Id: "));
 		panel.add(new JLabel("Category: "));
+		panel.add(new JLabel("Id: "));
+		panel.add(new JLabel("Name: "));
 		panel.add(new JLabel("Description: "));
 		panel.add(new JLabel("Price: "));
 		panel.add(new JLabel("Avaliable Quantity: "));
@@ -118,9 +116,10 @@ public class ProductDialog extends JDialog{
 		orderQtyText = new JTextField();
 		orderQtyText.setDocument(new IntDocument());
 		panel = new JPanel(new GridLayout(9,1));
-		panel.add(nameText);
-		panel.add(idText);
+		
 		panel.add(categoryList);
+		panel.add(idText);
+		panel.add(nameText);
 		panel.add(descriptionText);
 		panel.add(priceText);
 		panel.add(quantityText);
@@ -190,13 +189,13 @@ public class ProductDialog extends JDialog{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				//Product newProduct = new Product("4","animal","pig","something",12,20,"c123",100,200);
-				
+				//System.out.println("add");
 				try {
 					if(validateData()){
-						manager.addProduct((String)categoryList.getSelectedItem(),getNameText(),getCategoryText(),getDescriptionText(),
+						manager.addProduct(idText.getText(),getNameText(),getCategoryText(),getDescriptionText(),
 									getQuantityText(),getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
-					
 						mainScreen.getProductListPanel().refreshTable();
+						dispose();
 					}
 				} catch (DataInputException e) {
 					// TODO Auto-generated catch block
@@ -226,6 +225,7 @@ public class ProductDialog extends JDialog{
 				if(categoryList.getSelectedIndex()!=-1){
 					String code = (String)categoryList.getSelectedItem();
 					idText.setText(manager.getNewProductIdByCategory(code));
+					
 				}
 			}
 		});
@@ -245,14 +245,14 @@ public class ProductDialog extends JDialog{
 				
 				try {
 					if(validateData()){
-						manager.modifyProduct(id,getNameText(),getCategoryText(),getDescriptionText(),getQuantityText(),
+						manager.modifyProduct(idText.getText(),getNameText(),getCategoryText(),getDescriptionText(),getQuantityText(),
 									getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
 						
 						//manager.modifyProduct(newProduct, index);
 						mainScreen.getProductListPanel().refreshTable();
 						dispose();
 					}else{
-						System.out.println("invalid data");
+						JOptionPane.showMessageDialog(getParent(), "Invalid data","Error",JOptionPane.WARNING_MESSAGE);
 					}
 				} catch (DataInputException e) {
 					// TODO Auto-generated catch block
@@ -303,16 +303,16 @@ public class ProductDialog extends JDialog{
 	}
 	
 	private void deleteVendorMouseClicked(ActionEvent evt) {
-		if(validDel(id)){
-			String msg = "The product '" + id + "' will be deleted";
+		if(validDel(idText.getText())){
+			String msg = "The product '" + idText.getText() + "' will be deleted";
 			int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
 	       	if (n == 0){
-				manager.deleteProduct(id);
+				manager.deleteProduct(idText.getText());
 				mainScreen.getProductListPanel().refreshTable();
 				dispose();
 	       	}
 		}else{
-			String msg = "This product `"+ id + "` is associated with some transaction";
+			String msg = "This product `"+ idText.getText() + "` is associated with some transaction";
        		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
 		}
 	}
