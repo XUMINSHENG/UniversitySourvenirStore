@@ -105,7 +105,8 @@ public class StoreWindow extends JFrame{
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
-		
+		//lock the size of window
+		setResizable(false);
 	}
 	
 	private WindowListener windorListener = new WindowAdapter (){
