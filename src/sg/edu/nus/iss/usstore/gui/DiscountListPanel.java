@@ -68,7 +68,7 @@ public class DiscountListPanel extends JPanel{
 				
 			}else if (d instanceof OcassionalDiscount){
 				data[i][2] = Util.dateToString(((OcassionalDiscount)d).getStartDate());
-				data[i][2] = ((OcassionalDiscount)d).getPeriod();
+				data[i][3] = ((OcassionalDiscount)d).getPeriod();
 				data[i][5] = "A";
 			}
 			data[i][0] = d.getDiscountcode();

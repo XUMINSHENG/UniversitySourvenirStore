@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,10 +19,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.jdatepicker.JDateComponentFactory;
+import org.jdatepicker.JDatePicker;
+
 import sg.edu.nus.iss.usstore.domain.MemberDiscount;
 import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
+import sg.edu.nus.iss.usstore.util.IntDocument;
 import sg.edu.nus.iss.usstore.util.Util;
 /**
  * 
@@ -37,7 +42,7 @@ public class DiscountDialog extends JDialog {
 	private JTextField Period;
 	private JTextField Percent;
 	private JTextField Applicable;
-
+	private JDatePicker startDatePicker;
 	//private DiscountMgr discountlist;
 
 	private JRadioButton rdbtnOcaDisc;
@@ -79,7 +84,7 @@ public class DiscountDialog extends JDialog {
 		createDeleteButton();
 		if(ifMember){
 			setTitle("Member Discount");
-			StartDate.setEditable(false);
+			//StartDate.setEditable(false);
 			StartDate.setText("ALWAYS");
 			Period.setEditable(false);
 			Period.setText("ALWAYS");
@@ -161,62 +166,73 @@ public class DiscountDialog extends JDialog {
 		contentPanel.setLayout(null);
 
 		JLabel lblDiscountcode = new JLabel("Discount Code:");
-		lblDiscountcode.setBounds(6, 37, 100, 23);
+		lblDiscountcode.setBounds(6, 38, 100, 25);
 		contentPanel.add(lblDiscountcode);
 
 		DiscountCode = new JTextField();
-		DiscountCode.setBounds(140, 38, 200, 20);
+		DiscountCode.setBounds(140, 38, 200, 25);
 		contentPanel.add(DiscountCode);
 		DiscountCode.setColumns(10);
 
 		JLabel lblDiscountDescription = new JLabel("Discount Description :");
-		lblDiscountDescription.setBounds(6, 63, 125, 14);
+		lblDiscountDescription.setBounds(6, 63, 125, 25);
 		contentPanel.add(lblDiscountDescription);
 
 		DiscountDescription = new JTextField();
-		DiscountDescription.setBounds(140, 60, 200, 20);
+		DiscountDescription.setBounds(140, 63, 200, 25);
 		contentPanel.add(DiscountDescription);
 		DiscountDescription.setColumns(10);
 
 		JLabel lblPercent = new JLabel("Percent :");
-		lblPercent.setBounds(6, 88, 99, 14);
+		lblPercent.setBounds(6, 88, 99, 25);
 		contentPanel.add(lblPercent);
 		
+		Percent = new JTextField();
+		Percent.setBounds(140, 88, 200, 25);
+		contentPanel.add(Percent);
+		Percent.setColumns(10);
+		
 		JLabel lblStartDate = new JLabel("Start Date :");
-		lblStartDate.setBounds(6, 113, 99, 14);
+		lblStartDate.setBounds(6, 114, 99, 28);
 		contentPanel.add(lblStartDate);
+		
+		startDatePicker = new JDateComponentFactory().createJDatePicker();
+		startDatePicker.setTextEditable(false);
+		startDatePicker.setShowYearButtons(true);
+		((JComponent)startDatePicker).setBounds(140,114,200,28);
+		contentPanel.add((JComponent)startDatePicker);
+		
+		
 
-		StartDate = new JTextField();
-		StartDate.setBounds(140, 110, 200, 20);
-		contentPanel.add(StartDate);
-		StartDate.setColumns(10);
+//		StartDate = new JTextField();
+//		StartDate.setBounds(140, 114, 200, 28);
+//		contentPanel.add(StartDate);
+//		StartDate.setColumns(10);
 
 		JLabel lblPeriod = new JLabel("Period :");
-		lblPeriod.setBounds(6, 138, 95, 14);
+		lblPeriod.setBounds(6, 143, 99, 25);
 		contentPanel.add(lblPeriod);
-
-		JLabel lblApplicable = new JLabel("Applicable :");
-		lblApplicable.setBounds(6, 163, 109, 14);
-		contentPanel.add(lblApplicable);
-
+		
 		Period = new JTextField();
-		Period.setBounds(140, 135, 200, 20);
+		Period.setBounds(140, 143, 200, 25);
 		contentPanel.add(Period);
 		Period.setColumns(10);
 
-		Percent = new JTextField();
-		Percent.setBounds(140, 85, 200, 20);
-		contentPanel.add(Percent);
-		Percent.setColumns(10);
-
+		JLabel lblApplicable = new JLabel("Applicable :");
+		lblApplicable.setBounds(6, 170, 109, 25);
+		contentPanel.add(lblApplicable);
+		
 		Applicable = new JTextField();
-		Applicable.setBounds(140, 160, 200, 20);
+		Applicable.setBounds(140, 170, 200, 25);
 		contentPanel.add(Applicable);
 		Applicable.setColumns(10);
 		Applicable.setEditable(false);
+		
+		Percent.setDocument(new IntDocument());
+		Period.setDocument(new IntDocument());
 
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(250, 194, 89, 23);
+		btnCancel.setBounds(250, 200, 89, 25);
 		btnCancel.addActionListener(new ActionListener() {
 			
 			@Override
@@ -237,7 +253,7 @@ public class DiscountDialog extends JDialog {
 	
 	private void createAddButton(){
 		JButton ADDButton = new JButton("ADD");
-		ADDButton.setBounds(100, 194, 89, 23);
+		ADDButton.setBounds(100, 200, 89, 25);
 		contentPanel.add(ADDButton);
 		ADDButton.addActionListener(new ActionListener() {
 			
@@ -269,7 +285,7 @@ public class DiscountDialog extends JDialog {
 
 	private void createModiyButton(){
 		JButton MButton = new JButton("MODIFY");
-		MButton.setBounds(30, 194, 89, 23);
+		MButton.setBounds(30, 200, 89, 25);
 		contentPanel.add(MButton);
 		MButton.addActionListener(new ActionListener() {
 			
@@ -290,7 +306,7 @@ public class DiscountDialog extends JDialog {
 				} catch (DataInputException e1) {
 					// TODO Auto-generated catch block
 					//e1.printStackTrace();
-					JOptionPane.showMessageDialog(getParent(), "Invalid data","Error",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(getParent(),e1.getMessage(),"Error",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -299,7 +315,7 @@ public class DiscountDialog extends JDialog {
 
 	private void createDeleteButton(){
 		JButton btnDelete = new JButton("DELETE");
-		btnDelete.setBounds(140, 194, 89, 23);
+		btnDelete.setBounds(140, 200, 89, 25);
 		btnDelete.addActionListener(new ActionListener() {
 			
 			@Override
@@ -313,8 +329,16 @@ public class DiscountDialog extends JDialog {
 	}
 
 	private boolean valifyData() throws DataInputException{
-		if(DiscountCode.getText().isEmpty()||DiscountDescription.getText().isEmpty()||Percent.getText().isEmpty()||StartDate.getText().isEmpty()||Period.getText().isEmpty()){
-			throw new DataInputException("Invalid data");
+		if(DiscountCode.getText().isEmpty()){
+			throw new DataInputException("Code is void");
+		}else if(DiscountDescription.getText().isEmpty()){
+			throw new DataInputException("Description is void");
+		}else if(Percent.getText().isEmpty()){
+			throw new DataInputException("Percemt code is void");
+		}else if(StartDate.getText().isEmpty()){
+			throw new DataInputException("Start date code is void");
+		}else if(Period.getText().isEmpty()){
+			throw new DataInputException("Period is void");
 		}
 		return true;
 	}
