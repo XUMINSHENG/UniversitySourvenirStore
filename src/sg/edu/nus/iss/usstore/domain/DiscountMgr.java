@@ -58,13 +58,13 @@ public class DiscountMgr {
 		return discountList;
 	}
 
-	public ArrayList<Discount> getdiscountList(){
+	public ArrayList<Discount> getDiscountList(){
 
 		return discountList;
 
 	}
 
-	public Discount getdiscountCode(String discountCode) {
+	public Discount getDiscountCode(String discountCode) {
 		Iterator<Discount> i = discountList.iterator();
 		while (i.hasNext()) {
 			Discount disc = i.next();
@@ -83,76 +83,6 @@ public class DiscountMgr {
 	}
 
 	
-	
-	
-	
-	
-	
-/**
- * according to customer id and loyalty point
- * @param customerId
- * @param loyaltyPoint
- * @return
- */
-	
-	
-		
-	/* maximum disc*/
-/*	public double getMaxDiscount(String customerId,int loyaltyPoint){
-		boolean isMember = false;
-		boolean hasTransaction=false;
-		double maxDiscount=0;
-	    Date currentDate= new Date();
-		
-		ArrayList<Discount> discList = new ArrayList<Discount>();
-		
-		if(! customerId.equalsIgnoreCase("Public"))
-		{
-			isMember=true	;	
-		}	
-		if(loyaltyPoint!=-1)
-		{
-		
-		hasTransaction=true;
-		}
-		
-		discList= this.getDiscountlist();
-		
-		for(Discount d:discList)
-		{
-			if (d instanceof MemberDiscount && isMember){
-			    
-				if(!hasTransaction && d.getDiscountcode().equalsIgnoreCase("MEMBER_FIRST")){
-					 if(maxDiscount < d.getPercent()){
-						maxDiscount=d.getPercent();							  
-					 }		
-				}
-				else if(!d.getDiscountcode().equalsIgnoreCase("MEMBER_FIRST")){
-				
-					if(maxDiscount < d.getPercent()){
-						maxDiscount=d.getPercent();							  
-					}		
-				}
-	
-			} 
-			else if (d instanceof OcassionalDiscount)
-			{
-				OcassionalDiscount od = (OcassionalDiscount)d;
-				if(od.getStartDate().compareTo(currentDate) <= 0 && 
-					Util.addDays(od.getStartDate(),od.getPeriod()).compareTo(currentDate) >=0 ) {
-					if(maxDiscount < d.getPercent())
-					{
-						maxDiscount=d.getPercent();			  
-					}	
-				}
-			}
-			
-		}
-						
-		return maxDiscount;
-		
-	}*/
-
 	/**
 	 * according to customer's type, return the applicable and highest discount
 	 * @tanuj
@@ -198,16 +128,48 @@ public class DiscountMgr {
 		return maxDiscount;
 	}
 
-	public void modifyDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, double percent, String applicable) {
-		// TODO Auto-generated method stub
+	public void addDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, int percent, String Applicable){
+		
+		Discount newDiscount = new OcassionalDiscount(discountCode,  discountDescription,
+				 startDate,  period,  percent,  Applicable);
+		
+		this.discountList.add(newDiscount);
 		
 	}
+	
 
-	public void deleteDiscount(int index) {
-		// TODO Auto-generated method stub
-		
+	public void modifyMemberDiscount(String discountCode, String discountDescription,
+			 int percent) {
+		Discount result = getDiscountByCode(discountCode);
+		result.setDiscountDescription(discountDescription);
+		result.setPercent(percent);
+	}
+	
+	public void modifyOcassionalDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, int percent) {
+		Discount result = getDiscountByCode(discountCode);
+
+		OcassionalDiscount od = (OcassionalDiscount) result;
+		od.setDiscountDescription(discountDescription);
+		od.setStartDate(startDate);
+		od.setPeriod(period);
+		od.setPercent(percent);
+	}
+
+	public void deleteDiscount(String code) {
+		discountList.remove(getDiscountByCode(code));	
 	} 
 
+	private Discount getDiscountByCode(String code){
+		Discount result = null;
+		for(Discount d:discountList){
+			if (code.equals(d.getDiscountcode())){
+				result = d;
+				break;
+			}
+		}
+		return result;
+	}
 
 }

@@ -321,12 +321,50 @@ public class StoreApplication {
 		return storeWindow;
 	}
 
-
+	/**
+	 * 
+	 * @param discountCode
+	 * @param discountDescription
+	 * @param startDate
+	 * @param period
+	 * @param percent
+	 * @param Applicable
+	 */
 	public void addDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, double percent, String Applicable) {
-		// TODO Auto-generated method stub
-		store.addDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
+			Date startDate, int period, double percent, String Applicable ){
+		store.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
 	}
 	
+	/**
+	 * 
+	 * @param discountCode
+	 * @param discountDescription
+	 * @param percent
+	 */
+	public void modifyMemberDiscount(String discountCode, String discountDescription,
+			int percent){
+		store.modifyMemberDiscount(discountCode, discountDescription, percent);
+	}
+	
+	/**
+	 * 
+	 * @param discountCode
+	 * @param discountDescription
+	 * @param startDate
+	 * @param period
+	 * @param percent
+	 */
+	public void modifyOcassionalDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, int percent){
+		store.modifyOcassionalDiscount(discountCode, discountDescription, startDate, period, percent);
+	}
+	
+	/**
+	 * 
+	 * @param code
+	 */
+	public void deleteDiscount(String code){
+		store.deleteDiscount(code);
+	}
 
 }

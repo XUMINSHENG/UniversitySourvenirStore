@@ -33,6 +33,41 @@ public abstract class Discount {
 		return discountDescription;
 	}
 	
+	/**
+	 * @return the discountCode
+	 */
+	public String getDiscountCode() {
+		return discountCode;
+	}
+
+	/**
+	 * @param discountCode the discountCode to set
+	 */
+	public void setDiscountCode(String discountCode) {
+		this.discountCode = discountCode;
+	}
+
+	/**
+	 * @param discountDescription the discountDescription to set
+	 */
+	public void setDiscountDescription(String discountDescription) {
+		this.discountDescription = discountDescription;
+	}
+
+	/**
+	 * @param percent the percent to set
+	 */
+	public void setPercent(int percent) {
+		this.percent = percent;
+	}
+
+	/**
+	 * @param applicable the applicable to set
+	 */
+	public void setApplicable(String applicable) {
+		Applicable = applicable;
+	}
+
 	public int getPercent() {
 		return percent;
 	}
@@ -50,7 +85,7 @@ public abstract class Discount {
 	public Discount getHigherDiscount(Discount discount){
 		if ((discount == null) || (this.getPercent() > discount.getPercent())) 
 			return this;
-	else 
+		else 
 			return discount;
 	}
 

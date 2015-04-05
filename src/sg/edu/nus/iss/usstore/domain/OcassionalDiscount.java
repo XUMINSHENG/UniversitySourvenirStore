@@ -20,6 +20,20 @@ public class OcassionalDiscount extends Discount {
 		this.period=period;
 	}
 
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * @param period the period to set
+	 */
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+
 	public Date getStartDate() {
 		// TODO Auto-generated method stub
 		return startDate;

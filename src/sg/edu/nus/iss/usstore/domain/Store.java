@@ -409,33 +409,53 @@ public class Store {
 		categoryMgr.switchVendorPrefForCategory(categoryCode, upVendorName, downVendorName);
 	}
 	
-
-
-	/** discount related 
+	 // --------------------- discount related ----------------------------------
+	/**
 	 * 
+	 * @param discountCode
+	 * @param discountDescription
+	 * @param startDate
+	 * @param period
+	 * @param percent
+	 * @param Applicable
 	 */
 	public void addDiscount(String discountCode, String discountDescription,
 			Date startDate, int period, double percent, String Applicable ){
-		
 		discountMgr.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
-	}
-	
-
-	public void modifyDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, double percent, String Applicable){
-		discountMgr.modifyDiscount( discountCode,  discountDescription,
-				 startDate, period,  percent,  Applicable);
-		
 	}
 	
 	/**
 	 * 
-	 * @param index
+	 * @param discountCode
+	 * @param discountDescription
+	 * @param percent
 	 */
-	public void deleteDiscount(int index){
-		discountMgr.deleteDiscount(index);
+	public void modifyMemberDiscount(String discountCode, String discountDescription,
+			int percent){
+		discountMgr.modifyMemberDiscount(discountCode, discountDescription, percent);
 	}
 	
+	/**
+	 * 
+	 * @param discountCode
+	 * @param discountDescription
+	 * @param startDate
+	 * @param period
+	 * @param percent
+	 */
+	public void modifyOcassionalDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, int percent){
+		discountMgr.modifyOcassionalDiscount(discountCode, discountDescription, startDate, period, percent);
+	}
+	
+	/**
+	 * 
+	 * @param code
+	 */
+	public void deleteDiscount(String code){
+		discountMgr.deleteDiscount(code);
+	}
+
 	/**
 	 * 
 	 * @return
