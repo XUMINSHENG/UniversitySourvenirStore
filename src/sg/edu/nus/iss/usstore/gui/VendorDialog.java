@@ -26,7 +26,7 @@ public class VendorDialog extends javax.swing.JDialog {
     private String VendorDescription  = new String();
     private Category selectedCategory;
     private ArrayList<Category> CategoryList = new ArrayList<Category>();
-    private ArrayList<Vendor> UI_VendorList = new ArrayList<Vendor>();
+    //private ArrayList<Vendor> UI_VendorList = new ArrayList<Vendor>();
     private DefaultTableModel tableModel = 
     		new javax.swing.table.DefaultTableModel(new Object [][] { },columnNames) {
         /**
@@ -387,12 +387,7 @@ public class VendorDialog extends javax.swing.JDialog {
         this.selectedCategory = getSelectedCategory(categoryCode);
         this.TF_CategoryCode.setText(this.selectedCategory.getCode());
         this.TF_CategoryName.setText(this.selectedCategory.getName());
-           
-        this.UI_VendorList = selectedCategory.getVendorList();
-        
-        if(this.UI_VendorList.isEmpty())
-            this.UI_VendorList = new ArrayList<Vendor>();
-        
+            
         this.LoadTable();
         
         btnEnableCtl();
@@ -467,12 +462,7 @@ public class VendorDialog extends javax.swing.JDialog {
         this.selectedCategory = getSelectedCategory(categoryCode);
         this.TF_CategoryCode.setText(selectedCategory.getCode());
         this.TF_CategoryName.setText(selectedCategory.getName());
-        
-        this.UI_VendorList = selectedCategory.getVendorList();
-        
-        if(this.UI_VendorList.isEmpty())
-        	this.UI_VendorList = new ArrayList<Vendor>();
-        
+                
         this.LoadList();
         this.tableModel = (DefaultTableModel) this.T_SSA_VendorTable.getModel();//Creating Table model
         
@@ -482,15 +472,15 @@ public class VendorDialog extends javax.swing.JDialog {
     private void LoadTable()
     {
         tableModel.setRowCount(0);
-        if(this.UI_VendorList != null) 
+        if(this.selectedCategory.getVendorList() != null) 
 	    {  
-	        for(int i = 0;i < this.UI_VendorList.size() ; i++)
+	        for(int i = 0;i < selectedCategory.getVendorList().size() ; i++)
 	        {   
 	            this.tableModel.addRow(
 	            		new Object[]{
-	            				this.UI_VendorList.get(i).getName(),
-	            				this.UI_VendorList.get(i).getDescription(),
-	            				this.UI_VendorList.get(i).getPreference()
+	            				selectedCategory.getVendorList().get(i).getName(),
+	            				selectedCategory.getVendorList().get(i).getDescription(),
+	            				selectedCategory.getVendorList().get(i).getPreference()
 	            				}
 	            		);
 	        }
@@ -532,7 +522,7 @@ public class VendorDialog extends javax.swing.JDialog {
         boolean result = true;
     	
     	// duplicate check
-        for(Vendor vendor : this.UI_VendorList){
+        for(Vendor vendor : selectedCategory.getVendorList()){
         	if(vendor.getName().equals(this.VendorName)){
         		result = false;
             	break;
@@ -547,7 +537,7 @@ public class VendorDialog extends javax.swing.JDialog {
     	
         String selectedVendorName =  this.tableModel.getValueAt(this.T_SSA_VendorTable.getSelectedRow(),0).toString();
     	// duplicate check
-        for(Vendor vendor : this.UI_VendorList){
+        for(Vendor vendor : selectedCategory.getVendorList()){
         	// skip the one that be updated
         	if (vendor.getName().equals(selectedVendorName))continue;
         	

@@ -27,8 +27,6 @@ public class VendorDao extends BaseDao {
 	 */
 	public void loadDataFromFile(ArrayList<Category> categoryList) throws IOException, DataFileException {
 		
-		//ArrayList<Vendor> allVendorList = new ArrayList<Vendor>();
-		
 		for(Category category : categoryList){
 			
 			// file name example: vendors MUG .dat
