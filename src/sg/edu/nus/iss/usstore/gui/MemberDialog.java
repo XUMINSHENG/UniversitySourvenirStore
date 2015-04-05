@@ -9,11 +9,12 @@ import javax.swing.border.EmptyBorder;
 import sg.edu.nus.iss.usstore.domain.*;
 import sg.edu.nus.iss.usstore.util.StringDocument;
 
+/**
+ * @author Achyut Suresh Rao
+ */
+
 public class MemberDialog extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private StoreApplication manager;
 	private StoreWindow mainScreen;

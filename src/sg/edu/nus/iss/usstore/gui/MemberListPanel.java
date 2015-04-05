@@ -13,6 +13,10 @@ import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 
+/**
+ * @author Achyut Suresh Rao
+ */
+
 public class MemberListPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -25,10 +29,6 @@ public class MemberListPanel extends JPanel {
 	private JTable memberTable;
 	private DefaultTableModel tableModel;
 
-	/**
-	 * 
-	 * @param manager
-	 */
 	public MemberListPanel(StoreApplication manager) {
 		this.manager = manager;
 		setLayout(new BorderLayout());
@@ -51,10 +51,6 @@ public class MemberListPanel extends JPanel {
 		return data;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	private JPanel createTopPanel() {
 		JPanel p = new JPanel(new BorderLayout());
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -76,17 +72,10 @@ public class MemberListPanel extends JPanel {
 		return p;
 	}
 
-	/**
-	 * 
-	 * @param data
-	 * @return
-	 */
 	private Container createMiddlePanel(Object[][] data) {
 
 		tableModel = new DefaultTableModel(data, columnNames) {
-			/**
-			 * 
-			 */
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -182,12 +171,12 @@ public class MemberListPanel extends JPanel {
 
 						String msg = "This Member " + id
 								+ " is associated with some transaction!";
-						JOptionPane.showConfirmDialog(null, msg, "Alert",
-								JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null, msg, "Cannot Delete!", JOptionPane.WARNING_MESSAGE);
 					}
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Cannot Delete - Minimum threshold reached!",
+					JOptionPane.showMessageDialog(null,
+							"Cannot Delete - Minimum threshold reached!",
 							"Alert", JOptionPane.WARNING_MESSAGE);
 				}
 			}
@@ -214,9 +203,6 @@ public class MemberListPanel extends JPanel {
 		tableModel.fireTableDataChanged();
 	}
 
-	/**
-	 * 
-	 */
 	public boolean validDel(String id) {
 		boolean result = true;
 		for (Transaction trans : this.manager.getTransactionList()) {
