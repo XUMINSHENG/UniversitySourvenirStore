@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.usstore.domain.StoreKeeper;
-import sg.edu.nus.iss.usstore.exception.DataFileException;
 
 /**
  * @author CHARAN

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import sg.edu.nus.iss.usstore.domain.Discount;
-import sg.edu.nus.iss.usstore.domain.DiscountMgr;
 import sg.edu.nus.iss.usstore.domain.MemberDiscount;
 import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
