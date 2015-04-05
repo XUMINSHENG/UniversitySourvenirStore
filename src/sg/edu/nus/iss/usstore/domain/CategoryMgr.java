@@ -113,15 +113,7 @@ public class CategoryMgr {
 		Category category = this.getCategoryByCode(code);
 		this.categoryList.remove(category);
 	}
-	
-	/**
-	 * 
-	 * @param category
-	 * @param newVendorList
-	 */
-	public void updVendorForCategory(Category category, ArrayList<Vendor> newVendorList){
-		category.setVendorList(newVendorList);
-	}
+
 	
 	/**
 	 * 
