@@ -24,7 +24,7 @@ public class CategoryTest
 		vendorList = new ArrayList<Vendor>();
 		vendorList.add(v1);
 		vendorList.add(v2);
-		c1 = new Category("ARS", "Always Ready to Serve", vendorList);
+		c1 = new Category("MOB", "Mobile Phone", vendorList);
 	}
 	
 	@Test
