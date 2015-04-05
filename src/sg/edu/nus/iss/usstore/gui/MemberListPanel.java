@@ -2,7 +2,6 @@ package sg.edu.nus.iss.usstore.gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -11,7 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import sg.edu.nus.iss.usstore.domain.Member;
-import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 
 public class MemberListPanel extends JPanel {
@@ -164,23 +163,28 @@ public class MemberListPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				int result = JOptionPane.YES_NO_OPTION;
-				int dialogResult = JOptionPane.showConfirmDialog(null,
-						"Do you want to delete the Member?", "Delete Member",
-						result);
-				if(dialogResult == JOptionPane.YES_OPTION){
-					try {
-						delMemBtnClicked();
-					} catch (DataFileException | IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				String id = (String) memberTable.getValueAt(
+						memberTable.getSelectedRow(), 1);
+				if (validDel(id)) {
+					String msg = "Member '" + id + "' will be deleted";
+					int n = JOptionPane.showConfirmDialog(null, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
+					if (n == 0) {
+						// proceed deletion
+						manager.removeMember(id);
+						refreshTable();
+						
 					}
-				}else{
-				
+				} else {
+					String msg = "This Member " + id
+							+ " is associated with some transaction";
+					JOptionPane.showConfirmDialog(null, msg, "Alert",
+							JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
 		});
+	
+	
 		deleteButton.setEnabled(false);
 		p.add(deleteButton);
 
@@ -206,13 +210,32 @@ public class MemberListPanel extends JPanel {
 	/**
 	 * 
 	 */
-	private void delMemBtnClicked() throws DataFileException, IOException {
+	/*private void delMemBtnClicked() throws DataFileException, IOException {
 		String id = (String) memberTable.getValueAt(
 				memberTable.getSelectedRow(), 1);
-
-		manager.removeMember(id);
+		boolean result = true;
+		for (Transaction trans : this.manager.getTransactionList()) {
+			if (trans.getCustomer().equals(this.manager.getMemberById(id))) {
+				result = false;
+			}
+		}
+		if (!result) {
+			manager.removeMember(id);
+		} else {
+			JOptionPane.showMessageDialog(new JFrame(), "");
+		}
 
 		refreshTable();
+	}*/
+	public boolean validDel(String id){
+		boolean result = true;
+		for(Transaction trans:this.manager.getTransactionList()){
+			if(trans.getCustomer()==this.manager.getMemberById(id)){
+				result = false;
+				break;
+			}
+		}
+		return result;
 	}
 
 }
