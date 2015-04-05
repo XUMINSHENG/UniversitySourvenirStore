@@ -15,10 +15,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -67,6 +69,9 @@ public class CheckOutPanel extends JPanel
 	private JTable table;
 	private JButton JbFinish;
 	private JButton JbBack;
+	private JButton JbMemberSubmit;
+	private JRadioButton jb1;
+	private JRadioButton jb2;
 	private TableColumn column;
 
 	private DecimalFormat df = new DecimalFormat("0.00");
@@ -215,7 +220,7 @@ public class CheckOutPanel extends JPanel
 		}
 		// refresh UI
 		{
-			JlgetMemberName.setText(null);
+			JlgetMemberName.setText("PUBLIC");
 			JlTotalPriceNum.setText(Double.toString(transaction
 					.calcTotalPrice()));
 			JlDiscountNum.setText(Double.toString(transaction.getDiscount()
@@ -233,6 +238,10 @@ public class CheckOutPanel extends JPanel
 			JtCashNum.setText(null);
 			jlTitle.setForeground(Color.BLACK);
 			jlTitle.setText("Check Out");
+			jb2.setSelected(true);	
+			JtMemberID.setEnabled(false);
+			JbMemberSubmit.setEnabled(false);
+			
 		}
 	}
 	//draw UI
@@ -262,9 +271,22 @@ public class CheckOutPanel extends JPanel
 		JPanel jp4 = new JPanel();
 
 		// jp1
-		JLabel JlMemberID = new JLabel("MEMBER ID");
-		JtMemberID = new JTextField(24);
+		JLabel JlMemberID = new JLabel(" MEMBER ID");
+		JtMemberID = new JTextField(10);
+		ButtonGroup bg = new ButtonGroup();
+		jb1 = new JRadioButton("Member");
+		jb2 = new JRadioButton("PUBLIC");
+		bg.add(jb1);
+		jb1.setActionCommand("jb1");
+		jb1.addActionListener(listener);
+		jb2.setActionCommand("jb2");
+		jb2.addActionListener(listener);;
+		bg.add(jb2);
+		jb2.setSelected(true);
+		JtMemberID.setEnabled(false);
 		jp1.setLayout(new FlowLayout(FlowLayout.LEFT));
+		jp1.add(jb1);
+		jp1.add(jb2);
 		jp1.add(JlMemberID);
 		jp1.add(JtMemberID);
 		jpInput.add(jp1);
@@ -272,7 +294,8 @@ public class CheckOutPanel extends JPanel
 		// jp2
 		JLabel JlMemberName = new JLabel("MEMBER  ");
 		JlgetMemberName = new JLabel("PUBLIC");
-		JButton JbMemberSubmit = new JButton("Update Member");
+		JbMemberSubmit = new JButton("Update Member");
+		JbMemberSubmit.setEnabled(false);
 		JbMemberSubmit.setActionCommand("JbMemberSubmit");
 		JbMemberSubmit.addActionListener(listener);
 		jp2.setLayout(new GridLayout(1, 2));
@@ -787,6 +810,17 @@ public class CheckOutPanel extends JPanel
 			if (e.getActionCommand().equals("JbBack"))
 			{
 				sa.getStoreWindow().changeCard("mainScreen");
+			}
+			if (e.getActionCommand().equals("jb1"))
+			{
+				JtMemberID.setEnabled(true);
+				JbMemberSubmit.setEnabled(true);
+			}
+			if (e.getActionCommand().equals("jb2"))
+			{
+				transaction = sa.setBillCustomer(transaction,"");
+				JtMemberID.setEnabled(false);
+				JbMemberSubmit.setEnabled(false);
 			}
 		}
 	}
