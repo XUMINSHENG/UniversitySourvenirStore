@@ -261,7 +261,7 @@ public class DiscountListPanel extends JPanel{
 				int rowIndex = productTable.convertRowIndexToModel(productTable.getSelectedRow());
 				int columnIndex = productTable.getColumnModel().getColumnIndex("Code");
 				String code = (String)tableModel.getValueAt(rowIndex, columnIndex);
-				columnIndex = productTable.getColumnModel().getColumnIndex("Application");
+				columnIndex = productTable.getColumnModel().getColumnIndex("Applicable");
 				String role = (String)tableModel.getValueAt(rowIndex, columnIndex);
 				if(role.equals("M")){
 					DiscountDialog d = new DiscountDialog(manager,code,true);

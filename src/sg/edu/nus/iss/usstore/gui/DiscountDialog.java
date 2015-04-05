@@ -98,6 +98,7 @@ public class DiscountDialog extends JDialog {
 			StartDate.setText(Util.dateToString((o.getStartDate())));
 			Period.setText(Integer.toString(o.getPeriod()));
 		}
+		DiscountCode.setEditable(false);
 	}
 	
 	private void createTopButton(){
