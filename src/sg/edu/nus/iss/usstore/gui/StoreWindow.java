@@ -231,7 +231,14 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("add category");
+				if(manager.getCategoryList().isEmpty()){
+					String msg = "Need to have a category at least";
+		       		JOptionPane.showMessageDialog(getParent(),msg, "Alert",JOptionPane.WARNING_MESSAGE);
+				}else{
+					String code = manager.getCategoryList().get(0).getCode();
+					 VendorDialog vendorDlg = new VendorDialog(manager, code);
+			         vendorDlg.setVisible(true);
+				}
 			}
 		});
 		menu.add(menuItem);
@@ -258,6 +265,7 @@ public class StoreWindow extends JFrame{
 				// TODO Auto-generated method stub
 				try {
 					DiscountDialog dialog = new DiscountDialog(manager);
+					dialog.setVisible(true);
 				} catch (IOException | DataFileException | DataInputException e1) {
 					// TODO Auto-generated catch block
 					//e1.printStackTrace();
