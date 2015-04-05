@@ -43,6 +43,7 @@ public class OrderListDialog extends JDialog {
 	private final String[] columnNames = { "Vendor Name", "Product Id",
 			"Product Name", "Order Quantity" };
 	private StoreApplication manager;
+	private Object[][] data;
 
 	public OrderListDialog(StoreApplication manager) {
 		super(manager.getStoreWindow(), "Purchase Order List");
@@ -78,7 +79,7 @@ public class OrderListDialog extends JDialog {
 	}
 
 	public Container createCenterPanel() {
-		Object[][] data = loadTableData(manager.getPurchaseOrder().getOrderList());
+		data = loadTableData(manager.getPurchaseOrder().getOrderList());
 		
 		tableModel = new DefaultTableModel(data, columnNames) {
 			@Override
@@ -134,7 +135,9 @@ public class OrderListDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				JOptionPane.showMessageDialog(null, "Printer Here");
+				printer();
+				JOptionPane.showMessageDialog(null, "Print to console already!");
+				dispose();
 			}
 		});
 		p.add(b);
@@ -176,5 +179,16 @@ public class OrderListDialog extends JDialog {
 			// }
 		}
 		return data;
+	}
+	
+	private void printer(){
+		System.out.println("Replenish Order List");
+		System.out.println("\t"+"Vendor Name" +"\t|\t"+ "Product Id" + "\t|\t"+ 
+				"Product Name" + "\t|\t"+ "Order Quantity" + "\t|\t");
+		for(int i=0;i<data.length;i++){
+			System.out.println("\t"+data[i][0] +"\t|\t"+ data[i][1] + "\t|\t"+ 
+		data[i][2] + "\t|\t"+ data[i][3] + "\t|\t");
+		}
+		System.out.println("---------------End-----------------");
 	}
 }
