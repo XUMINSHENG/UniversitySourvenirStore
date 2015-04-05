@@ -19,6 +19,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -60,6 +61,7 @@ public class CheckOutPanel extends JPanel
 	private JLabel JlLoyalPointNum;
 	private JLabel JlRestNum;
 	private JLabel JlChangeNum;
+	private JLabel jlTips;
 	private JTextField JtBarCodeID;
 	private JTextField JtQuantity;
 	private JTextField JtMemberID;
@@ -86,14 +88,14 @@ public class CheckOutPanel extends JPanel
 	private int scrollpanelheight = 270;
 	private int flag = 0;
 	private String tempBarCode;
-	private Vector vector = new Vector<Object>();
+	private Vector<Object> vector = new Vector<Object>();
 	private Listener listener = new Listener();
 	private StoreApplication sa = null;
 	private Transaction transaction;
 
-	private final String ERR_MSG_MEMBER_NOT_EXIST = "Error MemberID!";
-	private final String ERR_MSG_PRODCUT_NOT_EXIST = "No product!";
-	private final String ERR_MSG_BARCODE_ERROR = "Bar Code Error!";
+	private final String ERR_MSG_MEMBER_NOT_EXIST = "Invalid MemberID!";
+	private final String ERR_MSG_PRODCUT_NOT_EXIST = "Invalid Bar Code!";
+	private final String ERR_MSG_BARCODE_ERROR = "Invalid Bar Code!";
 	private final String ERR_MSG_QUANTITY_FORMAT_ERROR = "Quantity Format Error";
 	private final String ERR_MSG_QUANTITY_NOT_ENOUGH = "Quantity is not Enough!";
 	private final String ERR_MSG_POINT_FORMAT_ERROR = "Point Format Error!";
@@ -140,6 +142,7 @@ public class CheckOutPanel extends JPanel
 		{
 			JtMemberID.setEnabled(true);
 			JtBarCodeID.setEnabled(true);
+			JtMemberID.setEditable(true);
 			JtQuantity.setEnabled(true);
 			JbMemberSubmit.setEnabled(true);
 			JbProductSubmit.setEnabled(true);
@@ -152,8 +155,10 @@ public class CheckOutPanel extends JPanel
 			JtQuantity.setEnabled(false);
 			JbMemberSubmit.setEnabled(true);
 			JbProductSubmit.setEnabled(true);
+				
 		} else if (sum == 6)
 		{
+	
 			JtMemberID.setEnabled(false);
 			JtBarCodeID.setEnabled(true);
 			JtQuantity.setEnabled(true);
@@ -161,6 +166,7 @@ public class CheckOutPanel extends JPanel
 			JbProductSubmit.setEnabled(true);
 		} else if (sum == 10)
 		{
+
 			JtMemberID.setEnabled(false);
 			JtBarCodeID.setEnabled(false);
 			JtQuantity.setEnabled(false);
@@ -233,7 +239,7 @@ public class CheckOutPanel extends JPanel
 
 		for (int i = 0; i < itemList.size(); i++)
 		{
-			Vector subVector = new Vector();
+			Vector<Object> subVector = new Vector<Object>();
 			subVector.add(i + 1);
 			TransactionItem transactionitem = (TransactionItem) itemList.get(i);
 			product = transactionitem.getProduct();
@@ -309,9 +315,9 @@ public class CheckOutPanel extends JPanel
 			jlTitle.setForeground(Color.BLACK);
 			jlTitle.setText("Check Out");
 			jb2.setSelected(true);
+			jb3.setSelected(true);
 			JtMemberID.setEnabled(false);
 			JbMemberSubmit.setEnabled(false);
-
 		}
 	}
 
@@ -335,7 +341,8 @@ public class CheckOutPanel extends JPanel
 
 		jpinputSelect.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel jlDateEntity = new JLabel("Date Entry Type:");
-		JLabel jlTips  = new JLabel("If you choose 'Bar Code Reader', please enter data in console screen!");
+		jlTips = new JLabel();
+		jlTips.setForeground(Color.BLUE);
 		ButtonGroup bg2 = new ButtonGroup();
 		jb3 = new JRadioButton("Manual");
 		jb4 = new JRadioButton("Bar Code Reader");
@@ -350,7 +357,8 @@ public class CheckOutPanel extends JPanel
 		jpinputSelect.add(jb3);
 		jpinputSelect.add(jb4);
 		jpinputSelect.add(jlTips);
-
+		jlTips.setText("If you choose 'Member'&'Bar Code Reader', please enter data in console screen!");
+		
 		jpTitleSelect.add(jlTitle);
 		jpTitleSelect.add(jpinputSelect);
 		jpOperation.add(jpTitleSelect);
@@ -731,6 +739,11 @@ public class CheckOutPanel extends JPanel
 
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer()
 		{
+			/**
+			 * Override Cell Renderer to change color of the table
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public Component getTableCellRendererComponent(JTable table,
 					Object value, boolean isSelected, boolean hasFocus,
 					int row, int column)
@@ -834,7 +847,7 @@ public class CheckOutPanel extends JPanel
 				}
 				product = sa.getProductByBarCode(tempBarCode);
 				String tempqty = JtQuantity.getText();
-				if (tempBarCode.length() == 0)
+				if (tempBarCode.length() == 0||product==null)
 				{
 					jlTitle.setForeground(Color.RED);
 					jlTitle.setText(ERR_MSG_BARCODE_ERROR);
@@ -850,13 +863,13 @@ public class CheckOutPanel extends JPanel
 						.parseInt(tempqty))
 				{
 					jlTitle.setForeground(Color.RED);
-					jlTitle.setText(ERR_MSG_QUANTITY_NOT_ENOUGH);
+					jlTitle.setText(ERR_MSG_QUANTITY_NOT_ENOUGH + "Only " +product.getQuantityAvailable() +" is Available !");
 				} else
 				{
 					int intqty = Integer.parseInt(tempqty);
 					if (jlTitle.getText() == ERR_MSG_PRODCUT_NOT_EXIST
 							|| jlTitle.getText() == ERR_MSG_BARCODE_ERROR
-							|| jlTitle.getText() == ERR_MSG_QUANTITY_NOT_ENOUGH
+							|| jlTitle.getText().substring(0,10).equals("Quantity i")
 							|| jlTitle.getText() == ERR_MSG_QUANTITY_FORMAT_ERROR)
 					{
 						jlTitle.setForeground(Color.BLACK);
@@ -904,7 +917,14 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbCancel"))
 			{
-				cancelAll();
+
+				String msg = "Cancel this Transaction ?";
+				int n = JOptionPane.showConfirmDialog(null, msg,
+						"Confirmation", JOptionPane.YES_NO_OPTION);
+				if (n == 0)
+				{
+					cancelAll();
+				}
 			}
 			if (e.getActionCommand().equals("JbFinish"))
 			{
@@ -928,7 +948,14 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbBack"))
 			{
-				sa.getStoreWindow().changeCard("mainScreen");
+				String msg = "Back to Main Screen?";
+				int n = JOptionPane.showConfirmDialog(null, msg,
+						"Confirmation", JOptionPane.YES_NO_OPTION);
+				if (n == 0)
+				{
+					cancelAll();
+					sa.getStoreWindow().changeCard("mainScreen");
+				}
 			}
 			if (e.getActionCommand().equals("jb1"))
 			{

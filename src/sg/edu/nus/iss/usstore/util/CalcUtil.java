@@ -60,15 +60,4 @@ public class CalcUtil
 		BigDecimal b2 = new BigDecimal(Double.toString(v2));
 		return b1.divide(b2).doubleValue();
 	}
-//	public static void main(String[]args)
-//	{
-//		double a = 21.45;
-//		double b = 3;
-//		CalcUtil cu = new CalcUtil();
-//		System.out.println(cu.add(a, b));
-//		System.out.println(cu.sub(a, b));
-//		System.out.println(cu.div(a, b));
-//		System.out.println(cu.mul(a, b));
-//		
-//	}
 }// /~
