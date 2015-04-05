@@ -26,11 +26,11 @@ public class TransactionMgr
 		td = new TransactionDao(new Store());
 		transactionList = new ArrayList<>();
 	}
-	
+	// load data
 	public void loadData() throws IOException, DataFileException{
 		transactionList = td.loadDataFromFile();
 	}
-	
+	// save date
 	public void save() throws IOException
 	{
 		td.saveDataToFile(transactionList);
