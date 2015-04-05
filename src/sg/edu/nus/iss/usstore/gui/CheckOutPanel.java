@@ -291,8 +291,8 @@ public class CheckOutPanel extends JPanel
 		jb2.setSelected(true);
 		JtMemberID.setEnabled(false);
 		jp1.setLayout(new FlowLayout(FlowLayout.LEFT));
-		jp1.add(jb1);
 		jp1.add(jb2);
+		jp1.add(jb1);
 		jp1.add(JlMemberID);
 		jp1.add(JtMemberID);
 		jpInput.add(jp1);
@@ -690,12 +690,13 @@ public class CheckOutPanel extends JPanel
 		JbBack = new JButton("Back");
 		JbBack.setActionCommand("JbBack");
 		JbBack.addActionListener(listener);
-		jpButton.add(JlBlank1);
-		jpButton.add(JbBack);
-		jpButton.add(JlBlank2);
+
 		jpButton.add(JbDelete);
 		jpButton.add(JbCancel);
 		jpButton.add(JbFinish);
+		jpButton.add(JlBlank1);
+		jpButton.add(JlBlank2);
+		jpButton.add(JbBack);
 		this.add(jpButton, BorderLayout.EAST);
 	}
 	//Button ActionListener
