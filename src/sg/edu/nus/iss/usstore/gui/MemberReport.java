@@ -124,7 +124,7 @@ public class MemberReport extends javax.swing.JFrame {
 					System.out.println("this.windowClosed, event="+evt);
 					//TODO add your code for this.windowClosed
 					manager.getStoreWindow().setEnabled(true);
-					manager.getStoreWindow().show();
+					manager.getStoreWindow().setVisible(true);
 				}
 			});
 		} catch (Exception e) {
