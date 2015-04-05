@@ -64,11 +64,10 @@ public class StoreWindow extends JFrame{
 	private JPanel cards;
 	private ProductsListPanel productListPanel;
 	private CheckInventoryPanel checkInventoryPanel;
-	//private LoginPanel loginPanel;
 	private CheckOutPanel checkOutPanel;
 	private MemberListPanel memberListPanel;
-	//private ProductListPanel productListPanel;
 	private CategoryListPanel categoryListPanel;
+	private DiscountListPanel discountListPanel;
 	private final Dimension size = new Dimension(150, 100);
 	private final Dimension space = new Dimension(20, 0);
 	
@@ -85,7 +84,7 @@ public class StoreWindow extends JFrame{
 		this.checkInventoryPanel = new CheckInventoryPanel(manager);
 		this.categoryListPanel = new CategoryListPanel(manager);
 		this.memberListPanel = new MemberListPanel(manager);
-		
+		this.discountListPanel = new DiscountListPanel(manager);
 		
 		//register cards with cardName
 		cards.add(createMainPanel(),"mainScreen");
@@ -94,6 +93,7 @@ public class StoreWindow extends JFrame{
 		cards.add(checkInventoryPanel,"checkInventory");
 		cards.add(categoryListPanel,"categoryList");
 		cards.add(memberListPanel,"memberList");
+		cards.add(discountListPanel,"discountList");
 		setContentPane(cards);
 		
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -253,7 +253,7 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("Discount List");
+				changeCard("discountList");
 			}
 		});
 		menu.add(menuItem_1);
@@ -263,14 +263,9 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				try {
-					DiscountDialog dialog = new DiscountDialog(manager);
-					dialog.setVisible(true);
-				} catch (IOException | DataFileException | DataInputException e1) {
-					// TODO Auto-generated catch block
-					//e1.printStackTrace();
-					JOptionPane.showMessageDialog(getParent(), "error","Alert",JOptionPane.WARNING_MESSAGE);
-				}
+				
+				DiscountDialog dialog = new DiscountDialog(manager);
+				dialog.setVisible(true);
 			}
 		});
 		menu.add(menuItem);
@@ -476,7 +471,7 @@ public class StoreWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("discount list");
-				//changeCard("discountList");
+				changeCard("discountList");
 			}
 		});
 		p.add(button);
@@ -494,13 +489,9 @@ public class StoreWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				try {
-					DiscountDialog dialog = new DiscountDialog(manager);
-				} catch (IOException | DataFileException | DataInputException e1) {
-					// TODO Auto-generated catch block
-					//e1.printStackTrace();
-					JOptionPane.showMessageDialog(getParent(), "error","Alert",JOptionPane.WARNING_MESSAGE);
-				}
+				
+				DiscountDialog dialog = new DiscountDialog(manager);
+				
 				//dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				
 			}
