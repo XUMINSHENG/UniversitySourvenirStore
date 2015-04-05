@@ -208,7 +208,7 @@ public class Store {
 	
 //  -------------------- discount related methods	-------------------
 	public ArrayList<Discount> registerDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, double percent, String Applicable){
+			Date startDate, int period, int percent, String Applicable){
 		return discountMgr.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
 	}
 	
@@ -420,8 +420,8 @@ public class Store {
 	 * @param Applicable
 	 */
 	public void addDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, double percent, String Applicable ){
-		discountMgr.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
+			Date startDate, int period, int percent, String Applicable ){
+		discountMgr.addDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
 	}
 	
 	/**
@@ -464,4 +464,7 @@ public class Store {
 		return discountMgr.getDiscountlist();
 	}
 
+	public Discount getDiscountByCode(String code){
+		return discountMgr.getDiscountByCode(code);
+	}
 }

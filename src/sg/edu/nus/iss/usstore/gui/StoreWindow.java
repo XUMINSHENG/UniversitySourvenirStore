@@ -671,5 +671,8 @@ public class StoreWindow extends JFrame{
 		return memberListPanel;
 	}
 	
+	public DiscountListPanel getDiscountListPanel(){
+		return discountListPanel;
+	}
 	
 }

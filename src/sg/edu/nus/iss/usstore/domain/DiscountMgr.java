@@ -52,7 +52,7 @@ public class DiscountMgr {
 	 * @return
 	 */
 	public ArrayList<Discount> registerDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, double percent, String Applicable) {
+			Date startDate, int period, int percent, String Applicable) {
 
 		discountList.add(new MemberDiscount(discountCode, discountDescription, period, Applicable));
 		return discountList;
@@ -161,7 +161,7 @@ public class DiscountMgr {
 		discountList.remove(getDiscountByCode(code));	
 	} 
 
-	private Discount getDiscountByCode(String code){
+	public Discount getDiscountByCode(String code){
 		Discount result = null;
 		for(Discount d:discountList){
 			if (code.equals(d.getDiscountcode())){

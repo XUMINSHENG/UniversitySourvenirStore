@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import sg.edu.nus.iss.usstore.domain.MemberDiscount;
+import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.Util;
@@ -43,6 +44,7 @@ public class DiscountDialog extends JDialog {
 	private JRadioButton rdbtnMemDisc;
 	
 	private StoreApplication manager;
+	private boolean ifMember;
 
 	/**
 	 * Launch the application.
@@ -71,6 +73,7 @@ public class DiscountDialog extends JDialog {
 	public DiscountDialog(StoreApplication manager, String code,boolean ifMember){
 		super(manager.getStoreWindow());
 		this.manager = manager;
+		this.ifMember = ifMember;
 		initGUI();
 		createModiyButton();
 		createDeleteButton();
@@ -81,10 +84,19 @@ public class DiscountDialog extends JDialog {
 			Period.setEditable(false);
 			Period.setText("ALWAYS");
 			Applicable.setText("M");
-			
+			MemberDiscount m = (MemberDiscount)manager.getDiscountByCode(code);
+			DiscountCode.setText(m.getDiscountCode());
+			DiscountDescription.setText(m.getDiscountDescription());
+			Percent.setText(Integer.toString(m.getPercent()));
 		}else{
 			setTitle("Ocassional Discount");
 			Applicable.setText("A");
+			OcassionalDiscount o = (OcassionalDiscount)manager.getDiscountByCode(code);
+			DiscountCode.setText(o.getDiscountCode());
+			DiscountDescription.setText(o.getDiscountDescription());
+			Percent.setText(Integer.toString(o.getPercent()));
+			StartDate.setText(Util.dateToString((o.getStartDate())));
+			Period.setText(Integer.toString(o.getPeriod()));
 		}
 	}
 	
@@ -101,6 +113,7 @@ public class DiscountDialog extends JDialog {
 					Period.setText("Always");
 					StartDate.setEditable(false);
 					Period.setEditable(false);
+					ifMember = true;
 				}
 				
 					
@@ -126,6 +139,7 @@ public class DiscountDialog extends JDialog {
 				    Period.setText(null);
 				    StartDate.setEditable(true);
 				    Period.setEditable(true);
+				    ifMember = false;
 				}
 			}
 		});
@@ -230,17 +244,22 @@ public class DiscountDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					String code = DiscountCode.getText();
-					String description = DiscountDescription.getText();
-					String startDate = StartDate.getText();
-					if (startDate == "ALWAYS") 
-					
-					
-					manager.registerDiscount(code, description,Util.castDate(StartDate.getText()), Util.castInt(Period.getText()),Util.castDouble(Percent.getText()), Applicable.getText());
+					if (valifyData()){
+						if(ifMember){
+							manager.addMemberDiscount(DiscountCode.getText(), DiscountDescription.getText(),Util.castDate(StartDate.getText()), Util.castInt(Period.getText()),Util.castInt(Percent.getText()), Applicable.getText());
+						}else{
+							manager.addOcassionalDiscount(DiscountCode.getText(), DiscountDescription.getText(),Util.castDate(StartDate.getText()), Util.castInt(Period.getText()),Util.castInt(Percent.getText()), Applicable.getText());
+						}
+						manager.getStoreWindow().getDiscountListPanel().refreshTable();
+						setVisible(false);
+						dispose();
+						
+					}
+						
 				} catch (DataInputException e1) {
 					// TODO Auto-generated catch block
 					//e1.printStackTrace();
-					JOptionPane.showMessageDialog(getParent(), "Invalid data","Error",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(getParent(), e1.getMessage(),"Error",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -257,13 +276,16 @@ public class DiscountDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					String code = DiscountCode.getText();
-					String description = DiscountDescription.getText();
-					String startDate = StartDate.getText();
-					if (startDate == "ALWAYS") 
-					
-					
-					manager.registerDiscount(code, description,Util.castDate(StartDate.getText()), Util.castInt(Period.getText()),Util.castDouble(Percent.getText()), Applicable.getText());
+					if(valifyData()){
+						if(ifMember){
+							manager.modifyMemberDiscount(DiscountCode.getText(), DiscountDescription.getText(), Util.castInt(Percent.getText()));
+						}else{
+							manager.modifyOcassionalDiscount(DiscountCode.getText(), DiscountDescription.getText(), Util.castDate(StartDate.getText()), Util.castInt(Period.getText()), Util.castInt(Percent.getText()));
+						}
+						manager.getStoreWindow().getDiscountListPanel().refreshTable();
+						setVisible(false);
+						dispose();
+					}
 				} catch (DataInputException e1) {
 					// TODO Auto-generated catch block
 					//e1.printStackTrace();
@@ -277,7 +299,38 @@ public class DiscountDialog extends JDialog {
 	private void createDeleteButton(){
 		JButton btnDelete = new JButton("DELETE");
 		btnDelete.setBounds(140, 194, 89, 23);
+		btnDelete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				deleteVendorMouseClicked(arg0);
+				
+			}
+		});
 		contentPanel.add(btnDelete);
 	}
 
+	private boolean valifyData() throws DataInputException{
+		if(DiscountCode.getText().isEmpty()||DiscountDescription.getText().isEmpty()||Percent.getText().isEmpty()||StartDate.getText().isEmpty()||Period.getText().isEmpty()){
+			throw new DataInputException("Invalid data");
+		}
+		return true;
+	}
+
+	private void deleteVendorMouseClicked(ActionEvent evt) {
+		//if(validDel(idText.getText())){
+			String code = DiscountCode.getText();
+			String msg = "The discount '" + code + "' will be deleted";
+			int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
+	       	if (n == 0){
+				manager.deleteDiscount(code);
+				manager.getStoreWindow().getProductListPanel().refreshTable();
+				dispose();
+	       	}
+//		}else{
+//			String msg = "This product `"+ idText.getText() + "` is associated with some transaction";
+//       		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+//		}
+	}
 }

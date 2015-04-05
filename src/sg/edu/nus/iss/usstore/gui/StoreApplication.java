@@ -281,12 +281,6 @@ public class StoreApplication {
 		store.switchVendorPrefForCategory(categoryCode, upVendorName, downVendorName);
 	}
 	
-	
-	public ArrayList<Discount> registerDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, double percent, String Applicable){
-		return store.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
-	}
-	
 	public ArrayList<Discount> getDiscountList(){
 		return store.getDiscountList();
 	
@@ -330,11 +324,15 @@ public class StoreApplication {
 	 * @param percent
 	 * @param Applicable
 	 */
-	public void addDiscount(String discountCode, String discountDescription,
-			Date startDate, int period, double percent, String Applicable ){
+	public void addMemberDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, int percent, String Applicable ){
 		store.registerDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
 	}
 	
+	public void addOcassionalDiscount(String discountCode, String discountDescription,
+			Date startDate, int period, int percent, String Applicable ){
+		store.addDiscount(discountCode, discountDescription, startDate, period, percent, Applicable);
+	}
 	/**
 	 * 
 	 * @param discountCode
@@ -365,6 +363,10 @@ public class StoreApplication {
 	 */
 	public void deleteDiscount(String code){
 		store.deleteDiscount(code);
+	}
+	
+	public Discount getDiscountByCode(String code){
+		return store.getDiscountByCode(code);
 	}
 
 }

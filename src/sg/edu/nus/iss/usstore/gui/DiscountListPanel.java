@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -277,7 +278,7 @@ public class DiscountListPanel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				deleteVendorMouseClicked(arg0);
 				
 			}
 		});
@@ -324,4 +325,23 @@ public class DiscountListPanel extends JPanel{
 		setTableFormat();
 	}
 
+	private void deleteVendorMouseClicked(ActionEvent evt) {
+
+		int rowIndex = productTable.convertRowIndexToModel(productTable.getSelectedRow());
+		int columnIndex = productTable.getColumnModel().getColumnIndex("Code");
+		String code = (String)tableModel.getValueAt(rowIndex, columnIndex);
+		
+		//if(validDel(id)){
+			String msg = "The discount '" + code + "' will be deleted";
+			int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
+	       	if (n == 0){
+				manager.deleteDiscount(code);
+				this.refreshTable();
+	       	}
+		//}
+		//else{
+		//	String msg = "This product `"+ id + "` is associated with some transaction";
+       	//	JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
+		//}
+	}
 }
