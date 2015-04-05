@@ -78,9 +78,7 @@ public class CheckOutPanel extends JPanel
 	private DefaultTableModel defaultModel;
 	private double tempChange;
 
-	private Customer customer = null;
 	private Product product = null;
-	private Discount discount;
 	private int scrollpanelwidth = 600;
 	private int scrollpanelheight = 270;
 	private int flag = 0;
@@ -167,7 +165,7 @@ public class CheckOutPanel extends JPanel
 	public void tableDataBinding()
 	{
 		flag = 1;
-		ArrayList itemList = transaction.getItemList();
+		ArrayList<TransactionItem> itemList = transaction.getItemList();
 		Vector dataVector = defaultModel.getDataVector();
 		dataVector.clear();
 
@@ -589,6 +587,11 @@ public class CheckOutPanel extends JPanel
 				"Price", "Total" };
 		defaultModel = new DefaultTableModel(null, tableTitle)
 		{
+			/**
+			 * override defaultModel to set editable
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column)
 			{
 				if (column == 3)
@@ -811,6 +814,13 @@ public class CheckOutPanel extends JPanel
 					transaction.setCustomer(new Public());
 				}
 				transaction.setDate(new Date());
+				//deal with the problem getLoyaltypoint==0 & reset the loyaltypoint
+				if (transaction.getCustomer() instanceof Member)
+				{
+					Member member = (Member) transaction.getCustomer();
+					if(member.getLoyaltyPoint()==-1)
+						member.setLoyaltyPoint(0);
+				}
 				JFrame confirm = new CheckOutConfirmFrame(sa.confirmPayment(transaction),sa);
 				confirm.setVisible(true);
 				cancelAll();
