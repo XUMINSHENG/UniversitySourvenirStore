@@ -2,7 +2,6 @@ package sg.edu.nus.iss.usstore.gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -11,7 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import sg.edu.nus.iss.usstore.domain.Member;
-import sg.edu.nus.iss.usstore.exception.DataFileException;
+import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 
 public class MemberListPanel extends JPanel {
@@ -45,7 +44,7 @@ public class MemberListPanel extends JPanel {
 		Member member;
 		for (int i = 0; i < memberList.size(); i++) {
 			member = memberList.get(i);
-			data[i][0] = member.getName();
+			data[i][0] = member.getName().toUpperCase();
 			data[i][1] = member.getMemberID().toUpperCase();
 			data[i][2] = member.getLoyaltyPoint();
 		}
@@ -137,6 +136,7 @@ public class MemberListPanel extends JPanel {
 				// TODO Auto-generated method stub
 				MemberDialog memberDlg = new MemberDialog(manager, "Add Member");
 				memberDlg.setVisible(true);
+				refreshTable();
 			}
 		});
 		p.add(b);
@@ -153,6 +153,7 @@ public class MemberListPanel extends JPanel {
 						"Modify Member", id);
 
 				memberDlg.setVisible(true);
+				refreshTable();
 			}
 		});
 		modifyButton.setEnabled(false);
@@ -164,21 +165,31 @@ public class MemberListPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				int result = JOptionPane.YES_NO_OPTION;
-				int dialogResult = JOptionPane.showConfirmDialog(null,
-						"Do you want to delete the Member?", "Delete Member",
-						result);
-				if(dialogResult == JOptionPane.YES_OPTION){
-					try {
-						delMemBtnClicked();
-					} catch (DataFileException | IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}else{
-				
-				}
+				if (manager.getMemberList().size() > 10) {
+					String id = (String) memberTable.getValueAt(
+							memberTable.getSelectedRow(), 1);
+					if (validDel(id)) {
+						String msg = "Member '" + id + "' will be deleted";
+						int n = JOptionPane.showConfirmDialog(null, msg,
+								"Confirmation", JOptionPane.YES_NO_OPTION);
+						if (n == 0) {
+							// proceed deletion
+							manager.removeMember(id);
+							refreshTable();
 
+						}
+					} else {
+
+						String msg = "This Member " + id
+								+ " is associated with some transaction!";
+						JOptionPane.showConfirmDialog(null, msg, "Alert",
+								JOptionPane.WARNING_MESSAGE);
+					}
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Cannot Delete - Minimum threshold reached!",
+							"Alert", JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 		deleteButton.setEnabled(false);
@@ -206,13 +217,15 @@ public class MemberListPanel extends JPanel {
 	/**
 	 * 
 	 */
-	private void delMemBtnClicked() throws DataFileException, IOException {
-		String id = (String) memberTable.getValueAt(
-				memberTable.getSelectedRow(), 1);
-
-		manager.removeMember(id);
-
-		refreshTable();
+	public boolean validDel(String id) {
+		boolean result = true;
+		for (Transaction trans : this.manager.getTransactionList()) {
+			if (trans.getCustomer() == this.manager.getMemberById(id)) {
+				result = false;
+				break;
+			}
+		}
+		return result;
 	}
 
 }

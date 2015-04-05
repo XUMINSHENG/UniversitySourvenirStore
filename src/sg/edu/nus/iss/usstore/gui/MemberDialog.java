@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 import sg.edu.nus.iss.usstore.domain.*;
 import sg.edu.nus.iss.usstore.util.StringDocument;
 
@@ -21,7 +22,6 @@ public class MemberDialog extends JDialog {
 	private JTextField name;
 	private JTextField memberID;
 	private JTextField loyaltyPoint;
-
 
 	public MemberDialog(StoreApplication manager, String title) {
 		super(manager.getStoreWindow(), title);
@@ -91,7 +91,6 @@ public class MemberDialog extends JDialog {
 	public boolean validateData() {
 		if (name.getText().isEmpty() || memberID.getText().isEmpty()
 				|| loyaltyPoint.getText().isEmpty()) {
-		
 
 			return false;
 		} else {
@@ -99,8 +98,6 @@ public class MemberDialog extends JDialog {
 		}
 
 	}
-
-	
 
 	private JPanel createAddBottomPanel() {
 		// TODO Auto-generated method stub

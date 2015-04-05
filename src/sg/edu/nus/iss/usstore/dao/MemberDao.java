@@ -88,7 +88,7 @@ public class MemberDao extends BaseDao {
 		for (Member member : dataList) {
 			StringBuffer line;
 
-			line = new StringBuffer(member.getName() + Util.C_Separator);
+			line = new StringBuffer(member.getName().toUpperCase() + Util.C_Separator);
 			line.append(member.getMemberID().toUpperCase() + Util.C_Separator);
 			line.append(member.getLoyaltyPoint());
 
