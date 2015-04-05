@@ -3,6 +3,7 @@ package sg.edu.nus.iss.usstore.gui;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,7 +47,9 @@ public class CheckInventoryPanel extends JPanel{
 	
 	public JPanel createNorthPanel(){
 		JPanel p = new JPanel(new FlowLayout());
-		p.add(new JLabel("Replenish Inventory List"));
+		JLabel label = new JLabel("Replenish Inventory List");
+		label.setFont(new Font("JPanel",Font.BOLD,26));
+		p.add(label);
 		return p;
 	}
 	
@@ -97,16 +100,16 @@ public class CheckInventoryPanel extends JPanel{
 	
 	private JPanel createSouthPanel(){
 		JPanel p = new JPanel(new FlowLayout());
-		fire.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				int rowIndex = table.convertRowIndexToModel(table.getSelectedRow());
-				table.remove(rowIndex);
-			}
-		});
-		p.add(fire);
+//		fire.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				int rowIndex = table.convertRowIndexToModel(table.getSelectedRow());
+//				table.remove(rowIndex);
+//			}
+//		});
+//		p.add(fire);
 		JButton b = new JButton("Generate Order List");
 		b.addActionListener(new ActionListener() {
 			

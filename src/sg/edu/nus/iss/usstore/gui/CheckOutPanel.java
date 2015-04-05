@@ -70,8 +70,11 @@ public class CheckOutPanel extends JPanel
 	private JButton JbFinish;
 	private JButton JbBack;
 	private JButton JbMemberSubmit;
+	private JButton JbProductSubmit;
 	private JRadioButton jb1;
 	private JRadioButton jb2;
+	private JRadioButton jb3;
+	private JRadioButton jb4;
 	private TableColumn column;
 
 	private DecimalFormat df = new DecimalFormat("0.00");
@@ -100,18 +103,75 @@ public class CheckOutPanel extends JPanel
 	private final String ERR_MSG_SELECT_ROW = "Select a Row!";
 
 	public static JLabel jlTitle;
-	//set Transaction
+
+	// set Transaction
 	public Transaction getTransaction()
 	{
 		return transaction;
 	}
-	//get Transaction
+
+	// get Transaction
 	public void setTransaction(Transaction transaction)
 	{
 		this.transaction = transaction;
 	}
-	
-	//SET Output Value
+
+	// control radio Button's select
+	public void setRadioButton()
+	{
+		System.out.println("start");
+		int sum = 0;
+		if (jb1.isSelected() == true)
+		{
+			sum = sum + 1;
+		}
+		if (jb2.isSelected() == true)
+		{
+			sum = sum + 2;
+		}
+		if (jb3.isSelected() == true)
+		{
+			sum = sum + 4;
+		}
+		if (jb4.isSelected() == true)
+		{
+			sum = sum + 8;
+		}
+	if (sum==5)
+		{
+			JtMemberID.setEnabled(true);
+			JtBarCodeID.setEnabled(true);
+			JtQuantity.setEnabled(true);
+			JbMemberSubmit.setEnabled(true);
+			JbProductSubmit.setEnabled(true);
+		}
+	else if (sum==9)
+		{
+			JtMemberID.setEnabled(false);
+			JtBarCodeID.setEnabled(false);
+			JtQuantity.setEnabled(false);
+			JbMemberSubmit.setEnabled(true);
+			JbProductSubmit.setEnabled(true);
+		}
+	else if (sum==6)
+		{
+			JtMemberID.setEnabled(false);
+			JtBarCodeID.setEnabled(true);
+			JtQuantity.setEnabled(true);
+			JbMemberSubmit.setEnabled(false);
+			JbProductSubmit.setEnabled(true);
+		}
+	else if (sum==10)
+		{
+			JtMemberID.setEnabled(false);
+			JtBarCodeID.setEnabled(false);
+			JtQuantity.setEnabled(false);
+			JbMemberSubmit.setEnabled(false);
+			JbProductSubmit.setEnabled(true);
+		}
+	}
+
+	// SET Output Value
 	public void setOutputValue()
 	{
 		JlTotalPriceNum.setText(df.format(transaction.calcTotalPrice()));
@@ -120,17 +180,18 @@ public class CheckOutPanel extends JPanel
 		JlDiscountedPriceNum
 				.setText(df.format(transaction.calcDiscountPrice()));
 		JlRestNum.setText(df.format(transaction.calcRest()));
-		if(transaction.calcChange()>=0)
-		JlChangeNum.setText(df.format(transaction.calcChange()));
+		if (transaction.calcChange() >= 0)
+			JlChangeNum.setText(df.format(transaction.calcChange()));
 		if (transaction.getCustomer() instanceof Member)
 		{
 			Member member = (Member) transaction.getCustomer();
 			JlgetMemberName.setText(member.name);
-			if(member.getLoyaltyPoint()==0)
-			JlLoyalPointNum.setText("0");
+			if (member.getLoyaltyPoint() == 0)
+				JlLoyalPointNum.setText("0");
 			else
 			{
-				JlLoyalPointNum.setText(Integer.toString(member.getLoyaltyPoint()));
+				JlLoyalPointNum.setText(Integer.toString(member
+						.getLoyaltyPoint()));
 			}
 			JtPaidNum.setEnabled(true);
 		} else
@@ -140,7 +201,8 @@ public class CheckOutPanel extends JPanel
 		}
 		JbFinishControl();
 	}
-	//Control the useable of Finish Button
+
+	// Control the useable of Finish Button
 	public void JbFinishControl()
 	{
 		if (transaction.calcChange() < 0)
@@ -161,6 +223,7 @@ public class CheckOutPanel extends JPanel
 		}
 
 	}
+
 	// table data binding
 	public void tableDataBinding()
 	{
@@ -187,6 +250,7 @@ public class CheckOutPanel extends JPanel
 		flag = 0;
 		setOutputValue();
 	}
+
 	// Use this method to add product to table
 	public void addProduct(ArrayList<TransactionItem> arrayList, int qty)
 	{
@@ -208,13 +272,14 @@ public class CheckOutPanel extends JPanel
 			tempTransactionItem.setQty(tempTransactionItem.getQty() + qty);
 		}
 	}
+
 	// cancel check out
 	public void cancelAll()
 	{
 		// refresh data
 		{
 			transaction = new Transaction();
-			sa.setBillCustomer(transaction,"");
+			sa.setBillCustomer(transaction, "");
 			vector = defaultModel.getDataVector();
 			vector.clear();
 			table.validate();
@@ -244,13 +309,14 @@ public class CheckOutPanel extends JPanel
 			JtCashNum.setText(null);
 			jlTitle.setForeground(Color.BLACK);
 			jlTitle.setText("Check Out");
-			jb2.setSelected(true);	
+			jb2.setSelected(true);
 			JtMemberID.setEnabled(false);
 			JbMemberSubmit.setEnabled(false);
-			
+
 		}
 	}
-	//draw UI
+
+	// draw UI
 	public CheckOutPanel(StoreApplication sa)
 	{ // ʵ�ֹ��췽��
 		this.sa = sa;
@@ -262,9 +328,31 @@ public class CheckOutPanel extends JPanel
 		jlTitle.setFont(new Font("Bauhaus 93", Font.PLAIN, 30));
 		jlTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		jpOperation.setLayout(new GridLayout(3, 1));
-		jpOperation.add(jlTitle);
+		JPanel jpTitleSelect = new JPanel();
 		JPanel jpInput = new JPanel();
 		JPanel jpOutput = new JPanel();
+		jpTitleSelect.setLayout(new GridLayout(2, 1));
+		JPanel jpinputSelect = new JPanel();
+
+		jpinputSelect.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel jlDateEntity = new JLabel("Date Entry Type:");
+		ButtonGroup bg2 = new ButtonGroup();
+		jb3 = new JRadioButton("Manual");
+		jb4 = new JRadioButton("Bar Code Reader");
+		jb3.setActionCommand("jb3");
+		jb3.addActionListener(listener);
+		jb4.setActionCommand("jb4");
+		jb4.addActionListener(listener);
+		bg2.add(jb3);
+		bg2.add(jb4);
+		jb3.setSelected(true);
+		jpinputSelect.add(jlDateEntity);
+		jpinputSelect.add(jb3);
+		jpinputSelect.add(jb4);
+
+		jpTitleSelect.add(jlTitle);
+		jpTitleSelect.add(jpinputSelect);
+		jpOperation.add(jpTitleSelect);
 		jpOperation.add(jpInput);
 		jpOperation.add(jpOutput);
 
@@ -279,17 +367,17 @@ public class CheckOutPanel extends JPanel
 		// jp1
 		JLabel JlMemberID = new JLabel(" MEMBER ID");
 		JtMemberID = new JTextField(10);
-		ButtonGroup bg = new ButtonGroup();
+		ButtonGroup bg1 = new ButtonGroup();
 		jb1 = new JRadioButton("Member");
 		jb2 = new JRadioButton("PUBLIC");
-		bg.add(jb1);
 		jb1.setActionCommand("jb1");
 		jb1.addActionListener(listener);
 		jb2.setActionCommand("jb2");
-		jb2.addActionListener(listener);;
-		bg.add(jb2);
+		jb2.addActionListener(listener);
+		;
+		bg1.add(jb1);
+		bg1.add(jb2);
 		jb2.setSelected(true);
-		JtMemberID.setEnabled(false);
 		jp1.setLayout(new FlowLayout(FlowLayout.LEFT));
 		jp1.add(jb2);
 		jp1.add(jb1);
@@ -298,7 +386,7 @@ public class CheckOutPanel extends JPanel
 		jpInput.add(jp1);
 
 		// jp2
-		JLabel JlMemberName = new JLabel("MEMBER  ");
+		JLabel JlMemberName = new JLabel("NAME        ");
 		JlgetMemberName = new JLabel("PUBLIC");
 		JbMemberSubmit = new JButton("Set Member");
 		JbMemberSubmit.setEnabled(false);
@@ -333,7 +421,7 @@ public class CheckOutPanel extends JPanel
 		JLabel JlQuantity = new JLabel("QUANTITY");
 		JtQuantity = new JTextField(6);
 		JtQuantity.setDocument(new IntDocument());
-		JButton JbProductSubmit = new JButton("Add Product");
+		JbProductSubmit = new JButton("Add Product");
 		tempBarCode = JtBarCodeID.getText();
 		product = sa.getProductByBarCode(tempBarCode);
 		JbProductSubmit.setActionCommand("JbProductSubmit");
@@ -414,10 +502,10 @@ public class CheckOutPanel extends JPanel
 					if (member.getLoyaltyPoint() >= tempLoyalPaidNum)
 					{
 						if (jlTitle.getText() == ERR_MSG_POINT_NOT_ENOUGH)
-							{
+						{
 							jlTitle.setForeground(Color.BLACK);
 							jlTitle.setText("Check Out");
-							}
+						}
 						transaction.setRedeemedLoyaltyPoint(tempLoyalPaidNum);
 						JlRestNum.setText(df.format(transaction.calcRest()));
 					} else
@@ -449,10 +537,10 @@ public class CheckOutPanel extends JPanel
 						if (member.getLoyaltyPoint() >= tempLoyalPaidNum)
 						{
 							if (jlTitle.getText() == ERR_MSG_POINT_NOT_ENOUGH)
-								{
+							{
 								jlTitle.setForeground(Color.BLACK);
 								jlTitle.setText("Check Out");
-								}
+							}
 							transaction
 									.setRedeemedLoyaltyPoint(tempLoyalPaidNum);
 							JlRestNum.setText(df.format(transaction.calcRest()));
@@ -583,8 +671,8 @@ public class CheckOutPanel extends JPanel
 		jpOutput.add(jp12);
 
 		// Table
-		String[] tableTitle = { "Num", "Bar Code", "Product", "Quantity(Editable)",
-				"Price", "Total" };
+		String[] tableTitle = { "Num", "Bar Code", "Product",
+				"Quantity(Editable)", "Price", "Total" };
 		defaultModel = new DefaultTableModel(null, tableTitle)
 		{
 			/**
@@ -606,19 +694,19 @@ public class CheckOutPanel extends JPanel
 			column = table.getColumnModel().getColumn(i);
 			if (i == 0)
 			{
-				column.setPreferredWidth(scrollpanelwidth/16);
+				column.setPreferredWidth(scrollpanelwidth / 16);
 			}
-			if (i == 1 || i == 2 )
+			if (i == 1 || i == 2)
 			{
-				column.setPreferredWidth(scrollpanelwidth/4);
+				column.setPreferredWidth(scrollpanelwidth / 4);
 			}
-			if (i==3)
+			if (i == 3)
 			{
-				column.setPreferredWidth(scrollpanelwidth*3/16);
-			} 
-			if ( i==4 || i==5 )
+				column.setPreferredWidth(scrollpanelwidth * 3 / 16);
+			}
+			if (i == 4 || i == 5)
 			{
-				column.setPreferredWidth(scrollpanelheight/8);
+				column.setPreferredWidth(scrollpanelheight / 8);
 			}
 		}
 		defaultModel.addTableModelListener(new TableModelListener()
@@ -651,12 +739,12 @@ public class CheckOutPanel extends JPanel
 					setBackground(Color.WHITE);
 				else if (row % 2 == 1)
 					setBackground(new Color(206, 231, 255));
-				if (column==3)
+				if (column == 3)
 					setBackground(new Color(160, 255, 160));
 				return super.getTableCellRendererComponent(table, value,
 						isSelected, hasFocus, row, column);
 
-			}	
+			}
 		};
 
 		for (int i = 0; i <= 5; i++)
@@ -699,7 +787,8 @@ public class CheckOutPanel extends JPanel
 		jpButton.add(JbBack);
 		this.add(jpButton, BorderLayout.EAST);
 	}
-	//Button ActionListener
+
+	// Button ActionListener
 	class Listener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
@@ -716,16 +805,16 @@ public class CheckOutPanel extends JPanel
 					transaction = sa.setBillCustomer(transaction, MemberID);
 					if (transaction.getCustomer() == null)
 					{
-						transaction = sa.setBillCustomer(transaction,"");
+						transaction = sa.setBillCustomer(transaction, "");
 						jlTitle.setForeground(Color.RED);
 						jlTitle.setText(ERR_MSG_MEMBER_NOT_EXIST);
 					} else
 					{
 						if (jlTitle.getText() == ERR_MSG_MEMBER_NOT_EXIST)
-							{
+						{
 							jlTitle.setForeground(Color.BLACK);
 							jlTitle.setText("Check Out");
-							}
+						}
 					}
 				}
 				setOutputValue();
@@ -748,12 +837,12 @@ public class CheckOutPanel extends JPanel
 				{
 					jlTitle.setForeground(Color.RED);
 					jlTitle.setText(ERR_MSG_QUANTITY_FORMAT_ERROR);
-				} else if(product.getQuantityAvailable()<Integer.parseInt(tempqty))
+				} else if (product.getQuantityAvailable() < Integer
+						.parseInt(tempqty))
 				{
 					jlTitle.setForeground(Color.RED);
 					jlTitle.setText(ERR_MSG_QUANTITY_NOT_ENOUGH);
-				}
-				else
+				} else
 				{
 					int intqty = Integer.parseInt(tempqty);
 					if (jlTitle.getText() == ERR_MSG_PRODCUT_NOT_EXIST
@@ -810,19 +899,21 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("JbFinish"))
 			{
-				if (transaction.getCustomer().name==null)
+				if (transaction.getCustomer().name == null)
 				{
 					transaction.setCustomer(new Public());
 				}
 				transaction.setDate(new Date());
-				//deal with the problem getLoyaltypoint==0 & reset the loyaltypoint
+				// deal with the problem getLoyaltypoint==0 & reset the
+				// loyaltypoint
 				if (transaction.getCustomer() instanceof Member)
 				{
 					Member member = (Member) transaction.getCustomer();
-					if(member.getLoyaltyPoint()==-1)
+					if (member.getLoyaltyPoint() == -1)
 						member.setLoyaltyPoint(0);
 				}
-				JFrame confirm = new CheckOutConfirmFrame(sa.confirmPayment(transaction),sa);
+				JFrame confirm = new CheckOutConfirmFrame(
+						sa.confirmPayment(transaction), sa);
 				confirm.setVisible(true);
 				cancelAll();
 			}
@@ -832,20 +923,28 @@ public class CheckOutPanel extends JPanel
 			}
 			if (e.getActionCommand().equals("jb1"))
 			{
-				JtMemberID.setEnabled(true);
-				JbMemberSubmit.setEnabled(true);
+				setRadioButton();
 				setOutputValue();
 			}
 			if (e.getActionCommand().equals("jb2"))
 			{
-				transaction = sa.setBillCustomer(transaction,"");
-				JtMemberID.setEnabled(false);
-				JbMemberSubmit.setEnabled(false);
-				if(jlTitle.getText()==ERR_MSG_MEMBER_NOT_EXIST)
+				transaction = sa.setBillCustomer(transaction, "");
+				if (jlTitle.getText() == ERR_MSG_MEMBER_NOT_EXIST)
 				{
 					jlTitle.setForeground(Color.BLACK);
 					jlTitle.setText("Check Out");
 				}
+				setRadioButton();
+				setOutputValue();
+			}
+			if (e.getActionCommand().equals("jb3"))
+			{
+				setRadioButton();
+				setOutputValue();
+			}
+			if (e.getActionCommand().equals("jb4"))
+			{
+				setRadioButton();
 				setOutputValue();
 			}
 		}
