@@ -43,6 +43,10 @@ public class ProductTest {
 
 	@Test
 	public void testCheckInventoryLevel() {
+		
+		
+		assertTrue(product1.checkInventoryLevel());
+		product1.setQuantityAvailable(199);
 		assertFalse(product1.checkInventoryLevel());
 	}
 
@@ -53,18 +57,18 @@ public class ProductTest {
 
 	@Test
 	public void testAddQuantity() {
-		product2.addQuantity(100);
+		product1.addQuantity(100);
 		assertEquals(400,product1.getQuantityAvailable());
 	}
 
 	@Test
 	public void testGetProductId() {
-		assertEquals("CGY/1", product1.getProductId());
+		assertEquals("CGY/2", product2.getProductId());
 	}
 
 	@Test
 	public void testSetProductId() {
-		product1.setProductId("CGY/1");
+		product1.setProductId("CGY/3");
 		assertEquals("CGY/3", product1.getProductId());
 	}
 
@@ -106,7 +110,7 @@ public class ProductTest {
 
 	@Test
 	public void testGetQuantityAvailable() {
-		assertEquals(400, product1.getQuantityAvailable());
+		assertEquals(300, product1.getQuantityAvailable());
 	}
 
 	@Test
