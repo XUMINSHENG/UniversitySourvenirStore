@@ -234,14 +234,14 @@ public class CheckOutPanel extends JPanel
 	{
 		flag = 1;
 		ArrayList<TransactionItem> itemList = transaction.getItemList();
-		Vector dataVector = defaultModel.getDataVector();
+		Vector<Object> dataVector = defaultModel.getDataVector();
 		dataVector.clear();
 
 		for (int i = 0; i < itemList.size(); i++)
 		{
 			Vector<Object> subVector = new Vector<Object>();
 			subVector.add(i + 1);
-			TransactionItem transactionitem = (TransactionItem) itemList.get(i);
+			TransactionItem transactionitem = itemList.get(i);
 			product = transactionitem.getProduct();
 			subVector.add(product.getBarCodeNumber());
 			subVector.add(product.getName());
@@ -323,7 +323,7 @@ public class CheckOutPanel extends JPanel
 
 	// draw UI
 	public CheckOutPanel(StoreApplication sa)
-	{ // ʵ�ֹ��췽��
+	{
 		this.sa = sa;
 		// OPeration
 		JPanel jpOperation = new JPanel();
@@ -376,6 +376,7 @@ public class CheckOutPanel extends JPanel
 		// jp1
 		JLabel JlMemberID = new JLabel(" MEMBER ID");
 		JtMemberID = new JTextField(10);
+		JtMemberID.setEnabled(false);
 		ButtonGroup bg1 = new ButtonGroup();
 		jb1 = new JRadioButton("Member");
 		jb2 = new JRadioButton("PUBLIC");
@@ -383,7 +384,6 @@ public class CheckOutPanel extends JPanel
 		jb1.addActionListener(listener);
 		jb2.setActionCommand("jb2");
 		jb2.addActionListener(listener);
-		;
 		bg1.add(jb1);
 		bg1.add(jb2);
 		jb2.setSelected(true);
@@ -565,11 +565,8 @@ public class CheckOutPanel extends JPanel
 				}
 				setOutputValue();
 			}
-
 			public void changedUpdate(DocumentEvent e)
 			{
-				// TODO Auto-generated method stub
-
 			}
 		});
 		jp9.add(JlPaid);
@@ -869,8 +866,7 @@ public class CheckOutPanel extends JPanel
 					int intqty = Integer.parseInt(tempqty);
 					if (jlTitle.getText() == ERR_MSG_PRODCUT_NOT_EXIST
 							|| jlTitle.getText() == ERR_MSG_BARCODE_ERROR
-							|| jlTitle.getText().substring(0,10).equals("Quantity i")
-							|| jlTitle.getText() == ERR_MSG_QUANTITY_FORMAT_ERROR)
+							|| jlTitle.getText().substring(0,8).equals("Quantity"))
 					{
 						jlTitle.setForeground(Color.BLACK);
 						jlTitle.setText("Check Out");
