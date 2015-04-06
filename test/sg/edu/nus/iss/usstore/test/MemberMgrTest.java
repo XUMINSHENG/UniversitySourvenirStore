@@ -11,6 +11,10 @@ import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.MemberMgr;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 
+/**
+ * @author Achyut Suresh Rao
+ */
+
 public class MemberMgrTest {
 
 	MemberMgr memMgr;

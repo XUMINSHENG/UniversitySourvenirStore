@@ -6,6 +6,10 @@ import org.junit.Test;
 
 import sg.edu.nus.iss.usstore.domain.Member;
 
+/**
+ * @author Achyut Suresh Rao
+ */
+
 public class MemberTest {
 	
 	Member mem1 = new Member("sam", "a0123654", 10);
