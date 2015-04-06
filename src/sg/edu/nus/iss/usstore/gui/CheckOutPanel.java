@@ -103,6 +103,7 @@ public class CheckOutPanel extends JPanel
 	private final String ERR_MSG_CASH_NOT_ENOUGH = "Cash is not enough!";
 	private final String ERR_MSG_SELECT_ROW = "Select a Row!";
 
+	private final String TIPS_1 = "If you choose Bar Code Reader', please enter data in console screen!";
 	public static JLabel jlTitle;
 
 	// set Transaction
@@ -146,6 +147,8 @@ public class CheckOutPanel extends JPanel
 			JtMemberID.setEditable(true);
 			JtQuantity.setEnabled(true);
 			JbMemberSubmit.setEnabled(true);
+			JtQuantity.setText(null);
+			JbProductSubmit.setText("Add   Product");
 			JbProductSubmit.setEnabled(true);
 		} else if (sum == 9)
 		{
@@ -154,6 +157,8 @@ public class CheckOutPanel extends JPanel
 			JtMemberID.setEditable(false);
 			JtBarCodeID.setEnabled(false);
 			JtQuantity.setEnabled(false);
+			JtQuantity.setText("1");
+			JbProductSubmit.setText("Scan Product");
 			JbMemberSubmit.setEnabled(true);
 			JbProductSubmit.setEnabled(true);
 				
@@ -163,7 +168,9 @@ public class CheckOutPanel extends JPanel
 			JtMemberID.setEnabled(false);
 			JtBarCodeID.setEnabled(true);
 			JtQuantity.setEnabled(true);
+			JtQuantity.setText(null);
 			JbMemberSubmit.setEnabled(false);
+			JbProductSubmit.setText("Add   Product");
 			JbProductSubmit.setEnabled(true);
 		} else if (sum == 10)
 		{
@@ -172,6 +179,7 @@ public class CheckOutPanel extends JPanel
 			JtBarCodeID.setEnabled(false);
 			JtQuantity.setEnabled(false);
 			JtQuantity.setText("1");
+			JbProductSubmit.setText("Scan Product");
 			JbMemberSubmit.setEnabled(false);
 			JbProductSubmit.setEnabled(true);
 		}
@@ -388,7 +396,7 @@ public class CheckOutPanel extends JPanel
 		jpinputSelect.add(jb3);
 		jpinputSelect.add(jb4);
 		jpinputSelect.add(jlTips);
-		jlTips.setText("If you choose Bar Code Reader', please enter data in console screen!");
+		jlTips.setText(TIPS_1);
 		
 		jpTitleSelect.add(jlTitle);
 		jpTitleSelect.add(jpinputSelect);
@@ -428,7 +436,7 @@ public class CheckOutPanel extends JPanel
 		// jp2
 		JLabel JlMemberName = new JLabel("NAME        ");
 		JlgetMemberName = new JLabel("PUBLIC");
-		JbMemberSubmit = new JButton("Set Member");
+		JbMemberSubmit = new JButton("Set   Member");
 		JbMemberSubmit.setEnabled(false);
 		JbMemberSubmit.setActionCommand("JbMemberSubmit");
 		JbMemberSubmit.addActionListener(listener);
@@ -461,7 +469,7 @@ public class CheckOutPanel extends JPanel
 		JLabel JlQuantity = new JLabel("QUANTITY");
 		JtQuantity = new JTextField(6);
 		JtQuantity.setDocument(new IntDocument());
-		JbProductSubmit = new JButton("Add Product");
+		JbProductSubmit = new JButton("Add   Product");
 		tempBarCode = JtBarCodeID.getText();
 		product = sa.getProductByBarCode(tempBarCode);
 		JbProductSubmit.setActionCommand("JbProductSubmit");

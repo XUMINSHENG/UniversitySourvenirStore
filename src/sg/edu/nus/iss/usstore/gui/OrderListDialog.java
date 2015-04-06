@@ -191,7 +191,7 @@ public class OrderListDialog extends JDialog {
 	}
 	
 	private void printer(){
-		System.out.println("Replenish Order List");
+		System.out.println("Purchase Order");
 	//	System.out.println("\t"+"Vendor Name" +"\t|\t"+ "Product Id" + "\t|\t"+ 
 	//			"Product Name" + "\t|\t"+ "Order Quantity" + "\t|\t");
 		System.out.println("===============================================================================");
