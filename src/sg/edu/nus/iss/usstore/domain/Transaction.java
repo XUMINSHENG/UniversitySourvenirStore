@@ -34,16 +34,6 @@ public class Transaction
 	private static final double DOLLAR_TO_POINT = 0.1;
 	private static final double POINTS_TO_DOLLAR = 0.05;
 
-	public Discount getDiscount()
-	{
-		return discount;
-	}
-
-	public void setDiscount(Discount discount)
-	{
-		this.discount = discount;
-	}
-
 	public Transaction()
 	{
 	}
@@ -53,16 +43,6 @@ public class Transaction
 		this.id = id;
 		this.customer=customer;
 		this.date = date;
-	}
-
-	public Customer getCustomer()
-	{
-		return customer;
-	}
-
-	public void setCustomer(Customer customer)
-	{
-		this.customer = customer;
 	}
 	
 	public int getId()
@@ -74,7 +54,7 @@ public class Transaction
 	{
 		this.id = id;
 	}
-
+	
 	public Date getDate()
 	{
 		return date;
@@ -84,7 +64,29 @@ public class Transaction
 	{
 		this.date = date;
 	}
+	
 
+	public Customer getCustomer()
+	{
+		return customer;
+	}
+
+	public void setCustomer(Customer customer)
+	{
+		this.customer = customer;
+	}
+	
+	public Discount getDiscount()
+	{
+		return discount;
+	}
+
+	public void setDiscount(Discount discount)
+	{
+		this.discount = discount;
+	}
+
+	
 	public ArrayList<TransactionItem> getItemList()
 	{
 		return itemList;
@@ -94,7 +96,7 @@ public class Transaction
 	{
 		this.itemList = itemList;
 	}
-
+	
 	public double getCashAmount()
 	{
 		return cashAmount;
@@ -104,7 +106,7 @@ public class Transaction
 	{
 		this.cashAmount = cashAmount;
 	}
-
+	
 	public int getRedeemedLoyaltyPoint()
 	{
 		return redeemedLoyaltyPoint;
@@ -139,7 +141,7 @@ public class Transaction
 			itemList.add(transactionitem);
 		}
 	}
-
+	
 	public void removeItem(Product product)
 	{
 		for(int i = 0; i<itemList.size();i++)

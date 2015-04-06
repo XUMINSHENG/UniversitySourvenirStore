@@ -9,15 +9,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.jdatepicker.impl.UtilCalendarModel;
 import org.junit.Test;
 
 import sg.edu.nus.iss.usstore.domain.Category;
+import sg.edu.nus.iss.usstore.domain.Discount;
 import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.MemberDiscount;
+import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.ProductMgr;
-import sg.edu.nus.iss.usstore.domain.Store;
 import sg.edu.nus.iss.usstore.domain.Transaction;
 import sg.edu.nus.iss.usstore.domain.TransactionItem;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
@@ -83,6 +83,44 @@ public class TransactionTest extends Transaction
 		Date date2 = new Date();
 		t.setDate(date2);
 		assertEquals(date2,t.getDate());
+	}
+	
+	@Test
+	public void testGetCostomerID()
+	{
+		t.setCustomer(customer);
+		assertEquals(customer,t.getCustomer());
+	}
+
+	@Test
+	public void testSetCostomerID()
+	{
+		t.setCustomer(customer);
+		assertEquals(customer,t.getCustomer());
+	}
+	
+	@Test
+	public void testSetDiscount()
+	{
+		Discount discount1 = new OcassionalDiscount("1","2",new Date(),3,4,"5");
+		Discount discount2 = new MemberDiscount("6","7",8,"9");
+		t.setDiscount(discount1);
+		assertEquals(t.getDiscount(),discount1);
+		t.setDiscount(discount2);
+		assertEquals(t.getDiscount(),discount2);
+	}
+	
+	@Test
+	public void testgetDiscount()
+	{
+		Discount discount1 = new OcassionalDiscount("1","2",new Date(),3,4,"5");
+		Discount discount2 = new MemberDiscount("6","7",8,"9");
+		t.setDiscount(discount1);
+		Discount discount3 = t.getDiscount();
+		assertEquals(discount1,discount3);
+		t.setDiscount(discount2);
+		Discount discount4 = t.getDiscount();
+		assertEquals(discount2,discount4);
 	}
 	
 	@Test
@@ -207,17 +245,15 @@ public class TransactionTest extends Transaction
 	}
 
 	@Test
-	public void testGetCostomerID()
+	public void testCalcRest()
 	{
-		t.setCustomer(customer);
-		assertEquals(customer,t.getCustomer());
+		t = new Transaction();
+		t.addItem(product1,1.2,3);
+		t.addItem(product2,4.5,6);
+		t.setDiscount(discount);
+		t.setRedeemedLoyaltyPoint(5);
+		assertTrue(t.calcDiscountPrice()-CalcUtil.mul(5,0.05)==t.calcRest());
 	}
 
-	@Test
-	public void testSetCostomerID()
-	{
-		t.setCustomer(customer);
-		assertEquals(customer,t.getCustomer());
-	}
 
 }///~
