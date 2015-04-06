@@ -176,6 +176,11 @@ public class CheckOutPanel extends JPanel
 			JbProductSubmit.setEnabled(true);
 		}
 	}
+	/**
+	 * Get the number of product which is already in cart
+	 * @param product
+	 * @return Integer
+	 */
 	public int getCartNum(Product product)
 	{
 		int inCart = 0;
