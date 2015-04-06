@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,7 +26,6 @@ import org.jdatepicker.JDatePicker;
 
 import sg.edu.nus.iss.usstore.domain.MemberDiscount;
 import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
-import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.IntDocument;
 import sg.edu.nus.iss.usstore.util.Util;
@@ -273,6 +271,7 @@ public class DiscountDialog extends JDialog {
 		contentPanel.add(ADDButton);
 		ADDButton.addActionListener(new ActionListener() {
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -281,7 +280,7 @@ public class DiscountDialog extends JDialog {
 						if(ifMember){
 							manager.addMemberDiscount(DiscountCode.getText(), DiscountDescription.getText(), Util.castInt(Percent.getText()), Applicable.getText());
 						}else{
-							Date date = new Date(startDatePicker.getModel().getYear(),startDatePicker.getModel().getMonth(),startDatePicker.getModel().getDay());
+							Date date = new Date(startDatePicker.getModel().getYear()-1900,startDatePicker.getModel().getMonth(),startDatePicker.getModel().getDay());
 							manager.addOcassionalDiscount(DiscountCode.getText(), DiscountDescription.getText(),date, Util.castInt(Period.getText()),Util.castInt(Percent.getText()), Applicable.getText());
 						}
 						manager.getStoreWindow().getDiscountListPanel().refreshTable();
@@ -314,7 +313,7 @@ public class DiscountDialog extends JDialog {
 						if(ifMember){
 							manager.modifyMemberDiscount(DiscountCode.getText(), DiscountDescription.getText(), Util.castInt(Percent.getText()));
 						}else{
-							Date date = new Date(startDatePicker.getModel().getYear(),startDatePicker.getModel().getMonth(),startDatePicker.getModel().getDay());
+							Date date = new Date(startDatePicker.getModel().getYear()-1900,startDatePicker.getModel().getMonth(),startDatePicker.getModel().getDay());
 							manager.modifyOcassionalDiscount(DiscountCode.getText(), DiscountDescription.getText(), date, Util.castInt(Period.getText()), Util.castInt(Percent.getText()));
 						}
 						manager.getStoreWindow().getDiscountListPanel().refreshTable();
