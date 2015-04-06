@@ -26,6 +26,7 @@ import sg.edu.nus.iss.usstore.domain.MemberDiscount;
 import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
 import sg.edu.nus.iss.usstore.exception.DataInputException;
 import sg.edu.nus.iss.usstore.util.IntDocument;
+import sg.edu.nus.iss.usstore.util.StringDocument;
 import sg.edu.nus.iss.usstore.util.Util;
 /**
  * 
@@ -165,6 +166,7 @@ public class DiscountDialog extends JDialog {
 
 		DiscountCode = new JTextField();
 		DiscountCode.setBounds(140, 38, 200, 25);
+		DiscountCode.setDocument(new StringDocument());
 		contentPanel.add(DiscountCode);
 		DiscountCode.setColumns(10);
 
@@ -174,6 +176,7 @@ public class DiscountDialog extends JDialog {
 
 		DiscountDescription = new JTextField();
 		DiscountDescription.setBounds(140, 63, 200, 25);
+		DiscountDescription.setDocument(new StringDocument());
 		contentPanel.add(DiscountDescription);
 		DiscountDescription.setColumns(10);
 
