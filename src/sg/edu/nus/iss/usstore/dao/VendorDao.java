@@ -8,7 +8,11 @@ import sg.edu.nus.iss.usstore.domain.Category;
 import sg.edu.nus.iss.usstore.domain.Vendor;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.util.Util;
-
+/**
+ * 
+ * @author Avishek Kar Deb Barman
+ *
+ */
 public class VendorDao extends BaseDao {
 	// datafile name
 	private static final String C_File_Name_Prxfix = "Vendors";

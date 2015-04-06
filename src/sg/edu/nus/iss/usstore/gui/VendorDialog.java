@@ -14,9 +14,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 public class VendorDialog extends javax.swing.JDialog {
 	
-	/**
-	 * 
-	 */
+/**
+ * 
+ * @author Avishek Kar Deb Barman
+ *
+ */
+
 	private static final long serialVersionUID = 1L;
 	private final String[] columnNames = new String [] {"Name", "Description", "Preference"};
 			

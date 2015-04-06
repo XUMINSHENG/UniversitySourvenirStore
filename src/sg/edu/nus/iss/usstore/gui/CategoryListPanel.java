@@ -14,9 +14,12 @@ import javax.swing.table.DefaultTableModel;
 
 public class CategoryListPanel extends javax.swing.JPanel {
 
-	/**
-	 * 
-	 */
+/**
+ * 
+ * @author Avishek Kar Deb Barman
+ *
+ */
+
 	private static final long serialVersionUID = 1L;
 	private final String[] columnNames = {"Code", "Name"};
 	

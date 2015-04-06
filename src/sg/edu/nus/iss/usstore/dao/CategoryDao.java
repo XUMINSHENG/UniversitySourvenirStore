@@ -9,7 +9,7 @@ import sg.edu.nus.iss.usstore.util.Util;
 
 /**
  * 
- * @author Xu Minsheng
+ * @author Avishek Kar Deb Barman
  *
  */
 public class CategoryDao extends BaseDao {

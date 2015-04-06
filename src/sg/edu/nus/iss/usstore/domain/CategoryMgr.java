@@ -8,9 +8,10 @@ import sg.edu.nus.iss.usstore.exception.DataFileException;
 
 /**
  * 
- * @author Xu Minsheng
+ * @author Avishek Kar Deb Barman
  *
  */
+
 public class CategoryMgr {
 	private ArrayList<Category> categoryList;
 	// this VendorList only exist for maintain data consistency
