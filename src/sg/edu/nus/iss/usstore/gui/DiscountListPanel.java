@@ -34,12 +34,16 @@ import sg.edu.nus.iss.usstore.domain.MemberDiscount;
 import sg.edu.nus.iss.usstore.domain.OcassionalDiscount;
 import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 import sg.edu.nus.iss.usstore.util.Util;
+/**
+ * 
+ * @author tanuj
+ *
+ */
+
 
 public class DiscountListPanel extends JPanel{
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private StoreApplication manager;
 	private final String[] columnNames = {"Code","Description","Start date","Period(Day)","Percentage","Applicable"};
