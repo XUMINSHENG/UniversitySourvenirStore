@@ -157,6 +157,7 @@ public class StoreTest {
 		// result not null
 		assertNotEquals(result, null);
 		// customer is public
+		result = instance.setBillCustomer(transaction,"");
 		assertEquals(result.getCustomer().getClass(), Public.class);
 
 		// load data from file

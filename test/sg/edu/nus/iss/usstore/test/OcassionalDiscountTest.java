@@ -22,7 +22,7 @@ public class OcassionalDiscountTest {
 
 	@org.junit.Before
 	public void setUp() throws Exception {
-		Date date = Util.castDate("yyyy-mm-dd");
+		Date date = Util.castDate("2014-05-19");
 		ocaDisc1 = new OcassionalDiscount("CENTENARY","Centenary Celebration in 2014", date,365,15,"A");
 		ocaDisc2 = new OcassionalDiscount("ORIENTATION_DAY","ORIENTATION_DAY",date,1,50,"A");
 	}
