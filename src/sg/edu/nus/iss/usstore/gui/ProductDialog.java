@@ -171,6 +171,7 @@ public class ProductDialog extends JDialog{
 		}else if(barCodeText.getText().isEmpty()){
 			throw new DataInputException("barCode cannot be void");
 		}else if(manager.valifyBarCode(barCodeText.getText())){
+			System.out.println("same");
 			throw new DataInputException("barCode is existed already!");
 		}else if(reorderQtyText.getText().isEmpty()){
 			throw new DataInputException("reorderQty cannot be void");
