@@ -12,7 +12,11 @@ import javax.swing.text.PlainDocument;
 
 public class StringDocument extends PlainDocument{
 
-private int limitedLength;
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int limitedLength;
 	
 	public StringDocument(){
 		super();

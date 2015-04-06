@@ -6,9 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -104,14 +102,16 @@ public class DiscountDialog extends JDialog {
 			Percent.setText(Integer.toString(o.getPercent()));
 			StartDate.setVisible(false);
 			((JComponent)startDatePicker).setVisible(true);
-			Date date = o.getStartDate();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-			int year = Integer.parseInt(sdf.format(date));
-			sdf = new SimpleDateFormat("MM");
-			int month = Integer.parseInt(sdf.format(date));
-			sdf = new SimpleDateFormat("dd");
-			int day = Integer.parseInt(sdf.format(date));
-			startDatePicker.getModel().setDate(year, month-1, day);
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(o.getStartDate());;
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+//			int year = Integer.parseInt(sdf.format(date));
+//			sdf = new SimpleDateFormat("MM");
+//			int month = Integer.parseInt(sdf.format(date));
+//			sdf = new SimpleDateFormat("dd");
+//			int day = Integer.parseInt(sdf.format(date));
+			startDatePicker.getModel().setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
 			Period.setDocument(new IntDocument());
 			Period.setText(Integer.toString(o.getPeriod()));
 		}
@@ -271,7 +271,6 @@ public class DiscountDialog extends JDialog {
 		contentPanel.add(ADDButton);
 		ADDButton.addActionListener(new ActionListener() {
 			
-			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -280,8 +279,9 @@ public class DiscountDialog extends JDialog {
 						if(ifMember){
 							manager.addMemberDiscount(DiscountCode.getText(), DiscountDescription.getText(), Util.castInt(Percent.getText()), Applicable.getText());
 						}else{
-							Date date = new Date(startDatePicker.getModel().getYear()-1900,startDatePicker.getModel().getMonth(),startDatePicker.getModel().getDay());
-							manager.addOcassionalDiscount(DiscountCode.getText(), DiscountDescription.getText(),date, Util.castInt(Period.getText()),Util.castInt(Percent.getText()), Applicable.getText());
+							Calendar cal = (Calendar)startDatePicker.getModel().getValue();
+							//Date date = new Date(startDatePicker.getModel().getYear()-1900,startDatePicker.getModel().getMonth(),startDatePicker.getModel().getDay());
+							manager.addOcassionalDiscount(DiscountCode.getText(), DiscountDescription.getText(),cal.getTime(), Util.castInt(Period.getText()),Util.castInt(Percent.getText()), Applicable.getText());
 						}
 						manager.getStoreWindow().getDiscountListPanel().refreshTable();
 						setVisible(false);
@@ -313,8 +313,9 @@ public class DiscountDialog extends JDialog {
 						if(ifMember){
 							manager.modifyMemberDiscount(DiscountCode.getText(), DiscountDescription.getText(), Util.castInt(Percent.getText()));
 						}else{
-							Date date = new Date(startDatePicker.getModel().getYear()-1900,startDatePicker.getModel().getMonth(),startDatePicker.getModel().getDay());
-							manager.modifyOcassionalDiscount(DiscountCode.getText(), DiscountDescription.getText(), date, Util.castInt(Period.getText()), Util.castInt(Percent.getText()));
+							Calendar cal = (Calendar)startDatePicker.getModel().getValue();
+							//Date date = new Date(startDatePicker.getModel().getYear()-1900,startDatePicker.getModel().getMonth(),startDatePicker.getModel().getDay());
+							manager.modifyOcassionalDiscount(DiscountCode.getText(), DiscountDescription.getText(), cal.getTime(), Util.castInt(Period.getText()), Util.castInt(Percent.getText()));
 						}
 						manager.getStoreWindow().getDiscountListPanel().refreshTable();
 						setVisible(false);
