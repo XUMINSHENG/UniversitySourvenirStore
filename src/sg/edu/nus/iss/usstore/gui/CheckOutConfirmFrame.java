@@ -6,13 +6,13 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,7 +48,8 @@ public class CheckOutConfirmFrame extends JFrame
 	private JTable table;
 	StoreApplication sa;
 	private ArrayList<TransactionItem> List = new ArrayList<TransactionItem>();
-	private SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+	private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	private DecimalFormat df2 = new DecimalFormat("0.00");
 	/**
 	 * draw UI
 	 * @param t
@@ -133,7 +134,7 @@ public class CheckOutConfirmFrame extends JFrame
 		jpbutton.add(jp3);
 		jpbutton.add(jp4);
 		
-		JLabel jlCash = new JLabel("CashPay:"+cash);
+		JLabel jlCash = new JLabel("CashPay:"+df2.format(cash));
 		jp1.add(jlCash);
 		
 		JLabel jlDiscount = new JLabel("Discount:"+discount.getPercent());
