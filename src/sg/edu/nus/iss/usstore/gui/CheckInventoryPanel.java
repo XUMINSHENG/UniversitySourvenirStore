@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -29,6 +28,10 @@ import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 
 public class CheckInventoryPanel extends JPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final String[] columnNames = {"Id","Name","Available Quantity","Threshold","Order Quantity"};
 	private StoreApplication manager;
 	private JTable table;

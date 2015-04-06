@@ -6,39 +6,25 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.IOException;
-import java.security.KeyStore;
 
-import javax.security.auth.kerberos.KerberosKey;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 
-import sg.edu.nus.iss.usstore.domain.*;
-import sg.edu.nus.iss.usstore.exception.DataFileException;
-import sg.edu.nus.iss.usstore.exception.DataInputException;
 
 /*
  * Main Window with CardLayout and MenuBar
@@ -199,7 +185,7 @@ public class StoreWindow extends JFrame{
 			}
 		});
 		menu.add(menuItem);
-		menuItem = new JMenuItem("Stocktaking");
+		menuItem = new JMenuItem("Inventory");
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -446,7 +432,7 @@ public class StoreWindow extends JFrame{
 		p.add(button);
 		p.add(Box.createRigidArea(space));
 		icon = new ImageIcon("images\\checkInventory.png");
-		button = new JButton("Stocktaking",icon);
+		button = new JButton("Inventory",icon);
 		button.setIconTextGap(2);
 		button.setHorizontalTextPosition(JButton.CENTER);
 		button.setVerticalTextPosition(JButton.BOTTOM);

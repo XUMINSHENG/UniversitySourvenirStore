@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -38,6 +37,10 @@ import sg.edu.nus.iss.usstore.util.Util;
 
 public class DiscountListPanel extends JPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private StoreApplication manager;
 	private final String[] columnNames = {"Code","Description","Start date","Period(Day)","Percentage","Applicable"};
 	private JButton modifyButton;
@@ -154,8 +157,10 @@ public class DiscountListPanel extends JPanel{
 					String role = (String)tableModel.getValueAt(rowIndex, columnIndex);
 					if(role.equals("M")){
 						DiscountDialog d = new DiscountDialog(manager, code,true);
+						d.setVisible(true);
 					}else{
 						DiscountDialog d = new DiscountDialog(manager, code,false);
+						d.setVisible(true);
 					}
 				}
 			}
@@ -265,8 +270,10 @@ public class DiscountListPanel extends JPanel{
 				String role = (String)tableModel.getValueAt(rowIndex, columnIndex);
 				if(role.equals("M")){
 					DiscountDialog d = new DiscountDialog(manager,code,true);
+					d.setVisible(true);
 				}else{
 					DiscountDialog d = new DiscountDialog(manager,code,false);
+					d.setVisible(true);
 				}
 			}
 		});
