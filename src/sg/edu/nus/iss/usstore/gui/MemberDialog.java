@@ -110,20 +110,23 @@ public class MemberDialog extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if (validMemberId()) {
+					if (validateData()) {
+						manager.registerMember(getNameText(), getIdText(), -1);
+						mainScreen.getMemberPanel().refreshTable();
+						dispose();
+					} else {
+						System.out.println("invalid data");
+						JOptionPane.showMessageDialog(new JFrame(),
+								"Enter All/Correct Details");
 
-				if (validateData()) {
-					manager.registerMember(getNameText(), getIdText(), -1);
-					mainScreen.getMemberPanel().refreshTable();
-					dispose();
+					}
+
 				} else {
-					System.out.println("invalid data");
-					JOptionPane.showMessageDialog(new JFrame(),
-							"Enter All/Correct Details");
-
+					JOptionPane.showMessageDialog(null, "Duplicate Member ID detected",
+							"Alert", JOptionPane.WARNING_MESSAGE);
 				}
-
 			}
-
 		});
 		panel.add(button);
 		button = new JButton("Cancel");
@@ -148,16 +151,21 @@ public class MemberDialog extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if (validMemberId()) {
+					if (validateData()) {
+						manager.modifyMember(getNameText(), getIdText(),
+								getLoyaltyText(), index);
 
-				if (validateData()) {
-					manager.modifyMember(getNameText(), getIdText(),
-							getLoyaltyText(), index);
+						mainScreen.getMemberPanel().refreshTable();
+						dispose();
+					} else {
 
-					mainScreen.getMemberPanel().refreshTable();
-					dispose();
-				} else {
-
-					System.out.println("invalid data");
+						System.out.println("invalid data");
+					}
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Cannot assign a Duplicate Member Id",
+							"Alert", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -187,6 +195,18 @@ public class MemberDialog extends JDialog {
 
 	public int getLoyaltyText() {
 		return Integer.parseInt(this.loyaltyPoint.getText());
+	}
+
+	public boolean validMemberId() {
+		boolean result = true;
+		for (Member mem : this.manager.getMemberList()) {
+			if (mem.getMemberID().equals(getIdText())) {
+				result = false;
+				break;
+			}
+
+		}
+		return result;
 	}
 
 }
