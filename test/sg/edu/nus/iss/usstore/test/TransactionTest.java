@@ -44,7 +44,6 @@ public class TransactionTest extends Transaction
 	{
 		Transaction t1 = new Transaction();
 		assertFalse(t1.toString()==null);
-		t=null;
 	}
 
 	@Test
@@ -60,12 +59,14 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testGetId()
 	{
+		assertFalse(t.getId()==0);
 		assertEquals(1,t.getId());
 	}
 
 	@Test
 	public void testSetId()
 	{
+		assertFalse(t.getId()==2);
 		t.setId(2);
 		assertEquals(2,t.getId());
 	}
