@@ -146,7 +146,7 @@ public class LoginScreen extends javax.swing.JFrame {
 	
 	@SuppressWarnings("deprecation")
 	private void LoginActionPerformed(ActionEvent evt) {
-		System.out.println("Login.actionPerformed, event="+evt);
+		//System.out.println("Login.actionPerformed, event="+evt);
 		//TODO add your code for Login.actionPerformed
 		String msg;
 		if(txtName.getText().equals("") || PwdField.getText().equals(""))

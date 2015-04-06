@@ -4,8 +4,6 @@ package sg.edu.nus.iss.usstore.domain;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-
 import sg.edu.nus.iss.usstore.dao.DiscountDao;
 import sg.edu.nus.iss.usstore.exception.DataFileException;
 import sg.edu.nus.iss.usstore.util.Util;
