@@ -2,13 +2,11 @@ package sg.edu.nus.iss.usstore.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,6 +36,10 @@ import sg.edu.nus.iss.usstore.util.TableColumnAdjuster;
 
 public class OrderListDialog extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private final String[] columnNames = { "Vendor Name", "Product Id",
@@ -82,6 +84,11 @@ public class OrderListDialog extends JDialog {
 		data = loadTableData(manager.getPurchaseOrder().getOrderList());
 		
 		tableModel = new DefaultTableModel(data, columnNames) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;

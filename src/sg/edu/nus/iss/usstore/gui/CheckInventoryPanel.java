@@ -58,6 +58,10 @@ public class CheckInventoryPanel extends JPanel{
 	
 	public Container createCenterPanel(){
 		tableModel = new DefaultTableModel(loadTableData(manager.checkInventory()),columnNames){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			@Override
 			public boolean isCellEditable(int row,int column){
 				return false;
@@ -120,7 +124,7 @@ public class CheckInventoryPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				OrderListDialog d = new OrderListDialog(manager);
-				
+				d.setVisible(true);
 			}
 		});
 		p.add(b);

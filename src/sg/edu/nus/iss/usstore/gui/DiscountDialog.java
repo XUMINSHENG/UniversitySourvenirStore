@@ -42,26 +42,12 @@ public class DiscountDialog extends JDialog {
 	private JTextField Percent;
 	private JTextField Applicable;
 	private JDatePicker startDatePicker;
-	//private DiscountMgr discountlist;
 
 	private JRadioButton rdbtnOcaDisc;
 	private JRadioButton rdbtnMemDisc;
 	
 	private StoreApplication manager;
 	private boolean ifMember;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		try {
-//			DiscountDialog dialog = new DiscountDialog();
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	/**
 	 * Create the dialog.
@@ -105,12 +91,6 @@ public class DiscountDialog extends JDialog {
 			
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(o.getStartDate());;
-//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-//			int year = Integer.parseInt(sdf.format(date));
-//			sdf = new SimpleDateFormat("MM");
-//			int month = Integer.parseInt(sdf.format(date));
-//			sdf = new SimpleDateFormat("dd");
-//			int day = Integer.parseInt(sdf.format(date));
 			startDatePicker.getModel().setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
 			Period.setDocument(new IntDocument());
 			Period.setText(Integer.toString(o.getPeriod()));
@@ -256,12 +236,6 @@ public class DiscountDialog extends JDialog {
 			}
 		});
 		contentPanel.add(btnCancel);
-		
-//		{
-//			{
-//				setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{getContentPane(), contentPanel, rdbtnMemDisc, rdbtnOcaDisc, lblDiscountcode, DiscountCode, lblDiscountDescription, DiscountDescription, lblStartDate, StartDate, lblPeriod, lblPercent, lblApplicable, Period, Percent, Applicable, btnNewButton, btnNewButton_1, btnNewButton_2, btnNewButton_3}));
-//			}
-//		}
 
 	}
 	
@@ -362,18 +336,13 @@ public class DiscountDialog extends JDialog {
 	}
 
 	private void deleteVendorMouseClicked(ActionEvent evt) {
-		//if(validDel(idText.getText())){
-			String code = DiscountCode.getText();
-			String msg = "The discount '" + code + "' will be deleted";
-			int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
-	       	if (n == 0){
-				manager.deleteDiscount(code);
-				manager.getStoreWindow().getProductListPanel().refreshTable();
-				dispose();
-	       	}
-//		}else{
-//			String msg = "This product `"+ idText.getText() + "` is associated with some transaction";
-//       		JOptionPane.showMessageDialog(this, msg, "Alert",JOptionPane.WARNING_MESSAGE);
-//		}
+		String code = DiscountCode.getText();
+		String msg = "The discount '" + code + "' will be deleted";
+		int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
+	    if (n == 0){
+			manager.deleteDiscount(code);
+			manager.getStoreWindow().getProductListPanel().refreshTable();
+			dispose();
+	    }
 	}
 }
