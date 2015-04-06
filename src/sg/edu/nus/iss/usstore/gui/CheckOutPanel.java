@@ -176,7 +176,18 @@ public class CheckOutPanel extends JPanel
 			JbProductSubmit.setEnabled(true);
 		}
 	}
-
+	public int getCartNum(Product product)
+	{
+		int inCart = 0;
+		ArrayList<TransactionItem> cart= transaction.getItemList();
+		for(int i = 0; i< cart.size();i++)
+		{
+			if(product.equals(cart.get(i).getProduct()))
+				inCart = cart.get(i).getQty();
+		}
+		return inCart;
+	}
+	
 	/**
 	 *  SET Output Value
 	 */
@@ -372,7 +383,7 @@ public class CheckOutPanel extends JPanel
 		jpinputSelect.add(jb3);
 		jpinputSelect.add(jb4);
 		jpinputSelect.add(jlTips);
-		jlTips.setText("If you choose 'Member'&'Bar Code Reader', please enter data in console screen!");
+		jlTips.setText("If you choose Bar Code Reader', please enter data in console screen!");
 		
 		jpTitleSelect.add(jlTitle);
 		jpTitleSelect.add(jpinputSelect);
@@ -871,8 +882,8 @@ public class CheckOutPanel extends JPanel
 				{
 					jlTitle.setForeground(Color.RED);
 					jlTitle.setText(ERR_MSG_QUANTITY_FORMAT_ERROR);
-				} else if (product.getQuantityAvailable() < Integer
-						.parseInt(tempqty))
+				} else if (product.getQuantityAvailable() < (Integer
+						.parseInt(tempqty)+getCartNum(product)))
 				{
 					jlTitle.setForeground(Color.RED);
 					jlTitle.setText(ERR_MSG_QUANTITY_NOT_ENOUGH + "Only " +product.getQuantityAvailable() +" is Available !");

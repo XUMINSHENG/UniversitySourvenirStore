@@ -19,7 +19,9 @@ public class BarCodeReader {
 	public String scanMemberId()
 	{
 		System.out.print("Enter Member ID: ");
-		return reader.nextLine();
+		String result  = reader.nextLine();
+		System.out.print("Please Click 'Set Member' Button to set member on the GUI");
+		return result;
 	}
 	
 	public String scanProductBarCode()
