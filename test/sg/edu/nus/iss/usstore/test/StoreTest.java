@@ -77,13 +77,10 @@ public class StoreTest {
 		try {
 			instance.saveData();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			fail("save data method throws a unexpected exception");
 		}
-		// TODO review the generated test code and remove the default call to
-		// fail.
-
 	}
 
 	/**
@@ -193,13 +190,17 @@ public class StoreTest {
 		Product p1 = instance.getProductByBarCode("1234");
 		transaction.addItem(p1, p1.getPrice(), 5);
 		
+		// before confirm
+		int transactionNo_old = instance.getTransactionList().size();
+		
 		Transaction result = instance.confirmPayment(transaction);
 		assertNotEquals(result.getCustomer(), null);
 		assertNotEquals(result.getDiscount(), null);
 		
-		
-		//assertEquals(result.getCashAmount(), );
-		//assertEquals(result.getRedeemedLoyaltyPoint(), );
+		// after confirm
+		int transactionNo_new = instance.getTransactionList().size();
+		// new transaction has been added to list
+		assertEquals(transactionNo_old+1, transactionNo_new);
 	}
 
 	 /**
@@ -219,10 +220,10 @@ public class StoreTest {
 		 // purchase is not null
 		 assertNotEquals(result, null);
 		 
-		 // 
+		 // the date of purchase should be same as today
 		 assertEquals(Util.dateToString(result.getOrderDate()),Util.dateToString(new Date()));
 		 
-		 //
+		 // list of this purchase order should not be null
 		 assertNotEquals(result.getOrderList(), null);
 	 }
 	
