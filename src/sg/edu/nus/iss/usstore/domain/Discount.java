@@ -7,6 +7,36 @@ package sg.edu.nus.iss.usstore.domain;
  */
 
 public abstract class Discount {
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Discount other = (Discount) obj;
+		if (Applicable == null) {
+			if (other.Applicable != null)
+				return false;
+		} else if (!Applicable.equals(other.Applicable))
+			return false;
+		if (discountCode == null) {
+			if (other.discountCode != null)
+				return false;
+		} else if (!discountCode.equals(other.discountCode))
+			return false;
+		if (discountDescription == null) {
+			if (other.discountDescription != null)
+				return false;
+		} else if (!discountDescription.equals(other.discountDescription))
+			return false;
+		if (percent != other.percent)
+			return false;
+		return true;
+	}
+
 	private String discountCode;
 	private String discountDescription;
 	//private String startDate;

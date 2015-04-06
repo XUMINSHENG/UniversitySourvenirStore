@@ -58,22 +58,6 @@ public class DiscountMgr {
 		return discountList;
 	}
 
-	public ArrayList<Discount> getDiscountList(){
-
-		return discountList;
-
-	}
-
-	public Discount getDiscountCode(String discountCode) {
-		Iterator<Discount> i = discountList.iterator();
-		while (i.hasNext()) {
-			Discount disc = i.next();
-			if (disc.getDiscountcode().equals(discountCode))
-				return disc;
-		}
-		return null;
-	}
-
 	public void writeFile() throws IOException {
 		discountDao.saveDataToFile(discountList);
 	}
