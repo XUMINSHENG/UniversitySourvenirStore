@@ -72,8 +72,8 @@ public class ProductMgrTest {
         
         assertNotEquals(null, result);
         
-        //according to datafile, there 2 products quantity is less than threshold
-        assertEquals(result.size(), 2);
+        //according to datafile, there 3 products quantity is less than threshold
+        assertEquals(result.size(), 3);
     }
 
     /**
