@@ -36,7 +36,7 @@ public class CheckInventoryPanel extends JPanel{
 	private StoreApplication manager;
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private JButton fire = new JButton("Fire");
+	//private JButton fire = new JButton("Fire");
 	
 	public CheckInventoryPanel(StoreApplication manager){
 		this.manager = manager;
@@ -45,7 +45,7 @@ public class CheckInventoryPanel extends JPanel{
 		add("Center",createCenterPanel());
 		add("South",createSouthPanel());
 		setVisible(true);
-		fire.setEnabled(false);
+		//fire.setEnabled(false);
 	}
 	
 	public JPanel createNorthPanel(){
@@ -86,19 +86,19 @@ public class CheckInventoryPanel extends JPanel{
 		tca.setOnlyAdjustLarger(true);
 		tca.adjustColumns();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				// TODO Auto-generated method stub
-				if(table.getSelectionModel().isSelectionEmpty()){
-					fire.setEnabled(false);
-				}else{
-					fire.setEnabled(true);
-				}
-			}
-
-		});
+//		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+//			
+//			@Override
+//			public void valueChanged(ListSelectionEvent e) {
+//				// TODO Auto-generated method stub
+//				if(table.getSelectionModel().isSelectionEmpty()){
+//					fire.setEnabled(false);
+//				}else{
+//					fire.setEnabled(true);
+//				}
+//			}
+//
+//		});
 		table.setFillsViewportHeight(true);
 		table.setAutoCreateRowSorter(true);
 		JScrollPane p = new JScrollPane(table);

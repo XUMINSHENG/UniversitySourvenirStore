@@ -50,19 +50,21 @@ public class OrderListDialog extends JDialog {
 	public OrderListDialog(StoreApplication manager) {
 		super(manager.getStoreWindow(), "Purchase Order List");
 		this.manager = manager;
-		setLayout(new BorderLayout());
-		add("North", createNorthPanel());
-		add("Center", createCenterPanel());
-		add("South", createSouthPanel());
+		
 		initGUI();
+		System.out.println("open");
 	}
 
 	private void initGUI() {
 		// setPreferredSize(new Dimension(600, 400));
+		setLayout(new BorderLayout());
 		setSize(600, 400);
 		setLocationRelativeTo(null);
 		setModal(true);
-		setVisible(true);
+		add("North", createNorthPanel());
+		add("Center", createCenterPanel());
+		add("South", createSouthPanel());
+		
 	}
 
 	public JPanel createNorthPanel() {
@@ -143,7 +145,8 @@ public class OrderListDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				printer();
-				JOptionPane.showMessageDialog(null, "Print to console already!");
+				JOptionPane.showMessageDialog(getParent(), "Print to console already!");
+				
 				dispose();
 			}
 		});
@@ -213,5 +216,6 @@ public class OrderListDialog extends JDialog {
 	//	data[i][2] + "\t|\t"+ data[i][3] + "\t|\t");
 		}
 		System.out.println("----------------------------------------End----------------------------------------");
+		//dispose();
 	}
 }

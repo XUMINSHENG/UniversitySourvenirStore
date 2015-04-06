@@ -184,8 +184,8 @@ public class DiscountDialog extends JDialog {
 		
 		Percent = new JTextField();
 		Percent.setBounds(140, 88, 200, 25);
-		contentPanel.add(Percent);
 		Percent.setColumns(10);
+		contentPanel.add(Percent);
 		
 		JLabel lblStartDate = new JLabel("Start Date :");
 		lblStartDate.setBounds(6, 114, 99, 28);
@@ -223,7 +223,7 @@ public class DiscountDialog extends JDialog {
 		Applicable.setColumns(10);
 		Applicable.setEditable(false);
 		
-		Percent.setDocument(new IntDocument());
+		Percent.setDocument(new IntDocument(2));
 
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setBounds(250, 200, 89, 25);
@@ -313,7 +313,7 @@ public class DiscountDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				deleteVendorMouseClicked(arg0);
+				deleteVendorMouseClicked();
 				
 			}
 		});
@@ -335,13 +335,13 @@ public class DiscountDialog extends JDialog {
 		return true;
 	}
 
-	private void deleteVendorMouseClicked(ActionEvent evt) {
+	private void deleteVendorMouseClicked() {
 		String code = DiscountCode.getText();
 		String msg = "The discount '" + code + "' will be deleted";
 		int n = JOptionPane.showConfirmDialog(this, msg, "Confirmation",JOptionPane.YES_NO_OPTION);
 	    if (n == 0){
 			manager.deleteDiscount(code);
-			manager.getStoreWindow().getProductListPanel().refreshTable();
+			manager.getStoreWindow().getDiscountListPanel().refreshTable();
 			dispose();
 	    }
 	}
