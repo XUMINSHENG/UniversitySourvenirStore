@@ -208,7 +208,6 @@ public class TransactionTest extends Transaction
 	@Test
 	public void testCalcTotalPrice()
 	{
-		ProductMgr pm = null;
 		t.addItem(product1,1.2,3);
 		t.addItem(product2,4.5,6);
 		assertTrue(1.2*3+4.5*6==t.calcTotalPrice());
@@ -254,6 +253,4 @@ public class TransactionTest extends Transaction
 		t.setRedeemedLoyaltyPoint(5);
 		assertTrue(t.calcDiscountPrice()-CalcUtil.mul(5,0.05)==t.calcRest());
 	}
-
-
-}///~
+}// /~

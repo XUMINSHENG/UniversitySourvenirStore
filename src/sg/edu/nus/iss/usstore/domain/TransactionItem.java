@@ -18,7 +18,6 @@ public class TransactionItem
 	
 	public TransactionItem()
 	{
-		
 	}
 	
 	public TransactionItem(Product product,double price,int qty)
@@ -27,31 +26,40 @@ public class TransactionItem
 		this.price = price;
 		this.qty = qty;
 	}
-	
+	//seters & geters
 	public Product getProduct()
 	{
 		return product;
 	}
+	//seters & geters
 	public void setProduct(Product product)
 	{
 		this.product = product;
 	}
+	//seters & geters
 	public double getPrice()
 	{
 		return price;
 	}
+	//seters & geters
 	public void setPrice(double price)
 	{
 		this.price = price;
 	}
+	//seters & geters
 	public int getQty()
 	{
 		return qty;
 	}
+	//seters & geters
 	public void setQty(int qty)
 	{
 		this.qty = qty;
 	}
+	/**
+	 * calculate the TransactionItem's worth
+	 * @return Double
+	 */
 	public double calculateAmount()
 	{
 		return CalcUtil.mul(this.price, this.qty);

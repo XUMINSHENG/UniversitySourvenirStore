@@ -26,6 +26,12 @@ public class TransactionMgr
 		td = new TransactionDao(new Store());
 		transactionList = new ArrayList<>();
 	}
+	
+	public TransactionMgr(Store store)
+	{
+		td = new TransactionDao(store);
+	}
+	
 	// load data
 	public void loadData() throws IOException, DataFileException{
 		transactionList = td.loadDataFromFile();
@@ -35,22 +41,17 @@ public class TransactionMgr
 	{
 		td.saveDataToFile(transactionList);
 	}
-	
-	public TransactionMgr(Store store)
-	{
-		td = new TransactionDao(store);
-	}
-	
+	//seters & geters 
 	public ArrayList<Transaction> getTransactionList()
 	{
 		return transactionList;
 	}
-	
+	//seters & geters
 	public void setTransactionList(ArrayList<Transaction> transactionList)
 	{
 		this.transactionList = transactionList;
 	}
-	
+	//seters & geters
 	public void addTransaction(Transaction transaction)
 	{
 		if(transaction.getId()==0)
@@ -59,7 +60,7 @@ public class TransactionMgr
 		}
 		transactionList.add(transaction);
 	}
-	
+	//seters & geters
 	public ArrayList<Transaction> getTransactionListByDate(Date date)
 	{
 		ArrayList<Transaction> result = new ArrayList<Transaction>();
@@ -73,7 +74,10 @@ public class TransactionMgr
 		}
 		return result;
 	}
-	
+	/**
+	 * calculate the TransactionItem's worth
+	 * @return Integer
+	 */
 	public int getMaxId(){
 		int maxId = 0;
 		

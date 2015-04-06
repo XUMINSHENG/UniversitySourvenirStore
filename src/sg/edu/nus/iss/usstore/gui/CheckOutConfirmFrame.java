@@ -47,9 +47,13 @@ public class CheckOutConfirmFrame extends JFrame
 	private Product product = null;
 	private JTable table;
 	StoreApplication sa;
-	private ArrayList<TransactionItem> List = new ArrayList();
+	private ArrayList<TransactionItem> List = new ArrayList<TransactionItem>();
 	private SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-	//draw UI
+	/**
+	 * draw UI
+	 * @param t
+	 * @param sa
+	 */
 	public CheckOutConfirmFrame(Transaction t,StoreApplication sa) 
 	{
 		this.transaction = t;
@@ -102,6 +106,11 @@ public class CheckOutConfirmFrame extends JFrame
 		String[] tableTitle = {"Product", "Quantity","Total" };
 		defaultModel = new DefaultTableModel(null, tableTitle)
 		{
+			/**
+			 * override isCellEditable to set table can't be editable
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column)
 			{
 					return false;
@@ -142,10 +151,13 @@ public class CheckOutConfirmFrame extends JFrame
 		this.pack();
 		
 	}
-	//check rest number of product
+	/**
+	 * check rest number of product
+	 * @return ArrayList<Product>
+	 */
 	public ArrayList<Product> checkProductRestNum()
 	{
-		ArrayList<Product> result = new ArrayList();
+		ArrayList<Product> result = new ArrayList<Product>();
 		for (int i = 0 ; i < List.size();i++)
 		{
 			TransactionItem t = List.get(i);
@@ -155,17 +167,19 @@ public class CheckOutConfirmFrame extends JFrame
 		}
 		return result;
 	}
-	//Data Binding
+	/**
+	 * Data Binding
+	 */
 	public void tableDataBinding()
 	{
-		ArrayList itemList = transaction.getItemList();
-		Vector dataVector = defaultModel.getDataVector();
+		ArrayList<TransactionItem> itemList = transaction.getItemList();
+		Vector<Object> dataVector = defaultModel.getDataVector();
 		dataVector.clear();
 		System.out.print( itemList.size());
 		for (int i = 0; i < itemList.size(); i++)
 		{
-			Vector subVector = new Vector();
-			TransactionItem transactionitem = (TransactionItem) itemList.get(i);
+			Vector<Object> subVector = new Vector<Object>();
+			TransactionItem transactionitem = itemList.get(i);
 			product = transactionitem.getProduct();
 			subVector.add(product.getName());
 			subVector.add(Integer.toString(transactionitem.getQty()));
@@ -175,6 +189,9 @@ public class CheckOutConfirmFrame extends JFrame
 		table.validate();
 		table.repaint();
 	}
+	/**
+	 *Override ActionListener
+	 */
 	class Listener implements ActionListener
 	{
 
@@ -188,7 +205,7 @@ public class CheckOutConfirmFrame extends JFrame
 				dispose();
 				if (checkProductRestNum().size()>0)
 				{
-					JDialog jd = new OrderListDialog(sa);
+					new OrderListDialog(sa);
 				}
 			}
 		}

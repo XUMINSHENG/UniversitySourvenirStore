@@ -53,7 +53,7 @@ public class CheckOutPanel extends JPanel
 	 * @version 0.9
 	 */
 	private static final long serialVersionUID = 1L;
-
+	//define UI param
 	private JLabel JlgetMemberName;
 	private JLabel JlTotalPriceNum;
 	private JLabel JlDiscountNum;
@@ -78,21 +78,20 @@ public class CheckOutPanel extends JPanel
 	private JRadioButton jb4;
 	private TableColumn column;
 	private BarCodeReader br = new BarCodeReader();
-
 	private DecimalFormat df = new DecimalFormat("0.00");
 	private DefaultTableModel defaultModel;
+	
 	private double tempChange;
-
 	private Product product = null;
 	private int scrollpanelwidth = 600;
-	private int scrollpanelheight = 270;
+	private int scrollpanelheight = 230;
 	private int flag = 0;
 	private String tempBarCode;
 	private Vector<Object> vector = new Vector<Object>();
 	private Listener listener = new Listener();
 	private StoreApplication sa = null;
 	private Transaction transaction;
-
+	//define Error massage
 	private final String ERR_MSG_MEMBER_NOT_EXIST = "Invalid MemberID!";
 	private final String ERR_MSG_PRODCUT_NOT_EXIST = "Invalid Bar Code!";
 	private final String ERR_MSG_BARCODE_ERROR = "Invalid Bar Code!";
@@ -118,7 +117,9 @@ public class CheckOutPanel extends JPanel
 		this.transaction = transaction;
 	}
 
-	// control radio Button's select
+	/**
+	 * control radio Buttons' select
+	 */
 	public void setRadioButton()
 	{
 		int sum = 0;
@@ -176,7 +177,9 @@ public class CheckOutPanel extends JPanel
 		}
 	}
 
-	// SET Output Value
+	/**
+	 *  SET Output Value
+	 */
 	public void setOutputValue()
 	{
 		JlTotalPriceNum.setText(df.format(transaction.calcTotalPrice()));
@@ -207,7 +210,9 @@ public class CheckOutPanel extends JPanel
 		JbFinishControl();
 	}
 
-	// Control the useable of Finish Button
+	/**
+	 * Control the useable of Finish Button
+	 */
 	public void JbFinishControl()
 	{
 		if (transaction.calcChange() < 0)
@@ -226,22 +231,23 @@ public class CheckOutPanel extends JPanel
 		{
 			JbFinish.setEnabled(true);
 		}
-
 	}
 
-	// table data binding
+	/**
+	 * table data binding
+	 */
 	public void tableDataBinding()
 	{
 		flag = 1;
 		ArrayList<TransactionItem> itemList = transaction.getItemList();
-		Vector dataVector = defaultModel.getDataVector();
+		Vector<Object> dataVector = defaultModel.getDataVector();
 		dataVector.clear();
 
 		for (int i = 0; i < itemList.size(); i++)
 		{
 			Vector<Object> subVector = new Vector<Object>();
 			subVector.add(i + 1);
-			TransactionItem transactionitem = (TransactionItem) itemList.get(i);
+			TransactionItem transactionitem = itemList.get(i);
 			product = transactionitem.getProduct();
 			subVector.add(product.getBarCodeNumber());
 			subVector.add(product.getName());
@@ -256,7 +262,11 @@ public class CheckOutPanel extends JPanel
 		setOutputValue();
 	}
 
-	// Use this method to add product to table
+	/**
+	 * Add product to table
+	 * @param arrayList
+	 * @param qty
+	 */
 	public void addProduct(ArrayList<TransactionItem> arrayList, int qty)
 	{
 		int productAddFlag = -1;
@@ -278,7 +288,9 @@ public class CheckOutPanel extends JPanel
 		}
 	}
 
-	// cancel check out
+	/**
+	 * cancel this check out
+	 */
 	public void cancelAll()
 	{
 		// refresh data
@@ -290,7 +302,7 @@ public class CheckOutPanel extends JPanel
 			table.validate();
 			table.repaint();
 		}
-		// refresh para
+		// refresh param
 		{
 			flag = 0;
 		}
@@ -321,9 +333,12 @@ public class CheckOutPanel extends JPanel
 		}
 	}
 
-	// draw UI
+	/**
+	 * draw UI & set some param
+	 * @param sa
+	 */
 	public CheckOutPanel(StoreApplication sa)
-	{ // ʵ�ֹ��췽��
+	{
 		this.sa = sa;
 		// OPeration
 		JPanel jpOperation = new JPanel();
@@ -376,6 +391,7 @@ public class CheckOutPanel extends JPanel
 		// jp1
 		JLabel JlMemberID = new JLabel(" MEMBER ID");
 		JtMemberID = new JTextField(10);
+		JtMemberID.setEnabled(false);
 		ButtonGroup bg1 = new ButtonGroup();
 		jb1 = new JRadioButton("Member");
 		jb2 = new JRadioButton("PUBLIC");
@@ -383,7 +399,6 @@ public class CheckOutPanel extends JPanel
 		jb1.addActionListener(listener);
 		jb2.setActionCommand("jb2");
 		jb2.addActionListener(listener);
-		;
 		bg1.add(jb1);
 		bg1.add(jb2);
 		jb2.setSelected(true);
@@ -494,9 +509,9 @@ public class CheckOutPanel extends JPanel
 		JtPaidNum.setDocument(new DigitDocument());
 		JtPaidNum.getDocument().addDocumentListener(new DocumentListener()
 		{
+			//inset Update
 			public void insertUpdate(DocumentEvent e)
 			{
-				// ������д��Ӧ�Ĵ������
 				String tempLoyalPaid = JtPaidNum.getText();
 				int tempLoyalPaidNum = Integer.valueOf(tempLoyalPaid)
 						.intValue();
@@ -525,7 +540,7 @@ public class CheckOutPanel extends JPanel
 				}
 				setOutputValue();
 			}
-
+			//remove Update
 			public void removeUpdate(DocumentEvent e)
 			{
 
@@ -565,11 +580,8 @@ public class CheckOutPanel extends JPanel
 				}
 				setOutputValue();
 			}
-
 			public void changedUpdate(DocumentEvent e)
 			{
-				// TODO Auto-generated method stub
-
 			}
 		});
 		jp9.add(JlPaid);
@@ -591,7 +603,7 @@ public class CheckOutPanel extends JPanel
 		JtCashNum.setDocument(new DigitDocument());
 		JtCashNum.getDocument().addDocumentListener(new DocumentListener()
 		{
-
+			//insert Update
 			public void insertUpdate(DocumentEvent e)
 			{
 				String ScashNum = JtCashNum.getText();
@@ -623,7 +635,7 @@ public class CheckOutPanel extends JPanel
 				}
 				setOutputValue();
 			}
-
+			//remove Update
 			public void removeUpdate(DocumentEvent e)
 			{
 				if (JtCashNum.getText().length() != 0)
@@ -719,8 +731,8 @@ public class CheckOutPanel extends JPanel
 			}
 		}
 		defaultModel.addTableModelListener(new TableModelListener()
-		{
-
+		{	
+			//Override the TableModelListener to make the Quantity editable
 			@Override
 			public void tableChanged(TableModelEvent e)
 			{
@@ -869,8 +881,7 @@ public class CheckOutPanel extends JPanel
 					int intqty = Integer.parseInt(tempqty);
 					if (jlTitle.getText() == ERR_MSG_PRODCUT_NOT_EXIST
 							|| jlTitle.getText() == ERR_MSG_BARCODE_ERROR
-							|| jlTitle.getText().substring(0,8).equals("Quantity")
-							|| jlTitle.getText() == ERR_MSG_QUANTITY_FORMAT_ERROR)
+							|| jlTitle.getText().substring(0,8).equals("Quantity"))
 					{
 						jlTitle.setForeground(Color.BLACK);
 						jlTitle.setText("Check Out");
@@ -985,5 +996,4 @@ public class CheckOutPanel extends JPanel
 			}
 		}
 	}
-
-}
+}// /~
