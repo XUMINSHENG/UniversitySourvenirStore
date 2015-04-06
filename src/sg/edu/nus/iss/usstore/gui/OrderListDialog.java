@@ -52,7 +52,6 @@ public class OrderListDialog extends JDialog {
 		this.manager = manager;
 		
 		initGUI();
-		System.out.println("open");
 	}
 
 	private void initGUI() {
