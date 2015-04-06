@@ -869,7 +869,7 @@ public class CheckOutPanel extends JPanel
 					int intqty = Integer.parseInt(tempqty);
 					if (jlTitle.getText() == ERR_MSG_PRODCUT_NOT_EXIST
 							|| jlTitle.getText() == ERR_MSG_BARCODE_ERROR
-							|| jlTitle.getText().substring(0,10).equals("Quantity i")
+							|| jlTitle.getText().substring(0,8).equals("Quantity")
 							|| jlTitle.getText() == ERR_MSG_QUANTITY_FORMAT_ERROR)
 					{
 						jlTitle.setForeground(Color.BLACK);
