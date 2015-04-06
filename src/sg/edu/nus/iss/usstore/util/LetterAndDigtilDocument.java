@@ -12,6 +12,10 @@ import javax.swing.text.PlainDocument;
 
 public class LetterAndDigtilDocument extends PlainDocument{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int limitedLength;
 	
 	public LetterAndDigtilDocument(){

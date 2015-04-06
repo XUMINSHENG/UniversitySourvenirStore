@@ -23,6 +23,10 @@ import javax.swing.text.PlainDocument;
 
 public class DigitDocument extends PlainDocument{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int limitedLength;
 	private int position = -1;
 	
