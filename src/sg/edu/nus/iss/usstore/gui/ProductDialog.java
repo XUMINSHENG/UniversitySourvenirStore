@@ -192,9 +192,12 @@ public class ProductDialog extends JDialog{
 				//Product newProduct = new Product("4","animal","pig","something",12,20,"c123",100,200);
 				//System.out.println("add");
 				try {
-					if(manager.valifyBarCode(barCodeText.getText())){
-						throw new DataInputException("barCode is existed already!");
+					
+					if(!validAdd()){
+						throw new DataInputException("barCode exists already!");
 					}
+					
+					
 					if(validateData()){
 						manager.addProduct(idText.getText(),getNameText(),getCategoryText(),getDescriptionText(),
 									getQuantityText(),getPriceText(),getBarCodeText(),getReorderQtyText(),getOrderQtyText());
@@ -305,6 +308,11 @@ public class ProductDialog extends JDialog{
 		
 		return result;
 	}
+	
+	private boolean validAdd(){
+		return (manager.getProductByBarCode(getBarCodeText())==null);
+	}
+	
 	
 	private void deleteVendorMouseClicked(ActionEvent evt) {
 		if(validDel(idText.getText())){

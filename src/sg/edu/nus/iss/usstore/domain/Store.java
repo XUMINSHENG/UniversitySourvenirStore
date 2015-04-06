@@ -223,11 +223,7 @@ public class Store {
 	public String getNewProductIdByCategory(String code){
 		return productMgr.getNewProductIdByCategory(code);
 	}
-	
-	
-	public boolean valifyBarCode(String code){
-		return productMgr.validfyBarCode(code);
-	}
+
 	
 	/**
 	 * 

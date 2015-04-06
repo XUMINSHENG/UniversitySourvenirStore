@@ -24,6 +24,12 @@ public class MemberDialog extends JDialog {
 	private JTextField memberID;
 	private JTextField loyaltyPoint;
 
+	/**
+	 * add mode
+	 * 
+	 * @param manager
+	 * @param title
+	 */
 	public MemberDialog(StoreApplication manager, String title) {
 		super(manager.getStoreWindow(), title);
 		this.manager = manager;
@@ -32,12 +38,20 @@ public class MemberDialog extends JDialog {
 		add("South", createAddBottomPanel());
 	}
 
+	/**
+	 * modify mode
+	 * 
+	 * @param manager
+	 * @param title
+	 * @param id
+	 */
 	public MemberDialog(StoreApplication manager, String title, String id) {
 		super(manager.getStoreWindow(), title);
 		this.manager = manager;
 		this.mainScreen = manager.getStoreWindow();
 		this.index = manager.getMemberList().indexOf(manager.getMemberById(id));
 		initGUI();
+		memberID.setEditable(false);
 		add("South", createModifyBottomPanel());
 		Member m = manager.getMemberList().get(index);
 		setData(m.getName(), m.getMemberID(), m.getLoyaltyPoint());
@@ -151,22 +165,19 @@ public class MemberDialog extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (validMemberId()) {
-					if (validateData()) {
-						manager.modifyMember(getNameText(), getIdText(),
-								getLoyaltyText(), index);
+				
+				if (validateData()) {
+					manager.modifyMember(getNameText(), getIdText(),
+							getLoyaltyText(), index);
 
-						mainScreen.getMemberPanel().refreshTable();
-						dispose();
-					} else {
+					mainScreen.getMemberPanel().refreshTable();
+					dispose();
+				} else {
 
-						System.out.println("invalid data");
-					}
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Cannot assign a Duplicate Member Id",
+					JOptionPane.showMessageDialog(null, "Enter All/Correct Details",
 							"Alert", JOptionPane.WARNING_MESSAGE);
 				}
+				
 			}
 		});
 		panel.add(button);

@@ -142,13 +142,4 @@ public class ProductMgr {
 		return this.productList;
 	}
 	
-	public boolean validfyBarCode(String code){
-		for(Product p: this.productList){
-			if(code==p.getBarCodeNumber()){
-				return false;
-			}
-		}
-		return true;
-	}
-	
 }
