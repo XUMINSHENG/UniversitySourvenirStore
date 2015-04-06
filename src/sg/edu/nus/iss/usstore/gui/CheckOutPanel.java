@@ -34,7 +34,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import sg.edu.nus.iss.usstore.domain.BarCodeReader;
+import sg.edu.nus.iss.usstore.device.BarCodeReader;
 import sg.edu.nus.iss.usstore.domain.Member;
 import sg.edu.nus.iss.usstore.domain.Product;
 import sg.edu.nus.iss.usstore.domain.Public;

@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.usstore.domain;
+package sg.edu.nus.iss.usstore.device;
 
 import java.util.Scanner;
 

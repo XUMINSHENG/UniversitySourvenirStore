@@ -1,4 +1,8 @@
-package sg.edu.nus.iss.usstore.domain;
+package sg.edu.nus.iss.usstore.device;
+
+import sg.edu.nus.iss.usstore.domain.Transaction;
+import sg.edu.nus.iss.usstore.domain.TransactionItem;
+
 /**
  * 
  * @author tanuj
@@ -15,7 +19,7 @@ public class RecieptPrinter {
 	public void print()
 	{		
 		/**
-	 * 	writes on the cansole the transaction in the below given format
+	 * 	writes on the console the transaction in the below given format
 	 * after finishing of the transaction
 	 */
 		System.out.println("##################################################################################");
