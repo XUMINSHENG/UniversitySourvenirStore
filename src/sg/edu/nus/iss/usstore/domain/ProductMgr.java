@@ -19,11 +19,7 @@ public class ProductMgr {
 	public ProductMgr(Store store){
 		productDao = new ProductDao(store);
 	}
-	
-	public ProductMgr(ArrayList<Product> list){
-		this.productList = list;
-	}
-	
+
 	//load data from file
 	public void loadData() throws IOException, DataFileException{
 		productList = productDao.loadDataFromFile();
