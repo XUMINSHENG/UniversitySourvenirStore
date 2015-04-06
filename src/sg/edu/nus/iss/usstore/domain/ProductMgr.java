@@ -103,7 +103,7 @@ public class ProductMgr {
 	
 	public void deleteProduct(String id){
 		for(int i =0;i<productList.size();i++){
-			if(id==productList.get(i).getProductId()){
+			if(id.equals(productList.get(i).getProductId())){
 				this.productList.remove(i);
 				break;
 			}
@@ -121,7 +121,7 @@ public class ProductMgr {
 	
 	public Product getProductById(String id){
 		for(int x=0;x<productList.size();x++){
-			if(id==productList.get(x).getProductId()){
+			if(id.equals(productList.get(x).getProductId())){
 				return productList.get(x);
 			}
 		}
@@ -131,7 +131,7 @@ public class ProductMgr {
 	//return the bar code of product
 	public Product getProductByBarCode(String barCode){
 		for(int x=0;x<productList.size();x++){
-			if(barCode==productList.get(x).getBarCodeNumber()){
+			if(barCode.equals(productList.get(x).getBarCodeNumber())){
 				return productList.get(x);
 			}
 		}
