@@ -37,6 +37,9 @@ public class MemberMgr {
 		return this.memberList;
 
 	}
+	public void setMemberList(ArrayList<Member> memberList){
+		this.memberList = memberList;
+	}
 
 	public Member getMemberByID(String memID) {
 		Iterator<Member> i = this.memberList.iterator();

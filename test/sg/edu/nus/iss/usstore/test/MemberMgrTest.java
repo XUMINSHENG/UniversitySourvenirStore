@@ -18,7 +18,6 @@ import sg.edu.nus.iss.usstore.exception.DataFileException;
 public class MemberMgrTest {
 
 	MemberMgr memMgr;
-	ArrayList<Member> member = new ArrayList<>();
 
 	public MemberMgrTest() throws IOException, DataFileException {
 		memMgr = new MemberMgr();
@@ -33,25 +32,40 @@ public class MemberMgrTest {
 
 	@Test
 	public void testRegisterMember() {
+		memMgr = new MemberMgr();
+		ArrayList<Member> member = new ArrayList<>();
 		member.add(new Member("sam", "a0123654", 100));
+		memMgr.setMemberList(member);
 		assertFalse(member.isEmpty());
 
 	}
 
 	@Test
 	public void testGetMemberList() {
-		assertEquals("Suraj Sharma,X437F356,250", memMgr.getMemberList().get(0).toString());
+		memMgr= new MemberMgr();
+		ArrayList<Member> member1 = new ArrayList<>();
+		Member mem = new Member("Suraj", "X437F35", 250);
+		member1.add(mem);
+		memMgr.setMemberList(member1);
+		assertEquals("Suraj,X437F35,250", memMgr.getMemberList().get(0).toString());
 	}
 
 	@Test
 	public void testGetMemberByID() {
-	
+		memMgr = new MemberMgr();
+		ArrayList<Member> member = new ArrayList<>();
+		member.add(new Member("Suraj Sharma", "X437F356", 250));
+		memMgr.setMemberList(member);
 		assertEquals("Suraj Sharma,X437F356,250",memMgr.getMemberByID("X437F356").toString());
 		
 	}
 	
 	@Test
 	public void testModifyMember(){
+		memMgr = new MemberMgr();
+		ArrayList<Member> member = new ArrayList<>();
+		member.add(new Member("Suraj Sharma", "X437F356", 250));
+		memMgr.setMemberList(member);
 		assertEquals("Suraj Sharma,X437F356,250",memMgr.getMemberByID("X437F356").toString());
 		memMgr.modifyMember("Suraj Sharma", "X437F356",300, 0);
 		assertNotEquals("Suraj Sharma,X437F356,250",memMgr.getMemberByID("X437F356").toString());
