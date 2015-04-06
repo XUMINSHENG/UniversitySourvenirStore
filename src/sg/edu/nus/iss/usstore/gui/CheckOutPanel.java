@@ -851,6 +851,8 @@ public class CheckOutPanel extends JPanel
 				{
 					jlTitle.setForeground(Color.RED);
 					jlTitle.setText(ERR_MSG_MEMBER_NOT_EXIST);
+					if(jb1.isSelected()&&jb4.isSelected())
+					JtMemberID.setText(br.scanMemberId());
 				} else
 				{
 					transaction = sa.setBillCustomer(transaction, MemberID);
@@ -859,6 +861,8 @@ public class CheckOutPanel extends JPanel
 						transaction = sa.setBillCustomer(transaction, "");
 						jlTitle.setForeground(Color.RED);
 						jlTitle.setText(ERR_MSG_MEMBER_NOT_EXIST);
+						if(jb1.isSelected()&&jb4.isSelected())
+							JtMemberID.setText(br.scanMemberId());
 					} else
 					{
 						if (jlTitle.getText() == ERR_MSG_MEMBER_NOT_EXIST)

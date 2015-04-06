@@ -20,7 +20,7 @@ public class BarCodeReader {
 	{
 		System.out.print("Enter Member ID: ");
 		String result  = reader.nextLine();
-		System.out.print("Please Click 'Set Member' Button to set member on the GUI");
+		System.out.println("Please Click 'Set Member' Button to set member on the GUI");
 		return result;
 	}
 	
