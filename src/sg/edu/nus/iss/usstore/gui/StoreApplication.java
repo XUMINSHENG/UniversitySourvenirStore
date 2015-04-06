@@ -113,6 +113,10 @@ public class StoreApplication {
 		return store.getNewProductIdByCategory(code);
 	}
 	
+	public boolean valifyBarCode(String code){
+		return store.valifyBarCode(code);
+	}
+	
 	public void addProduct(String id,String name, String categoryCode, String briefDescription, 
 			int quantityAvailable, double price, String barCode, int threshold, int orderQuantity){
 		store.addProduct(id,name, categoryCode, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);	

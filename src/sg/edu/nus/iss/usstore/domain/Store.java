@@ -224,6 +224,11 @@ public class Store {
 		return productMgr.getNewProductIdByCategory(code);
 	}
 	
+	
+	public boolean valifyBarCode(String code){
+		return productMgr.validfyBarCode(code);
+	}
+	
 	/**
 	 * 
 	 * @param id
