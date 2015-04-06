@@ -532,7 +532,7 @@ public class StoreWindow extends JFrame{
 				// TODO Auto-generated method stub
 				
 				DiscountDialog dialog = new DiscountDialog(manager);
-				
+				dialog.setVisible(true);
 				//dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				
 			}

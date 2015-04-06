@@ -152,7 +152,6 @@ public class DiscountDialog extends JDialog {
 
 	private void initGUI() {
 		setBounds(100, 100, 450, 300);
-		setVisible(true);
 		setModal(true);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
